@@ -1,0 +1,1243 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+:root {
+	--poppins: 'Poppins', sans-serif;
+	--lato: 'Lato', sans-serif;
+
+	--light: #F9F9F9;
+	--blue: #3C91E6;
+	--light-blue: #CFE8FF;
+	--grey: #eee;
+	--dark-grey: #AAAAAA;
+	--dark: #342E37;
+	--redlight: #DB504A;
+	--light-red: #ffaaa7;
+	--yellow: #FFCE26;
+	--light-yellow: #FFF2C6;
+	--orange: #FD7238;
+	--light-orange: #FFE0D3;
+	--green: #008000;
+	--light-green: #a6fda6;
+	--dark-green: #394b39;
+	--lighter-grey: #f4f4f4;
+	--light-gray: #f0f0f0;
+	--fb-blue: #4267B2;
+	--red: #f00;
+	--li-grey: #ccc;
+	--gray: #c4bfbf;
+	--light-hover: #f0f2f5;
+
+}
+
+html {
+	overflow-x: hidden;
+}
+
+body.dark {
+	--light: #0C0C1E;
+	--grey: #060714;
+	--dark: #FBFBFB;
+}
+
+body {
+	background: var(--grey);
+	overflow-x: hidden;
+}
+
+
+
+
+
+/* SIDEBAR */
+
+
+#sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 200px;
+	height: 100%;
+	background: var(--light);
+	z-index: 2000;
+	font-family: var(--lato);
+	transition: width 0.3s ease-in-out;
+	overflow-x: hidden;
+	scrollbar-width: none;
+}
+
+#sidebar::--webkit-scrollbar {
+	display: none;
+}
+
+#sidebar.hide {
+	width: 60px;
+}
+
+#sidebar .brand {
+	font-size: 24px;
+	font-weight: 700;
+	height: 56px;
+	display: flex;
+	align-items: center;
+	color: var(--green);
+	position: sticky;
+	top: 0;
+	left: 0;
+	background: var(--light);
+	z-index: 500;
+	padding-bottom: 1px;
+	box-sizing: content-box;
+	margin-top: 5px;
+}
+
+#sidebar .brand .bsulogo {
+	height: 31px;
+	width: 32px;
+	align-items: center;
+	margin: 15px;
+	margin-inline-end: 23px;
+	display: flex;
+	justify-content: center;
+}
+
+#sidebar .brand .bx {
+	min-width: 60px;
+	display: flex;
+	justify-content: center;
+}
+
+
+
+
+#sidebar .side-menu {
+	width: 100%;
+	margin-top: 30px;
+}
+
+
+#sidebar .side-menu li {
+	height: 48px;
+	background: transparent;
+	margin-left: 6px;
+	border-radius: 48px 0 0 48px;
+	padding: 4px;
+}
+
+#sidebar .side-menu li.active {
+	background: var(--grey);
+	position: relative;
+	justify-content: space-between;
+
+}
+
+#sidebar .side-menu li.active::before {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	top: -40px;
+	right: 0;
+	box-shadow: 20px 20px 0 var(--grey);
+	z-index: -1;
+}
+
+#sidebar .side-menu li.active::after {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	bottom: -40px;
+	right: 0;
+	box-shadow: 20px -20px 0 var(--grey);
+	z-index: -1;
+}
+
+#sidebar .side-menu li a {
+	width: 100%;
+	height: 100%;
+	background: var(--light);
+	display: flex;
+	align-items: center;
+	border-radius: 48px;
+	font-size: 13.5px;
+	color: var(--dark);
+	white-space: nowrap;
+	overflow-x: hidden;
+
+}
+
+#sidebar .side-menu.top li.active a {
+	color: var(--green);
+}
+
+#sidebar.hide .side-menu li a {
+	width: calc(48px - (4px * 2));
+	transition: width .3s ease;
+}
+
+#sidebar .side-menu.top li a:hover {
+	color: var(--blue);
+}
+
+#sidebar .side-menu li a .bx {
+	min-width: calc(60px - ((4px + 6px) * 2));
+	display: flex;
+	justify-content: center;
+}
+
+
+
+#sidebar .side-menu li.active::before {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	top: -40px;
+	right: 0;
+	box-shadow: 20px 20px 0 var(--grey);
+	z-index: -1;
+}
+
+
+#profile-popup {
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 60px;
+	/* Adjust the distance from the profile icon */
+	background-color: var(--light);
+	border: 1px solid var(--green);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 300px;
+	/* Adjust the width as needed */
+	max-height: 400px;
+	/* Adjust the maximum height as needed */
+	border-radius: 10px;
+	/* Adjust the radius as needed */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	/* Add a shadow for a better visual effect */
+	margin-right: 25px;
+	/* Adjust the margin-right value as needed */
+	overflow-y: auto;
+	z-index: 2;
+	/* Ensure the profile pop-up appears above the message pop-up */
+}
+
+.popup-content {
+	padding: 16px;
+}
+
+.profile-header {
+	display: flex;
+	align-items: center;
+	margin-bottom: 16px;
+}
+
+.profile-picture {
+	width: 50px;
+	/* Adjust the width as needed */
+	height: 50px;
+	/* Adjust the height as needed */
+	border-radius: 50%;
+	/* Make the image circular */
+	margin-right: 15px;
+}
+
+.profile-name {
+	font-size: 16px;
+	/* Adjust the font size as needed */
+	font-weight: bold;
+	color: var(--dark);
+}
+
+hr {
+	margin: 15px 0;
+	border: 0.5px solid var(--green);
+}
+
+.profile-menu {
+	display: flex;
+	flex-direction: column;
+
+}
+
+.profile-item {
+	padding: 10px 0;
+	cursor: pointer;
+	padding: 10px 0;
+	cursor: pointer;
+	color: var(--dark);
+	/* Default font color */
+	transition: color 0.3s;
+	/* Add transition for font color change */
+}
+
+.profile-item:hover {
+
+	color: var(--blue);
+	/* Change font color on hover */
+}
+
+.profile-item.clicked {
+	color: var(--green);
+	/* Change font color when clicked */
+}
+
+.profile-header img {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	margin-right: 12px;
+}
+
+.user-info p {
+	margin: 0;
+}
+
+
+
+.profile-menu a {
+	display: block;
+	color: var(--dark);
+	text-decoration: none;
+	padding: 8px 0;
+	transition: background-color 0.3s;
+	border-radius: 10px;
+	overflow: hidden;
+	transition: width 0.3s, padding-left 0.3s;
+	padding-left: 0;
+
+}
+
+.profile-menu a:hover {
+	background-color: rgba(128, 128, 128, 0.248);
+	border-radius: 15px;
+	padding-left: 10px;
+}
+
+.profile-menu i {
+	margin-right: 8px;
+
+}
+
+.popup-header {
+	background-color: var(--green);
+	/* Change color as needed */
+	color: var(--light);
+	padding: 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.popup-title {
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+#clock {
+	font-size: 24px;
+	height: 36px;
+	margin-left: 18px;
+	position: center;
+	width: 150px;
+	padding: 0 16px;
+	left: 50px;
+	border-radius: 36px;
+	background: none;
+	color: var(--dark);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+
+
+/* CONTENT */
+#content {
+	position: relative;
+	width: calc(100% - 200px);
+	left: 200px;
+	transition: .3s ease;
+}
+
+#sidebar.hide~#content {
+	width: calc(100% - 60px);
+	left: 60px;
+}
+
+
+
+
+/* NAVBAR */
+nav {
+	position: relative;
+}
+
+#content nav {
+	height: 56px;
+	background: var(--light);
+	padding: 0 24px;
+	display: flex;
+	align-items: center;
+	grid-gap: 24px;
+	font-family: var(--lato);
+	position: sticky;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+
+}
+
+#content nav::before {
+	content: '';
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	bottom: -40px;
+	left: 0;
+	border-radius: 50%;
+	box-shadow: -20px -20px 0 var(--light);
+}
+
+#content nav a {
+	color: var(--dark);
+}
+
+#content nav .bx.bx-menu {
+	cursor: pointer;
+	color: var(--dark);
+}
+
+#content nav .nav-link {
+	font-size: 16px;
+	transition: .3s ease;
+}
+
+#content nav .nav-link:hover {
+	color: var(--blue);
+}
+
+#content nav form {
+	max-width: 400px;
+	width: 100%;
+	margin-right: auto;
+}
+
+#content nav form .form-input {
+	display: flex;
+	align-items: center;
+	height: 36px;
+
+}
+
+#content nav form .form-input input {
+	flex-grow: 1;
+	padding: 0 16px;
+	height: 100%;
+	border: none;
+	background: var(--grey);
+	border-radius: 36px 0 0 36px;
+	outline: none;
+	width: 100%;
+	color: var(--dark);
+
+	/*searchbar*/
+}
+
+#content nav form .form-input button {
+	width: 36px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: var(--green);
+	color: var(--light);
+	font-size: 18px;
+	border: none;
+	outline: none;
+	border-radius: 0 36px 36px 0;
+	cursor: pointer;
+}
+
+nav {
+	position: relative;
+}
+
+/*popup menu*/
+#content nav .profile img {
+	width: 36px;
+	height: 36px;
+	object-fit: cover;
+	border-radius: 50%;
+
+}
+
+#content nav .prof {
+	position: relative;
+}
+
+#content nav .profile-menu {
+	position: absolute;
+	background: var(--light);
+	width: 250px;
+	right: 25px;
+	top: 20;
+	padding: 13px;
+	opacity: 0;
+	pointer-events: none;
+	border-radius: 6px;
+	box-shadow: 0 5px 10px var(--dark);
+	transition: 0.2s ease;
+	margin-left: 8px;
+	font-size: 19;
+	list-style: none;
+
+
+}
+
+#content nav .prof:hover .profile-menu {
+	opacity: 1;
+	pointer-events: auto;
+}
+
+/*switch*/
+
+.switch-mode {
+	display: block;
+	width: 50px;
+	height: 25px;
+	border-radius: 25px;
+	background: var(--grey);
+	cursor: pointer;
+	position: relative;
+}
+
+.switch-mode::before {
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 2px;
+	bottom: 2px;
+	width: calc(25px - 4px);
+	background: var(--green);
+	border-radius: 50%;
+	transition: all .3s ease;
+}
+
+#switch-mode:checked+.switch-mode::before {
+	left: calc(100% - (25px - 4px) - 2px);
+}
+
+/* Add this style to your CSS */
+.show {
+	display: block;
+}
+
+
+#see-more-button {
+	float: right;
+	background-color: var(--blue);
+	/* Set the background color */
+	color: var(--light);
+	/* Set the text color */
+	padding: 10px 15px;
+	/* Add padding for a comfortable size */
+	border: none;
+	/* Remove border for a clean look */
+	border-radius: 5px;
+	/* Add border-radius for rounded corners */
+	cursor: pointer;
+	/* Change cursor on hover for better usability */
+	transition: background-color 0.3s;
+	/* Add a smooth transition effect */
+}
+
+#see-more-button:hover {
+	background-color: var(--green);
+	/* Change background color on hover */
+}
+
+#see-more-button i {
+	margin-left: 5px;
+	/* Add space between text and icon */
+}
+
+
+
+/* MAIN */
+#content main {
+	width: 100%;
+	padding: 10px 24px;
+	font-family: var(--poppins);
+	max-height: calc(100vh - 56px);
+	overflow-y: auto;
+}
+
+
+#content main .head-title {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	grid-gap: 16px;
+	flex-wrap: wrap;
+}
+
+#content main .head-title .left h1 {
+	font-size: 36px;
+	font-weight: 600;
+	margin-bottom: 10px;
+	color: var(--dark);
+}
+
+#content main .head-title .left .breadcrumb {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+}
+
+#content main .head-title .left .breadcrumb li {
+	color: var(--dark);
+}
+
+#content main .head-title .left .breadcrumb li a {
+	color: var(--dark-grey);
+	pointer-events: none;
+}
+
+#content main .head-title .left .breadcrumb li a.active {
+	color: var(--blue);
+	pointer-events: unset;
+
+
+}
+
+#content main .head-title .btn-download {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--blue);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+	transition: background 0.3s ease;
+	/* Add transition for a smooth color change */
+}
+
+#content main .head-title .btn-download:hover {
+	background: var(--green)
+}
+
+
+#clock {
+	font-size: 24px;
+	height: 36px;
+	margin-left: 18px;
+	position: center;
+	width: 150px;
+	padding: 0 16px;
+	left: 50px;
+	border-radius: 36px;
+	background: none;
+	color: var(--dark);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+
+
+#content main .box-info {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	grid-gap: 15px;
+	margin-top: 36px;
+}
+
+#content main .box-info li {
+	padding: 15px;
+	background: var(--light);
+	border-radius: 15px;
+	display: flex;
+	align-items: center;
+	grid-gap: 18px;
+}
+
+#content main .box-info li .bx {
+	width: 70px;
+	height: 70px;
+	border-radius: 10px;
+	font-size: 36px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#content main .box-info li:nth-child(1) .bx {
+	background: var(--light-yellow);
+	color: var(--yellow);
+
+}
+
+#content main .box-info li:nth-child(1) .bx:hover {
+	background: var(--dark-green);
+	opacity: .2;
+}
+
+#content main .box-info li:nth-child(2) .bx {
+	background: var(--light-green);
+	color: var(--green);
+}
+
+
+#content main .box-info li:nth-child(3) .bx {
+	background: var(--light-blue);
+	color: var(--blue);
+}
+
+
+
+
+#content main .box-info li:nth-child(4) .bx {
+	background: var(--light-red);
+	color: var(--red);
+}
+
+
+
+
+
+#content main .box-info li .text h3 {
+	font-size: 20px;
+	font-weight: 600;
+	color: var(--dark);
+}
+
+#content main .box-info li .text p {
+	color: var(--dark);
+	font-size: 18px;
+}
+
+
+
+
+
+#content main .table-data {
+	flex-grow: 1;
+	flex-basis: 300px;
+	/* Updated value */
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 24px;
+	margin-top: 24px;
+	width: 100%;
+	color: var(--dark);
+}
+
+#content main .table-data>div {
+	border-radius: 20px;
+	background: var(--light);
+	padding: 24px;
+	overflow-x: auto;
+}
+
+#content main .table-data .head {
+	display: flex;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 24px;
+}
+
+#content main .table-data .head h3 {
+	margin-right: auto;
+	font-size: 24px;
+	font-weight: 600;
+}
+
+#content main .table-data .head .bx {
+	cursor: pointer;
+}
+
+#content main .table-data .order {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+
+#content main .table-data .order table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#content main .table-data .order table th {
+	padding-bottom: 12px;
+	font-size: 13px;
+	text-align: left;
+	border-bottom: 1px solid var(--grey);
+}
+
+#content main .table-data .order table td {
+	padding: 16px 0;
+}
+
+#content main .table-data .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+
+#content main .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+
+#content main .table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+
+#content main .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+
+#content main .table-data .order table tr td .status.admitted {
+	background: var(--blue);
+}
+
+#content main .table-data .order table tr td .status.rejected {
+	background: var(--red);
+}
+
+#content main .table-data .order table tr td .status.pending {
+	background: var(--yellow);
+}
+
+#content main .table-data .order table tr td .button {
+	border: none;
+	border-radius: 10px;
+	color: var(--light);
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 1px 1px;
+	cursor: pointer;
+	transition-duration: 0.4s;
+
+}
+
+#content main .table-data .order table tr td .button.edit {
+	background-color: var(--blue);
+	color: var(--light);
+}
+
+#content main .table-data .order table tr td .button.edit:hover {
+	background-color: var(--lighter-grey);
+	color: var(--gray);
+}
+
+#content main .table-data .order table tr td .button.delete {
+	background-color: var(--red);
+	color: var(--light);
+}
+
+#content main .table-data .order table tr td .button.delete:hover {
+	background-color: var(--lighter-grey);
+	color: var(--gray);
+}
+
+#content main .table-data .todo {
+	flex-grow: 1;
+	flex-basis: 500px;
+}
+
+#content main .table-data .todo .todo-list {
+	width: 100%;
+}
+
+#content main .table-data .todo .todo-list li {
+	width: 100%;
+	margin-bottom: 16px;
+	background: var(--grey);
+	border-radius: 10px;
+	padding: 14px 20px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#content main .table-data .todo .todo-list li .bx {
+	cursor: pointer;
+}
+
+#content main .table-data .todo .todo-list li.completed {
+	border-left: 10px solid var(--blue);
+}
+
+#content main .table-data .todo .todo-list li.not-completed {
+	border-left: 10px solid var(--orange);
+}
+
+#content main .table-data .todo .todo-list li:last-child {
+	margin-bottom: 0;
+}
+
+
+#result-id-picture {
+	width: 150px;
+	height: 150px;
+	border: 2px solid #000;
+	display: flex;
+	justify-content: space-between;
+	border-radius: 5px;
+
+
+}
+
+.Picture {
+	padding-left: 25px;
+	padding-bottom: 10px;
+}
+
+
+.profile-details {
+	flex: 1;
+}
+
+/* Style for the signature */
+#result-signature {
+	margin: 15px;
+	text-align: right;
+}
+
+#date-of-application {
+	width: 120px;
+	float: right;
+	padding-left:-15px;
+}
+
+.name-sign {
+	margin-right: 15px;
+	text-align: right;
+
+
+}
+
+#result-signature-slip {
+
+	border: 1px solid #000;
+	height: 100px;
+	width: 300px;
+	margin-top: 10px;
+}
+
+.pi {
+	text-align: center;
+	margin: 0 auto;
+}
+
+.order-profile {
+	display: flex;
+	justify-content: center;
+	/* Center horizontally */
+	align-items: center;
+	/* Center vertically */
+
+}
+
+.profile-result {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	max-width: 90%;
+	background-color: rgb(243, 243, 243);
+	color: black;
+	font-size: 16px;
+	padding-top: 20px;
+	border: 1px solid #ccc;
+	border-radius: 10px;
+
+}
+
+.profile-info-twos {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 15px;
+	margin-left: 20px;
+}
+
+.profile-info-one {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 15px;
+	margin-left: 20px;
+}
+
+.profile-info-content {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 15px;
+	margin-left: 20px;
+}
+
+
+.column {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 5px;
+
+}
+
+.content-header {
+	margin: 15px 8px 0;
+
+}
+
+.StudentResult-Content {
+	display: flex;
+	align-items: center;
+	border: 2px solid #000;
+	/* Add border to the result info div */
+	padding: 5px;
+	border-radius: 5px;
+}
+
+.student-picture {
+	width: 30%;
+	/* Adjust the width as needed */
+	margin-right: 20px;
+	/* Add some space between the picture and the information */
+}
+
+.student-picture img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+.result-info {
+	width: 70%;
+	/* Adjust the width as needed */
+	flex: 3;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.result-style {
+	margin-bottom: 10px;
+	/* Add some space between each result section */
+}
+
+/* Additional styling as per your design requirements */
+.applicant-name {
+	
+	font-size: 1.2em;
+	/* Example font size */
+	color: var(--dark);
+	/* Example text color */
+}
+
+.applicant-number {
+	
+	color: #777;
+	/* Lighter color for contrast */
+}
+
+.program-info {
+	color: #009688;
+	/* Green color for emphasis */
+}
+
+.status-pending {
+	font-weight: bold;
+	color: #FFA500;
+	/* Orange color for pending status */
+}
+
+/* Center the announcement text */
+.result-status-dets {
+	text-align: center;
+	/* Align text to the center */
+	font-size: 1.2em;
+	/* Example font size */
+	font-weight: bold;
+	/* Example font weight */
+	color: #FF0000;
+	/* Red color for emphasis */
+	padding: 10px;
+	/* Add some padding around the text */
+	border: 2px solid #FF0000;
+	/* Add a border */
+	border-radius: 5px;
+	/* Add border radius for a softer look */
+	margin: 20px 0;
+	/* Add margin top and bottom */
+}
+
+/* Add a margin-left to the dropdown elements */
+.dropdown {
+	display: none;
+	margin-left: 30px;
+	/* Adjust the value as needed */
+}
+
+/* Style for the dropdown links */
+.dropdown a {
+	padding: 10px;
+	text-decoration: none;
+	display: block;
+	background-color: #f9f9f9;
+	color: #666;
+	/* Change the color to a lighter black (e.g., #666) */
+}
+
+/* Style for the dropdown links on hover */
+.dropdown a:hover {
+	background-color: #ccc;
+}
+
+/* Add this class for a soft transition effect */
+.faq-header {
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+	padding: 1em 0;
+}
+
+.faq-container {
+	max-width: 800px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 8px;
+}
+
+h2.faq-question {
+	color: #333;
+}
+
+.faq-question {
+	cursor: pointer;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	background-color: #f9f9f9;
+}
+
+.faq-answer {
+	display: none;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background-color: #fff;
+}
+
+
+
+@media screen and (max-width: 576px) {
+	#content nav form .form-input input {
+		display: none;
+	}
+
+	#content nav form .form-input button {
+		width: auto;
+		height: auto;
+		background: transparent;
+		border-radius: none;
+		color: var(--dark);
+	}
+
+	#content nav form.show .form-input input {
+		display: block;
+		width: 100%;
+	}
+
+	#content nav form.show .form-input button {
+		width: 36px;
+		height: 100%;
+		border-radius: 0 36px 36px 0;
+		color: var(--light);
+		background: var(--red);
+	}
+
+	#content nav form.show~.notification,
+	#content nav form.show~.profile {
+		display: none;
+	}
+
+	#content main .box-info {
+		grid-template-columns: 1fr;
+	}
+
+	#content main .table-data .head {
+		min-width: 420px;
+	}
+
+	#content main .table-data .order table {
+		min-width: 420px;
+	}
+
+	#content main .table-data .todo .todo-list {
+		min-width: 420px;
+	}
+
+	#sidebar .brand .adminprofile {
+		height: 31px;
+		width: 32px;
+		align-items: center;
+		margin: 15px;
+		margin-inline-end: 23px;
+		display: flex;
+		justify-content: center;
+	}
+
+}
+
+
+@media screen and (max-width: 768px) {
+	#sidebar {
+		width: 200px;
+	}
+
+	#content {
+		width: calc(100% - 60px);
+		left: 200px;
+	}
+
+	#content nav .nav-link {
+		display: none;
+	}
+}

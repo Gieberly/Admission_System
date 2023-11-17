@@ -1,0 +1,161 @@
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Arial', sans-serif;
+      
+         background-size: cover;
+        background-position: center;
+        color: #fff; /* Set text color to white or a suitable contrast */
+    }
+    body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
+        z-index: -1; /* Place the overlay behind the content */
+    }
+    header {
+        background: rgba(14, 14, 14); /* Add a semi-transparent black background to the header for better readability */
+        padding: 10px; /* Adjust the padding to reduce the height */
+        text-align: center;
+    }
+    .logo img {
+        width: 50px; /* Adjust the size of the logo as needed */
+        height: auto;
+        margin-right: 10px; /* Add some spacing between the logo and the university name */
+    }
+    .logo img {
+        width: 50px; /* Adjust the size of the logo as needed */
+        height: auto;
+        margin-right: 10px; /* Add some spacing between the logo and the university name */
+    }
+
+
+.scname {
+    margin: 0;
+    font-size: 1.5rem; /* Adjust the font size as needed */
+}
+
+.content {
+    padding: 50px;
+    text-align: center;
+}
+
+/* Example style for the form */
+
+.content .par{
+    padding-left: 20px;
+    padding-bottom: 25px;
+    font-family: Arial;
+    letter-spacing: 1.2px;
+    line-height: 30px;
+}
+
+.content h1{
+    font-family: 'Times New Roman';
+    font-size: 50px;
+    color: #ffffff;
+    padding-left: 20px;
+    margin-top: 9%;
+    letter-spacing: 2px;
+}
+
+.content .cn{
+    width: 140px;
+    height: 40px;
+    background: #23f810;
+    border: none;
+    margin-bottom: 10px;
+    margin-left: 20px;
+    margin-top: 15px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: .4s ease;
+    
+}
+
+.content .cn a{
+    text-decoration: none;
+    color: #000;
+    transition: .3s ease;
+    margin: 0 auto;
+}
+
+.cn:hover{
+    background-color: #fff;
+}
+
+.content span{
+    color: #23f810;
+    font-size: 65px
+}
+.side {
+  float: left;
+  text-align: left;
+}
+.form {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 300px; 
+    float: right;
+    width: 100%;
+    max-width: 300px; 
+    margin: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.5); 
+}
+
+.login-container {
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+
+
+.btnn {
+    background-color: #15ff00;
+    border: none;
+    color: rgb(255, 255, 255);
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+}
+.btnn a {
+    color: #ffffff; /* Font color (white in this example) */
+    text-decoration: none;
+    font-weight: bold; /* Make the font bold */
+}
+.link {
+    text-align: left;
+    margin-bottom: 15px;
+}
+
+.liw {
+    text-align: left;
+    margin-bottom: 5px;
+}
