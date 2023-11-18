@@ -1241,3 +1241,20 @@ h2.faq-question {
 		display: none;
 	}
 }
+
+ /* Your styles go here */
+        .social-icons-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .social-icons-container a {
+            margin-right: 10px;
+            text-decoration: none;
+            color:var(--green);
+            font-size: 24px;
+        }
+		.social-icons-container a:hover {
+            color: #000000; /* Change to the desired hover color */
+        }
+	

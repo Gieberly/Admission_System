@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
-    $status = ($userType == 'student') ? 'approved' : 'pending';
+    $status = ($userType == 'staff') ? 'approved' : 'pending';
 
     // Check if the email already exists
     $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
@@ -25,8 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit(); // Stop execution
     }
 
-    // Proceed with user registration if the email is unique
-    $_SESSION['registered_email'] = $email;
+
 
     $stmt = $conn->prepare("INSERT INTO users (name, email, password, userType, status) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $name, $email, $hashedPassword, $userType, $status);
@@ -52,13 +51,13 @@ $conn->close();
     <title>Admin and Faculty login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <link rel="stylesheet" href="../frontend/assets/css/login.css">
+    <link rel="stylesheet" href="assets/css/login.css">
 </head>
 
 <body>
     <header>
         <div class="icon">
-            <a href="#" class="logo"><img src="../frontend/assets/images/BSU Logo1.png" alt="BSU Logo"></a>
+            <a href="#" class="logo"><img src="assets/images/BSU Logo1.png" alt="BSU Logo"></a>
             <h2 class="scname">Benguet State University</h2>
         </div>
     </header>
@@ -66,7 +65,7 @@ $conn->close();
     <style>
         body {
 
-            background-image: url('../frontend/assets/images/banner.jpg');
+            background-image: url('assets/images/banner.jpg');
         }
     </style>
 

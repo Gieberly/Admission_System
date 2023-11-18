@@ -3,12 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start(); // Start the session
 
-// Check if the registered_email session variable is set
-if (!isset($_SESSION['registered_email'])) {
-    // Redirect to register.php or handle the case where the user is not registered
-    header("Location: register.php");
-    exit();
-}
+  
 include("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -125,8 +120,8 @@ $conn->close();
   <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
-  <link rel="icon" href="../frontend/assets/images/BSU Logo1.png" type="image/x-icon">
-  <link rel="stylesheet" href="..\frontend\assets\css\admissionform.css">
+  <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
+  <link rel="stylesheet" href="assets\css\admissionform.css">
   <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
   <script>
         // JavaScript function to check if the entered email matches the registered email

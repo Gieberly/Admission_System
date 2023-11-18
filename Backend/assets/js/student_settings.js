@@ -21,3 +21,7 @@ $(document).ready(function() {
         tabs(index);
     });
 });
+document.getElementById('settings').addEventListener('click', function() {
+    var changepassSection = document.getElementById('settings-dropdown');
+    changepassSection.style.display = (changepassSection.style.display === 'none') ? 'block' : 'none';
+});

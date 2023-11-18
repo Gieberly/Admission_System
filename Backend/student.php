@@ -3,34 +3,30 @@ include("config.php");
 
 session_start();
 
-// Check if the session variable is set
-if (!isset($_SESSION['registered_email'])) {
-    header("Location: register.php");
+// Check if the user is a student member, otherwise redirect them
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'student') {
+    header("Location: loginpage.php");
     exit();
 }
 
-// Retrieve data from the database based on the registered email
-$registered_email = $_SESSION['registered_email'];
+// Retrieve the student's information from the users table
+$studentId = $_SESSION['user_id'];
+$stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmtUser->bind_param("i", $studentId);
+$stmtUser->execute();
+$resultUser = $stmtUser->get_result();
+$studentData = $resultUser->fetch_assoc();
 
-$stmt = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
-$stmt->bind_param("s", $registered_email);
-$stmt->execute();
-$result = $stmt->get_result();
+// Retrieve the admission data based on the user's email
+$email = $studentData['email'];
+$stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
+$stmtAdmission->bind_param("s", $email);
+$stmtAdmission->execute();
+$resultAdmission = $stmtAdmission->get_result();
+$admissionData = $resultAdmission->fetch_assoc();
 
-// Check if the data exists
-if ($result->num_rows > 0) {
-    // Fetch the data
-    $row = $result->fetch_assoc();
-} else {
-    echo "No data found for the given email.";
-    exit();
-}
-
-// Close the statement
-$stmt->close();
-$conn->close();
+// Display the student's and admission data
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -357,9 +353,9 @@ $conn->close();
 
                                         <div class="Picture">
                                             <h2 class="pi">Personal Information</h2>
-                                            <div id="date-of-application"><?php echo $row['application_date']; ?></div>
+                                            <div id="date-of-application"><?php echo $admissionData['application_date']; ?></div>
                                             <br>
-                                            <div id="result-id-picture"><img src="<?php echo $row['id_picture']; ?>" alt="ID Picture"></div>
+                                            <div id="result-id-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture"></div>
 
                                         </div>
 
@@ -368,20 +364,20 @@ $conn->close();
                                             <div class="column">
                                                 <p class="fnp">
                                                 <strong>Full Name</strong><br>
-                                                    <span id="result-Full-Name"><?php echo $row['applicant_name']; ?></span>
+                                                    <span id="result-Full-Name"><?php echo $admissionData['applicant_name']; ?></span>
                                                     
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p class="genderp">
                                                     <strong>Gender at birth:</strong><br>
-                                                    <span id="result-Gender"><?php echo $row['gender']; ?></span>
+                                                    <span id="result-Gender"><?php echo $admissionData['gender']; ?></span>
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p class="bdate">
                                                     <strong>Birthdate:</strong><br>
-                                                    <span id="result-Birthdate"><?php echo $row['birthdate']; ?></span>
+                                                    <span id="result-Birthdate"><?php echo $admissionData['birthdate']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -389,32 +385,32 @@ $conn->close();
                                             <div class="column">
                                                 <p>
                                                     <strong>Birthplace:</strong><br>
-                                                    <span id="result-City"><?php echo $row['birthplace']; ?></span>,
+                                                    <span id="result-City"><?php echo $admissionData['birthplace']; ?></span>,
                                                </p>
                                             </div>
 
                                             <div class="column">
                                                 <p>
                                                     <strong>Age:</strong><br>
-                                                    <span id="result-Age"><?php echo $row['age']; ?></span>
+                                                    <span id="result-Age"><?php echo $admissionData['age']; ?></span>
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p>
                                                     <strong>Civil Status:</strong><br>
-                                                    <span id="result-Civil"> <?php echo $row['civil_status']; ?></span>
+                                                    <span id="result-Civil"> <?php echo $admissionData['civil_status']; ?></span>
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p>
                                                     <strong>Citizenship:</strong><br>
-                                                    <span id="result-Citizenship"><?php echo $row['citizenship']; ?></span>
+                                                    <span id="result-Citizenship"><?php echo $admissionData['citizenship']; ?></span>
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p>
                                                     <strong>Nationality:</strong><br>
-                                                    <span id="result-Nationality"><?php echo $row['nationality']; ?></span>
+                                                    <span id="result-Nationality"><?php echo $admissionData['nationality']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -426,7 +422,7 @@ $conn->close();
 
                                                 <p class="ContactInfo"> <strong>Address:</strong><br>
 
-                                                <?php echo $row['permanent_address']; ?>
+                                                <?php echo $admissionData['permanent_address']; ?>
                                                 </p>
 
                                             </div>
@@ -434,7 +430,7 @@ $conn->close();
                                             <div class="column">
                                                 <p>
                                                     <strong>Zip Code:</strong><br>
-                                                    <span id="result-ZipCode"> <?php echo $row['zip_code']; ?></span>
+                                                    <span id="result-ZipCode"> <?php echo $admissionData['zip_code']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -447,18 +443,18 @@ $conn->close();
                                             <div class="column">
                                                 <p>
                                                     <strong>Telephone/Mobile No.:</strong>
-                                                    <span id="result-Telephone"><?php echo $row['phone']; ?></span>
+                                                    <span id="result-Telephone"><?php echo $admissionData['phone']; ?></span>
                                                 </p>
 
 
                                                 <p>
                                                     <strong>Facebook Account Name:</strong>
-                                                    <span id="result-Facebook"><?php echo $row['facebook']; ?></span>
+                                                    <span id="result-Facebook"><?php echo $admissionData['facebook']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Email Address:</strong>
-                                                    <span id="result-Email"> <?php echo $row['email']; ?></span>
+                                                    <span id="result-Email"> <?php echo $admissionData['email']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -472,40 +468,40 @@ $conn->close();
 
                                                 <p>
                                                     <strong>Contact Person:</strong>
-                                                    <span id="result-ContactOne"><?php echo $row['contact_person_1']; ?></span>
+                                                    <span id="result-ContactOne"><?php echo $admissionData['contact_person_1']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Mobile Number:</strong>
-                                                    <span id="result-NumberOne"><?php echo $row['contact_person_1_mobile']; ?></span>
+                                                    <span id="result-NumberOne"><?php echo $admissionData['contact_person_1_mobile']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Relationship:</strong>
-                                                    <span id="result-RelationshipOne"><?php echo $row['relationship_1']; ?></span>
+                                                    <span id="result-RelationshipOne"><?php echo $admissionData['relationship_1']; ?></span>
                                                 </p>
                                             </div>
                                             <div class="column">
                                                 <p>
                                                     <strong>Contact Person:</strong>
-                                                    <span id="result-ContactTwo"> <?php echo $row['contact_person_2']; ?></span>
+                                                    <span id="result-ContactTwo"> <?php echo $admissionData['contact_person_2']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Mobile Number:</strong>
-                                                    <span id="result-NumberTwo"><?php echo $row['contact_person_2_mobile']; ?></span>
+                                                    <span id="result-NumberTwo"><?php echo $admissionData['contact_person_2_mobile']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Relationship:</strong>
-                                                    <span id="result-RelationshipTwo"><?php echo $row['relationship_2']; ?></span>
+                                                    <span id="result-RelationshipTwo"><?php echo $admissionData['relationship_2']; ?></span>
                                                 </p>
 
                                             </div>
                                             <div class="column">
                                                 <p class="content-header">
                                                     <strong>Academic Classification:</strong>
-                                                    <span id="result-classification"><?php echo $row['academic_classification']; ?></span>
+                                                    <span id="result-classification"><?php echo $admissionData['academic_classification']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -517,22 +513,22 @@ $conn->close();
                                             <div class="column">
                                                 <p>
                                                     <strong>Name and Address of High School/Senior High School:</strong>
-                                                    <span id="high_school_name_address"> <?php echo $row['high_school_name_address']; ?></span>
+                                                    <span id="high_school_name_address"> <?php echo $admissionData['high_school_name_address']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Name and Address of Division where ALS/PEPT was
                                                         taken:</strong>
-                                                    <span id="result-ALS"><?php echo $row['als_pept_name_address']; ?></span>
+                                                    <span id="result-ALS"><?php echo $admissionData['als_pept_name_address']; ?></span>
                                                 </p>
 
                                                 <p>
                                                     <strong>Name and Address of College/University:</strong>
-                                                    <span id="college_name_address"> <?php echo $row['college_name_address']; ?></span>
+                                                    <span id="college_name_address"> <?php echo $admissionData['college_name_address']; ?></span>
                                                 </p>
                                                 <p>
                                                     <strong>Learner's Reference Number:</strong>
-                                                    <span id="result-LRN"><?php echo $row['lrn']; ?></span>
+                                                    <span id="result-LRN"><?php echo $admissionData['lrn']; ?></span>
                                                 </p>
                                             </div>
                                         </div>
@@ -542,14 +538,14 @@ $conn->close();
                                             <div class="column">
                                                 <p>
                                                     <strong>Degree:</strong>
-                                                    <span id="result-Degree"><?php echo $row['degree_applied']; ?></span>
+                                                    <span id="result-Degree"><?php echo $admissionData['degree_applied']; ?></span>
                                                 </p>
                                             </div>
              
                                             <div class="column">
                                                 <p>
                                                     <strong>Nature of degree:</strong>
-                                                    <span id="result-natureDegree"><?php echo $row['nature_of_degree']; ?></span>
+                                                    <span id="result-natureDegree"><?php echo $admissionData['nature_of_degree']; ?></span>
                                                 </p>
 
                                             </div>
@@ -585,21 +581,21 @@ $conn->close();
                         <div class="order">
 
                             <div class="StudentResult-Content">
-                                <div id="StudentResult-picture" class="student-picture"><img src="<?php echo $row['id_picture']; ?>" alt="ID Picture">
+                                <div id="StudentResult-picture" class="student-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
                                 </div>
 
                                 <div class="result-info">
                                     <div class="result-style">
                                         <p class="result-p">
                                             <strong>Applicant Name:</strong>
-                                            <span id="result-ApplicantName" class="applicant-name"><?php echo $row['applicant_name']; ?></span>
+                                            <span id="result-ApplicantName" class="applicant-name"><?php echo $admissionData['applicant_name']; ?></span>
                                         </p>
                                     </div>
 
                                     <div class="result-style">
                                         <p class="result-p">
                                             <strong>Applicant Number:</strong>
-                                            <span id="result-ApplicantNumber" class="applicant-number"><?php echo $row['applicant_number']; ?> </span>
+                                            <span id="result-ApplicantNumber" class="applicant-number"><?php echo $admissionData['applicant_number']; ?> </span>
                                         </p>
                                     </div>
 
@@ -607,7 +603,7 @@ $conn->close();
                                     <div class="result-style">
                                         <p class="result-p">
                                             <strong>Program:</strong>
-                                            <span id="result-Program" class="program-info"><?php echo $row['degree_applied']; ?></span>
+                                            <span id="result-Program" class="program-info"><?php echo $admissionData['degree_applied']; ?></span>
                                         </p>
                                     </div>
 
@@ -647,7 +643,7 @@ $conn->close();
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"><?php echo $row['applicant_name']; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $studentData['name']; ?></p>
             </div>
            
 
@@ -663,30 +659,41 @@ $conn->close();
 
 
                 </div>
-                <a href="#" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>              
+                <a href="#" id="settings" class="profile-item" onclick="toggleSettingContent()"><i class='bx bx-cog'></i> Settings</a>              
+<div id="setting-content"class style="display: none;">
+<div class="settings-content">
+<a href="StudentProfileEdit.php">Edit Info</a>
+</div>
+</div>
+          
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-                    <div class="dropdown" id="help-dropdown">
-                        <!-- Content for Help and Support dropdown -->
-                            <!-- Trigger for the FAQ pop-up -->
-                            <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ (Frequently Asked Questions)</a>
-                            <!-- Trigger for the Contact Us pop-up -->
-                            <!-- <a href="#">Connect With Us</a> -->
-                            <div class="contact-info">
-                                <h3>Contact Us</h3>
-                                <p>Reach us on social media:</p>
-                                <ul class="social-icons">
-                                  <li><a href="https://web.facebook.com/people/Admissions-Benguet-State-University/100067151912833/"><i class="fab fa-facebook-square"></i>Facebook</a></li>                          
-                                  <li><a href="mailto.registrar.admissions@bsu.edu.ph"><i class="fas fa-envelope-square"></i> Send Email</a></li>
-                                  <li><a href="bsu.edu.ph"><i class="fas fa-globe"></i> Visit BSU website</a></li>
-                                  <!-- Add more social media icons and links as needed -->
-                                </ul>
-                              </div>
-                    </div>
-                        <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+<div class="dropdown" id="help-dropdown">
+                   <!-- Content for Help and Support dropdown -->
+                  <!-- Trigger for the FAQ pop-up -->
+<a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ (Frequently Asked Questions)</a>
+<a href="#" onclick="toggleDevonContent()">Connect With us</a>
+<div id="devon-content"class style="display: none;">
+<div class="social-icons-container">
+    <!-- Facebook -->
+    <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
 
-               
+    <!-- Email -->
+    <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
+
+    <!-- Twitter -->
+    <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
+
+    <!-- YouTube -->
+    <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+</div>
 
             </div>
+           </div>
+            <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+
         </div>
 
 

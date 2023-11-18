@@ -390,3 +390,24 @@ function confirmLogout() {
         alert("Logout canceled");
     }
 }
+function toggleDevonContent() {
+    var devonContent = document.getElementById("devon-content");
+
+    // Toggle the display property
+    if (devonContent.style.display === "block" || devonContent.style.display === "") {
+        devonContent.style.display = "none";
+    } else {
+        devonContent.style.display = "block";
+    }
+}
+function toggleSettingContent() {
+    var settingsContent = document.getElementById("setting-content");
+
+    // Toggle the display property
+    if (settingsContent.style.display === "block" || settingsContent.style.display === "") {
+        settingsContent.style.display = "none";
+    } else {
+        settingsContent.style.display = "block";
+    }
+}
+
