@@ -1,3 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BSU OUR Admission Unit Personnel</title>
+    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css//personnel.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <section id="sidebar">
+        <a class="brand">
+            <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
+            <span class="text">Personnel</span>
+        </a>
+
+        <ul class="side-menu top">
+            <li class="active">
+                <a href="#" id="dashboard-link">
+                    <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="#" id="master-list-link">
+                    <i class='bx bxs-user-pin'></i>
+                    <span class="text">Master List</span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="#" id="student-result-link">
+                    <i class='bx bxs-window-alt'></i>
+                    <span class="text">Student Result</span>
+                </a>
+            </li>
+
+            <li class="">
+                <a href="#" id="announcements-link">
+                    <i class='bx bxs-book-content'></i>
+                    <span class="text">Announcements</span>
+                </a>
+            </li>
+        </ul>
+    </section>
+    <section id="content">
+        <!-- NAVBAR -->
+        <nav>
+            <i class='bx bx-menu'></i>
+            <a>Categories</a>
+            <form id="search-form">
+                <div class="form-input" style="display: none;">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
+            <div id="clock">8:10:45</div>
+           
+            <a href="#" class="profile" id="profile-button">
+                <img src="assets/images/human icon.png" alt="User Profile">
+            </a>
+
+        </nav>
+        <!-- NAVBAR -->
+
+        <!-- MAIN -->
+    </section>
+
+
+    <script>
 const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
 allSideMenu.forEach(item=> {
@@ -11,7 +90,7 @@ allSideMenu.forEach(item=> {
 	})
 });
 
-
+ 
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
@@ -20,7 +99,7 @@ const sidebar = document.getElementById('sidebar');
 menuBar.addEventListener('click', function () {
 	sidebar.classList.toggle('hide');
 })
-  
+
 
 
 
@@ -189,13 +268,14 @@ document.addEventListener('DOMContentLoaded', function () {
     const MasterListContent = document.getElementById('master-list-content');
     const StudentResultLink = document.getElementById('student-result-link'); 
     const StudentResultContent = document.getElementById('student-result-content');
-  
+    const AnnouncementsLink = document.getElementById('announcements-link'); 
+    const AnnouncementsContent = document.getElementById('announcements-content'); 
     
     // Initially hide the content divs by default
     dashboardContent.style.display = 'block';
     MasterListContent.style.display = 'none';
     StudentResultContent.style.display = 'none';
-  
+    AnnouncementsContent.style.display = 'none'; 
 
     // Add event listeners to the links
     dashboardLink.addEventListener('click', function (event) {
@@ -203,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dashboardContent.style.display = 'block';
         MasterListContent.style.display = 'none';
         StudentResultContent.style.display = 'none';
-     
+        AnnouncementsContent.style.display = 'none'; 
     });
 
     MasterListLink.addEventListener('click', function (event) {
@@ -211,7 +291,7 @@ document.addEventListener('DOMContentLoaded', function () {
         dashboardContent.style.display = 'none';
         MasterListContent.style.display = 'block';
         StudentResultContent.style.display = 'none';
-       
+        AnnouncementsContent.style.display = 'none'; 
     });
 
     StudentResultLink.addEventListener('click', function (event) {
@@ -219,10 +299,16 @@ document.addEventListener('DOMContentLoaded', function () {
         dashboardContent.style.display = 'none';
         MasterListContent.style.display = 'none';
         StudentResultContent.style.display = 'block';
-      
+        AnnouncementsContent.style.display = 'none'; 
     });
 
-  
+    AnnouncementsLink.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the default link behavior
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        AnnouncementsContent.style.display = 'block'; 
+    });
 });
 
 // tab like buttons for Student Result and Forms
@@ -245,14 +331,21 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById(tabId).classList.add('active');
     });
 });
-function confirmLogout() {
-    // Display a confirmation dialog
-    var confirmLogout = confirm("Are you sure you want to log out?");
-
-    // If the user clicks "OK," redirect to logout.php
-    if (confirmLogout) {
-        window.location.href = "../Backend/logout.php";
+//dropdown for nature of degree
+function updateSelection(answer) {
+    console.log(answer.value);
+    if(answer.value == 1){
+        document.getElementById('nonBoard').classList.remove('nonboardProgram');
+        document.getElementById('Board').classList.add('boardProgram');
     } else {
-        alert("Logout canceled");
-    }  
-}
+        document.getElementById('Board').classList.remove('boardProgram');
+        document.getElementById('nonBoard').classList.add('nonboardProgram');
+    }
+};
+
+
+
+
+    </script>
+</body>
+</html>

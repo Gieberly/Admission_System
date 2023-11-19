@@ -1104,7 +1104,6 @@ nav {
 	margin: 20px 0;
 	/* Add margin top and bottom */
 }
-
 /* Add a margin-left to the dropdown elements */
 .dropdown {
 	display: none;
@@ -1112,20 +1111,6 @@ nav {
 	/* Adjust the value as needed */
 }
 
-/* Style for the dropdown links */
-.dropdown a {
-	padding: 10px;
-	text-decoration: none;
-	display: block;
-	background-color: #f9f9f9;
-	color: #666;
-	/* Change the color to a lighter black (e.g., #666) */
-}
-
-/* Style for the dropdown links on hover */
-.dropdown a:hover {
-	background-color: #ccc;
-}
 
 /* Add this class for a soft transition effect */
 .faq-header {

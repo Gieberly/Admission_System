@@ -656,21 +656,17 @@ $admissionData = $resultAdmission->fetch_assoc();
                         <input type="checkbox" id="switch-mode" hidden>
                         <label for="switch-mode" class="switch-mode"></label></a>
 
-
+  
 
                 </div>
-                <a href="#" id="settings" class="profile-item" onclick="toggleSettingContent()"><i class='bx bx-cog'></i> Settings</a>              
-<div id="setting-content"class style="display: none;">
-<div class="settings-content">
-<a href="StudentProfileEdit.php">Edit Info</a>
-</div>
-</div>
+                <a href="StudentProfileEdit.php" id="settings" class="profile-item" ><i class='bx bx-cog'></i> Settings</a>              
+
           
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
 <div class="dropdown" id="help-dropdown">
                    <!-- Content for Help and Support dropdown -->
                   <!-- Trigger for the FAQ pop-up -->
-<a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ (Frequently Asked Questions)</a>
+<a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ </a>
 <a href="#" onclick="toggleDevonContent()">Connect With us</a>
 <div id="devon-content"class style="display: none;">
 <div class="social-icons-container">

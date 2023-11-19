@@ -8,6 +8,15 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
     exit();
 }
 
+// Fetch staff information from the database based on user ID
+$userID = $_SESSION['user_id'];
+$stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$stmt->bind_result($name, $email, $userType, $status);
+$stmt->fetch();
+$stmt->close();
+
 // Function to get all staff members
 function getAllStaff() {
     global $conn;
@@ -381,7 +390,7 @@ $studentFormData = getAllStudentFormData();
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture"
                     id="profile-picture">
-                <p class="profile-name">John Doe</p>
+                <p class="profile-name"><?php echo $name; ?></p>
             </div>
 
             <hr>
@@ -396,7 +405,7 @@ $studentFormData = getAllStudentFormData();
                 
 
                 </div>
-<a href="#" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>              
+<a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>              
 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
 
 <div class="dropdown" id="help-dropdown">

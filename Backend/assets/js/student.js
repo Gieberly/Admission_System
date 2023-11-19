@@ -173,7 +173,7 @@ $(document).ready(function () {
         $("#settings-dropdown").toggle();
         $("#help-dropdown").hide(); // Hide the other dropdown
         $("#profile-content").toggleClass("soft-transition");
-    });
+    }); 
 
     $("#help").click(function () {
         $("#help-dropdown").toggle();
@@ -388,7 +388,7 @@ function confirmLogout() {
         window.location.href = "../Backend/logout.php";
     } else {
         alert("Logout canceled");
-    }
+    }  
 }
 function toggleDevonContent() {
     var devonContent = document.getElementById("devon-content");

@@ -1,17 +1,27 @@
-const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-allSideMenu.forEach(item=> {
-	const li = item.parentElement;
+document.addEventListener('DOMContentLoaded', function () {
+    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-	item.addEventListener('click', function () {
-		allSideMenu.forEach(i=> {
-			i.parentElement.classList.remove('active');
-		})
-		li.classList.add('active');
-	})
+    allSideMenu.forEach(item => {
+        const li = item.parentElement;
+
+        item.addEventListener('click', function () {
+            allSideMenu.forEach(i => {
+                i.parentElement.classList.remove('active');
+            })
+            li.classList.add('active');
+        })
+    });
+
+    // Set 'Master List' as active by default
+    const sidebarActivetLink = document.getElementById('announcements-link');
+    sidebarActivetLink.parentElement.classList.add('active');
+
+    // Remove 'active' class from 'Dashboard' link
+    const dashboardLink = document.getElementById('dashboard-link');
+    dashboardLink.parentElement.classList.remove('active');
 });
-
-
+ 
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
@@ -20,7 +30,7 @@ const sidebar = document.getElementById('sidebar');
 menuBar.addEventListener('click', function () {
 	sidebar.classList.toggle('hide');
 })
-  
+
 
 
 
@@ -172,87 +182,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-//pressing the box info and dashboard
-
-document.addEventListener('DOMContentLoaded', function () {
-    const AvailableItem = document.getElementById('available-box');
-    const AdmittedItem = document.getElementById('admission-box');
-    const ReadmittedItem = document.getElementById('admitted-box');
-    const NonqualifiedItem = document.getElementById('readmitted-box');
-});
-
-//pressing Sidebar
-document.addEventListener('DOMContentLoaded', function () {
-    const dashboardLink = document.getElementById('dashboard-link');
-    const dashboardContent = document.getElementById('dashboard-content');
-    const MasterListLink = document.getElementById('master-list-link');
-    const MasterListContent = document.getElementById('master-list-content');
-    const StudentResultLink = document.getElementById('student-result-link'); 
-    const StudentResultContent = document.getElementById('student-result-content');
-  
-    
-    // Initially hide the content divs by default
-    dashboardContent.style.display = 'block';
-    MasterListContent.style.display = 'none';
-    StudentResultContent.style.display = 'none';
-  
-
-    // Add event listeners to the links
-    dashboardLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'block';
-        MasterListContent.style.display = 'none';
-        StudentResultContent.style.display = 'none';
-     
-    });
-
-    MasterListLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'none';
-        MasterListContent.style.display = 'block';
-        StudentResultContent.style.display = 'none';
-       
-    });
-
-    StudentResultLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'none';
-        MasterListContent.style.display = 'none';
-        StudentResultContent.style.display = 'block';
-      
-    });
-
-  
-});
 
 // tab like buttons for Student Result and Forms
-  const tabButtons = document.querySelectorAll('.tab-button');
-  const tabContents = document.querySelectorAll('.tab-content');
+document.addEventListener('DOMContentLoaded', function () {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
 
-  tabButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      const tabId = button.getAttribute('data-tab');
+    // Function to activate a specific tab
+    function activateTab(tabId) {
+        tabButtons.forEach((btn) => {
+            btn.classList.remove('active');
+        });
 
-      tabButtons.forEach((btn) => {
-        btn.classList.remove('active');
-      });
+        tabContents.forEach((content) => {
+            content.classList.remove('active');
+        });
 
-      tabContents.forEach((content) => {
-        content.classList.remove('active');
-      });
+        const activeButton = document.querySelector(`.tab-button[data-tab="${tabId}"]`);
+        const activeContent = document.getElementById(tabId);
 
-      button.classList.add('active');
-      document.getElementById(tabId).classList.add('active');
+        if (activeButton && activeContent) {
+            activeButton.classList.add('active');
+            activeContent.classList.add('active');
+        }
+    }
+
+    // Activate 'tab3' by default
+    activateTab('tab3');
+
+    tabButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const tabId = button.getAttribute('data-tab');
+            activateTab(tabId);
+        });
     });
 });
-function confirmLogout() {
-    // Display a confirmation dialog
-    var confirmLogout = confirm("Are you sure you want to log out?");
 
-    // If the user clicks "OK," redirect to logout.php
-    if (confirmLogout) {
-        window.location.href = "../Backend/logout.php";
+
+//dropdown for nature of degree
+function updateSelection(answer) {
+    console.log(answer.value);
+    if(answer.value == 1){
+        document.getElementById('nonBoard').classList.remove('nonboardProgram');
+        document.getElementById('Board').classList.add('boardProgram');
     } else {
-        alert("Logout canceled");
-    }  
-}
+        document.getElementById('Board').classList.remove('boardProgram');
+        document.getElementById('nonBoard').classList.add('nonboardProgram');
+    }
+};
+

@@ -164,6 +164,8 @@ justify-content: center;
 	white-space: nowrap;
 	overflow-x: hidden;
 }
+
+
 #sidebar .side-menu.top li.active a {
 	color: var(--green);
 }
@@ -629,16 +631,18 @@ nav {
 	pointer-events: auto; 
 }
 /*switch*/
-#content nav .switch-mode {
+
+.switch-mode {
 	display: block;
-	min-width: 50px;
+	width: 50px;
 	height: 25px;
 	border-radius: 25px;
 	background: var(--grey);
 	cursor: pointer;
 	position: relative;
 }
-#content nav .switch-mode::before {
+
+.switch-mode::before {
 	content: '';
 	position: absolute;
 	top: 2px;
@@ -649,7 +653,8 @@ nav {
 	border-radius: 50%;
 	transition: all .3s ease;
 }
-#content nav #switch-mode:checked + .switch-mode::before {
+
+#switch-mode:checked+.switch-mode::before {
 	left: calc(100% - (25px - 4px) - 2px);
 }
 /* NAVBAR */
@@ -1347,4 +1352,29 @@ select {
 
 	color: var(--dark);
   }
+
+ /* Your styles go here */
+ .social-icons-container {
+	display: flex;
+	align-items: center;
+}
+
+.social-icons-container a {
+	margin-right: 10px;
+	text-decoration: none;
+	color:var(--green);
+	font-size: 24px;
+}
+.social-icons-container a:hover {
+	color: #000000; /* Change to the desired hover color */
+}
+
+
+/* Add a margin-left to the dropdown elements */
+.dropdown {
+	display: none;
+	margin-left: 30px;
+	/* Adjust the value as needed */
+}
+
 
