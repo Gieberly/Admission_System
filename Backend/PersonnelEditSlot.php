@@ -201,8 +201,6 @@ function getCourses($conn) {
 
 
     
-
-<script src="assets/js/personnels.js"></script>
   
 
 </body>

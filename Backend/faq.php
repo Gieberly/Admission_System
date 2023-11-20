@@ -204,7 +204,7 @@ function getFAQs($conn) {
 
     </section>
 
-    <script src="assets/js/personnels.js"></script>
+
 
   
 

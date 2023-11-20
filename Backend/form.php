@@ -3,7 +3,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start(); // Start the session
 
-  
+   
 include("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -123,28 +123,29 @@ $conn->close();
   <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
   <link rel="stylesheet" href="assets\css\admissionform.css">
   <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-  <script>
+
+
+</head>
+
+<body>
+<script>
         // JavaScript function to check if the entered email matches the registered email
         function checkEmail() {
             var enteredEmail = document.getElementById('email').value;
             var registeredEmail = '<?php echo $_SESSION['registered_email']; ?>';
 
             if (enteredEmail !== registeredEmail) {
-                alert('Error: Email mismatch. Please use the same email as in registration.');
+                alert('Error: Email mismatch. Please use the same email used in registration.');
                 return false; // Prevent form submission
             }
 
             return true; // Allow form submission
         }
     </script>
-
-</head>
-
-<body>
   <header class="header">
     <div class="logo-brand-container">
       <div class="logo">
-        <img src="../frontend/assets/images/BSU Logo1.png" alt="Logo">
+        <img src="assets/images/BSU Logo1.png" alt="Logo">
       </div>
       <div class="brand">
         <p>Republic of the Philippines</p>
@@ -930,7 +931,7 @@ $conn->close();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 
 
-  <script src="..\frontend\assets\js\admissionform.js"></script>
+  <script src="assets\js\admissionform.js"></script>
 
 
 </body>

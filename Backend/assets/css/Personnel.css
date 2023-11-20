@@ -1028,15 +1028,18 @@ nav {
 #content main .box-info li .text p {
 	color: var(--dark);	
 	font-size: 12px;
+
+
 }
 #content main .table-data {
-	flex-grow: 1;
-    flex-basis: 300px; /* Updated value */
+	table-layout: auto;
+	width: 100%;
+	border-collapse: collapse;
+   
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
     margin-top: 10px;
-    width: 100%;
     color: var(--dark);
 }
 #content main .table-data > div {
@@ -1046,6 +1049,7 @@ nav {
 	overflow-x: auto;
 }
 #content main .table-data .head {
+	
 	align-items: center;
 	grid-gap: 16px;
 	margin-bottom: 40px;
@@ -1053,6 +1057,7 @@ nav {
 #content main .table-data .head h3 {
 	font-size: 18px;
 	float: left;
+	margin-right: auto;
 }
 #content main .table-data .head .bx {
 	cursor: pointer;
@@ -1065,29 +1070,54 @@ nav {
 
 #content main .table-data .order table {
 	width: 100%;
-	border-collapse: collapse; /* Merge cell borders into a single line */
-	border: 1px solid var(--dark-grey); /* Add a 1px solid border around table headers and data cells */
+	border-collapse: collapse;
+	
 }
 #content main .table-data .order table th {
-	border: 1px solid #dddddd;
+	border: none;
     text-align: left;
     padding: 6px;
 	font-size: 12px;
-	background-color: #f2f2f2;
+
+	font-size: 10px;
+	white-space: normal;
+	border-bottom: 1px solid var(--grey);
 }
 #content main .table-data .order table td {
-	border: 1px solid #dddddd;
-    text-align: left;
+	border: none;
     padding: 6px;
 	font-size: 12px;
 }
 #content main .table-data .order table th, td {
+	
 	width: 0px;
 	max-width: 0px;
-	overflow: hidden;
-	white-space: nowrap;
+	white-space: normal; /* or white-space: pre; */
+	overflow: visible; /* or overflow: auto; */
 	text-overflow: ellipsis;
   }
+  #content main .table-data .order table tr td:first-child {
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+#content main .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content main .table-data .order table tbody tr:hover {
+	background: var(--grey);
+}
+#content main .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
 
 #content main .table-data .order table tr td .status {
 	font-size: 10px;
@@ -1259,24 +1289,6 @@ nav {
     outline: none; /* Remove the default focus outline */
   }
 
-
-  table {
-	border-collapse: collapse;
-	width: 100%;
-}
-
-table, th, td {
-	border: 1px solid black;
-}
-
-th, td {
-	padding: 10px;
-	text-align: left;
-}
-
-th {
-	background-color: #f2f2f2;
-}
 
 .editable {
 	cursor: pointer;

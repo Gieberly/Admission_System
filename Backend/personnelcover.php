@@ -123,7 +123,7 @@ $stmt->close();
 
 
                 </div>
-                <a href="StudentProfileEdit.php" id="settings" class="profile-item" ><i class='bx bx-cog'></i> Settings</a>              
+                <a href="EditInfo.php" id="settings" class="profile-item" ><i class='bx bx-cog'></i> Settings</a>              
     
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
      <div class="dropdown" id="help-dropdown">
@@ -158,7 +158,7 @@ $stmt->close();
    </div>
 </div>
     <!-- CONTENT -->
-   
+   <script src="assets/js/personnels.js"></script>
 </body>
  <!-- #region -->
 </html>

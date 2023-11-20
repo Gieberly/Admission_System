@@ -746,80 +746,85 @@ nav {
 
 
 #content main .table-data {
-	flex-grow: 1;
-	flex-basis: 300px;
-	/* Updated value */
-	display: flex;
-	flex-wrap: wrap;
-	grid-gap: 24px;
-	margin-top: 24px;
+	table-layout: auto;
 	width: 100%;
-	color: var(--dark);
+	border-collapse: collapse;
+   
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 24px;
+    margin-top: 10px;
+    color: var(--dark);
 }
-
-#content main .table-data>div {
-	border-radius: 20px;
+#content main .table-data > div {
+	border-radius: 10px;
 	background: var(--light);
-	padding: 24px;
+	padding: 20px;
 	overflow-x: auto;
 }
-
 #content main .table-data .head {
-	display: flex;
+	
 	align-items: center;
 	grid-gap: 16px;
-	margin-bottom: 24px;
+	margin-bottom: 40px;
 }
-
 #content main .table-data .head h3 {
+	font-size: 18px;
+	float: left;
 	margin-right: auto;
-	font-size: 24px;
-	font-weight: 600;
 }
-
 #content main .table-data .head .bx {
 	cursor: pointer;
 }
 
 #content main .table-data .order {
-	flex-grow: 1;
-	flex-basis: 500px;
+	flex-basis: 200px;
+	flex-grow: 1; /* Can grow to fill available space */
 }
 
 #content main .table-data .order table {
 	width: 100%;
 	border-collapse: collapse;
+	
 }
-
 #content main .table-data .order table th {
-	padding-bottom: 12px;
-	font-size: 13px;
-	text-align: left;
+	border: none;
+    text-align: left;
+    padding: 6px;
+	font-size: 12px;
+
+	font-size: 10px;
+	white-space: normal;
 	border-bottom: 1px solid var(--grey);
 }
-
 #content main .table-data .order table td {
-	padding: 16px 0;
+	border: none;
+    padding: 6px;
+	font-size: 12px;
 }
-
-#content main .table-data .order table tr td:first-child {
+#content main .table-data .order table th, td {
+	
+	width: 0px;
+	max-width: 0px;
+	white-space: normal; /* or white-space: pre; */
+	overflow: visible; /* or overflow: auto; */
+	text-overflow: ellipsis;
+  }
+  #content main .table-data .order table tr td:first-child {
 	display: flex;
 	align-items: center;
 	grid-gap: 12px;
 	padding-left: 6px;
 }
-
 #content main .table-data .order table td img {
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
 	object-fit: cover;
 }
-
 #content main .table-data .order table tbody tr:hover {
 	background: var(--grey);
 }
-
 #content main .table-data .order table tr td .status {
 	font-size: 10px;
 	padding: 6px 16px;

@@ -52,8 +52,8 @@ $stmt->fetch();
                 <!--master list-->
                 <div id="master-list">
     <div class="table-data">
-        <div class="order">
-             <div class="head">
+                <div class="order">
+                <div class="head">
                                 <h3>List of Students</h3>
                             <div class="headfornaturetosort">
                                 <!--Drop Down for Nature of Degree--> 
@@ -98,13 +98,13 @@ $stmt->fetch();
                                         <col style="width: 8%;">
                                         <col style="width: 17%;">
                                         <col style="width: 15%;">
-                                        <col style="width: 10%;">
+                                        <col style="width: 13%;">
                                         <col style="width: 5%;">
                                         <col style="width: 5%;">
                                         <col style="width: 5%;">
                                         <col style="width: 5%;">
                                         <col style="width: 5%;">
-                                        <col style="width: 8%;">
+                                        <col style="width: 5%;">
                                         <col style="width: 9%;">
                                       
                                        
@@ -287,7 +287,7 @@ $('#viewButton i').on('click', function () {
           
         </main>
         <!-- MAIN -->
-        <script src="assets/js/personnels.js"></script>
+      
 
     </section>
             </body>

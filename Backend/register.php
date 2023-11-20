@@ -24,7 +24,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->close();
         exit(); // Stop execution
     }
- 
+     // Proceed with user registration if the email is unique
+     $_SESSION['registered_email'] = $email;
 
 
     $stmt = $conn->prepare("INSERT INTO users (name, email, password, userType, status) VALUES (?, ?, ?, ?, ?)");
@@ -77,7 +78,7 @@ $conn->close();
         </div>
 
       
-        <div class="form" id="registrationForm">
+        <div class="form" id="registrationForm" style="display: block;">
             <form  method="POST" id="RegForm">
                 <h2>Register</h2>
                 <input type="text" name="name" placeholder="Name" required>

@@ -154,7 +154,7 @@ $stmt->fetch();
  </script>
 
     </section>
-    <script src="assets/js/personnels.js"></script>
+
 
             </body>
 </html>

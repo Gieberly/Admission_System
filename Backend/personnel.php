@@ -82,7 +82,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
 
  
 
-<script src="assets/js/personnels.js"></script>
+
 
 
         </main>
