@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2023 at 06:43 AM
+-- Generation Time: Nov 20, 2023 at 11:11 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -80,21 +80,21 @@ INSERT INTO `admission_data` (`id`, `id_picture`, `applicant_name`, `gender`, `b
 -- --------------------------------------------------------
 
 --
--- Table structure for table `applicationdates`
+-- Table structure for table `applicationdate`
 --
 
-CREATE TABLE `applicationdates` (
-  `DateID` int(11) NOT NULL,
+CREATE TABLE `applicationdate` (
+  `ApplicationDateID` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `EndDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `applicationdates`
+-- Dumping data for table `applicationdate`
 --
 
-INSERT INTO `applicationdates` (`DateID`, `StartDate`, `EndDate`) VALUES
-(1, '2000-05-11', '2000-05-12');
+INSERT INTO `applicationdate` (`ApplicationDateID`, `StartDate`, `EndDate`) VALUES
+(2, '2023-01-11', '2023-01-31');
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,8 @@ INSERT INTO `courses` (`CourseID`, `CourseName`, `TotalSlots`, `AvailableSlots`)
 (28, 'dgtfrydtru', 445, 55),
 (29, 'ewrw', 1, 1),
 (30, 'dgtfrydtru', 55, 44),
-(31, 'fwre ybbn', 44, 44);
+(31, 'fwre ybbn', 44, 44),
+(32, 'rety', 44, 44);
 
 -- --------------------------------------------------------
 
@@ -175,6 +176,23 @@ INSERT INTO `reapplication` (`StepID`, `Steps`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `releasingofresults`
+--
+
+CREATE TABLE `releasingofresults` (
+  `ReleaseDate` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `releasingofresults`
+--
+
+INSERT INTO `releasingofresults` (`ReleaseDate`) VALUES
+('2023-12-01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -202,7 +220,13 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `userType`, `status`) VA
 (53, 'Anthonio Sabiano', 'antonio@gmail.com', '$2y$10$fZYJRhQ3OKr21G5y1PBygepBs6Z.v7xfUV3H9iloV2OCTxeyd8.92', 'student', 'approved'),
 (54, 'Ivan Bacasen', 'ivan@gmail.com', '$2y$10$5mW3zryh0FRzFv9MqL9Ov.TfdRYb5sP8usmPkivO9t0bPXL5xUYiq', 'student', 'approved'),
 (55, 'Chad Bacasen', 'chad@gmail.com', '$2y$10$eQhS833dk45Lmg9WuNkXk.TubOa884ga3KkPYkiks.o..b5SECdMG', 'student', 'pending'),
-(56, 'Zion Bacasen', 'zion@gmail.com', '$2y$10$.AMQfkC3bdaTiXRhWuk03u30J.rQEFedIN3XUNZno5RfrbQMdf2Fm', 'student', 'pending');
+(56, 'Zion Bacasen', 'zion@gmail.com', '$2y$10$.AMQfkC3bdaTiXRhWuk03u30J.rQEFedIN3XUNZno5RfrbQMdf2Fm', 'student', 'pending'),
+(57, 'Jeffrey De la Torre', 'jeffy@gmail.com', '$2y$10$v8NUrdqrSvVKKIG4e22NfOqYmOeep/VgHYh/RG9Is848RKutf.g7a', 'staff', 'approved'),
+(58, 'Giely Bons', 'jeffey@gmail.com', '$2y$10$CyV0kGZKvtPNPbP3.05peOyREFhva4Y4rwLJgdU6wbixNBoEUZHX6', 'student', 'approved'),
+(59, 'Gieberly Sawac', 'g@gmail.com', '$2y$10$7.Z25E4aX0nvBrYj.dbbNON4W9GczC/TJrPHjOX86qOHKdGElVYk6', 'staff', 'pending'),
+(60, 'Gieberly Sawac', 'd@gmail.com', '$2y$10$fyUrbP8AzmAnr81o7CRn5OO2yVT/t15QBq49gU/CEMACVH4fFfzAq', 'staff', 'approved'),
+(61, 'Gieberly Sawac', 'gieb@gmail.com', '$2y$10$8rt07RZ.aEWpJ8atgVK./erc9GRMcM0QzFdgo.GuNJ4NuzCT02x6e', 'staff', 'pending'),
+(62, 'Jeffrey De la Torre', 'giebe@gmail.com', '$2y$10$Mrxosl9qEfNIBWv411Y3.eRZBRPypKgJMg7hUbWTbG3nMVEmYs.6y', 'student', 'approved');
 
 --
 -- Indexes for dumped tables
@@ -215,10 +239,10 @@ ALTER TABLE `admission_data`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `applicationdates`
+-- Indexes for table `applicationdate`
 --
-ALTER TABLE `applicationdates`
-  ADD PRIMARY KEY (`DateID`);
+ALTER TABLE `applicationdate`
+  ADD PRIMARY KEY (`ApplicationDateID`);
 
 --
 -- Indexes for table `courses`
@@ -245,6 +269,12 @@ ALTER TABLE `reapplication`
   ADD PRIMARY KEY (`StepID`);
 
 --
+-- Indexes for table `releasingofresults`
+--
+ALTER TABLE `releasingofresults`
+  ADD PRIMARY KEY (`ReleaseDate`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -261,16 +291,16 @@ ALTER TABLE `admission_data`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
--- AUTO_INCREMENT for table `applicationdates`
+-- AUTO_INCREMENT for table `applicationdate`
 --
-ALTER TABLE `applicationdates`
-  MODIFY `DateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `applicationdate`
+  MODIFY `ApplicationDateID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `deleted_staff`
@@ -294,7 +324,7 @@ ALTER TABLE `reapplication`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
