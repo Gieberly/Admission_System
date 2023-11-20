@@ -215,6 +215,28 @@ $conn->close();
                 <option value="Non-board">Non-Board</option>
               </select>
             </div>
+
+             <!-- Input Board Academic Classification Selection -->
+            <div class="boardclassificationFields" id="boardclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification" required>
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="board-shs">Senior High School</option>
+              <option value="board-transferee">Transferee</option>
+              <option value="board-als-pept">ALS/PEPT</option>
+            </select>
+          </div>
+
+          <!-- Input Non-Board Academic Classification Selection -->
+          <div class="nonboardclassificationFields" id="nonboardclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification" required>
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="nonboard-shs">Senior High School</option>
+              <option value="nonboard-transferee">Transferee</option>
+              <option value="nonboard-als-pept">ALS/PEPT</option>
+            </select>
+          </div>
           
             <!-- Input grades for Board selection -->
             <div id="boardFields" class="programFields">
