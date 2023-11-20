@@ -1075,10 +1075,11 @@ nav {
 }
 #content main .table-data .order table th {
 	border: none;
+	
     text-align: left;
     padding: 6px;
 	font-size: 12px;
-
+    background-color: rgba(229, 229, 229, 0.185);
 	font-size: 10px;
 	white-space: normal;
 	border-bottom: 1px solid var(--grey);
@@ -1164,9 +1165,10 @@ nav {
 	background-color: var(--lighter-grey);
   	color:var(--gray);
 }
+
 #content main .table-data .todo {
 	flex-grow: 1;
-	flex-basis: 500px;
+	flex-basis: 30px;
 }
 #content main .table-data .todo .todo-list {
 	width: 100%;
@@ -1193,8 +1195,6 @@ nav {
 #content main .table-data .todo .todo-list li:last-child {
 	margin-bottom: 0;
 }
-/* MAIN */
-/* CONTENT */
 
 @media screen and (max-width: 768px) {
 	#sidebar {
@@ -1210,6 +1210,11 @@ nav {
 		display: none;
 	}
 }
+
+
+
+
+
 
 @media screen and (max-width: 576px) {
 	#content nav form .form-input input {
@@ -1254,18 +1259,7 @@ nav {
 	#content main .table-data .todo .todo-list {
 		min-width: 420px;
 	}
-	
-	#sidebar .brand .adminprofile{
-		height:31px;
-		width: 32px;
-		align-items: center;
-		margin:15px;
-		margin-inline-end: 23px;
-		display: flex;
-		justify-content: center;
-		}
 }
-
   #mathGrade,
   #scienceGrade,
   #englishGrade {

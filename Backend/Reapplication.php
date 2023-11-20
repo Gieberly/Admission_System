@@ -30,8 +30,29 @@ function getReapplicationSteps($conn) {
     }
 
     return $steps;
+    
 }
+// Function to get ApplicationDates from the database
+function getApplicationDates($conn) {
+    $dates = array();
 
+    $sql = "SELECT * FROM ApplicationDates";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $dates[] = $row;
+        }
+    }
+
+    return $dates;
+}
+// Function to format a date in a user-friendly way
+function formatUserFriendlyDate($dateString) {
+    // Assuming $dateString is in the format 'YYYY-MM-DD'
+    $timestamp = strtotime($dateString);
+    return date("F j, Y", $timestamp);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -67,19 +88,29 @@ function getReapplicationSteps($conn) {
                         </ul>
                     </div>
                 </div>
-                <div class="table-data">
-                        <div class="order">
-                            <div class="head">
+
                 <!--form-->
                 <div class="tabs">
                     <button class="tab-button" data-tab="tab3"  onclick="window.location.href='faq.php'">FAQ</button>
                     <button class="tab-button" data-tab="tab5" onclick="window.location.href='PersonnelEditSlot.php'">Slot</button>
                     <button class="tab-button active" data-tab="tab4"  onclick="window.location.href='Reapplication.php'">Readmission Date</button>
                     <button class="tab-button" data-tab="tab6"  onclick="window.location.href='ReleasingDate.php'">Releasing of Result</button>
-                    <button class="button save" id="addcoursepop" >Add Steps</button>
+                  
 
                 </div>
+                     
+<div class="table-data">
+                        <div class="order">
+                        
+                            <div class="head">
+						<h3>Steps for Reapplication</h3>
+                        <button class="button save" id="addcoursepop" >Add Steps</button>
+						
+					</div>
+                
+                   
 
+       
                 <div class="tab-content" id="tab4" style="display: block;">
               
                 <div>
@@ -118,6 +149,7 @@ function getReapplicationSteps($conn) {
     ?>
         </tbody>
     </table>
+    
     <div id="edit-reapp-step-section" style="display: none;">
     <h2>Edit Re-application Step</h2>
     <form id="edit-reapp-step-form" action="editReappSteps.php" method="post">
@@ -137,7 +169,7 @@ function getReapplicationSteps($conn) {
     </form>
 </div>
 
-    </div></div></div>
+    </div></div>
     <script>
    function editReappStep(stepID, stepText) {
         // Set values in the edit form
@@ -177,10 +209,46 @@ function getReapplicationSteps($conn) {
 </script>
 
     </div>
+    <div class="todo">
+					<div class="head">
+						<h3>Set Admission</h3>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+                    <?php
+$applicationDates = getApplicationDates($conn);
+
+if (!empty($applicationDates)) {
+    $startDate = formatUserFriendlyDate($applicationDates[0]['StartDate']);
+    $endDate = formatUserFriendlyDate($applicationDates[0]['EndDate']);
+
+    echo "<p>Start Date: $startDate to $endDate</p>";
+
+} else {
+    echo "<p>No admission dates set yet.</p>";
+}
+?>
+
+          <!-- Add this form to your HTML -->
+<form method="post" action="setAppDates.php">
+    <label for="start_date">Start Date:</label>
+    <input type="date" id="start_date" name="start_date" required>
+
+    <label for="end_date">End Date:</label>
+    <input type="date" id="end_date" name="end_date">
+
+    <button type="submit">set</button>
+</form>
 
 
+        </div>
+				</div>
 
 
+</div>
+
+</main>
+</section>
   
 
 </body>

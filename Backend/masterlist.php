@@ -80,7 +80,7 @@ $stmt->fetch();
  <label for="rangeInput"></label>
 <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
 <button type="button" id="viewButton">
-    <i class='bx bx-show'></i> 
+<i class='bx bx-filter' ></i>
 </button>
 
                                     <button type="button" id="sortButton">
@@ -92,23 +92,7 @@ $stmt->fetch();
                             </div>
             <div id="table-container">
                 <table>
-                <colgroup>
-                                        <col style="width: 3%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 8%;">
-                                        <col style="width: 17%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 13%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 9%;">
-                                      
-                                       
-                                    </colgroup>
+
                     <thead>
                         <tr>
                             <th>#</th>
