@@ -2,7 +2,7 @@
 $host = "localhost";
 $user = "root";
 $password = "";
-$database = "bsu_admission_db";
+$database = "multi_user";
 $conn = new mysqli($host, $user, $password, $database);
 // Check connection
 if ($conn->connect_error) {

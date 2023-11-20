@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("config.php");
+include("../config.php");
 
 // Check if the user is an admin, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
 
 // Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT fname, email, role, register_date FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
 $stmt->bind_result($name, $email, $userType, $status);
@@ -28,7 +28,7 @@ function getAllStaff() {
 // Function to update staff status
 function updateStaffStatus($staffId, $newStatus) {
     global $conn;
-    $query = "UPDATE users SET status = ? WHERE id = ? AND userType = 'staff'";
+    $query = "UPDATE users SET status = ? WHERE id = ? AND userType = 'admin'";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("si", $newStatus, $staffId);
     return $stmt->execute();
@@ -61,138 +61,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
 // Function to get all student form data
 function getAllStudentFormData() {
     global $conn;
-    $query = "SELECT id,applicant_number,degree_applied,nature_of_degree, applicant_name, email, math_grade, science_grade, english_grade, gwa_grade, rank FROM admission_data";
-    $result = $conn->query($query);
-    return $result;
+    // $query = "SELECT id,applicant_number,degree_applied,nature_of_degree, applicant_name, email, 
+    // math_grade, science_grade, english_grade, gwa_grade, rank FROM admission_data";
+    // $result = $conn->query($query);
+    // return $result;
 }
 
 // Display all student form data in the table
 $studentFormData = getAllStudentFormData();
 ?>
-
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSU OUR Admission Admin</title>
-    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets\css\admin.css" />
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
-</head>
+<?php include 'header.php'?>
 
 <body>
-    <!-- SIDEBAR -->
-    <section id="sidebar">
-        <a class="brand">
-            <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
-            <span class="text">Admin</span>
-        </a>
-
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="#" id="dashboard-link">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="master-list-link">
-                    <i class='bx bxs-user-pin'></i>
-                    <span class="text">Applicants</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="student-result-link">
-                    <i class='bx bxs-window-alt'></i>
-                    <span class="text">Personnels</span>
-                </a>
-            </li>
-
-           
-        </ul>
-    </section>
-    <!-- SIDEBAR -->
-
+   <?php include 'nav.php'?>
     <!-- CONTENT -->
     <section id="content">
-        <!-- NAVBAR -->
-        <nav>
-            <i class='bx bx-menu'></i>
-            <a>Categories</a>
-            <form id="search-form">
-                <div class="form-input" style="display: none;">
-                    <input type="text" id="searchInput" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
-            <div id="clock">8:10:45</div>
-           
-            <a href="#" class="profile" id="profile-button">
-                <img src="assets/images/human icon.png" alt="User Profile">
-            </a>
-
-        </nav>
-        <!-- NAVBAR -->
+    <?php include 'navbar.php'?>
 
         <!-- MAIN -->
 
         <main>
-        <!--Dashboard-->
-            <div id="dashboard-content">
-                <div class="head-title">
-                    <div class="left">
-                        <h1>Dashboard</h1>
-                        <ul class="breadcrumb">
-                            <li><a href="#">Dashboard</a></li>
-                            <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Home</a></li>
-                        </ul>
-                    </div>
-                </div>
-
-                <ul class="box-info">
-                    <li id="available-box">
-                        <i class='bx bx-clipboard'></i>
-                        <span class="text">
-                            <h3>1020</h3>
-                            <p>Available Slots</p>
-                        </span>
-                    </li>
-
-                    <li id="admission-box">
-                        <i class='bx bxs-group'></i>
-                        <span class="text">
-                            <h3>2834</h3>
-                            <p>Students For Admission</p>
-                        </span>
-                    </li>
-
-                    <li id="admitted-box">
-                        <i class='bx bx-user-check'></i>
-                        <span class="text">
-                            <h3>2543</h3>
-                            <p>Admitted Students</p>
-                        </span>
-                    </li>
-
-                    <li id="readmitted-box">
-                        <i class='bx bxs-user-x'></i>
-                        <span class="text">
-                            <h3>1020</h3>
-                            <p>Students For Readmission</p>
-                        </span>
-                    </li>
-                </ul>
-
-            </div>
-
+        <?php include 'dashboard.php'?>
             <!--Master List-->
             <div id="master-list-content">
                 <div class="head-title">
@@ -247,7 +136,7 @@ $studentFormData = getAllStudentFormData();
                                 <tbody>
                                 <?php
     // Counter for numbering the students
-    $counter = 1;
+    // $counter = 1;
 
     // Loop through the results and populate the table rows
     while ($row = $studentFormData->fetch_assoc()) {

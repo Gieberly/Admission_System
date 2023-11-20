@@ -88,6 +88,7 @@ $conn->close();
                 <br>
                 <label for="userType">Select User Type:</label>
                 <select id="userType" name="userType" required>
+                    <option value="admin">Admin</option>
                     <option value="student">Student</option>
                     <option value="staff">Staff</option>
                 </select>
