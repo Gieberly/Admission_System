@@ -122,26 +122,57 @@ function run(hideTab, showTab) {
 
 
 function updateSelection() {
-  var natureOfDegree = document.getElementById("categoryDropdown").value;
+  var selectedValue = document.getElementById("categoryDropdown").value;
 
-  // Hide all program fields initially
-  document.getElementById("boardFields").style.display = "none";
-  document.getElementById("nonBoardField").style.display = "none";
-  document.getElementById("boardProgramsDropdown").style.display = "none";
-  document.getElementById("nonBoardProgramsDropdown").style.display = "none";
+    // Hide all classification fields initially
+    document.getElementById("boardclassificationFields").style.display = "none";
+    document.getElementById("nonboardclassificationFields").style.display = "none";
 
-  if (natureOfDegree === "Board") {
-    // Show board program fields
-    document.getElementById("boardFields").style.display = "block";
-  } else if (natureOfDegree === "Non-board") {
-    // Show non-board program fields
-    document.getElementById("nonBoardField").style.display = "block";
-  }
+    // Show the relevant classification field based on the selected value
+    if (selectedValue === "Board") {
+      document.getElementById("boardclassificationFields").style.display = "block";
+      document.getElementById("nonBoardField").style.display = "none";
+      document.getElementById("boardFields").style.display = "none";
+    } 
+    else if (selectedValue === "Non-board") {
+      document.getElementById("nonboardclassificationFields").style.display = "block";
+      document.getElementById("boardFields").style.display = "none";
+      document.getElementById("nonBoardField").style.display = "none";
+    }
 
   // Copy the selected nature of degree to Tab-2 input field
   document.getElementById("nature_of_degree").value = natureOfDegree;
 
 }
+
+const academicClassificationSelect = document.getElementById('academic_classification');
+const programFieldsDivs = document.querySelectorAll('.programFields');
+
+academicClassificationSelect.addEventListener('change', () => {
+  if (academicClassificationSelect.value === 'board-shs') {
+    programFieldsDivs.forEach((div) => {
+      if (div.id !== 'boardFields') {
+        div.style.display = 'none';
+      }
+    });
+
+    document.getElementById('boardFields').style.display = 'block';
+  } else if (academicClassificationSelect.value === 'board-transferee' || academicClassificationSelect.value === 'board-als-pept') {
+    programFieldsDivs.forEach((div) => {
+      if (div.id !== 'nonBoardField') {
+        div.style.display = 'none';
+      }
+    });
+
+    document.getElementById('nonBoardField').style.display = 'block';
+  } else {
+    programFieldsDivs.forEach((div) => {
+      div.style.display = 'none';
+    });
+  }
+});
+
+
 function updateDegreeFields() {
   // Get the selected value from the board program dropdown
   var selectedValueBoard = document.getElementById("board-programs").value;
