@@ -53,6 +53,22 @@ function formatUserFriendlyDate($dateString) {
     $timestamp = strtotime($dateString);
     return date("F j, Y", $timestamp);
 }
+// Function to get ReleasingDates from the database
+function getReleasingDates($conn) {
+    $dates = array();
+
+    $sql = "SELECT * FROM ReleasingDates";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $dates[] = $row;
+        }
+    }
+
+    return $dates;
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -93,7 +109,7 @@ function formatUserFriendlyDate($dateString) {
                 <div class="tabs">
                     <button class="tab-button" data-tab="tab3"  onclick="window.location.href='faq.php'">FAQ</button>
                     <button class="tab-button" data-tab="tab5" onclick="window.location.href='PersonnelEditSlot.php'">Slot</button>
-                    <button class="tab-button active" data-tab="tab4"  onclick="window.location.href='Reapplication.php'">Readmission Date</button>
+                    <button class="tab-button active" data-tab="tab4"  onclick="window.location.href='Reapplication.php'">Admissi</button>
                     <button class="tab-button" data-tab="tab6"  onclick="window.location.href='ReleasingDate.php'">Releasing of Result</button>
                   
 
@@ -239,6 +255,43 @@ if (!empty($applicationDates)) {
 
     <button type="submit">set</button>
 </form>
+
+
+<?php
+$releasingDates = getReleasingDates($conn);
+
+if (!empty($releasingDates)) {
+    $releaseDate = formatUserFriendlyDate($releasingDates[0]['release_date']);
+    echo "<p>Releasing Date: $releaseDate</p>";
+    
+    // Add a button to trigger the edit form
+    echo "<button class='button edit' onclick='showEditForm()'>Edit Releasing Date</button>";
+} else {
+    echo "<p>No releasing date set yet.</p>";
+}
+?>
+<!-- Add this form to your HTML -->
+<!-- Add this form to your HTML -->
+<div id="edit-releasing-date-form" style="display: none;">
+    <h2>Edit Releasing Date</h2>
+    <form id="edit-releasing-date-form-inner" action="editReleasingDate.php" method="post">
+        <label for="edit-releasing-date">Releasing Date:</label>
+        <input type="date" id="edit-releasing-date" name="release_date" required>
+        <button type="button" class="button save" onclick="saveEditedReleasingDate()">Save Date</button>
+    </form>
+</div>
+
+<script>
+    function showEditForm() {
+        document.getElementById('edit-releasing-date-form').style.display = 'block';
+    }
+
+    function saveEditedReleasingDate() {
+        // Submit the form for saving the edited Releasing Date
+        document.getElementById('edit-releasing-date-form-inner').submit();
+    }
+</script>
+
 
 
         </div>

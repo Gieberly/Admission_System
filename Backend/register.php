@@ -1,22 +1,19 @@
 <?php
 session_start();
 include("config.php");
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
-    $status = ($userType == 'staff') ? 'approved' : 'pending';
-
+    $status = ($userType == 'student') ? 'approved' : 'pending';
     // Check if the email already exists
     $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
     $stmtCheckEmail = $conn->prepare($checkEmailQuery);
     $stmtCheckEmail->bind_param("s", $email);
     $stmtCheckEmail->execute();
     $stmtCheckEmail->store_result();
-
     if ($stmtCheckEmail->num_rows > 0) {
         // Email already exists, inform the user
         echo "Email already in use. Please choose another email.";
@@ -24,23 +21,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $conn->close();
         exit(); // Stop execution
     }
-     // Proceed with user registration if the email is unique
-     $_SESSION['registered_email'] = $email;
-
-
+    // Proceed with user registration if the email is unique
+    $_SESSION['registered_email'] = $email;
     $stmt = $conn->prepare("INSERT INTO users (name, email, password, userType, status) VALUES (?, ?, ?, ?, ?)");
     $stmt->bind_param("sssss", $name, $email, $hashedPassword, $userType, $status);
-
     if ($stmt->execute()) {
         header("Location: loginpage.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;
     }
-
     $stmt->close();
 }
-
 $conn->close();
 ?>
 
