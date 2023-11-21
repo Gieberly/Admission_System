@@ -28,6 +28,7 @@ function run(hideTab, showTab) {
         var englishGrade = parseFloat(document.getElementById("englishGrade").value);
         var mathGrade = parseFloat(document.getElementById("mathGrade").value);
         var scienceGrade = parseFloat(document.getElementById("scienceGrade").value);
+        var shsgwaGrade = parseFloat(document.getElementById("shsgwaGrade").value);
 
         if (isNaN(englishGrade) || isNaN(mathGrade) || isNaN(scienceGrade) ||
           englishGrade < 0 || mathGrade < 0 || scienceGrade < 0 ||
@@ -190,31 +191,23 @@ function updateDegreeFields() {
   document.getElementById("slip_degree").value = selectedValue;
 }
 
-function calculateGWA() {
+function shsBoardSelection() {
   var natureOfDegree = document.getElementById("categoryDropdown").value;
 
   if (natureOfDegree === "Board") {
-    // Assuming you have input fields with IDs: englishGrade, mathGrade, scienceGrade
     var englishGrade = parseFloat(document.getElementById("englishGrade").value);
     var mathGrade = parseFloat(document.getElementById("mathGrade").value);
     var scienceGrade = parseFloat(document.getElementById("scienceGrade").value);
+    var shsgwaGrade = parseFloat(document.getElementById("shsgwaGrade").value);
 
-    // Check if grades are within the accepted range (75-99)
-    if (englishGrade >= 75 && mathGrade >= 75 && scienceGrade >= 75 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99) {
-      // Calculate GWA
-      var gwa = (englishGrade + mathGrade + scienceGrade) / 3;
-      document.getElementById("gwaResult").innerText = "GWA: " + gwa.toFixed(2) + "%";
-
-      // Check if GWA is above the required threshold (86%)
-      if (gwa >= 86) {
-        // Show board programs dropdown
-        document.getElementById("boardProgramsDropdown").style.display = "block";
-      } else {
-        alert("Sorry! your GWA didn't pass the required General Weighted Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
-      }
+    // Check if grades are within the accepted range (86-99)
+    if (englishGrade >= 86 && mathGrade >= 86 && scienceGrade >= 86 && shsgwaGrade >= 86 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99 && shsgwaGrade <= 99) {
+      document.getElementById("boardProgramsDropdown").style.display = "block";
     } else {
-      alert("Please enter valid grades between 75 and 99.");
+      alert("Sorry! your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
     }
+  } else {
+    alert("Please enter valid grades between 86 and 99.");
   }
 }
 

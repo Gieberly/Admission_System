@@ -238,7 +238,7 @@ $conn->close();
             </select>
           </div>
           
-            <!-- Input grades for Board selection -->
+            <!-- Input grades for SHS-Board selection -->
             <div id="boardFields" class="programFields">
               <label class="small-label" for="englishGrade">English Grade</label>
               <input type="number" class="input" name="englishGrade" id="englishGrade"
@@ -250,7 +250,10 @@ $conn->close();
               <label class="small-label" for="scienceGrade">Science Grade</label>
               <input type="number" class="input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
 
-              <button type="button" onclick="calculateGWA()">Submit</button>
+              <label class="small-label" for="gwaGrade">Science Grade</label>
+              <input type="number" class="input" name="gwaGrade" id="shsgwaGrade" placeholder="Enter GWA">
+
+              <button type="button" onclick="shsBoardSelection()">Submit</button>
               <p id="gwaResult"></p>
             </div>
 
