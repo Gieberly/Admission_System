@@ -141,6 +141,11 @@
     border: 1px solid #ccc;
 }
 
+.note-color {
+  font-weight: bold;
+    color: #e44d26; /* Change the color as needed */
+}
+
 /* Style the checkmark when the checkbox is checked */
 .checkbox-container input:checked ~ .checkmark {
     background-color: #2196F3;

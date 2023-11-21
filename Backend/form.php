@@ -200,7 +200,144 @@ $conn->close();
         <ul>
           <li>Notice of the result of the application for admission shall be announced in your student dashboard</li>
           </ul>
-          <div class="message">
+        
+        <p class="coa"><strong><em>Classification of the applicant.</em></strong> An Applicant may only be classified
+          in
+          one category (except for second degree transferee):</p>
+        <ol class="rac-list">
+          <li><b>Senior High School Graduates</b> - those who did not enroll in any technical/vocational/college
+            degree
+            program in any other school after graduation.</li>
+          <li><b>High School of the Old High school curriculum</b> - those who did not enroll in any college degree
+            program in any other school after graduation from high school.</li>
+          <li><b>Grade 12</b> as of application period (Currently enrolled as Grade 12).</li>
+          <li><b>ALS/PEPT Completers</b> - those whose ALS/PEPT Certificate of Rating indicates that they are eligible
+            for College Admission/Rating is equivalent to Senior High and similar terms.</li>
+          <li><b>Transferees</b> - those who started college schooling in another school and intend to continue
+            schooling in BSU.</li>
+          <li><b>Second Degree</b> - those who have already graduated from a degree program in College. This may
+            either
+            be Second degree (BSU graduate of a Baccalaureate program) or Second Degree-transferees (Graduates of a
+            Baccalaureate degree from another school who will enroll another degree in BSU).</li>
+        </ol>
+
+        <p><strong><u><i> Requirements per application classification:</i> </u></strong></p>
+        <ol type="I" class="custom-list">
+          <strong>
+            <li>Senior High School Graduate who did not enroll in any college degree
+              program/technical/vocational/degree
+              program in any other school after graduation and will only enroll for the immediately following School
+              Year:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
+              present the original copy for comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+
+          <strong>
+            <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree
+              program
+              in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the
+              applicant
+              can present the original copy for comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+          <strong>
+            <li>Grade 12 as of application period (Currently enrolled as Grade 12):</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified photocopy of Grade 11 Card</li>
+            <li>Certification of Enrollment from the last school attended.</li>
+          </ol>
+          <strong>
+            <li>ALS/PEPT Completer:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
+              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
+              purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+          <strong>
+            <li>Transferee:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+              comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+              your previous School.</li>
+          </ol>
+
+          <strong>
+            <li>Second Degree:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
+              nametag
+            </li>
+            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+              comparison purposes.</li>
+            <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school
+              attended</li>
+            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+              your previous School.</li>
+          </ol>
+        </ol>
+        <p></p>
+
+        <div class="message">
      <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GWA.</span>
   
        
@@ -403,143 +540,8 @@ $conn->close();
           </div>
         </div>
         </div>
-        <p class="coa"><strong><em>Classification of the applicant.</em></strong> An Applicant may only be classified
-          in
-          one category (except for second degree transferee):</p>
-        <ol class="rac-list">
-          <li><b>Senior High School Graduates</b> - those who did not enroll in any technical/vocational/college
-            degree
-            program in any other school after graduation.</li>
-          <li><b>High School of the Old High school curriculum</b> - those who did not enroll in any college degree
-            program in any other school after graduation from high school.</li>
-          <li><b>Grade 12</b> as of application period (Currently enrolled as Grade 12).</li>
-          <li><b>ALS/PEPT Completers</b> - those whose ALS/PEPT Certificate of Rating indicates that they are eligible
-            for College Admission/Rating is equivalent to Senior High and similar terms.</li>
-          <li><b>Transferees</b> - those who started college schooling in another school and intend to continue
-            schooling in BSU.</li>
-          <li><b>Second Degree</b> - those who have already graduated from a degree program in College. This may
-            either
-            be Second degree (BSU graduate of a Baccalaureate program) or Second Degree-transferees (Graduates of a
-            Baccalaureate degree from another school who will enroll another degree in BSU).</li>
-        </ol>
-
-        <p><strong><u><i> Requirements per application classification:</i> </u></strong></p>
-        <ol type="I" class="custom-list">
-          <strong>
-            <li>Senior High School Graduate who did not enroll in any college degree
-              program/technical/vocational/degree
-              program in any other school after graduation and will only enroll for the immediately following School
-              Year:</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
-              present the original copy for comparison purposes.</li>
-            <li>Certification of Enrollment from the last school attended (most recent).</li>
-          </ol>
-
-          <strong>
-            <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree
-              program
-              in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the
-              applicant
-              can present the original copy for comparison purposes.</li>
-            <li>Certification of Enrollment from the last school attended (most recent).</li>
-          </ol>
-          <strong>
-            <li>Grade 12 as of application period (Currently enrolled as Grade 12):</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified photocopy of Grade 11 Card</li>
-            <li>Certification of Enrollment from the last school attended.</li>
-          </ol>
-          <strong>
-            <li>ALS/PEPT Completer:</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
-              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
-              purposes.</li>
-            <li>Certification of Enrollment from the last school attended (most recent).</li>
-          </ol>
-          <strong>
-            <li>Transferee:</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
-              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
-              comparison purposes.</li>
-            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
-            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
-              your previous School.</li>
-          </ol>
-
-          <strong>
-            <li>Second Degree:</li>
-          </strong>
-          <ol class="rac-list" type="a">
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
-              family
-              name/surname of the husband</li>
-            <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
-            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
-              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
-              comparison purposes.</li>
-            <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school
-              attended</li>
-            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
-            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
-              your previous School.</li>
-          </ol>
-        </ol>
-        <p></p>
-
-        <p><label class="checkbox-container">
+        
+        <p class="note-color"><label class="checkbox-container">
         <input type="checkbox" id="read-guidelines" required>
         <span class="checkmark"></span> NOTE: CHECK AND PROCEED ONLY TO THE NEXT STEP IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE REQUIREMENTS WILL NOT BE ENTERTAINED!</p>
       </label>
