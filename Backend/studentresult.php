@@ -143,7 +143,8 @@ $stmt->fetch();
                         </div>
 
                     </div>
-                </div>     
+                </div>   
+    </div>  
           
         </main>
         <!-- MAIN -->
