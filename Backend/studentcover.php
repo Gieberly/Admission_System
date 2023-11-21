@@ -88,7 +88,7 @@ $admissionData = $resultAdmission->fetch_assoc();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            <a>Categories</a>
+          
             <form id="search-form">
                 <div class="form-input" style="display: none;">
                     <input type="text" id="searchInput" placeholder="Search...">
@@ -164,9 +164,10 @@ $admissionData = $resultAdmission->fetch_assoc();
             </div>
            </div>
             <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+            </div>
 
-        </div>
-
+</div>
+</div>
 
 
         <!-- CONTENT -->

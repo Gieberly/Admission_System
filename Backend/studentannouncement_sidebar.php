@@ -47,7 +47,9 @@ $admissionData = $resultAdmission->fetch_assoc();
 </head>
 
 <body>
-
+       <!-- MAIN -->
+ <section id="content">    
+     <main>
 <div id="dashboard-content">
                 <div class="head-title">
                     <div class="left">
@@ -261,5 +263,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                 </div>
 
             </div>
+       </main>
+       </section>
 </body>
 </html>
