@@ -241,29 +241,27 @@ $conn->close();
             <!-- Input grades for SHS-Board selection -->
             <div id="boardFields" class="programFields">
               <label class="small-label" for="englishGrade">English Grade</label>
-              <input type="number" class="input" name="englishGrade" id="englishGrade"
+              <input type="number" class="input grades-input" name="englishGrade" id="englishGrade"
                 placeholder="Enter English grade">
 
               <label class="small-label" for="mathGrade">Math Grade</label>
-              <input type="number" class="input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
+              <input type="number" class="input grades-input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
 
               <label class="small-label" for="scienceGrade">Science Grade</label>
-              <input type="number" class="input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
+              <input type="number" class="input grades-input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
 
-              <label class="small-label" for="gwaGrade">Science Grade</label>
-              <input type="number" class="input" name="gwaGrade" id="shsgwaGrade" placeholder="Enter GWA">
+              <label class="small-label" for="gwaGrade">GWA</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="shsgwaGrade" placeholder="Enter GWA">
 
               <button type="button" onclick="shsBoardSelection()">Submit</button>
-              <p id="gwaResult"></p>
             </div>
 
             <!-- Input field for Non-Board selection -->
             <div id="nonBoardField" class="programFields">
               <label class="small-label" for="gwaGrade">GWA Grade</label>
-              <input type="number" class="input" name="gwaGrade" id="gwaGrade" placeholder="Enter GWA grade">
+              <input type="number" class="input grades-input" name="gwaGrade" id="gwaGrade" placeholder="Enter GWA grade">
 
               <button type="button" onclick="submitNonBoardForm()">Submit</button>
-              <p id="nonBoardGwaResult"></p>
             </div>
 
 

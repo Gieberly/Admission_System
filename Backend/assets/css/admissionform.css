@@ -273,14 +273,14 @@ input[type="file"] {
 /* Style for the buttons */
 button {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 16px;
+  font-size: 12px;
   color: #fff;
   background-color: #007bff; /* Primary color, you can change this */
   border: none;
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 5px 10px;
+  margin: 5px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 3px;
   transition: background-color 0.3s ease;
 }
 
@@ -533,27 +533,33 @@ p.personal_information {
 /* Add this CSS for the grid layout with five fields in each row */
 .form-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Five equal-width columns */
+  grid-template-columns: repeat(4, 1fr); /* Five equal-width columns */
   gap: 15px; /* Adjust the gap between form groups */
 }
 
 .form-group {
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
+  margin-right: 15px; /* Adjust this value as needed */
 }
 
 /* Optional: Adjust the width of the label and input if needed */
 .small-label {
-  width: 200px; /* Adjust the width as needed */
+  width: 150px; /* Adjust the width as needed */
+  font-size: 16px; /* Adjust this value as needed */
 }
 
 .input {
   width: 100%; /* Input fields occupy the available width */
-  padding: 8px;
-  margin-top: 15px;
+  padding: 5px;
+  margin-top: 5px;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 3px;
 }
+
+.grades-input {
+  font-size: 12px; /* Adjust this value as needed */
+}
+
 /* Adjust the width and size of the Gender and Birthdate fields */
 #gender {
   padding: 10px; /* Adjust the padding as needed */
