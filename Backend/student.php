@@ -116,13 +116,13 @@ $admissionData = $resultAdmission->fetch_assoc();
                         <ul class="breadcrumb">
                             <li><a href="#">Announcement</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="student.html">Home</a></li>
+                            <li><a class="active" href="#">Home</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <ul class="box-info">
-                    <li id="available-box" class="box-icon">
+                    <li id="available-box">
                         <i class='bx bx-clipboard'></i>
                         <span class="text">
                             <h3>1020</h3>
@@ -132,7 +132,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 
 
-                    <li id="readmitted-box" class="box-icon">
+                    <li id="readmitted-box">
                         <i class='bx bx-calendar'></i>
                         <span class="text">
 
@@ -140,7 +140,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                         </span>
                     </li>
 
-                    <li id="nonqualified-box" class="box-icon">
+                    <li id="nonqualified-box">
                         <i class='bx bx-calendar'></i>
                         <span class="text">
 
