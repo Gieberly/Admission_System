@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($stmtCheckAdmission->num_rows > 0) {
                     // User has already filled out the admission form, redirect to student dashboard
-                    header("Location: ../Backend/student.php");
+                    header("Location: ../Backend/studentcontent_sidebar.php");
                     exit();
                 } else {
                     // User needs to fill out the admission form, redirect to admission form
