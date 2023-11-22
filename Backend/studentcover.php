@@ -56,21 +56,21 @@ $admissionData = $resultAdmission->fetch_assoc();
 
         <ul class="side-menu top">
             <li class="active">
-                <a href="#" id="profile-link">
+                <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-profile-link">
+                <a href="studentannouncement_sidebar.php" id="student-profile-link">
                     <i class='bx bxs-megaphone'></i>
                     <span class="text">Announcements</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-result-link">
+                <a href="studentresult_sidebar.php" id="student-result-link">
                     <i class='bx bxs-window-alt'></i>
                     <span class="text">Student Result</span>
                 </a>
