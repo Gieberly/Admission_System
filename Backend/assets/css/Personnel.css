@@ -696,6 +696,18 @@ nav {
 	color: var(--dark);
   }
 
+  #sortAZ {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #sortAZ .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+
 .nonboardProgram {
 	display: none;
 	border: 1px solid var(--dark);
@@ -1028,20 +1040,64 @@ nav {
 #content main .box-info li .text p {
 	color: var(--dark);	
 	font-size: 12px;
-
+ 
 
 }
+
 #content main .table-data {
 	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
-   
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
     margin-top: 10px;
     color: var(--dark);
+	
+
 }
+#table-container {
+	max-height: 400px; /* Set the desired max height for the table */
+	overflow-y: auto;
+  }
+/* Scrollbar styles */
+#table-container::-webkit-scrollbar {
+	width: 6px;
+
+  }
+  
+  #table-container::-webkit-scrollbar-thumb {
+	background-color: var(--green);
+	border-radius: 10px;
+  }
+  
+  #table-container::-webkit-scrollbar-track {
+	background-color: var(--light);
+  }
+  #table-container::-webkit-scrollbar-button:start:decrement,
+#table-container::-webkit-scrollbar-button:end:increment {
+  height: 5; /* Set height to 0 to make it smaller */
+}
+
+#table-container::-webkit-scrollbar-track-piece {
+  height: 5; /* Set height to 0 to make it smaller */
+}
+
+#table-container::-webkit-scrollbar-thumb:vertical {
+  min-height: 1px; /* Set a minimum height for the thumb */
+}
+
+  #table-container {
+	scrollbar-width: thin;
+  }
+  
+  #table-container {
+	scrollbar-color: var(--dark) var(--light);
+  }
+  
+
+  
+  
 #content main .table-data > div {
 	border-radius: 10px;
 	background: var(--light);
@@ -1049,10 +1105,13 @@ nav {
 	overflow-x: auto;
 }
 #content main .table-data .head {
-	
-	align-items: center;
-	grid-gap: 16px;
-	margin-bottom: 40px;
+    position: sticky;
+    top: 0;
+    background-color: var(--light);
+    z-index: 100;
+    align-items: center;
+    grid-gap: 16px;
+    margin-bottom: 40px;
 }
 #content main .table-data .head h3 {
 	font-size: 18px;
@@ -1064,45 +1123,68 @@ nav {
 }
 
 #content main .table-data .order {
-	flex-basis: 200px;
-	flex-grow: 1; /* Can grow to fill available space */
+    flex-basis: 200px;
+    flex-grow: 1; /* Can grow to fill available space */
+    overflow: auto; /* Add this line to enable scrolling within the container */
 }
 
 #content main .table-data .order table {
 	width: 100%;
 	border-collapse: collapse;
 	
+	
 }
 #content main .table-data .order table th {
 	border: none;
-	
     text-align: left;
     padding: 6px;
 	font-size: 12px;
-    background-color: rgba(229, 229, 229, 0.185);
+   
 	font-size: 10px;
 	white-space: normal;
-	border-bottom: 1px solid var(--grey);
-}
+	border-bottom: 1px solid var(--dark);
+	
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	
+	z-index: 2;
+	position: sticky;
+	top: 0;
+
+	background-color: var(--light);
+	
+  }
+
+
+  
 #content main .table-data .order table td {
 	border: none;
     padding: 6px;
-	font-size: 12px;
+	font-size: 10px;
+	font-family: 'Arial', sans-serif;
+
 }
-#content main .table-data .order table th, td {
-	
-	width: 0px;
-	max-width: 0px;
-	white-space: normal; /* or white-space: pre; */
-	overflow: visible; /* or overflow: auto; */
-	text-overflow: ellipsis;
-  }
+
+
   #content main .table-data .order table tr td:first-child {
+	font-family: 'Arial', sans-serif; 
 	display: flex;
 	align-items: center;
 	grid-gap: 12px;
 	padding-left: 6px;
 }
+
+
+#content main .table-data .order table tbody tr:nth-child(even) {
+   
+	background-color:fff;
+}
+
+#content main .table-data .order table tbody tr:nth-child(odd) {
+    background-color: #f0f0f0; 
+}
+
 #content main .table-data .order table td img {
 	width: 36px;
 	height: 36px;
@@ -1110,7 +1192,7 @@ nav {
 	object-fit: cover;
 }
 #content main .table-data .order table tbody tr:hover {
-	background: var(--grey);
+	background: var(--dark-grey);
 }
 #content main .table-data .order table tr td .status {
 	font-size: 10px;
@@ -1154,7 +1236,15 @@ nav {
 	color:var(--light);
 }
 #content main .table-data .order table tr td .button.edit:hover {
-	background-color: var(--lighter-grey);
+	background-color: var(--light-blue);
+  	color: var(--gray);
+}
+#content main .table-data .order table tr td .button.save {
+	background-color: var(--green);
+	color:var(--light);
+}
+#content main .table-data .order table tr td .button.save:hover {
+	background-color: var(--light-green);
   	color: var(--gray);
 }
 #content main .table-data .order table tr td .button.delete {
@@ -1162,7 +1252,7 @@ nav {
  	color: var(--light); 
 }
 #content main .table-data .order table tr td .button.delete:hover {
-	background-color: var(--lighter-grey);
+	background-color: var(--light-red);
   	color:var(--gray);
 }
 

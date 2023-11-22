@@ -44,12 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
     $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
     
-         // Check if the email entered in the admission form matches the one saved in the session
-    $registered_email = $_SESSION['registered_email'];
-    if ($email !== $registered_email) {
-        echo "Error: Email mismatch. Please use the same email as in registration.";
-        exit();
-    }
+
 
 // Check if a file was uploaded
 if ($id_picture['error'] === UPLOAD_ERR_OK) {
@@ -738,18 +733,18 @@ $conn->close();
             <label class="small-label" for="academic_classification">Academic Classification</label>
             <select name="academic_classification" class="input" id="academic_classification" required>
               <option value="" disabled selected>Select Academic Classification</option>
-              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)
+              <option value="Currently enrolled as Grade 12 student">Currently enrolled as Grade 12 student (Graduating for the current year)
               </option>
-              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after
+              <option value="Senior High School Graduate">Senior High School Graduate (who did not enroll in any other school after
                 graduation)</option>
-              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after
+              <option value="High School Graduate">High School Graduate (who did not enroll in any other school after
                 graduation)
               </option>
-              <option value="als_pept_passer">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="ALS A&E SHS level passer/ PEPT Passer">ALS A&E SHS level passer/ PEPT Passer</option>
               <option value="transferee">Transferee (previously enrolled as a college student from another school)
               </option>
-              <option value="vocational_completers">Vocational/Technical-Vocational Completers</option>
-              <option value="second_degree">Second (2nd) Degree</option>
+              <option value="Technical-Vocational Completers">Vocational/Technical-Vocational Completers</option>
+              <option value="Second Degree">Second (2nd) Degree</option>
             </select>
           </div>
         </div>
