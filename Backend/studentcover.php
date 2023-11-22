@@ -141,7 +141,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 <div class="dropdown" id="help-dropdown">
                    <!-- Content for Help and Support dropdown -->
                   <!-- Trigger for the FAQ pop-up -->
-<a href="#" onclick="openPopup('faq-popup')">FAQ </a>
+<a href="student_faq.php" onclick="openPopup('faq-popup')">FAQ </a>
 <a href="#" onclick="toggleDevonContent()">Connect With us</a>
 <div id="devon-content"class style="display: none;">
 <div class="social-icons-container">
@@ -157,8 +157,8 @@ $admissionData = $resultAdmission->fetch_assoc();
     <!-- Instagram -->
     <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
 
-    <!-- YouTube -->
-    <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+    <!-- BSU website -->
+    <a href="http://www.bsu.edu.ph/" target="_blank" title="BSU_website"><i class='bx bx-world'></i></a>
 </div>
 
             </div>
