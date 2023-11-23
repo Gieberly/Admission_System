@@ -28,11 +28,11 @@ function run(hideTab, showTab) {
         var englishGrade = parseFloat(document.getElementById("englishGrade").value);
         var mathGrade = parseFloat(document.getElementById("mathGrade").value);
         var scienceGrade = parseFloat(document.getElementById("scienceGrade").value);
-        var shsgwaGrade = parseFloat(document.getElementById("shsgwaGrade").value);
+        var bgwaGrade = parseFloat(document.getElementById("bgwaGrade").value);
 
-        if (isNaN(englishGrade) || isNaN(mathGrade) || isNaN(scienceGrade) ||
+        if (isNaN(englishGrade) || isNaN(mathGrade) || isNaN(scienceGrade) || isNaN(bgwaGrade) ||
           englishGrade < 0 || mathGrade < 0 || scienceGrade < 0 ||
-          englishGrade > 100 || mathGrade > 100 || scienceGrade > 100) {
+          englishGrade > 100 || mathGrade > 100 || scienceGrade > 100 || bgwaGrade > 100) {
           alert("Please enter valid grades for english, Math and Science before proceeding");
           return false;
         }
@@ -120,59 +120,23 @@ function run(hideTab, showTab) {
   window.scrollTo(0, 0);
 }
 
-
-
-function updateSelection() {
-  var selectedValue = document.getElementById("categoryDropdown").value;
-
-    // Hide all classification fields initially
-    document.getElementById("boardclassificationFields").style.display = "none";
-    document.getElementById("nonboardclassificationFields").style.display = "none";
-
-    // Show the relevant classification field based on the selected value
-    if (selectedValue === "Board") {
-      document.getElementById("boardclassificationFields").style.display = "block";
-      document.getElementById("nonBoardField").style.display = "none";
-      document.getElementById("boardFields").style.display = "none";
-    } 
-    else if (selectedValue === "Non-board") {
-      document.getElementById("nonboardclassificationFields").style.display = "block";
-      document.getElementById("boardFields").style.display = "none";
-      document.getElementById("nonBoardField").style.display = "none";
-    }
-
-  // Copy the selected nature of degree to Tab-2 input field
-  document.getElementById("nature_of_degree").value = natureOfDegree;
-
-}
-
-const academicClassificationSelect = document.getElementById('academic_classification');
-const programFieldsDivs = document.querySelectorAll('.programFields');
-
-academicClassificationSelect.addEventListener('change', () => {
-  if (academicClassificationSelect.value === 'board-shs') {
-    programFieldsDivs.forEach((div) => {
-      if (div.id !== 'boardFields') {
-        div.style.display = 'none';
-      }
-    });
-
-    document.getElementById('boardFields').style.display = 'block';
-  } else if (academicClassificationSelect.value === 'board-transferee' || academicClassificationSelect.value === 'board-als-pept') {
-    programFieldsDivs.forEach((div) => {
-      if (div.id !== 'nonBoardField') {
-        div.style.display = 'none';
-      }
-    });
-
-    document.getElementById('nonBoardField').style.display = 'block';
-  } else {
-    programFieldsDivs.forEach((div) => {
-      div.style.display = 'none';
-    });
-  }
+document.addEventListener('DOMContentLoaded', function () {
+  // Your script code here
+  updateSelection();
 });
 
+function updateSelection(answer) {
+  console.log(answer.value);
+  if(answer.value == 1 || answer.value == 0) {
+    document.getElementById('classificationFields').classList.remove('programFields');
+  } else {
+    document.getElementById('classificationFields').classList.add('programFields');
+  }
+ }
+ 
+
+  // Copy the selected nature of degree to Tab-2 input field
+  //document.getElementById("nature_of_degree").value = natureOfDegree;
 
 function updateDegreeFields() {
   // Get the selected value from the board program dropdown

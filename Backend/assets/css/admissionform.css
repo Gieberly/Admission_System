@@ -632,14 +632,6 @@ p.personal_information {
   .programFields {
     display: none;
   }
-
-  .boardclassificationFields {
-    display: none;
-  }
-  
-  .nonboardclassificationFields {
-    display: none;
-  }
   
 /* Apply styles to the page container */
 .page-container {

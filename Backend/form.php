@@ -235,8 +235,7 @@ $conn->close();
               family
               name/surname of the husband</li>
             <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
+              nametag</li>
             <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
               present the original copy for comparison purposes.</li>
             <li>Certification of Enrollment from the last school attended (most recent).</li>
@@ -345,48 +344,23 @@ $conn->close();
           <div class="form-container">
             <div class="form-group">
               <label class="small-label" for="categoryDropdown">Select Program</label>
-              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
+              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection(this)">
                 <option value="" disabled selected>Select nature of degree</option>
-                <option value="Board">Board</option>
-                <option value="Non-board">Non-Board</option>
+                <option value="1">Board</option>
+                <option value="0">Non-Board</option>
               </select>
             </div>
 
-             <!-- Input Board Academic Classification Selection -->
-            <div class="boardclassificationFields" id="boardclassificationFields">
+             <!-- Input Academic Classification Selection -->
+            <div class="programFields" id="classificationFields">
             <label class="small-label" for="academic_classification">Academic Classification</label>
-            <select name="academic_classification" class="input" id="academic_classification" onchange="updateBoardSelection()">
+            <select name="academic_classification" class="input" id="academic_classification" onchange="updateAcademicSelection()">
               <option value="" disabled selected>Select Academic Classification</option>
-              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)
-              </option>
-              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after
-                graduation)</option>
-              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after
-                graduation)
-              </option>
+              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after graduation)</option>
               <option value="als_pept_passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="transferee">Transferee (previously enrolled as a college student from another school)
-              </option>
-              <option value="vocational_completers">Vocational/Technical-Vocational Completers</option>
-              <option value="second_degree">Second (2nd) Degree</option>
-            </select>
-          </div>
-
-          <!-- Input Non-Board Academic Classification Selection -->
-          <div class="nonboardclassificationFields" id="nonboardclassificationFields">
-            <label class="small-label" for="academic_classification">Academic Classification</label>
-            <select name="academic_classification" class="input" id="academic_classification-non" onchange="updateNonBoardSelection()">
-              <option value="" disabled selected>Select Academic Classification</option>
-              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)
-              </option>
-              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after
-                graduation)</option>
-              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after
-                graduation)
-              </option>
-              <option value="als_pept_passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="transferee">Transferee (previously enrolled as a college student from another school)
-              </option>
+              <option value="transferee">Transferee (previously enrolled as a college student from another school)</option>
               <option value="vocational_completers">Vocational/Technical-Vocational Completers</option>
               <option value="second_degree">Second (2nd) Degree</option>
             </select>
@@ -405,7 +379,7 @@ $conn->close();
               <input type="number" class="input grades-input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
 
               <label class="small-label" for="gwaGrade">GWA</label>
-              <input type="number" class="input grades-input" name="gwaGrade" id="shsgwaGrade" placeholder="Enter GWA">
+              <input type="number" class="input grades-input" name="gwaGrade" id="bgwaGrade" placeholder="Enter GWA">
 
               <button type="button" onclick="shsBoardSelection()">Submit</button>
             </div>
