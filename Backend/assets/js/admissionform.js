@@ -120,20 +120,19 @@ function run(hideTab, showTab) {
   window.scrollTo(0, 0);
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  // Your script code here
-  updateSelection();
-});
+const categoryDropdown = document.getElementById('categoryDropdown');
+const classificationFields = document.getElementById('classificationFields');
 
-function updateSelection(answer) {
-  console.log(answer.value);
-  if(answer.value == 1 || answer.value == 0) {
-    document.getElementById('classificationFields').classList.remove('programFields');
+// Initially hide the classificationFields div
+classificationFields.style.display = 'none';
+
+categoryDropdown.addEventListener('change', () => {
+  if (categoryDropdown.value === 'Board' || categoryDropdown.value === 'Non-board') {
+    classificationFields.style.display = 'block';
   } else {
-    document.getElementById('classificationFields').classList.add('programFields');
+    classificationFields.style.display = 'none';
   }
- }
- 
+});
 
   // Copy the selected nature of degree to Tab-2 input field
   //document.getElementById("nature_of_degree").value = natureOfDegree;
