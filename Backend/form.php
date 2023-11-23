@@ -741,7 +741,7 @@ $conn->close();
                 graduation)
               </option>
               <option value="ALS A&E SHS level passer/ PEPT Passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="transferee">Transferee (previously enrolled as a college student from another school)
+              <option value="Transferee">Transferee (previously enrolled as a college student from another school)
               </option>
               <option value="Technical-Vocational Completers">Vocational/Technical-Vocational Completers</option>
               <option value="Second Degree">Second (2nd) Degree</option>

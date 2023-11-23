@@ -269,7 +269,7 @@ justify-content: center;
     border-radius: 10px; /* Adjust the radius as needed */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
     overflow: hidden;
-    z-index: 1;
+    z-index: 50000;
 }
 /* Styles for the profile popup */
 #profile-popup {
@@ -286,7 +286,7 @@ justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
     margin-right: 25px; /* Adjust the margin-right value as needed */
     overflow-y: auto;
-    z-index: 2; /* Ensure the profile pop-up appears above the message pop-up */
+    z-index: 50000;/* Ensure the profile pop-up appears above the message pop-up */
 }
 
 .popup-content {
@@ -1178,11 +1178,11 @@ nav {
 
 #content main .table-data .order table tbody tr:nth-child(even) {
    
-	background-color:fff;
+	background-color:var();
 }
 
 #content main .table-data .order table tbody tr:nth-child(odd) {
-    background-color: #f0f0f0; 
+    background-color: rgba(236, 236, 236, 0.383); 
 }
 
 #content main .table-data .order table td img {
@@ -1466,11 +1466,84 @@ select {
 }
 
 
-/* Add a margin-left to the dropdown elements */
-.dropdown {
-	display: none;
-	margin-left: 30px;
-	/* Adjust the value as needed */
+.ProgramDropdown {
+    width: 160;
+    padding: 2px;
+    font-size: 11px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+   
+	line-height: 1;
+	margin: 2px 0;
+}
+
+.ProgramDropdown:hover {
+    border-color: #999;
+}
+
+.ProgramDropdown:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+/* Style the dropdown arrow */
+.ProgramDropdown::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+/* Style the options */
+.ProgramDropdown option {
+    font-size: 11px;
+	
 }
 
 
+label[for="rangeInput"] {
+    display: block;
+    margin-bottom: 4px; /* Optional: Adjust the margin as needed */
+    font-size: 14px; /* Match the font size with .ProgramDropdown */
+}
+
+.ForRange {
+    width: 50;
+    padding: 2px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+	text-align: center;
+    line-height: 1;
+    margin: 2px 0;
+}
+
+.ForRange:hover {
+    border-color: #999;
+}
+
+.ForRange:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+/* Style the dropdown arrow */
+.ForRange::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.spacing {
+    width: 16px; /* Adjust the height for the desired spacing */
+}

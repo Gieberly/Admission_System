@@ -11,7 +11,9 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
 }
 
 // Retrieve student data from the database
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied FROM admission_data ORDER BY applicant_name ASC";
+// Modify your SQL query to include a WHERE clause
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied FROM admission_data WHERE degree_applied IN 
+('Bachelor of Science in Agriculture Major in Agronomy', 'Bachelor of Science in Agriculture Major in Agricultural Economics', 'Bachelor of Science in Agriculture Major in Agroforestry', 'Bachelor of Science in Agriculture Major in Animal Science') ORDER BY applicant_name ASC";
 
 $result = $conn->query($query);
 // Fetch user information from the database based on user ID
@@ -41,33 +43,31 @@ $stmt->fetch();
 <main>
 <div id="master-list-content">
                 <div class="head-title">
-                    <div class="left">
-                        <h1>Master List</h1>
+                <div class="left">
+                        <h1>Colleges</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Master List</a></li>
+                            <li><a href="#">Colleges</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Home</a></li>
+                            <li><p">BSA</p></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-download">Download</a>
-                    
-                    
                 </div>
+                 
                 <!--master list-->
                 <div id="master-list">
     <div class="table-data">
                 <div class="order">
                 <div class="head">
-                                <h3>List of Students</h3>  
+                                <h3>List of Students</h3>
                             <div class="headfornaturetosort">
                                 <!--Drop Down for Nature of Degree--> 
-                              
-<select class="ProgramDropdown" id="NatureofDegree" onchange="filterStudents()">
+<select class="ProgramDropdown" id="ProgramDropdown" onchange="filterStudents()">
     <option value="all">All</option>
-    <option value="Non-Board">Non-Board</option>
-    <option value="Board">Board</option>
+    <option value="Bachelor of Science in Agriculture Major in Agronomy">Agronomy</option>
+    <option value="Bachelor of Science in Agriculture Major in Agricultural Economics"> Agricultural Economics</option>
+    <option value="Bachelor of Science in Agriculture Major in Agroforestry">Agroforestry</option>
+    <option value="Bachelor of Science in Agriculture Major in Animal Science">Animal Science</option>
 </select>
-                                  
 <div class="spacing"></div>
                                 
  <label for="rangeInput"></label>
@@ -87,7 +87,7 @@ $stmt->fetch();
                             </div>
                             </div>
             <div id="table-container">
-            <table id="studentTable">
+                <table>
 
                     <thead>
                         <tr>
@@ -146,10 +146,6 @@ while ($row = $result->fetch_assoc()) {
     <div class="toast-body" id="toast-body"></div>
 </div>
 
-
-
-
-
 <script>
         // Function to update the Rank column based on the order of the rows
         function updateRankColumn() {
@@ -179,17 +175,17 @@ $(document).ready(function () {
             }
         });
     });
+ 
 
 
-
-$('#sortButton').on('click', function () {
+   $('#sortButton').on('click', function () {
     // Reset the counter to 1
     var counter = 1;
 
     // Get all table rows
     var rows = $('#table-container table tbody tr');
 
-    // Sort the rows based on GWA values in descending order
+    // Rank the rows based on GWA values in descending order
     rows.sort(function (a, b) {
         var gwaA = parseFloat($(a).find('td[data-column="gwa_grade"]').text());
         var gwaB = parseFloat($(b).find('td[data-column="gwa_grade"]').text());
@@ -210,28 +206,27 @@ $('#sortButton').on('click', function () {
     updateRankColumn();
 });
 
-// Delete button click event
-$('.delete').on('click', function () {
-    var id = $(this).data('id');
+ // Delete button click event
+ $('.delete').on('click', function () {
+        var id = $(this).data('id');
 
-    // Confirm deletion
-    if (confirm("Are you sure you want to delete this entry?")) {
-        // Send AJAX request to delete the row
-        $.ajax({
-            url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
-            type: 'POST',
-            data: {
-                id: id  // Fix: use id instead of i
-            },
-            success: function (response) {
-                console.log(response);
-                // Reload the page or update the table as needed
-                location.reload(); // Example: Reload the page
-            }
-        });
-    }
-});
-
+        // Confirm deletion
+        if (confirm("Are you sure you want to delete this entry?")) {
+            // Send AJAX request to delete the row
+            $.ajax({
+                url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
+                type: 'POST',
+                data: {
+                    id: i
+                },
+                success: function (response) {
+                    console.log(response);
+                    // Reload the page or update the table as needed
+                    location.reload(); // Example: Reload the page
+                }
+            });
+        }
+    });
 
 
 // JavaScript to show and hide the toast
@@ -287,16 +282,16 @@ function showToast(message) {
     // Reset the counter to 1
     var counter = 1;
 
-    var selectedValue = document.getElementById("NatureofDegree").value.toLowerCase(); // Convert to lowercase
+    var selectedProgram = document.getElementById("ProgramDropdown").value.toLowerCase(); // Assuming you have a dropdown for programs
 
     // Get all table rows
     var rows = document.querySelectorAll("#table-container table tbody tr");
 
-    // Loop through each row and show/hide based on the selected value
+    // Loop through each row and show/hide based on the selected program
     rows.forEach(function (row) {
-        var natureOfDegree = row.querySelector("td[data-column='nature_of_degree']").innerText.trim().toLowerCase(); // Convert to lowercase
+        var program = row.querySelector("td[data-column='degree_applied']").innerText.trim().toLowerCase(); // Assuming your column for the program is 'degree_applied'
 
-        if (selectedValue === "all" || selectedValue === natureOfDegree) {
+        if (selectedProgram === "all" || selectedProgram === program) {
             row.style.display = "";
             // Update the counter for displayed rows
             row.querySelector("td:first-child").innerText = counter++;
@@ -305,7 +300,6 @@ function showToast(message) {
         }
     });
 }
-
 
 $('#viewButton i').on('click', function () {
             var rangeInput = $('#rangeInput').val();
@@ -335,27 +329,7 @@ $('#viewButton i').on('click', function () {
                 }
             });
         }
-    
-// Add Download button click event
-$('.btn-download').on('click', function () {
-    // Use TableExport library to export the table to Excel
-    var table = document.getElementById('studentTable');
-    var exportData = new TableExport(table, {
-        formats: ['xlsx'],
-        filename: 'students',
-    });
 
-    // Get the Excel file data
-    var exportBlob = exportData.export2blob();
-
-    // Create a download link and trigger the download
-    var link = document.createElement('a');
-    link.href = window.URL.createObjectURL(exportBlob);
-    link.download = 'students.xlsx';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-});
 
  </script>
 

@@ -9,7 +9,7 @@ allSideMenu.forEach(item=> {
 		})
 		li.classList.add('active');
 	})
-});
+}); 
 
  
 
@@ -72,6 +72,27 @@ switchMode.addEventListener('change', function () {
 	}
 })
 
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdownContent = toggle.nextElementSibling;
+            const chevronIcon = toggle.querySelector('.bx-chevron-down');
+
+            // Toggle the visibility of the dropdown content
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+                chevronIcon.style.transform = 'rotate(0deg)';
+            } else {
+                dropdownContent.style.display = 'block';
+                chevronIcon.style.transform = 'rotate(180deg)';
+            }
+        });
+    });
+});
 
 
 //side bar

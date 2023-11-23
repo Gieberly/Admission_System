@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const currentURL = window.location.href;
 
+    // Retrieve the sidebar state from local storage
+    const sidebarState = localStorage.getItem('sidebarState');
+    const sidebar = document.getElementById('sidebar');
+
+    // Set the initial state of the sidebar based on local storage
+    if (sidebarState === 'hidden') {
+        sidebar.classList.add('hide');
+    }
+
     allSideMenu.forEach(item => {
         const li = item.parentElement;
 
@@ -27,19 +36,36 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Check if the current URL includes any of the dropdown links and set "Colleges" as active
+    const dropdownLinks = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
+    dropdownLinks.forEach(link => {
+        if (currentURL.includes(link.getAttribute('href'))) {
+            document.querySelector('#course-link').parentElement.classList.add('active');
+        }
+    });
+
+    // Add an event listener for the "Colleges" dropdown to unhide the sidebar
+    const coursesDropdown = document.getElementById('courses-dropdown');
+    const coursesDropdownLink = document.getElementById('course-link');
+    coursesDropdownLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        sidebar.classList.remove('hide');
+        localStorage.setItem('sidebarState', 'visible');
+    });
 });
-
-
- 
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 
 menuBar.addEventListener('click', function () {
-	sidebar.classList.toggle('hide');
-})
+    // Toggle the 'hide' class on the sidebar
+    sidebar.classList.toggle('hide');
 
+    // Store the state of the sidebar in local storage
+    const sidebarState = sidebar.classList.contains('hide') ? 'hidden' : 'visible';
+    localStorage.setItem('sidebarState', sidebarState);
+});
 
 
 
@@ -116,6 +142,27 @@ document.addEventListener('DOMContentLoaded', function () {
             abbreviation.style.fontSize = ''; // Empty string resets to the default size
             abbreviation.style.whiteSpace = 'nowrap'; // Display on one line
             abbreviation.textContent = originalAbbreviation;
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdownContent = toggle.nextElementSibling;
+            const chevronIcon = toggle.querySelector('.bx-chevron-down');
+
+            // Toggle the visibility of the dropdown content
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+                chevronIcon.style.transform = 'rotate(0deg)';
+            } else {
+                dropdownContent.style.display = 'block';
+                chevronIcon.style.transform = 'rotate(180deg)';
+            }
         });
     });
 });
