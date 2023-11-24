@@ -351,26 +351,40 @@ $conn->close();
               </select>
             </div>
 
-             <!-- Input Academic Classification Selection -->
-            <div class="programFields" id="classificationFields">
+             <!-- Input Academic Classification Selection (Board)-->
+            <div class="programFields" id="boardclassificationFields">
             <label class="small-label" for="academic_classification">Academic Classification</label>
-            <select name="academic_classification" class="input" id="academic_classification" onchange="updateAcademicSelection()">
+            <select name="academic_classification" class="input" id="academic_classification_board" onchange="updateBoardSelection()">
               <option value="" disabled selected>Select Academic Classification</option>
-              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
-              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
-              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after graduation)</option>
-              <option value="als_pept_passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="transferee">Transferee (previously enrolled as a college student from another school)</option>
-              <option value="vocational_completers">Vocational/Technical-Vocational Completers</option>
-              <option value="second_degree">Second (2nd) Degree</option>
+              <option value="grade_12b">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduateb">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduateb">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passerb">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereeb">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersb">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreeb">Second (2nd) Degree</option>
+            </select>
+          </div>
+
+            <!-- Input Academic Classification Selection (Non-Board) -->
+            <div class="programFields" id="nonclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="updateNonBoardSelection()">
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="grade_12n">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduaten">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduaten">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passern">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereen">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersn">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreen">Second (2nd) Degree</option>
             </select>
           </div>
           
-            <!-- Input grades for SHS-Board selection -->
-            <div id="shsboardFields" class="programFields">
+            <!-- Input grades for Highschool-Board selection -->
+            <div id="hsboardFields" class="programFields">
               <label class="small-label" for="englishGrade">English Grade</label>
-              <input type="number" class="input grades-input" name="englishGrade" id="englishGrade"
-                placeholder="Enter English grade">
+              <input type="number" class="input grades-input" name="englishGrade" id="englishGrade" placeholder="Enter English grade">
 
               <label class="small-label" for="mathGrade">Math Grade</label>
               <input type="number" class="input grades-input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
@@ -381,41 +395,23 @@ $conn->close();
               <label class="small-label" for="gwaGrade">GWA</label>
               <input type="number" class="input grades-input" name="gwaGrade" id="bgwaGrade" placeholder="Enter GWA">
 
-              <button type="button" onclick="shsBoardSelection()">Submit</button>
+              <button type="button" onclick="hsBoardSelection()">Submit</button>
             </div>
 
-            <!-- Input grades for Transferee-Board selection -->
-            <div id="transfereeboardFields" class="programFields">
+            <!-- Input grades for Transferee/Vocational/Non-board selection -->
+            <div id="tvnFields" class="programFields">
               <label class="small-label" for="gwaGrade">GWA</label>
-              <input type="number" class="input grades-input" name="gwaGrade" id="transfereegwaGrade"
-                placeholder="Enter GWA">
+              <input type="number" class="input grades-input" name="gwaGrade" id="tvgwaGrade" placeholder="Enter GWA">
 
-              <button type="button" onclick="transfereeBoardSelection()">Submit</button>
+              <button type="button" onclick="tvnSelection()">Submit</button>
             </div>
 
-            <!-- Input grades for ALS/PEPT-Board selection -->
-            <div id="alsboardFields" class="programFields">
+            <!-- Input grades for ALS/PEPT selection -->
+            <div id="alsFields" class="programFields">
               <label class="small-label" for="gwaGrade">Overall PRC</label>
-              <input type="number" class="input grades-input" name="gwaGrade" id="prcboardGrade"
-                placeholder="Enter Overall PRC">
+              <input type="number" class="input grades-input" name="gwaGrade" id="prcGrade" placeholder="Enter Overall PRC">
 
-              <button type="button" onclick="alsBoardSelection()">Submit</button>
-            </div>
-
-            <!-- Input field for Non-Board selection -->
-            <div id="nonBoardField" class="programFields">
-              <label class="small-label" for="gwaGrade">GWA Grade</label>
-              <input type="number" class="input grades-input" name="gwaGrade" id="gwaGrade" placeholder="Enter GWA grade">
-
-              <button type="button" onclick="submitNonBoardForm()">Submit</button>
-            </div>
-
-            <!-- Input field for ALS/PEPT-Non-Board selection -->
-            <div id="alsnonBoardField" class="programFields">
-              <label class="small-label" for="gwaGrade">Overall PRC</label>
-              <input type="number" class="input grades-input" name="gwaGrade" id="nonalsgwaGrade" placeholder="Enter Overall PRC">
-
-              <button type="button" onclick="submitalsNonBoardForm()">Submit</button>
+              <button type="button" onclick="alsSelection()">Submit</button>
             </div>
 
             <div class="form-group">
@@ -964,7 +960,7 @@ $conn->close();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 
 
-  <script src="assets\js\admissionform.js"></script>
+  <script defer src="assets\js\admissionform.js"></script>
 
 
 </body>

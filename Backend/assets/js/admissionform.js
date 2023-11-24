@@ -14,50 +14,58 @@ function run(hideTab, showTab) {
 
     if (hideTab === 1) {
 
-      // Validate the selected program
-      var natureOfDegree = document.getElementById("categoryDropdown").value;
-      if (natureOfDegree === "") {
-        alert("Please select the nature of the degree before proceeding.");
+// Validate the selected program
+var natureOfDegree = document.getElementById("categoryDropdown").value;
+if (natureOfDegree === "") {
+    alert("Please select the nature of the degree before proceeding.");
+    return false;
+}
+
+// Validate Academic Classification
+var academicClassification = document.getElementById("academic_classification").value; // Corrected variable name
+if (academicClassification === "") {
+    alert("Please select academic classification before proceeding.");
+    return false;
+}
+
+// Additional validation based on the natureOfDegree can be added here if needed
+
+// Prompt for grades or values based on the nature of the degree and academic classification
+var gradeRequirement = false;
+
+if (natureOfDegree === "Board" && (AcademicClassification === "grade_12" || AcademicClassification === "shs_graduate" || AcademicClassification === "hs_graduate" || AcademicClassification === "second_degree")) {
+    gradeRequirement = true;
+} else if (natureOfDegree === "Board" && (AcademicClassification === "transferee" || AcademicClassification === "vocational_completers")) {
+    gradeRequirement = true;
+} else if (natureOfDegree === "Board" && AcademicClassification === "als_pept_passer") {
+    gradeRequirement = true;
+} else if (natureOfDegree === "Non-board" && (AcademicClassification === "grade_12" || AcademicClassification === "shs_graduate" || AcademicClassification === "hs_graduate" || AcademicClassification === "second_degree" || AcademicClassification === "transferee" || AcademicClassification === "vocational_completers")) {
+    gradeRequirement = true;
+} else if (natureOfDegree === "Non-board" && AcademicClassification === "als_pept_passer") {
+    gradeRequirement = true;
+}
+
+if (gradeRequirement) {
+    var inputValue = parseFloat(document.getElementById("inputValue").value);
+
+    if (isNaN(inputValue) || inputValue < 0 || inputValue > 100) {
+        alert("Please enter a valid value before proceeding.");
         return false;
-      }
-
-      // Additional validation based on the natureOfDegree can be added here if needed
-
-      // If the nature of the degree is "Board", prompt for grades
-      if (natureOfDegree === "Board") {
-        var englishGrade = parseFloat(document.getElementById("englishGrade").value);
-        var mathGrade = parseFloat(document.getElementById("mathGrade").value);
-        var scienceGrade = parseFloat(document.getElementById("scienceGrade").value);
-        var bgwaGrade = parseFloat(document.getElementById("bgwaGrade").value);
-
-        if (isNaN(englishGrade) || isNaN(mathGrade) || isNaN(scienceGrade) || isNaN(bgwaGrade) ||
-          englishGrade < 0 || mathGrade < 0 || scienceGrade < 0 ||
-          englishGrade > 100 || mathGrade > 100 || scienceGrade > 100 || bgwaGrade > 100) {
-          alert("Please enter valid grades for english, Math and Science before proceeding");
-          return false;
-        }
-      } else if (natureOfDegree === "Non-board") {
-        // If the nature of the degree is "Non-board", prompt for GWA
-        var gwaGrade = parseFloat(document.getElementById("gwaGrade").value);
-
-        if (isNaN(gwaGrade) || gwaGrade < 0 || gwaGrade > 100) {
-          alert("Please enter a valid GWA before proceeding.");
-          return false;
-        }
-      }
+    }
+}
 
       // Prompt the user to select a program
       var selectedProgram;
       if (natureOfDegree === "Board") {
         selectedProgram = document.getElementById("board-programs").value;
         if (selectedProgram === "") {
-          alert("Please select a board program before proceeding.");
+          alert("Please select academic classification before proceeding.");
           return false;
         }
       } else if (natureOfDegree === "Non-board") {
         selectedProgram = document.getElementById("NonBoardProgram").value;
         if (selectedProgram === "") {
-          alert("Please select a non-board program before proceeding.");
+          alert("Please select academic classification before proceeding.");
           return false;
         }
       }
@@ -120,19 +128,65 @@ function run(hideTab, showTab) {
   window.scrollTo(0, 0);
 }
 
-const categoryDropdown = document.getElementById('categoryDropdown');
-const classificationFields = document.getElementById('classificationFields');
+function updateSelection() {
+  const selectedProgram = document.getElementById('categoryDropdown').value;
+  const boardClassificationFields = document.getElementById('boardclassificationFields');
+  const nonBoardClassificationFields = document.getElementById('nonclassificationFields');
 
-// Initially hide the classificationFields div
-classificationFields.style.display = 'none';
+  // Hide both classification fields initially
+  boardClassificationFields.style.display = 'none';
+  nonBoardClassificationFields.style.display = 'none';
 
-categoryDropdown.addEventListener('change', () => {
-  if (categoryDropdown.value === 'Board' || categoryDropdown.value === 'Non-board') {
-    classificationFields.style.display = 'block';
-  } else {
-    classificationFields.style.display = 'none';
+  if (selectedProgram === 'Board') {
+    boardClassificationFields.style.display = 'block';
+  } else if (selectedProgram === 'Non-board') {
+    nonBoardClassificationFields.style.display = 'block';
   }
-});
+}
+
+function updateBoardSelection() {
+  const selectedBoardClassification = document.getElementById('academic_classification_board').value;
+  const hsBoardFields = document.getElementById('hsboardFields');
+  const tvnFields = document.getElementById('tvnFields');
+  const alsFields = document.getElementById('alsFields');
+
+  // Hide all programFields initially
+  hsBoardFields.style.display = 'none';
+  tvnFields.style.display = 'none';
+  alsFields.style.display = 'none';
+
+  if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb') {
+    hsBoardFields.style.display = 'block';
+    tvnFields.style.display = 'none';
+    alsFields.style.display = 'none';
+  } else if (selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb') {
+    tvnFields.style.display = 'block';
+    hsBoardFields.style.display = 'none';
+    alsFields.style.display = 'none';
+  } else {
+    alsFields.style.display = 'block';
+    hsBoardFields.style.display = 'none';
+    tvnFields.style.display = 'none';
+  }
+}
+
+function updateNonBoardSelection() {
+  const selectedNonBoardClassification = document.getElementById('academic_classification_nonboard').value;
+  const tvnFields = document.getElementById('tvnFields');
+  const alsFields = document.getElementById('alsFields');
+
+  // Hide all programFields initially
+  tvnFields.style.display = 'none';
+  alsFields.style.display = 'none';
+
+  if (selectedNonBoardClassification === 'als_pept_passern') {
+    alsFields.style.display = 'block';
+    tvnFields.style.display = 'none';
+  } else {
+    tvnFields.style.display = 'block';
+    alsFields.style.display = 'none';
+  }
+}
 
   // Copy the selected nature of degree to Tab-2 input field
   //document.getElementById("nature_of_degree").value = natureOfDegree;
@@ -154,23 +208,54 @@ function updateDegreeFields() {
   document.getElementById("slip_degree").value = selectedValue;
 }
 
-function shsBoardSelection() {
-  var natureOfDegree = document.getElementById("categoryDropdown").value;
+function hsBoardSelection() {
+  const englishGrade = parseInt(document.getElementById('englishGrade').value);
+  const mathGrade = parseInt(document.getElementById('mathGrade').value);
+  const scienceGrade = parseInt(document.getElementById('scienceGrade').value);
+  const gwaGrade = parseFloat(document.getElementById('bgwaGrade').value);
 
-  if (natureOfDegree === "Board") {
-    var englishGrade = parseFloat(document.getElementById("englishGrade").value);
-    var mathGrade = parseFloat(document.getElementById("mathGrade").value);
-    var scienceGrade = parseFloat(document.getElementById("scienceGrade").value);
-    var shsgwaGrade = parseFloat(document.getElementById("shsgwaGrade").value);
-
-    // Check if grades are within the accepted range (86-99)
-    if (englishGrade >= 86 && mathGrade >= 86 && scienceGrade >= 86 && shsgwaGrade >= 86 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99 && shsgwaGrade <= 99) {
-      document.getElementById("boardProgramsDropdown").style.display = "block";
-    } else {
-      alert("Sorry! your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
-    }
+  // Check if any grade is lower than 86 or greater than 100
+  if (englishGrade < 86 || mathGrade < 86 || scienceGrade < 86 || gwaGrade < 86 || englishGrade > 100 || mathGrade > 100 || scienceGrade > 100 || gwaGrade > 100) {
+    alert("Sorry! Your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
+  } else if (englishGrade >= 86 && mathGrade >= 86 && scienceGrade >= 86 && gwaGrade >= 86 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99 && gwaGrade <= 99) {
+    // Grades are valid and within the required range
+    alert('Congratulations! Your Grades are eligible for the Board Program. Please proceed with completing the Admission Form.');
+    // Show Board Programs Dropdown
+    document.getElementById('boardProgramsDropdown').style.display = 'block';
   } else {
     alert("Please enter valid grades between 86 and 99.");
+  }
+}
+
+function tvnSelection() {
+  const gwaGrade = parseFloat(document.getElementById('tvgwaGrade').value);
+
+  // Check if GWA is lower than 80 or greater than 100
+  if (gwaGrade < 80 || gwaGrade > 100) {
+    alert('Sorry! Your GWA didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
+  } else if (gwaGrade >= 80 && gwaGrade <= 99) {
+    // GWA is valid and within the required range
+    alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
+    // Show Board Programs Dropdown
+    document.getElementById('boardProgramsDropdown').style.display = 'block';
+  } else {
+    alert('Please enter a valid GWA between 80 and 99.');
+  }
+}
+
+function alsSelection() {
+  const prcGrade = parseFloat(document.getElementById('prcGrade').value);
+
+  // Check if GWA is lower than 80 or greater than 100
+  if (prcGrade < 80 || prcGrade > 100) {
+    alert('Sorry! Your PRC didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
+  } else if (prcGrade >= 80 && prcGrade <= 99) {
+    // GWA is valid and within the required range
+    alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
+    // Show Board Programs Dropdown
+    document.getElementById('boardProgramsDropdown').style.display = 'block';
+  } else {
+    alert('Please enter a valid PRC between 80 and 99.');
   }
 }
 
