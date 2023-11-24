@@ -61,7 +61,7 @@ $conn->close();
 
             background-image: url('assets/images/banner.jpg');
         }
-    </style>
+    </style> 
 
 
     <section class="content">
@@ -72,12 +72,12 @@ $conn->close();
 
       
         <div class="form" id="registrationForm" style="display: block;">
-            <form  method="POST" id="RegForm">
+        <form method="POST" id="RegForm" onsubmit="return validateForm();">
                 <h2>Register</h2>
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" id="registerEmail" name="password" placeholder="Password" required>
-                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <input type="text" name="name" placeholder="Full Name" autocomplete="name" required>
+                <input type="email" name="email" placeholder="Email" autocomplete="on">
+                <input type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required>
                 <br>
                 <label for="userType">Select User Type:</label>
                 <select id="userType" name="userType" required>
@@ -90,10 +90,13 @@ $conn->close();
                 </p>
             </form>
            
-        </div>
+        
         </div>
     </section>
 
+    <script>
+
+</script>
 
 
     <footer>

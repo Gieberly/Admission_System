@@ -102,8 +102,8 @@ $conn->close();
         <div class="form" id="loginForm" style="display: block;">
             <form action="loginpage.php" method="POST" >
                 <h2>Login</h2>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
+                <input type="email" autocomplete="email" name="email" placeholder="Email" required>
+                <input type="password" autocomplete="password" name="password" placeholder="Password" required>
                 <button class="btnn" type="submit">Login</button>
                 <p class="link">Don't have an account<br>
                     <a href="register.php" id="signupLink">Sign up </a> here
