@@ -6,13 +6,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $column = $_POST['column'];
     $value = $_POST['value'];
 
-    // Update the specified column in the database
-    $query = "UPDATE admission_data SET $column = ? WHERE id = ?";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $value, $id);
-    $stmt->execute();
-    $stmt->close();
+    // Validate input
+    // You may want to perform additional validation here
 
-    echo "Data updated successfully!";
+    // Update the database
+    $updateQuery = "UPDATE admission_data SET $column = ? WHERE id = ?";
+    $stmt = $conn->prepare($updateQuery);
+    $stmt->bind_param("si", $value, $id);
+
+    if ($stmt->execute()) {
+        echo "Update successful";
+    } else {
+        echo "Update failed";
+    }
+
+    $stmt->close();
+    $conn->close();
+} else {
+    echo "Invalid request";
 }
 ?>

@@ -61,7 +61,7 @@ $stmt->fetch();
                                 <h3>List of Students</h3>  
                             <div class="headfornaturetosort">
                                 <!--Drop Down for Nature of Degree--> 
-                              
+ 
 <select class="ProgramDropdown" id="NatureofDegree" onchange="filterStudents()">
     <option value="all">All</option>
     <option value="Non-Board">Non-Board</option>
@@ -84,7 +84,8 @@ $stmt->fetch();
   <i class='bx bx-sort-a-z'></i> <!-- Sort A-Z -->
 </button>
 
-                            </div>
+
+                    </div>
                             </div>
             <div id="table-container">
             <table id="studentTable">
@@ -130,6 +131,7 @@ while ($row = $result->fetch_assoc()) {
         <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="result"><?php echo $row['result']; ?></td>
         <td>
             <button class="button delete" data-id="<?php echo $row['id']; ?>">Delete</button>
+            <button class="button save" data-id="<?php echo $row['id']; ?>">Save</button>
         </td>
     </tr>
     <?php
@@ -151,8 +153,9 @@ while ($row = $result->fetch_assoc()) {
 
 
 <script>
-        // Function to update the Rank column based on the order of the rows
-        function updateRankColumn() {
+
+     // Function to update the Rank column based on the order of the rows
+     function updateRankColumn() {
         var rows = $('#table-container table tbody tr');
         rows.each(function (index, row) {
             $(row).find('td[data-column="rank"]').text(index + 1);
@@ -179,17 +182,36 @@ $(document).ready(function () {
             }
         });
     });
+ 
+  $('.save').on('click', function () {
+    var id = $(this).data('id');
+
+    // Update "Result" via AJAX
+    $.ajax({
+        url: 'saveChanges.php',
+        type: 'POST',
+        data: {
+            id: id,
+            column: 'result',
+            value: $('.edit[data-id="' + id + '"][data-column="result"]').text()
+        },
+        success: function (response) {
+            // Display a toast notification
+            showToast('');
+            console.log(response);
+        }
+    });
+ });
 
 
-
-$('#sortButton').on('click', function () {
+   $('#sortButton').on('click', function () {
     // Reset the counter to 1
     var counter = 1;
 
     // Get all table rows
     var rows = $('#table-container table tbody tr');
 
-    // Sort the rows based on GWA values in descending order
+    // Rank the rows based on GWA values in descending order
     rows.sort(function (a, b) {
         var gwaA = parseFloat($(a).find('td[data-column="gwa_grade"]').text());
         var gwaB = parseFloat($(b).find('td[data-column="gwa_grade"]').text());
@@ -208,34 +230,33 @@ $('#sortButton').on('click', function () {
 
     // Reset the rank column based on the new order
     updateRankColumn();
-});
+ });
 
-// Delete button click event
-$('.delete').on('click', function () {
-    var id = $(this).data('id');
+ // Delete button click event
+ $('.delete').on('click', function () {
+        var id = $(this).data('id');
 
-    // Confirm deletion
-    if (confirm("Are you sure you want to delete this entry?")) {
-        // Send AJAX request to delete the row
-        $.ajax({
-            url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
-            type: 'POST',
-            data: {
-                id: id  // Fix: use id instead of i
-            },
-            success: function (response) {
-                console.log(response);
-                // Reload the page or update the table as needed
-                location.reload(); // Example: Reload the page
-            }
-        });
-    }
-});
+        // Confirm deletion
+        if (confirm("Are you sure you want to delete this entry?")) {
+            // Send AJAX request to delete the row
+            $.ajax({
+                url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
+                type: 'POST',
+                data: {
+                    id: i
+                },
+                success: function (response) {
+                    console.log(response);
+                    // Reload the page or update the table as needed
+                    location.reload(); // Example: Reload the page
+                }
+            });
+        }
+    });
 
 
-
-// JavaScript to show and hide the toast
-function showToast(message) {
+  // JavaScript to show and hide the toast
+ function showToast(message) {
     var toast = new bootstrap.Toast(document.getElementById('toast-body'));
     document.getElementById('toast-body').innerText = message;
     $('#toast').addClass('show');
@@ -245,10 +266,10 @@ function showToast(message) {
     setTimeout(function () {
         $('#toast').removeClass('show');
     }, 3000);
-}
+  }
 
 
-});
+ });
 
  // Sort A-Z button click event
  $('#sortAZ').on('click', function () {
@@ -281,7 +302,7 @@ function showToast(message) {
     rows.each(function (index, row) {
         $(row).find('td[data-column="rank"]').text(existingRanks[index]);
     });
-});
+ });
 
     function filterStudents() {
     // Reset the counter to 1
@@ -304,10 +325,10 @@ function showToast(message) {
             row.style.display = "none";
         }
     });
-}
+  }
 
 
-$('#viewButton i').on('click', function () {
+ $('#viewButton i').on('click', function () {
             var rangeInput = $('#rangeInput').val();
             var range = rangeInput.split('-');
 
@@ -336,8 +357,8 @@ $('#viewButton i').on('click', function () {
             });
         }
     
-// Add Download button click event
-$('.btn-download').on('click', function () {
+ // Add Download button click event
+ $('.btn-download').on('click', function () {
     // Use TableExport library to export the table to Excel
     var table = document.getElementById('studentTable');
     var exportData = new TableExport(table, {
@@ -355,7 +376,7 @@ $('.btn-download').on('click', function () {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-});
+ });
 
  </script>
 

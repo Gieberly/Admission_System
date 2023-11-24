@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
 // Retrieve student data from the database
 // Modify your SQL query to include a WHERE clause
 $query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied FROM admission_data WHERE degree_applied IN 
-(  'Bachelor of Science in Agribusiness major in Enterprise Management') ORDER BY applicant_name ASC";
+(  'Bachelor of Science in Agricultural and Biosystems Engineering') ORDER BY applicant_name ASC";
 
 $result = $conn->query($query);
 // Fetch user information from the database based on user ID
@@ -61,14 +61,7 @@ $stmt->fetch();
                                 <h3>List of Students</h3>
                             <div class="headfornaturetosort">
                                 <!--Drop Down for Nature of Degree--> 
-<select class="ProgramDropdown" id="ProgramDropdown" onchange="filterStudents()">
-    <option value="all">All Major</option>
-    <option value="Bachelor of Science in Agriculture Major in Agronomy">Agronomy</option>
-    <option value="Bachelor of Science in Agriculture Major in Agricultural Economics"> Agricultural Economics</option>
-    <option value="Bachelor of Science in Agriculture Major in Agroforestry">Agroforestry</option>
-    <option value="Bachelor of Science in Agriculture Major in Animal Science">Animal Science</option>
-</select>
-                                  
+                        
                                 
  <label for="rangeInput"></label>
 <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
@@ -217,7 +210,7 @@ $(document).ready(function () {
                 url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
                 type: 'POST',
                 data: {
-                    id: i
+                    id: id
                 },
                 success: function (response) {
                     console.log(response);

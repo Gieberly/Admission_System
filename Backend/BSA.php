@@ -217,7 +217,7 @@ $(document).ready(function () {
                 url: 'deleteStudentPersonnel.php', // Replace with the actual server-side script
                 type: 'POST',
                 data: {
-                    id: i
+                    id: id
                 },
                 success: function (response) {
                     console.log(response);
