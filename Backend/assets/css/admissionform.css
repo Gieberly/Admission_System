@@ -57,33 +57,34 @@
           }
           
           input{
-            
             margin: 10px 0;
-         
             box-sizing: border-box;
             width: 100%;
-          
             border: 1px solid #aaaaaa;
             padding: 2%; /* Use a percentage for padding */
             font-size: 1em; /* Relative font size */
           }
           .index-btn-wrapper{
             display: none;
-            margin-top: 20px;
-          }
-          
-          .index-btn{
-            margin: 20px 15px 0 0;
+            width: 5%; /* Adjust the percentage based on your design */
+            max-width: 50px; /* Set a maximum width if needed */
+            margin: 15px 15px 0 0;
             background: #04AA6D;
             color: #ffffff;
             border: none;
-            padding: 10px 20px;
+            padding: 10px;
             font-size: 17px;
             cursor: pointer;
             transition: 0.3s;
           }
+
+          .index-btn{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
           
-          .index-btn:hover{
+          .index-btn-wrapper:hover{
             opacity: 0.8;
           }
           

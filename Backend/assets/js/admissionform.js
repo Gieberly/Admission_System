@@ -13,25 +13,6 @@ function run(hideTab, showTab) {
     y = $(x).find("input, select");
 
     if (hideTab === 1) {
-
-// Validate the selected program
-var natureOfDegree = document.getElementById("categoryDropdown").value;
-if (natureOfDegree === "") {
-    alert("Please select the Nature of Degree before proceeding.");
-    return false;
-}
-
-// Validate Academic Classification
-var boardAcademicClassification = document.getElementById("academic_classification_board").value;
-var nonBoardAcademicClassification = document.getElementById("academic_classification_nonboard").value;
-
-if (boardAcademicClassification === "" || nonBoardAcademicClassification === "") {
-    alert("Please select your Academic Classification before proceeding.");
-    return false;
-}
-
-// Additional validation based on the natureOfDegree can be added here if needed
-
 // Prompt for grades or values based on the nature of the degree and academic classification
 var gradeRequirement = false;
 
@@ -55,28 +36,17 @@ if (gradeRequirement) {
         return false;
     }
 }
-
-      // Prompt the user to select a program
-      var selectedProgram;
-      if (boardAcademicClassification === "academic_classification_board") {
-        selectedProgram = document.getElementById("board-programs").value;
-        if (selectedProgram === "") {
-          alert("Please select Board Program before proceeding.");
-          return false;
-        }
-      } else if (nonBoardAcademicClassification === "academic_classification_nonboard") {
-        selectedProgram = document.getElementById("NonBoardProgram").value;
-        if (selectedProgram === "") {
-          alert("Please select Non-Board Program before proceeding.");
-          return false;
-        }
-      }
-
       // Validate the checkbox in Tab 1
-      if (!document.getElementById("read-guidelines").checked) {
-        alert("Please check the box to confirm that you have read the guidelines.");
-        return false;
-      }
+      function checkGuidelinesAndProceed() {
+        var guidelinesCheckbox = document.getElementById('read-guidelines');
+
+        if (!guidelinesCheckbox.checked) {
+            alert('Please check the box to confirm that you have read the guidelines.');
+        } else {
+            // If the checkbox is checked, proceed to the second tab or perform any other action
+            run(1, 2);
+        }
+    }
 
     } else if (hideTab === 2) {
       // Handle the file input label click
@@ -250,7 +220,7 @@ function hsBoardSelection() {
     // Grades are valid and within the required range
     alert('Congratulations! Your Grades are eligible for the Board Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
-    document.getElementById('boardProgramsDropdown').style.display = 'block';
+    document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
     alert("Please enter valid grades between 86 and 99.");
   }
@@ -266,7 +236,7 @@ function tvnSelection() {
     // GWA is valid and within the required range
     alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
-    document.getElementById('boardProgramsDropdown').style.display = 'block';
+    document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
     alert('Please enter a valid GWA between 80 and 99.');
   }
@@ -282,7 +252,7 @@ function alsSelection() {
     // GWA is valid and within the required range
     alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
-    document.getElementById('boardProgramsDropdown').style.display = 'block';
+    document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
     alert('Please enter a valid PRC between 80 and 99.');
   }
