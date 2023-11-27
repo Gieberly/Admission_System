@@ -343,9 +343,9 @@ $conn->close();
         <div class="page-container">
           <div class="form-container">
             <div class="form-group">
-              <label class="small-label" for="categoryDropdown">Select Program</label>
+              <label class="small-label" for="categoryDropdown">Nature of Degree</label>
               <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
-                <option value="" disabled selected>Select nature of degree</option>
+                <option value="" disabled selected>Select Nature of Degree</option>
                 <option value="Board">Board</option>
                 <option value="Non-board">Non-Board</option>
               </select>

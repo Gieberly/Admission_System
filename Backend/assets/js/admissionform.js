@@ -17,14 +17,16 @@ function run(hideTab, showTab) {
 // Validate the selected program
 var natureOfDegree = document.getElementById("categoryDropdown").value;
 if (natureOfDegree === "") {
-    alert("Please select the nature of the degree before proceeding.");
+    alert("Please select the Nature of Degree before proceeding.");
     return false;
 }
 
 // Validate Academic Classification
-var academicClassification = document.getElementById("academic_classification").value; // Corrected variable name
-if (academicClassification === "") {
-    alert("Please select academic classification before proceeding.");
+var boardAcademicClassification = document.getElementById("academic_classification_board").value;
+var nonBoardAcademicClassification = document.getElementById("academic_classification_nonboard").value;
+
+if (boardAcademicClassification === "" || nonBoardAcademicClassification === "") {
+    alert("Please select your Academic Classification before proceeding.");
     return false;
 }
 
@@ -33,15 +35,15 @@ if (academicClassification === "") {
 // Prompt for grades or values based on the nature of the degree and academic classification
 var gradeRequirement = false;
 
-if (natureOfDegree === "Board" && (AcademicClassification === "grade_12" || AcademicClassification === "shs_graduate" || AcademicClassification === "hs_graduate" || AcademicClassification === "second_degree")) {
+if (boardAcademicClassification === "grade_12b" || boardAcademicClassification === "shs_graduateb" || boardAcademicClassification === "hs_graduateb") {
     gradeRequirement = true;
-} else if (natureOfDegree === "Board" && (AcademicClassification === "transferee" || AcademicClassification === "vocational_completers")) {
+} else if (boardAcademicClassification === "transfereeb" || boardAcademicClassification === "vocational_completersb" || boardAcademicClassification === "second_degreeb") {
     gradeRequirement = true;
-} else if (natureOfDegree === "Board" && AcademicClassification === "als_pept_passer") {
+} else if (boardAcademicClassification === "als_pept_passerb") {
     gradeRequirement = true;
-} else if (natureOfDegree === "Non-board" && (AcademicClassification === "grade_12" || AcademicClassification === "shs_graduate" || AcademicClassification === "hs_graduate" || AcademicClassification === "second_degree" || AcademicClassification === "transferee" || AcademicClassification === "vocational_completers")) {
+} else if (nonBoardAcademicClassification === "grade_12n" || nonBoardAcademicClassification === "shs_graduaten" || nonBoardAcademicClassification === "hs_graduaten" || nonBoardAcademicClassification === "second_degreen" || nonBoardAcademicClassification === "transfereen" || nonBoardAcademicClassification === "vocational_completersn") {
     gradeRequirement = true;
-} else if (natureOfDegree === "Non-board" && AcademicClassification === "als_pept_passer") {
+} else if (nonBoardAcademicClassification === "als_pept_passern") {
     gradeRequirement = true;
 }
 
@@ -56,16 +58,16 @@ if (gradeRequirement) {
 
       // Prompt the user to select a program
       var selectedProgram;
-      if (natureOfDegree === "Board") {
+      if (boardAcademicClassification === "academic_classification_board") {
         selectedProgram = document.getElementById("board-programs").value;
         if (selectedProgram === "") {
-          alert("Please select academic classification before proceeding.");
+          alert("Please select Board Program before proceeding.");
           return false;
         }
-      } else if (natureOfDegree === "Non-board") {
+      } else if (nonBoardAcademicClassification === "academic_classification_nonboard") {
         selectedProgram = document.getElementById("NonBoardProgram").value;
         if (selectedProgram === "") {
-          alert("Please select academic classification before proceeding.");
+          alert("Please select Non-Board Program before proceeding.");
           return false;
         }
       }
@@ -146,52 +148,64 @@ function updateSelection() {
 
 function updateBoardSelection() {
   const selectedBoardClassification = document.getElementById('academic_classification_board').value;
-  const hsBoardFields = document.getElementById('hsboardFields');
-  const tvnFields = document.getElementById('tvnFields');
-  const alsFields = document.getElementById('alsFields');
+  const BoardPrograms = document.getElementById('board-programs');
+  const NonBoardProgram = document.getElementById('NonBoardProgram');
 
   // Hide all programFields initially
-  hsBoardFields.style.display = 'none';
-  tvnFields.style.display = 'none';
-  alsFields.style.display = 'none';
+  BoardPrograms.style.display = 'none';
+  NonBoardProgram.style.display = 'none';
 
-  if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb') {
-    hsBoardFields.style.display = 'block';
-    tvnFields.style.display = 'none';
-    alsFields.style.display = 'none';
-  } else if (selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb') {
-    tvnFields.style.display = 'block';
-    hsBoardFields.style.display = 'none';
-    alsFields.style.display = 'none';
-  } else {
-    alsFields.style.display = 'block';
-    hsBoardFields.style.display = 'none';
-    tvnFields.style.display = 'none';
-  }
+  if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb' || selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb' || selectedBoardClassification === 'als_pept_passerb') {
+    BoardPrograms.style.display = 'block';
+    NonBoardProgram.style.display = 'none';
+  } else if (selectedBoardClassification === '') {
+    BoardPrograms.style.display = 'none';
+    NonBoardProgram.style.display = 'none';
+  } 
 }
 
 function updateNonBoardSelection() {
-  const selectedNonBoardClassification = document.getElementById('academic_classification_nonboard').value;
-  const tvnFields = document.getElementById('tvnFields');
-  const alsFields = document.getElementById('alsFields');
+  const selectednonBoardClassification = document.getElementById('academic_classification_nonboard').value;
+  const BoardPrograms = document.getElementById('board-programs');
+  const NonBoardProgram = document.getElementById('NonBoardProgram');
 
   // Hide all programFields initially
-  tvnFields.style.display = 'none';
-  alsFields.style.display = 'none';
+  BoardPrograms.style.display = 'none';
+  NonBoardProgram.style.display = 'none';
 
-  if (selectedNonBoardClassification === 'als_pept_passern') {
-    alsFields.style.display = 'block';
-    tvnFields.style.display = 'none';
-  } else {
-    tvnFields.style.display = 'block';
-    alsFields.style.display = 'none';
-  }
+  if (selectednonBoardClassification === 'grade_12n' || selectednonBoardClassification === 'shs_graduaten' || selectednonBoardClassification === 'hs_graduaten' || selectednonBoardClassification === 'second_degreen' || selectednonBoardClassification === 'transfereen' || selectednonBoardClassification === 'vocational_completersn' || selectednonBoardClassification === 'als_pept_passern') {
+    BoardPrograms.style.display = 'none';
+    NonBoardProgram.style.display = 'block';
+  } else if (selectednonBoardClassification === '') {
+    BoardPrograms.style.display = 'none';
+    NonBoardProgram.style.display = 'none';
+  } 
 }
 
   // Copy the selected nature of degree to Tab-2 input field
   //document.getElementById("nature_of_degree").value = natureOfDegree;
 
 function updateDegreeFields() {
+
+    // Hide all programFields initially
+    hsBoardFields.style.display = 'none';
+    tvnFields.style.display = 'none';
+    alsFields.style.display = 'none';
+  
+    if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb') {
+      hsBoardFields.style.display = 'block';
+      tvnFields.style.display = 'none';
+      alsFields.style.display = 'none';
+    } else if (selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb') {
+      tvnFields.style.display = 'block';
+      hsBoardFields.style.display = 'none';
+      alsFields.style.display = 'none';
+    } else {
+      alsFields.style.display = 'block';
+      hsBoardFields.style.display = 'none';
+      tvnFields.style.display = 'none';
+    }
+
   // Get the selected value from the board program dropdown
   var selectedValueBoard = document.getElementById("board-programs").value;
 
