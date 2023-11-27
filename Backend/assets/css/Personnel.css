@@ -1056,55 +1056,66 @@ nav {
 	
 
 }
+.table-data {
+    /* Add any styling for the table data container */
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 24px;
+    margin-top: 10px;
+    color: var(--dark);
+}
+
 #table-container {
-	max-height: 400px; /* Set the desired max height for the table */
-	overflow-y: auto;
-  }
+    /* Add any styling for the table container */
+    max-height: 400px;
+    overflow-y: auto;
+}
+
 /* Scrollbar styles */
 #table-container::-webkit-scrollbar {
-	width: 6px;
+    width: 6px;
+}
 
-  }
-  
-  #table-container::-webkit-scrollbar-thumb {
-	background-color: var(--green);
-	border-radius: 10px;
-  }
-  
-  #table-container::-webkit-scrollbar-track {
-	background-color: var(--light);
-  }
-  #table-container::-webkit-scrollbar-button:start:decrement,
+#table-container::-webkit-scrollbar-thumb {
+    background-color: var(--green);
+    border-radius: 10px;
+}
+
+#table-container::-webkit-scrollbar-track {
+    background-color: var(--light);
+}
+
+#table-container::-webkit-scrollbar-button:start:decrement,
 #table-container::-webkit-scrollbar-button:end:increment {
-  height: 5; /* Set height to 0 to make it smaller */
+    height: 5; /* Set height to 0 to make it smaller */
 }
 
 #table-container::-webkit-scrollbar-track-piece {
-  height: 5; /* Set height to 0 to make it smaller */
+    height: 5; /* Set height to 0 to make it smaller */
 }
 
 #table-container::-webkit-scrollbar-thumb:vertical {
-  min-height: 1px; /* Set a minimum height for the thumb */
+    min-height: 1px; /* Set a minimum height for the thumb */
 }
 
-  #table-container {
-	scrollbar-width: thin;
-  }
-  
-  #table-container {
-	scrollbar-color: var(--dark) var(--light);
-  }
-  
+#table-container {
+    scrollbar-width: thin;
+}
 
-  
-  
+#table-container {
+    scrollbar-color: var(--dark) var(--light);
+}
+
 #content main .table-data > div {
-	border-radius: 10px;
-	background: var(--light);
-	padding: 20px;
-	overflow-x: auto;
+    /* Add any styling for table data div container */
+    border-radius: 10px;
+    background: var(--light);
+    padding: 20px;
+    overflow-x: auto;
 }
+
 #content main .table-data .head {
+    /* Add any styling for the table header */
     position: sticky;
     top: 0;
     background-color: var(--light);
@@ -1113,147 +1124,159 @@ nav {
     grid-gap: 16px;
     margin-bottom: 40px;
 }
+
 #content main .table-data .head h3 {
-	font-size: 18px;
-	float: left;
-	margin-right: auto;
+    /* Add styles for the table header heading */
+    font-size: 18px;
+    float: left;
+    margin-right: auto;
 }
+
 #content main .table-data .head .bx {
-	cursor: pointer;
+    /* Add styles for the icons in the header */
+    cursor: pointer;
 }
 
 #content main .table-data .order {
+    /* Add any styling for the order container */
     flex-basis: 200px;
-    flex-grow: 1; /* Can grow to fill available space */
-    overflow: auto; /* Add this line to enable scrolling within the container */
+    flex-grow: 1;
+    overflow: auto;
 }
 
 #content main .table-data .order table {
-	width: 100%;
-	border-collapse: collapse;
-	
-	
+    /* Add any additional table styles */
+    width: 100%;
+    border-collapse: collapse;
 }
+
 #content main .table-data .order table th {
-	border: none;
+    /* Add any styles for table header cells */
+    border: none;
     text-align: left;
     padding: 6px;
-	font-size: 12px;
-   
-	font-size: 10px;
-	white-space: normal;
-	border-bottom: 1px solid var(--dark);
-	
-	position: -webkit-sticky;
-	position: sticky;
-	top: 0;
-	
-	z-index: 2;
-	position: sticky;
-	top: 0;
+    font-size: 12px;
+    font-size: 10px;
+    white-space: normal;
+    border-bottom: 1px solid var(--dark);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    background-color: var(--light);
+}
 
-	background-color: var(--light);
-	
-  }
-
-
-  
 #content main .table-data .order table td {
-	border: none;
+    /* Add any styles for table data cells */
+    border: none;
     padding: 6px;
-	font-size: 10px;
-	font-family: 'Arial', sans-serif;
-
+    font-size: 10px;
+    font-family: 'Arial', sans-serif;
 }
 
-
-  #content main .table-data .order table tr td:first-child {
-	font-family: 'Arial', sans-serif; 
-	display: flex;
-	align-items: center;
-	grid-gap: 12px;
-	padding-left: 6px;
+#content main .table-data .order table tr td:first-child {
+    /* Add styles for the first column of table data */
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    align-items: center;
+    grid-gap: 12px;
+    padding-left: 6px;
 }
-
 
 #content main .table-data .order table tbody tr:nth-child(even) {
-   
-	background-color:var();
+    /* Add styles for even rows */
+    background-color: var(); /* Specify your desired background color */
 }
 
 #content main .table-data .order table tbody tr:nth-child(odd) {
-    background-color: rgba(236, 236, 236, 0.383); 
+    /* Add styles for odd rows */
+    background-color: rgba(236, 236, 236, 0.383);
 }
 
-#content main .table-data .order table td img {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	object-fit: cover;
+#content main .table-data .order table tr td img {
+    /* Add styles for images within table cells */
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
 }
+
 #content main .table-data .order table tbody tr:hover {
-	background: var(--dark-grey);
-}
-#content main .table-data .order table tr td .status {
-	font-size: 10px;
-	padding: 6px 16px;
-	color: var(--light);
-	border-radius: 20px;
-	font-weight: 700;
+    /* Add styles for row hover effect */
+    background: var(--dark-grey);
 }
 
 #content main .table-data .order table tr td .status {
-	font-size: 10px;
-	padding: 6px 16px;
-	color: var(--light);
-	border-radius: 20px;
-	font-weight: 700;
+    /* Add styles for status cells */
+    font-size: 10px;
+    padding: 6px 16px;
+    color: var(--light);
+    border-radius: 20px;
+    font-weight: 700;
 }
+
 #content main .table-data .order table tr td .status.admitted {
-	background: var(--blue);
+    /* Add styles for specific status */
+    background: var(--blue);
 }
+
 #content main .table-data .order table tr td .status.rejected {
-	background: var(--red);
+    /* Add styles for specific status */
+    background: var(--red);
 }
+
 #content main .table-data .order table tr td .status.pending {
-	background: var(--yellow);
+    /* Add styles for specific status */
+    background: var(--yellow);
 }
+
 #content main .table-data .order table tr td .button {
-	border: none;
-	border-radius: 10px;
-	color:var(--light);
-	padding: 4px 8px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 12px;
-	margin: 1px 1px;
-	cursor: pointer;
-	transition-duration: 0.4s;
+    /* Add styles for buttons within table cells */
+    border: none;
+    border-radius: 10px;
+    color: var(--light);
+    padding: 4px 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 1px 1px;
+    cursor: pointer;
+    transition-duration: 0.4s;
 }
+
 #content main .table-data .order table tr td .button.edit {
-	background-color: var(--blue);
-	color:var(--light);
+    /* Add styles for edit button */
+    background-color: var(--blue);
 }
+
 #content main .table-data .order table tr td .button.edit:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
+    /* Add styles for edit button on hover */
+    background-color: var(--light-blue);
+    color: var(--gray);
 }
+
 #content main .table-data .order table tr td .button.save {
-	background-color: var(--green);
-	color:var(--light);
+    /* Add styles for save button */
+    background-color: var(--green);
 }
+
 #content main .table-data .order table tr td .button.save:hover {
-	background-color: var(--light-green);
-  	color: var(--gray);
+    /* Add styles for save button on hover */
+    background-color: var(--light-green);
+    color: var(--gray);
 }
+
 #content main .table-data .order table tr td .button.delete {
-	background-color: var(--red); 
- 	color: var(--light); 
+    /* Add styles for delete button */
+    background-color: var(--red);
+    color: var(--light);
 }
+
 #content main .table-data .order table tr td .button.delete:hover {
-	background-color: var(--light-red);
-  	color:var(--gray);
+    /* Add styles for delete button on hover */
+    background-color: var(--light-red);
+    color: var(--gray);
 }
 
 #content main .table-data .todo {

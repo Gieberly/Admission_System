@@ -73,7 +73,7 @@
     margin-left: 20px;
     margin-top: 15px;
     font-size: 18px;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     transition: .4s ease;
     
@@ -123,9 +123,10 @@ h2 {
 
 input {
     width: 100%;
-    padding: 8px;
+    padding: 5px;
     margin-bottom: 10px;
     box-sizing: border-box;
+    border-radius: 5px;
 }
 
 
@@ -135,7 +136,7 @@ input {
     border: none;
     color: rgb(255, 255, 255);
     width: 100%;
-    padding: 10px;
+    padding: 5px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -144,6 +145,7 @@ input {
     border-radius: 5px;
     font-family: 'Arial', sans-serif;
     font-size: 16px;
+
 }
 .btnn a {
     color: #ffffff; /* Font color (white in this example) */

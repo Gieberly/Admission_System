@@ -102,6 +102,13 @@ $studentFormData = getAllStudentFormData();
             </li>
 
             <li class="">
+                <a href="Courses.php" id="courses-link">
+                <i class='bx bxs-graduation'></i>
+                    <span class="text">Courses</span>
+                </a>
+            </li>
+
+            <li class="">
                 <a href="#" id="master-list-link">
                     <i class='bx bxs-user-pin'></i>
                     <span class="text">Applicants</span>
@@ -192,6 +199,7 @@ $studentFormData = getAllStudentFormData();
                 </ul>
 
             </div>
+            
 
             <!--Master List-->
             <div id="master-list-content">

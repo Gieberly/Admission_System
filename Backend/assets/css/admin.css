@@ -6,6 +6,7 @@
 	box-sizing: border-box;
 }
 
+  
 a {
 	text-decoration: none;
 }
@@ -44,7 +45,7 @@ li {
 }
 
 html {
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
 body.dark {
@@ -95,6 +96,7 @@ body {
 	box-sizing: content-box;
 	margin-top:5px ;
 }
+
 
 #sidebar .brand .bsulogo{
 height:31px;
@@ -163,6 +165,8 @@ justify-content: center;
 	white-space: nowrap;
 	overflow-x: hidden;
 }
+
+
 #sidebar .side-menu.top li.active a {
 	color: var(--green);
 }
@@ -266,7 +270,7 @@ justify-content: center;
     border-radius: 10px; /* Adjust the radius as needed */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
     overflow: hidden;
-    z-index: 1;
+    z-index: 50000;
 }
 /* Styles for the profile popup */
 #profile-popup {
@@ -283,7 +287,7 @@ justify-content: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
     margin-right: 25px; /* Adjust the margin-right value as needed */
     overflow-y: auto;
-    z-index: 2; /* Ensure the profile pop-up appears above the message pop-up */
+    z-index: 50000;/* Ensure the profile pop-up appears above the message pop-up */
 }
 
 .popup-content {
@@ -450,6 +454,8 @@ hr {
     display: block;
 }
 
+
+
 /* NAVBAR */
 nav {
     position: relative;
@@ -491,7 +497,7 @@ nav {
 	transition: .3s ease;
 }
 #content nav .nav-link:hover {
-	color: var(--blue);
+	color: var(--green);
 }
 #content nav form {
 	max-width: 400px;
@@ -555,47 +561,8 @@ nav {
 
 /* Add the following styles to your existing CSS file or style block */
 
-nav {
-    position: relative;
-}
 
-.notification,
-.message {
-    position: relative;
-    display: flex;
-    align-items: center;
-}
 
-.circle {
-    position: absolute;
-    border-radius: 50%;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
-    background-color: var(--grey);
-    transition: background-color 0.3s; /* Add smooth transition for color change */
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the circle */
-}
-
-.notification:hover .circle,
-.message:hover .circle {
-    background-color: var(--gray);
-}
-
-.notification .num {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    color: var(--light);
-    font-weight: 700;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 	/*popup menu*/
 #content nav .profile img {
 	width: 36px;
@@ -628,16 +595,18 @@ nav {
 	pointer-events: auto; 
 }
 /*switch*/
-#content nav .switch-mode {
+
+.switch-mode {
 	display: block;
-	min-width: 50px;
+	width: 50px;
 	height: 25px;
 	border-radius: 25px;
 	background: var(--grey);
 	cursor: pointer;
 	position: relative;
 }
-#content nav .switch-mode::before {
+
+.switch-mode::before {
 	content: '';
 	position: absolute;
 	top: 2px;
@@ -648,7 +617,8 @@ nav {
 	border-radius: 50%;
 	transition: all .3s ease;
 }
-#content nav #switch-mode:checked + .switch-mode::before {
+
+#switch-mode:checked+.switch-mode::before {
 	left: calc(100% - (25px - 4px) - 2px);
 }
 /* NAVBAR */
@@ -661,43 +631,101 @@ nav {
 	overflow-y: auto;
 }
 
-/* Add this CSS to adjust nature of degree dropdown */
-.dropdown-nature {
-    display: flex;
-	justify-content: flex-start;
-    align-items: center;
-    margin-right: 20px; /* Add some margin for spacing */
-}
 
-.dropdown-nature .nature-degree {
-    display: inline-block;
+/*Nature to Sort css*/
+.headfornaturetosort {
 	float: right;
+	display: flex;
+	flex: row;
+}
+/* Add this CSS to adjust nature of degree dropdown */
+.NatureDropdown {
+	border: 1px solid var(--dark);
+	font-size: 10px;
+	width: 200px;
+	height: 20px;
+	padding: 2px 2px;
+	margin-right: 5px;
+}
+#sortButton {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+
+  #sortButton .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+
+  #sortAZ {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #sortAZ .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #addCourses {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #addCourses .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+.nonboardProgram {
+	display: none;
+	border: 1px solid var(--dark);
+	font-size: 10px;
+	width: 140px;
+	height: 20px;
+	padding: 2px 2px;
+}
+.boardProgram {
+	display: none;
+	border: 1px solid var(--dark);
+	font-size: 10px;
+	width: 140px;
+	height: 20px;
+	padding: 2px 2px;	
 }
 
-/* Adjust the input box styles */ /*delete*/
-.search-box input[type="text"] {
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    outline: none;
-    font-size: 14px;
-    width: 200px; /* Adjust the width as needed */
-	background-color: var(--light-gray);
+/*Range*/
+.ForRange {
+	border: 1px solid var(--dark);
+	border-radius: none;
+	font-size: 12px;
+	width: 50px;
+	height: 20px;
+	padding: 4px 4px;
+	margin-left: 5px;
 }
+
+
+
 
 /*Tab like button for Student Result and Forms*/
 .tab-button {
-  padding: 10px 20px;
+  padding: 8px 18px;
   background-color: var(--dark-grey);
   border: none;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 15px;
   margin-top: 20px;
   border-radius: 3px;
 }
 
 .tab-button:hover {
-	background-color: var(--light-green);
+	background-color: var(--blue);
 	color:var(--gray);
   }
   
@@ -715,49 +743,7 @@ nav {
 	display: block;
   }
 
-/* Adjust the margin between the icon and input */
-#searchIcon {
-    margin-right: -5px; 
-	color:  var(--dark);
-} 
-#content main .head-title {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	grid-gap: 16px;
-	flex-wrap: wrap;
-}
 
-#content main .head-title .left h1 {
-	font-size: 36px;
-	font-weight: 600;
-	margin-bottom: 10px;
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb {
-	display: flex;
-	align-items: center;
-	grid-gap: 16px;
-}
-#content main .head-title .left .breadcrumb li {
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb li a {
-	color: var(--dark-grey);
-	pointer-events: none;
-}
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
-}
-/* MAIN */
-#content main {
-	width: 100%;
-	padding: 10px 24px;
-	font-family: var(--poppins);
-	max-height: calc(100vh - 56px);
-	overflow-y: auto;
-}
 
 .importform {
 	display: flex;
@@ -774,12 +760,7 @@ nav {
 	margin-bottom: 5px;
   }
   
-  input[type="file"] {
-	margin-bottom: 10px;
-	font-size: 16px;
-	margin-left: 30px;
-  }
-  
+
   button[type="submit"] {
 	background-color: var(--green);
 	color: var(--light);
@@ -854,13 +835,26 @@ nav {
   	color: var(--gray);
 }
 
+#content main .button.save-btn {
+	background-color: var(--green);
+	color:var(--dark);
+}
+
+#content main .button.save-btn:hover {
+	background-color: var(--light-gren);
+  	color: var(--gray);
+}
+
 #content main .head-title {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	overflow: hidden;
+	
 }
+
 
 #content main .head-title .left h1 {
 	font-size: 36px;
@@ -976,120 +970,168 @@ nav {
 #content main .box-info li .text p {
 	color: var(--dark);	
 	font-size: 12px;
+ 
+
 }
+
 #content main .table-data {
-	flex-grow: 1;
-    flex-basis: 300px; /* Updated value */
+	table-layout: auto;
+	width: 100%;
+	border-collapse: collapse;
     display: flex;
     flex-wrap: wrap;
     grid-gap: 24px;
-    margin-top: 24px;
-    width: 100%;
+    margin-top: 10px;
     color: var(--dark);
+	
+
 }
+#table-container {
+	max-height: calc(75vh - 56px);
+	overflow-y: auto;
+  }
+/* Scrollbar styles */
+#table-container::-webkit-scrollbar {
+	width: 6px;
+
+  }
+  
+  #table-container::-webkit-scrollbar-thumb {
+	background-color: var(--green);
+	border-radius: 10px;
+  }
+  
+  #table-container::-webkit-scrollbar-track {
+	background-color: var(--light);
+  }
+  #table-container::-webkit-scrollbar-button:start:decrement,
+#table-container::-webkit-scrollbar-button:end:increment {
+  height: 5; /* Set height to 0 to make it smaller */
+}
+
+#table-container::-webkit-scrollbar-track-piece {
+  height: 5; /* Set height to 0 to make it smaller */
+}
+
+#table-container::-webkit-scrollbar-thumb:vertical {
+  min-height: 1px; /* Set a minimum height for the thumb */
+}
+
+  #table-container {
+	scrollbar-width: thin;
+  }
+  
+  #table-container {
+	scrollbar-color: var(--dark) var(--light);
+  }
+  
+
+  
+  
 #content main .table-data > div {
-	border-radius: 20px;
+	border-radius: 10px;
 	background: var(--light);
-	padding: 15px;
+	padding: 20px;
 	overflow-x: auto;
 }
 #content main .table-data .head {
-	display: flex;
-	align-items: center;
-	grid-gap: 16px;
-	margin-bottom: 24px;
-}
-/*Drop down for Student Profile*/
-#content main .table-data .head .profile-dropdown {
-    background-color:var(--light);
-    color: var(--dark);
-    border: 1px solid var(--dark);
-	border-radius: 5px;
-    font-size: 16px;
-	font-weight: bold;
-    width: 400px;
-}
-/* Style the dropdown options */
-#content main .table-data .head .profile-dropdown option {
+    position: sticky;
+    top: 0;
     background-color: var(--light);
-    color: var(--dark);
-    font-size: 14px;
+    z-index: 100;
+    align-items: center;
+    grid-gap: 16px;
+    margin-bottom: 40px;
 }
-/* Style the arrow (pseudo-element) */
-#content main .table-data .head .profile-dropdown::after {
-    content: '\25BC'; /* Unicode character for a down arrow */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    color: var(--dark);
-    font-size: 16px;
-}
-/**/
 #content main .table-data .head h3 {
-	margin-right: auto;
 	font-size: 18px;
-	font-weight: 600;
+	float: left;
+	margin-right: auto;
 }
 #content main .table-data .head .bx {
 	cursor: pointer;
 }
 
 #content main .table-data .order {
-	flex-basis: 200px;
-	flex-grow: 1; /* Can grow to fill available space */
+    flex-basis: 130px;
+    flex-grow: 1; /* Can grow to fill available space */
+    overflow: auto; /* Add this line to enable scrolling within the container */
 }
-/*Drop down for College and programs*/
-#content main .table-data .order .custom-dropdown {
-    background-color:var(--light);
-    color: var(--dark);
-    border: 1px solid var(--dark);
-    font-size: 10px;
-    width: 65px;
-}
-/* Style the dropdown options */
-#content main .table-data .order .custom-dropdown option {
-    background-color: var(--light);
-    color: var(--dark);
-    font-size: 14px;
-}
-/* Style the arrow (pseudo-element) */
-#content main .table-data .order .custom-dropdown::after {
-    content: '\25BC'; /* Unicode character for a down arrow */
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    color: var(--dark);
-    font-size: 14px;
-}
-/**/
+
 #content main .table-data .order table {
 	width: 100%;
-	border-collapse: collapse; /* Merge cell borders into a single line */
-	border: 1px solid var(--dark-grey); /* Add a 1px solid border around table headers and data cells */
+	border-collapse: collapse;
+	
+	
 }
 #content main .table-data .order table th {
-	border: 1px solid #dddddd;
+	border: none;
     text-align: left;
-    padding: 8px;
+    padding: 6px;
 	font-size: 12px;
-	background-color: #f2f2f2;
-}
-#content main .table-data .order table td {
-	border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-	font-size: 12px;
-}
-#content main .table-data .order table th, td {
-	width: 0px;
-	max-width: 0px;
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
+   
+	font-size: 10px;
+	white-space: normal;
+	border-bottom: 1px solid var(--dark);
+	
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	
+	z-index: 2;
+	position: sticky;
+	top: 0;
+
+	background-color: var(--light);
+	
   }
- 
+
+
+  
+#content main .table-data .order table td {
+	border: none;
+    padding: 6px;
+	font-size: 10px;
+	font-family: 'Arial', sans-serif;
+
+}
+
+
+  #content main .table-data .order table tr td:first-child {
+	font-family: 'Arial', sans-serif; 
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
+}
+
+
+#content main .table-data .order table tbody tr:nth-child(even) {
+   
+	background-color:var();
+}
+
+#content main .table-data .order table tbody tr:nth-child(odd) {
+    background-color: rgba(236, 236, 236, 0.383); 
+}
+
+#content main .table-data .order table td img {
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
+}
+#content main .table-data .order table tbody tr:hover {
+	background: rgba(235, 235, 235, 0.697);
+}
+#content main .table-data .order table tr td .status {
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
+}
+
 #content main .table-data .order table tr td .status {
 	font-size: 10px;
 	padding: 6px 16px;
@@ -1119,25 +1161,37 @@ nav {
 	cursor: pointer;
 	transition-duration: 0.4s;
 }
-#content main .table-data .order table tr td .button.edit {
+#content main .table-data .order table tr td .button.edit-btn {
 	background-color: var(--blue);
 	color:var(--light);
 }
-#content main .table-data .order table tr td .button.edit:hover {
-	background-color: var(--lighter-grey);
+#content main .table-data .order table tr td .button.edit-btn:hover {
+	background-color: var(--light-blue);
   	color: var(--gray);
 }
-#content main .table-data .order table tr td .button.delete {
+#content main .table-data .order table tr td .button.save {
+	background-color: var(--green);
+	color:var(--light);
+}
+#content main .table-data .order table tr td .button.save:hover {
+	background-color: var(--light-green);
+  	color: var(--gray);
+}
+#content main .table-data .order table tr td .button.delete-btn {
 	background-color: var(--red); 
  	color: var(--light); 
 }
-#content main .table-data .order table tr td .button.delete:hover {
-	background-color: var(--lighter-grey);
+#content main .table-data .order table tr td .button.delete-btn:hover {
+	background-color: var(--light-red);
   	color:var(--gray);
 }
+
+
+
 #content main .table-data .todo {
-	flex-grow: 1;
-	flex-basis: 500px;
+ flex-basis: 130px;
+    flex-grow: 1; /* Can grow to fill available space */
+    overflow: auto; /* Add this line to enable scrolling within the container */
 }
 #content main .table-data .todo .todo-list {
 	width: 100%;
@@ -1164,8 +1218,6 @@ nav {
 #content main .table-data .todo .todo-list li:last-child {
 	margin-bottom: 0;
 }
-/* MAIN */
-/* CONTENT */
 
 @media screen and (max-width: 768px) {
 	#sidebar {
@@ -1182,10 +1234,15 @@ nav {
 	}
 }
 
+
+
+
+
+
 @media screen and (max-width: 576px) {
 	#content nav form .form-input input {
 		display: none;
-	}
+	}  
 
 	#content nav form .form-input button {
 		width: auto;
@@ -1225,91 +1282,201 @@ nav {
 	#content main .table-data .todo .todo-list {
 		min-width: 420px;
 	}
-	
-	#sidebar .brand .adminprofile{
-		height:31px;
-		width: 32px;
-		align-items: center;
-		margin:15px;
-		margin-inline-end: 23px;
-		display: flex;
-		justify-content: center;
-		}
 }
+  #mathGrade,
+  #scienceGrade,
+  #englishGrade {
+    width: 60px; /* Adjust the width as needed */
+  }
 
+  #gwaGrade {
+    width: 80px; /* Adjust the width as needed */
+  }
 
-h2 {
-text-align: center;
-color: #333;
-}
-
-table {
-width: 80%;
-margin: 20px auto;
-border-collapse: collapse;
-background-color: #fff;
-box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-padding: 12px;
-text-align: left;
-border-bottom: 1px solid #ddd;
-}
-
-th {
-background-color: #f2f2f2;
-}
-
-td {
-background-color: #fff;
-}
-
-form {
-
-
-text-align: center;
-}
-
-select, button {
-padding: 8px;
-margin-right: 5px;
-font-size: 14px;
-}
-
-/* Add this CSS to your HTML file or in a separate stylesheet */
-select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: #fff;
-   border-radius: 5px;
+  #mathGrade,
+  #scienceGrade,
+  #englishGrade,
+  #gwaGrade {
     padding: 8px;
-	border: 1px solid #ccc;
+    margin: 5px;
+    border: none; /* Remove border */
+    border-radius: 4px;
+    box-sizing: border-box;
     font-size: 14px;
-    cursor: pointer;
-	
+    outline: none; /* Remove the default focus outline */
+  }
+
+
+.editable {
+	cursor: pointer;
+	border: none;
+	background-color: transparent;
 }
 
-/* Add a custom arrow image */
-select::after {
+.editable:focus {
+	outline: none;
+	border: 1px solid #2196F3;
+}
+button {
+	padding: 4px 8px;
+	margin: 4px;
+	font-size: 14px;
+	cursor: pointer;
+	border: 1px solid #3498db;
+	color: #fff;
+	background-color: #3498db;
+	border-radius: 4px;
+}
+
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	text-indent: 1px;
+	text-overflow: '';
+}
+
+/* Style for the buttons */
+.update-button,
+        .save-button {
+            padding: 4px 8px;
+            margin: 4px;
+            font-size: 8px;
+            cursor: pointer;
+            border: 1px solid #3498db;
+            color: #070707;
+            background-color: #3498db;
+            border-radius: 4px;
+            display: block;
+            width: 40px; /
+}
+/* Custom styles for the toast */
+#toast {
+    position: fixed;
+    top: 10%;
+    right: 10%;
+    width: 300px;
+    background-color: #4CAF50;
+    color: #fff;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+#toast.show {
+    opacity: 1;
+}
+
+#viewButton {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#viewButton i {
+	cursor: pointer;
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+
+ /* Your styles go here */
+ .social-icons-container {
+	display: flex;
+	align-items: center;
+}
+
+.social-icons-container a {
+	margin-right: 10px;
+	text-decoration: none;
+	color:var(--green);
+	font-size: 24px;
+}
+.social-icons-container a:hover {
+	color: #000000; /* Change to the desired hover color */
+}
+
+
+.ProgramDropdown {
+    width: 160;
+    padding: 2px;
+    font-size: 11px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
    
+	line-height: 1;
+	margin: 2px 0;
+}
+
+.ProgramDropdown:hover {
+    border-color: #999;
+}
+
+.ProgramDropdown:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+/* Style the dropdown arrow */
+.ProgramDropdown::after {
+    content: '\25BC';
     position: absolute;
     top: 50%;
-    right: 10px;
+    right: 8px;
     transform: translateY(-50%);
     pointer-events: none;
 }
 
-
-button {
-background-color: #4caf50;
-color: #fff;
-border: none;
-border-radius: 4px;
-cursor: pointer;
+/* Style the options */
+.ProgramDropdown option {
+    font-size: 11px;
+	
 }
 
-button:hover {
-background-color: #45a049;
+
+label[for="rangeInput"] {
+    display: block;
+    margin-bottom: 4px; /* Optional: Adjust the margin as needed */
+    font-size: 14px; /* Match the font size with .ProgramDropdown */
+}
+
+.ForRange {
+    width: 50;
+    padding: 2px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+	text-align: center;
+    line-height: 1;
+    margin: 2px 0;
+}
+
+.ForRange:hover {
+    border-color: #999;
+}
+
+.ForRange:focus {
+    outline: none;
+    border-color: #0056b3;
+    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+}
+
+/* Style the dropdown arrow */
+.ForRange::after {
+    content: '\25BC';
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+.spacing {
+    width: 16px; /* Adjust the height for the desired spacing */
 }

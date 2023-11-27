@@ -35,6 +35,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ../Backend/form.php");
                     exit();
                 }
+            } elseif ($userType == 'faculty') {
+                if (strtolower($status) == 'approved') {
+                    header("Location: ../Backend/faculty.php");  // Redirect to faculty.php if approved
+                    exit();
+                } elseif (strtolower($status) == 'pending') {
+                    echo "Your registration is pending approval.";
+                } elseif (strtolower($status) == 'rejected') {
+                    echo "Your registration has been rejected. Please contact the administrator.";
+                } else {
+                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                }
                 
             } elseif ($userType == 'staff') {
                 if (strtolower($status) == 'approved') {
@@ -56,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
-            echo "Incorrect password";
+            echo "Incorrect password or email";
         }
     } else {
         echo "User not found";

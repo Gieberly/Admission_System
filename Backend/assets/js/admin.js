@@ -31,34 +31,35 @@ const searchButtonIcon = document.querySelector('#content nav form .form-input b
 const searchForm = document.querySelector('#content nav form');
 
 searchButton.addEventListener('click', function (e) {
-	if(window.innerWidth < 576) {
-		e.preventDefault();
-		searchForm.classList.toggle('show');
-		if(searchForm.classList.contains('show')) {
-			searchButtonIcon.classList.replace('bx-search', 'bx-x');
-		} else {
-			searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		}
-	}
+  if (window.innerWidth < 576) {
+    e.preventDefault();
+    searchForm.classList.toggle('show');
+    if (searchForm.classList.contains('show')) {
+      searchButtonIcon.classList.replace('bx-search', 'bx-x');
+      // Set the color to green when bx-x is added
+      searchButtonIcon.style.color = 'green';
+    } else {
+      searchButtonIcon.classList.replace('bx-x', 'bx-search');
+      // Reset the color when bx-x is removed
+      searchButtonIcon.style.color = ''; // Set to an empty string to use the default color
+    }
+  }
 })
 
-
-
-
-if(window.innerWidth < 768) {
-	sidebar.classList.add('hide');
-} else if(window.innerWidth > 576) {
-	searchButtonIcon.classList.replace('bx-x', 'bx-search');
-	searchForm.classList.remove('show');
+if (window.innerWidth < 768) {
+  sidebar.classList.add('hide');
+} else if (window.innerWidth > 576) {
+  searchButtonIcon.classList.replace('bx-x', 'bx-search');
+  searchForm.classList.remove('show');
 }
 
-
 window.addEventListener('resize', function () {
-	if(this.innerWidth > 576) {
-		searchButtonIcon.classList.replace('bx-x', 'bx-search');
-		searchForm.classList.remove('show');
-	}
+  if (this.innerWidth > 576) {
+    searchButtonIcon.classList.replace('bx-x', 'bx-search');
+    searchForm.classList.remove('show');
+  }
 })
+
 
 
 
@@ -174,56 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //pressing the box info and dashboard
 
-document.addEventListener('DOMContentLoaded', function () {
-    const AvailableItem = document.getElementById('available-box');
-    const AdmittedItem = document.getElementById('admission-box');
-    const ReadmittedItem = document.getElementById('admitted-box');
-    const NonqualifiedItem = document.getElementById('readmitted-box');
-});
-
-//pressing Sidebar
-document.addEventListener('DOMContentLoaded', function () {
-    const dashboardLink = document.getElementById('dashboard-link');
-    const dashboardContent = document.getElementById('dashboard-content');
-    const MasterListLink = document.getElementById('master-list-link');
-    const MasterListContent = document.getElementById('master-list-content');
-    const StudentResultLink = document.getElementById('student-result-link'); 
-    const StudentResultContent = document.getElementById('student-result-content');
-  
-    
-    // Initially hide the content divs by default
-    dashboardContent.style.display = 'block';
-    MasterListContent.style.display = 'none';
-    StudentResultContent.style.display = 'none';
-  
-
-    // Add event listeners to the links
-    dashboardLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'block';
-        MasterListContent.style.display = 'none';
-        StudentResultContent.style.display = 'none';
-     
-    });
-
-    MasterListLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'none';
-        MasterListContent.style.display = 'block';
-        StudentResultContent.style.display = 'none';
-       
-    });
-
-    StudentResultLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
-        dashboardContent.style.display = 'none';
-        MasterListContent.style.display = 'none';
-        StudentResultContent.style.display = 'block';
-      
-    });
-
-  
-});
 
 // tab like buttons for Student Result and Forms
   const tabButtons = document.querySelectorAll('.tab-button');

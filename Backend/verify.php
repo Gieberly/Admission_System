@@ -1,21 +1,32 @@
 <?php
+session_start();
 include("config.php");
 
-if (isset($_GET['token'])) {
-    $token = $_GET['token'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $enteredOTP = $_POST['otp'];
+    $email = $_SESSION['registered_email'];
 
-    $stmt = $conn->prepare("UPDATE users SET is_verified = 1 WHERE verification_token = ?");
-    $stmt->bind_param("s", $token);
-
-    if ($stmt->execute()) {
-        echo "Email verified successfully. You can now log in.";
-    } else {
-        echo "Error verifying email: " . $stmt->error;
-    }
-
+    $stmt = $conn->prepare("SELECT otp, otp_expiry FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($storedOTP, $otpExpiry);
+    $stmt->fetch();
     $stmt->close();
-    $conn->close();
-} else {
-    echo "Invalid verification link.";
+
+    if ($storedOTP === $enteredOTP && strtotime($otpExpiry) > time()) {
+        // OTP is valid, update user status to 'approved'
+        $stmtUpdateStatus = $conn->prepare("UPDATE users SET status = 'approved' WHERE email = ?");
+        $stmtUpdateStatus->bind_param("s", $email);
+        $stmtUpdateStatus->execute();
+        $stmtUpdateStatus->close();
+
+        // Redirect to login page
+        header("Location: loginpage.php");
+        exit();
+    } else {
+        echo "Invalid OTP or OTP expired. Please try again.";
+    }
 }
+
+$conn->close();
 ?>
