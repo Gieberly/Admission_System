@@ -68,7 +68,7 @@
             font-size: 1em; /* Relative font size */
           }
           .index-btn-wrapper{
-            display: flex;
+            display: none;
             margin-top: 20px;
           }
           
