@@ -195,186 +195,7 @@ $conn->close();
         <ul>
           <li>Notice of the result of the application for admission shall be announced in your student dashboard</li>
           </ul>
-          <div class="message">
-     <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GWA.</span>
-  
-       
-        <h2>Course guide for Application</h2>
-        <div class="page-container">
-          <div class="form-container">
-            <div class="form-group">
-              <label class="small-label" for="categoryDropdown">Select Program</label>
-              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
-                <option value="" disabled selected>Select nature of degree</option>
-                <option value="Board">Board</option>
-                <option value="Non-board">Non-Board</option>
-              </select>
-            </div>
-          
-            <!-- Input grades for Board selection -->
-            <div id="boardFields" class="programFields">
-              <label class="small-label" for="englishGrade">English Grade</label>
-              <input type="number" class="input" name="englishGrade" id="englishGrade"
-                placeholder="Enter English grade">
-
-              <label class="small-label" for="mathGrade">Math Grade</label>
-              <input type="number" class="input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
-
-              <label class="small-label" for="scienceGrade">Science Grade</label>
-              <input type="number" class="input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
-
-              <button type="button" onclick="calculateGWA()">Submit</button>
-              <p id="gwaResult"></p>
-            </div>
-
-            <!-- Input field for Non-Board selection -->
-            <div id="nonBoardField" class="programFields">
-              <label class="small-label" for="gwaGrade">GWA Grade</label>
-              <input type="number" class="input" name="gwaGrade" id="gwaGrade" placeholder="Enter GWA grade">
-
-              <button type="button" onclick="submitNonBoardForm()">Submit</button>
-              <p id="nonBoardGwaResult"></p>
-            </div>
-
-
-            <div class="form-group">
-              <div id="boardProgramsDropdown" class="programFields">
-                <label for="board-programs">Board Programs</label>
-                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
-                  <option value="">Board Programs</option>
-                  <optgroup label="College of Teacher Education">
-                    <option value="Bachelor of Early Childhood Education">Bachelor of Early Childhood Education</option>
-                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education </option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in English">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in English</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Filipino">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Filipino</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Mathematics">Bachelor of Secondary
-                      Education (BSEd) Major in Mathematics</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Science">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Science</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Social Studies">Bachelor of Secondary
-                      Education (BSEd) Major in Social Studies</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Values">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Values</option>
-                    <option value="Bachelor of Technology and Livelihood Education Major in Agri-Fisheries">Bachelor of
-                      Technology and Livelihood
-                      Education Major in Agri-Fisheries</option>
-                    <option value="Bachelor of Technology and Livelihood Education Major in Home Economics">Bachelor of
-                      Technology and Livelihood
-                      Education Major in Home Economics</option>
-                    <option value="Doctor of Veterinary Medicine">Doctor of Veterinary Medicine</option>
-                  </optgroup>
-                  <optgroup label="College of Natural Sciences">
-                    <option value="Bachelor of Science in Biology">Bachelor of Science in Biology</option>
-                    <option value="Bachelor of Science in Environmental Science">Bachelor of Science in Environmental
-                      Science</option>
-                    <option value="Bachelor of Science in Chemistry">Bachelor of Science in Chemistry</option>
-                  </optgroup>
-
-                  <optgroup label="College of Numeracy and Applied Sciences">
-                    <option value="Bachelor of Science in Mathematics">Bachelor of Science in Mathematics</option>
-                    <option value="Bachelor of Science in Statistics">Bachelor of Science in Statistics</option>
-                  </optgroup>
-
-                  <optgroup label="College of Social Sciences">
-                    <option value="Bachelor of Arts in History">Bachelor of Arts in History</option>
-                    <option value="Bachelor of Arts in Psychology">Bachelor of Arts in Psychology</option>
-                  </optgroup>
-
-
-
-                  <optgroup label="College of Public Administration and Governance">
-                    <option value="Bachelor in Public Administration">Bachelor in Public Administration</option>
-                    <option value="Diploma in Public Administration">Diploma in Public Administration</option>
-                    <option value="Certificate in Public Administration">Certificate in Public Administration</option>
-                  </optgroup>
-
-
-
-                  <optgroup label="College of Engineering">
-                    <option value="Bachelor of Science in Agricultural and Biosystems Engineering">Bachelor of Science
-                      in
-                      Agricultural and Biosystems Engineering</option>
-                    <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering
-                    </option>
-                    <option value="Bachelor of Science in Industrial Engineering">Bachelor of Science in Industrial
-                      Engineering</option>
-                    <option value="Bachelor of Science in Electrical Engineering">Bachelor of Science in Electrical
-                      Engineering</option>
-                  </optgroup>
-
-
-
-                  <optgroup label="">
-                    <option value="Bachelor of Science in Forestry (BSF)">Bachelor of Science in Forestry (BSF)</option>
-                    <option value="Bachelor of Science in Nursing (BSN)">Bachelor of Science in Nursing (BSN)</option>
-                    <option value="Doctor of Veterinary Medicine (DVM)">Doctor of Veterinary Medicine (DVM)</option>
-                  </optgroup>
-                </select>
-              </div>
-
-
-
-              <div id="nonBoardProgramsDropdown" class="programFields">
-                <label for="NonBoardProgram">Non-Board Programs</label>
-                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
-
-                  <option value="">Non-Board Programs</option>
-                  <optgroup label="College of Agriculture">
-                    <option value="Bachelor of Science in Agriculture (BSA)">Bachelor of Science in Agriculture (BSA)
-                    </option>
-                    <option value="Bachelor of Science in Agribusiness (BSAB)">Bachelor of Science in Agribusiness
-                      (BSAB)
-                    </option>
-                  </optgroup>
-                  <optgroup label="College of Arts and Humanities">
-                    <option value="Bachelor of Arts in Communication">Bachelor of Arts in Communication</option>
-                    <option value="Bachelor of Arts in English Language">Bachelor of Arts in English Language</option>
-                    <option value="Bachelor of Arts in Filipino Language">Bachelor of Arts in Filipino Language</option>
-                  </optgroup>
-
-                  <optgroup label="College of Home Economics and Technology">
-                    <option value="Bachelor of Science in Hospitality Management">Bachelor of Science in Hospitality
-                      Management</option>
-                    <option value="Bachelor of Science in Nutrition and Dietetics">Bachelor of Science in Nutrition and
-                      Dietetics</option>
-                    <option value="Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise">
-                      Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise</option>
-                    <option value="Bachelor of Science in Food Technology">Bachelor of Science in Food Technology
-                    </option>
-                    <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management
-                    </option>
-                    <option value="Bachelor of Science in Entrepreneurship specialized in Food Enterprise">Bachelor of
-                      Science in Entrepreneurship specialized in Food Enterprise</option>
-                  <optgroup label="College of Human Kinetics">
-                    <option value="Bachelor of Science in Exercise and Sports Science">Bachelor of Science in Exercise
-                      and
-                      Sports Science</option>
-                    <option value="Bachelor in Physical Education">Bachelor in Physical Education</option>
-                  </optgroup>
-                  <optgroup label="College of Information Sciences">
-                    <option value="Bachelor of Library and Information Science (BLIS)">Bachelor of Library and
-                      Information
-                      Science (BLIS)</option>
-                    <option value="Bachelor of Science in Information Technology (BSIT)">Bachelor of Science in
-                      Information
-                      Technology (BSIT)</option>
-                    <option value="Bachelor of Science in Development Communication (BSCD) major in:">Bachelor of
-                      Science in
-                      Development Communication (BSCD) major in:</option>
-                  </optgroup>
-
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+        
         <p class="coa"><strong><em>Classification of the applicant.</em></strong> An Applicant may only be classified
           in
           one category (except for second degree transferee):</p>
@@ -409,8 +230,7 @@ $conn->close();
               family
               name/surname of the husband</li>
             <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
+              nametag</li>
             <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
               present the original copy for comparison purposes.</li>
             <li>Certification of Enrollment from the last school attended (most recent).</li>
@@ -511,7 +331,216 @@ $conn->close();
         </ol>
         <p></p>
 
-        <p><label class="checkbox-container">
+        <div class="message">
+     <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GWA.</span>
+  
+        <h2>Course guide for Application</h2>
+        <div class="page-container">
+          <div class="form-container">
+            <div class="form-group">
+              <label class="small-label" for="categoryDropdown">Select Program</label>
+              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
+                <option value="" disabled selected>Select nature of degree</option>
+                <option value="Board">Board</option>
+                <option value="Non-board">Non-Board</option>
+              </select>
+            </div>
+
+             <!-- Input Academic Classification Selection (Board)-->
+            <div class="programFields" id="boardclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification_board" onchange="updateBoardSelection()">
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="grade_12b">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduateb">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduateb">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passerb">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereeb">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersb">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreeb">Second (2nd) Degree</option>
+            </select>
+          </div>
+
+            <!-- Input Academic Classification Selection (Non-Board) -->
+            <div class="programFields" id="nonclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="updateNonBoardSelection()">
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="grade_12n">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduaten">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduaten">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passern">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereen">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersn">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreen">Second (2nd) Degree</option>
+            </select>
+          </div>
+          
+            <!-- Input grades for Highschool-Board selection -->
+            <div id="hsboardFields" class="programFields">
+              <label class="small-label" for="englishGrade">English Grade</label>
+              <input type="number" class="input grades-input" name="englishGrade" id="englishGrade" placeholder="Enter English grade">
+
+              <label class="small-label" for="mathGrade">Math Grade</label>
+              <input type="number" class="input grades-input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
+
+              <label class="small-label" for="scienceGrade">Science Grade</label>
+              <input type="number" class="input grades-input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
+
+              <label class="small-label" for="gwaGrade">GWA</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="bgwaGrade" placeholder="Enter GWA">
+
+              <button type="button" onclick="hsBoardSelection()">Submit</button>
+            </div>
+
+            <!-- Input grades for Transferee/Vocational/Non-board selection -->
+            <div id="tvnFields" class="programFields">
+              <label class="small-label" for="gwaGrade">GWA</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="tvgwaGrade" placeholder="Enter GWA">
+
+              <button type="button" onclick="tvnSelection()">Submit</button>
+            </div>
+
+            <!-- Input grades for ALS/PEPT selection -->
+            <div id="alsFields" class="programFields">
+              <label class="small-label" for="gwaGrade">Overall PRC</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="prcGrade" placeholder="Enter Overall PRC">
+
+              <button type="button" onclick="alsSelection()">Submit</button>
+            </div>
+
+            <div class="form-group">
+              <div id="boardProgramsDropdown" class="programFields">
+                <label for="board-programs">Board Programs</label>
+                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
+                  <option value="">Board Programs</option>
+                  <optgroup label="College of Teacher Education">
+                    <option value="Bachelor of Early Childhood Education">Bachelor of Early Childhood Education</option>
+                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education </option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in English">Bachelor of Secondary
+                      Education
+                      (BSEd) Major in English</option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in Filipino">Bachelor of Secondary
+                      Education
+                      (BSEd) Major in Filipino</option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in Mathematics">Bachelor of Secondary
+                      Education (BSEd) Major in Mathematics</option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in Science">Bachelor of Secondary
+                      Education
+                      (BSEd) Major in Science</option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in Social Studies">Bachelor of Secondary
+                      Education (BSEd) Major in Social Studies</option>
+                    <option value="Bachelor of Secondary Education (BSEd) Major in Values">Bachelor of Secondary
+                      Education
+                      (BSEd) Major in Values</option>
+                    <option value="Bachelor of Technology and Livelihood Education Major in Agri-Fisheries">Bachelor of
+                      Technology and Livelihood
+                      Education Major in Agri-Fisheries</option>
+                    <option value="Bachelor of Technology and Livelihood Education Major in Home Economics">Bachelor of
+                      Technology and Livelihood
+                      Education Major in Home Economics</option>
+                    <option value="Doctor of Veterinary Medicine">Doctor of Veterinary Medicine</option>
+                  </optgroup>
+                  <optgroup label="College of Natural Sciences">
+                    <option value="Bachelor of Science in Biology">Bachelor of Science in Biology</option>
+                    <option value="Bachelor of Science in Environmental Science">Bachelor of Science in Environmental
+                      Science</option>
+                    <option value="Bachelor of Science in Chemistry">Bachelor of Science in Chemistry</option>
+                  </optgroup>
+
+                  <optgroup label="College of Numeracy and Applied Sciences">
+                    <option value="Bachelor of Science in Mathematics">Bachelor of Science in Mathematics</option>
+                    <option value="Bachelor of Science in Statistics">Bachelor of Science in Statistics</option>
+                  </optgroup>
+
+                  <optgroup label="College of Social Sciences">
+                    <option value="Bachelor of Arts in History">Bachelor of Arts in History</option>
+                    <option value="Bachelor of Arts in Psychology">Bachelor of Arts in Psychology</option>
+                  </optgroup>
+
+                  <optgroup label="College of Public Administration and Governance">
+                    <option value="Bachelor in Public Administration">Bachelor in Public Administration</option>
+                    <option value="Diploma in Public Administration">Diploma in Public Administration</option>
+                    <option value="Certificate in Public Administration">Certificate in Public Administration</option>
+                  </optgroup>
+
+                  <optgroup label="College of Engineering">
+                    <option value="Bachelor of Science in Agricultural and Biosystems Engineering">Bachelor of Science
+                      in
+                      Agricultural and Biosystems Engineering</option>
+                    <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering
+                    </option>
+                    <option value="Bachelor of Science in Industrial Engineering">Bachelor of Science in Industrial
+                      Engineering</option>
+                    <option value="Bachelor of Science in Electrical Engineering">Bachelor of Science in Electrical
+                      Engineering</option>
+                  </optgroup>
+
+                  <optgroup label="">
+                    <option value="Bachelor of Science in Forestry (BSF)">Bachelor of Science in Forestry (BSF)</option>
+                    <option value="Bachelor of Science in Nursing (BSN)">Bachelor of Science in Nursing (BSN)</option>
+                    <option value="Doctor of Veterinary Medicine (DVM)">Doctor of Veterinary Medicine (DVM)</option>
+                  </optgroup>
+                </select>
+              </div>
+
+              <div id="nonBoardProgramsDropdown" class="programFields">
+                <label for="NonBoardProgram">Non-Board Programs</label>
+                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
+
+                  <option value="">Non-Board Programs</option>
+                  <optgroup label="College of Agriculture">
+                    <option value="Bachelor of Science in Agriculture (BSA)">Bachelor of Science in Agriculture (BSA)
+                    </option>
+                    <option value="Bachelor of Science in Agribusiness (BSAB)">Bachelor of Science in Agribusiness
+                      (BSAB)
+                    </option>
+                  </optgroup>
+                  <optgroup label="College of Arts and Humanities">
+                    <option value="Bachelor of Arts in Communication">Bachelor of Arts in Communication</option>
+                    <option value="Bachelor of Arts in English Language">Bachelor of Arts in English Language</option>
+                    <option value="Bachelor of Arts in Filipino Language">Bachelor of Arts in Filipino Language</option>
+                  </optgroup>
+
+                  <optgroup label="College of Home Economics and Technology">
+                    <option value="Bachelor of Science in Hospitality Management">Bachelor of Science in Hospitality
+                      Management</option>
+                    <option value="Bachelor of Science in Nutrition and Dietetics">Bachelor of Science in Nutrition and
+                      Dietetics</option>
+                    <option value="Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise">
+                      Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise</option>
+                    <option value="Bachelor of Science in Food Technology">Bachelor of Science in Food Technology
+                    </option>
+                    <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management
+                    </option>
+                    <option value="Bachelor of Science in Entrepreneurship specialized in Food Enterprise">Bachelor of
+                      Science in Entrepreneurship specialized in Food Enterprise</option>
+                  <optgroup label="College of Human Kinetics">
+                    <option value="Bachelor of Science in Exercise and Sports Science">Bachelor of Science in Exercise
+                      and
+                      Sports Science</option>
+                    <option value="Bachelor in Physical Education">Bachelor in Physical Education</option>
+                  </optgroup>
+                  <optgroup label="College of Information Sciences">
+                    <option value="Bachelor of Library and Information Science (BLIS)">Bachelor of Library and
+                      Information
+                      Science (BLIS)</option>
+                    <option value="Bachelor of Science in Information Technology (BSIT)">Bachelor of Science in
+                      Information
+                      Technology (BSIT)</option>
+                    <option value="Bachelor of Science in Development Communication (BSCD) major in:">Bachelor of
+                      Science in
+                      Development Communication (BSCD) major in:</option>
+                  </optgroup>
+
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        
+        <p class="note-color"><label class="checkbox-container">
         <input type="checkbox" id="read-guidelines" required>
         <span class="checkmark"></span> NOTE: CHECK AND PROCEED ONLY TO THE NEXT STEP IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE REQUIREMENTS WILL NOT BE ENTERTAINED!</p>
       </label>
@@ -926,7 +955,7 @@ $conn->close();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 
 
-  <script src="assets\js\admissionform.js"></script>
+  <script defer src="assets\js\admissionform.js"></script>
 
 
 </body>
