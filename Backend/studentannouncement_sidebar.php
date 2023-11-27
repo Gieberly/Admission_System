@@ -74,19 +74,23 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 
                     <li id="readmitted-box" class="box-icon">
-                        <i class='bx bx-calendar'></i>
-                        <span class="text">
+                        <a href="student_readmissiondate.php">
+                            <i class='bx bx-calendar'></i>
+                            <span class="text">
 
-                            <p>Readmission Date</p>
-                        </span>
+                                <p>Readmission Date</p>
+                            </span>
+                        </a>
                     </li>
 
                     <li id="nonqualified-box" class="box-icon">
-                        <i class='bx bx-calendar'></i>
-                        <span class="text">
+                        <a href="student_releasingAnnounce.php">
+                            <i class='bx bx-calendar'></i>
+                            <span class="text">
 
-                            <p>Releasing of Result Date</p>
-                        </span>
+                                <p>Releasing of Result Date</p>
+                            </span>
+                        </a>
                     </li>
 
 
@@ -243,6 +247,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                         <div class="order">
                             <div class="head">
                                 <h3>Readmission Date</h3>
+                                a
                             </div>
                             <div>Readmission will start January 1- to 29</div>
                         </div>

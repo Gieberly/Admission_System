@@ -48,6 +48,50 @@ $admissionData = $resultAdmission->fetch_assoc();
     <body>
             <section id="content">
                 <main>
+                <div id="dashboard-content">
+                <div class="head-title">
+                    <div class="left">
+                        <h1>Announcement</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="#">Announcement</a></li>
+                            <li><i class='bx bx-chevron-right'></i></li>
+                            <li><a class="active" href="student.html">Home</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <ul class="box-info">
+                        <li id="available-box" class="box-icon">
+                            <i class='bx bx-clipboard'></i>
+                            <a href="studentannouncement_sidebar.php">
+                            <span class="text">
+                                <h3>1020</h3>
+                                <p>Available Slots</p>
+                            </span></a>
+                        </li>
+
+
+
+                        <li id="readmitted-box" class="box-icon">
+                        <a href="student_readmissiondate.php">
+                            <i class='bx bx-calendar'></i>
+                            <span class="text">
+
+                                <p>Readmission Date</p>
+                            </span></a>
+                        </li>
+
+                        <li id="nonqualified-box" class="box-icon">
+                        <a href="student_releasingAnnounce.php">
+                            <i class='bx bx-calendar'></i>
+                            <span class="text">
+
+                                <p>Releasing of Result Date</p>
+                            </span></a>
+                        </li>
+
+
+                    </ul>
                     <!--Available Slots-->
                 <div id="available-slot">
                     <div class="table-data">
@@ -193,6 +237,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 
                         </div>
                     </div>
+                </div>
                 </div>
                 </main>
             </section>
