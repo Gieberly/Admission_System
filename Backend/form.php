@@ -2,9 +2,14 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start(); // Start the session
-
-   
 include("config.php");
+// Query to select fields where Nature_of_Degree is 'Board'
+$sql = "SELECT * FROM Programs WHERE Nature_of_Degree = 'Board' ORDER BY Nature_of_Degree ASC, Description ASC";
+$result = $conn->query($sql);
+
+// Query to select fields where Nature_of_Degree is 'Non-Board' (adjust as per your actual data)
+$sqlNonBoard = "SELECT * FROM Programs WHERE Nature_of_Degree = 'Non-Board' ORDER BY Nature_of_Degree ASC, Description ASC";
+$resultNonBoard = $conn->query($sqlNonBoard);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Process form data
@@ -44,12 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
     $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
     
-         // Check if the email entered in the admission form matches the one saved in the session
-    $registered_email = $_SESSION['registered_email'];
-    if ($email !== $registered_email) {
-        echo "Error: Email mismatch. Please use the same email as in registration.";
-        exit();
-    }
+
 
 // Check if a file was uploaded
 if ($id_picture['error'] === UPLOAD_ERR_OK) {
@@ -380,6 +380,69 @@ $conn->close();
               <option value="second_degreen">Second (2nd) Degree</option>
             </select>
           </div>
+
+          <div class="form-group">
+              <!-- Board Programs -->
+              <div id="boardProgramsDropdown" class="programFields">
+                <label for="board-programs">Board Programs</label>
+                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
+                  <option value="">Select Board Program</option>
+                  <?php
+                    if ($result->num_rows > 0) {
+                        $currentNature = null;
+                        while ($row = $result->fetch_assoc()) {
+                            $nature = $row['Nature_of_Degree'];
+                            $description = $row['Description'];
+
+                            if ($nature != $currentNature) {
+                                if ($currentNature !== null) {
+                                    echo "</optgroup>";
+                                }
+                                echo "<optgroup label=\"$nature\">";
+                                $currentNature = $nature;
+                            }
+
+                            echo "<option value=\"$description\">$description</option>";
+                        }
+                        echo "</optgroup>";
+                    } else {
+                        echo "<option value=\"\">No programs available</option>";
+                    }
+                    ?>
+                </select>
+              </div>
+              
+              <!-- Non-Board Programs -->
+              <div id="nonBoardProgramsDropdown" class="programFields">
+                <label for="NonBoardProgram">Non-Board Programs</label>
+                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
+
+                  <option value="">Select Non-Board Program</option>
+                  <?php
+            if ($resultNonBoard->num_rows > 0) {
+                $currentNature = null;
+                while ($row = $resultNonBoard->fetch_assoc()) {
+                    $nature = $row['Nature_of_Degree'];
+                    $description = $row['Description'];
+
+                    if ($nature != $currentNature) {
+                        if ($currentNature !== null) {
+                            echo "</optgroup>";
+                        }
+                        echo "<optgroup label=\"$nature\">";
+                        $currentNature = $nature;
+                    }
+
+                    echo "<option value=\"$description\">$description</option>";
+                }
+                echo "</optgroup>";
+            } else {
+                echo "<option value=\"\">No programs available</option>";
+            }
+            ?>
+                </select>
+              </div>
+            </div>
           
             <!-- Input grades for Highschool-Board selection -->
             <div id="hsboardFields" class="programFields">
@@ -398,7 +461,7 @@ $conn->close();
               <button type="button" onclick="hsBoardSelection()">Submit</button>
             </div>
 
-            <!-- Input grades for Transferee/Vocational/Non-board selection -->
+            <!-- Input grades for Transferee/Vocational/SeconDegree/Non-board selection -->
             <div id="tvnFields" class="programFields">
               <label class="small-label" for="gwaGrade">GWA</label>
               <input type="number" class="input grades-input" name="gwaGrade" id="tvgwaGrade" placeholder="Enter GWA">
@@ -414,135 +477,7 @@ $conn->close();
               <button type="button" onclick="alsSelection()">Submit</button>
             </div>
 
-            <div class="form-group">
-              <div id="boardProgramsDropdown" class="programFields">
-                <label for="board-programs">Board Programs</label>
-                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
-                  <option value="">Board Programs</option>
-                  <optgroup label="College of Teacher Education">
-                    <option value="Bachelor of Early Childhood Education">Bachelor of Early Childhood Education</option>
-                    <option value="Bachelor of Elementary Education">Bachelor of Elementary Education </option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in English">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in English</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Filipino">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Filipino</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Mathematics">Bachelor of Secondary
-                      Education (BSEd) Major in Mathematics</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Science">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Science</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Social Studies">Bachelor of Secondary
-                      Education (BSEd) Major in Social Studies</option>
-                    <option value="Bachelor of Secondary Education (BSEd) Major in Values">Bachelor of Secondary
-                      Education
-                      (BSEd) Major in Values</option>
-                    <option value="Bachelor of Technology and Livelihood Education Major in Agri-Fisheries">Bachelor of
-                      Technology and Livelihood
-                      Education Major in Agri-Fisheries</option>
-                    <option value="Bachelor of Technology and Livelihood Education Major in Home Economics">Bachelor of
-                      Technology and Livelihood
-                      Education Major in Home Economics</option>
-                    <option value="Doctor of Veterinary Medicine">Doctor of Veterinary Medicine</option>
-                  </optgroup>
-                  <optgroup label="College of Natural Sciences">
-                    <option value="Bachelor of Science in Biology">Bachelor of Science in Biology</option>
-                    <option value="Bachelor of Science in Environmental Science">Bachelor of Science in Environmental
-                      Science</option>
-                    <option value="Bachelor of Science in Chemistry">Bachelor of Science in Chemistry</option>
-                  </optgroup>
-
-                  <optgroup label="College of Numeracy and Applied Sciences">
-                    <option value="Bachelor of Science in Mathematics">Bachelor of Science in Mathematics</option>
-                    <option value="Bachelor of Science in Statistics">Bachelor of Science in Statistics</option>
-                  </optgroup>
-
-                  <optgroup label="College of Social Sciences">
-                    <option value="Bachelor of Arts in History">Bachelor of Arts in History</option>
-                    <option value="Bachelor of Arts in Psychology">Bachelor of Arts in Psychology</option>
-                  </optgroup>
-
-                  <optgroup label="College of Public Administration and Governance">
-                    <option value="Bachelor in Public Administration">Bachelor in Public Administration</option>
-                    <option value="Diploma in Public Administration">Diploma in Public Administration</option>
-                    <option value="Certificate in Public Administration">Certificate in Public Administration</option>
-                  </optgroup>
-
-                  <optgroup label="College of Engineering">
-                    <option value="Bachelor of Science in Agricultural and Biosystems Engineering">Bachelor of Science
-                      in
-                      Agricultural and Biosystems Engineering</option>
-                    <option value="Bachelor of Science in Civil Engineering">Bachelor of Science in Civil Engineering
-                    </option>
-                    <option value="Bachelor of Science in Industrial Engineering">Bachelor of Science in Industrial
-                      Engineering</option>
-                    <option value="Bachelor of Science in Electrical Engineering">Bachelor of Science in Electrical
-                      Engineering</option>
-                  </optgroup>
-
-                  <optgroup label="">
-                    <option value="Bachelor of Science in Forestry (BSF)">Bachelor of Science in Forestry (BSF)</option>
-                    <option value="Bachelor of Science in Nursing (BSN)">Bachelor of Science in Nursing (BSN)</option>
-                    <option value="Doctor of Veterinary Medicine (DVM)">Doctor of Veterinary Medicine (DVM)</option>
-                  </optgroup>
-                </select>
-              </div>
-
-              <div id="nonBoardProgramsDropdown" class="programFields">
-                <label for="NonBoardProgram">Non-Board Programs</label>
-                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
-
-                  <option value="">Non-Board Programs</option>
-                  <optgroup label="College of Agriculture">
-                    <option value="Bachelor of Science in Agriculture (BSA)">Bachelor of Science in Agriculture (BSA)
-                    </option>
-                    <option value="Bachelor of Science in Agribusiness (BSAB)">Bachelor of Science in Agribusiness
-                      (BSAB)
-                    </option>
-                  </optgroup>
-                  <optgroup label="College of Arts and Humanities">
-                    <option value="Bachelor of Arts in Communication">Bachelor of Arts in Communication</option>
-                    <option value="Bachelor of Arts in English Language">Bachelor of Arts in English Language</option>
-                    <option value="Bachelor of Arts in Filipino Language">Bachelor of Arts in Filipino Language</option>
-                  </optgroup>
-
-                  <optgroup label="College of Home Economics and Technology">
-                    <option value="Bachelor of Science in Hospitality Management">Bachelor of Science in Hospitality
-                      Management</option>
-                    <option value="Bachelor of Science in Nutrition and Dietetics">Bachelor of Science in Nutrition and
-                      Dietetics</option>
-                    <option value="Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise">
-                      Bachelor of Science in Entrepreneurship specialized in Apparel & Fashion Enterprise</option>
-                    <option value="Bachelor of Science in Food Technology">Bachelor of Science in Food Technology
-                    </option>
-                    <option value="Bachelor of Science in Tourism Management">Bachelor of Science in Tourism Management
-                    </option>
-                    <option value="Bachelor of Science in Entrepreneurship specialized in Food Enterprise">Bachelor of
-                      Science in Entrepreneurship specialized in Food Enterprise</option>
-                  <optgroup label="College of Human Kinetics">
-                    <option value="Bachelor of Science in Exercise and Sports Science">Bachelor of Science in Exercise
-                      and
-                      Sports Science</option>
-                    <option value="Bachelor in Physical Education">Bachelor in Physical Education</option>
-                  </optgroup>
-                  <optgroup label="College of Information Sciences">
-                    <option value="Bachelor of Library and Information Science (BLIS)">Bachelor of Library and
-                      Information
-                      Science (BLIS)</option>
-                    <option value="Bachelor of Science in Information Technology (BSIT)">Bachelor of Science in
-                      Information
-                      Technology (BSIT)</option>
-                    <option value="Bachelor of Science in Development Communication (BSCD) major in:">Bachelor of
-                      Science in
-                      Development Communication (BSCD) major in:</option>
-                  </optgroup>
-
-                </select>
-              </div>
-            </div>
           </div>
-        </div>
         </div>
         
         <p class="note-color"><label class="checkbox-container">
@@ -556,8 +491,8 @@ $conn->close();
 
 
 
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(1, 2);">Next</div>
+      <div class="index-btn-wrapper" id="index-btn-wrapper">
+        <div class="index-btn" id="nextButton" onclick="run(1, 2);">Next</div>
       </div>
     </div>
 

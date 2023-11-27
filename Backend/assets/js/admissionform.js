@@ -131,7 +131,7 @@ if (gradeRequirement) {
 }
 
 function updateSelection() {
-  const selectedProgram = document.getElementById('categoryDropdown').value;
+  const selectedNatureDegree = document.getElementById('categoryDropdown').value;
   const boardClassificationFields = document.getElementById('boardclassificationFields');
   const nonBoardClassificationFields = document.getElementById('nonclassificationFields');
 
@@ -139,72 +139,87 @@ function updateSelection() {
   boardClassificationFields.style.display = 'none';
   nonBoardClassificationFields.style.display = 'none';
 
-  if (selectedProgram === 'Board') {
+  if (selectedNatureDegree === 'Board') {
     boardClassificationFields.style.display = 'block';
-  } else if (selectedProgram === 'Non-board') {
+  } else if (selectedNatureDegree === 'Non-board') {
     nonBoardClassificationFields.style.display = 'block';
   }
+  // Copy the selected nature of degree to Tab-2 input field
+  document.getElementById("nature_of_degree").value = selectNatureDegree;
 }
 
 function updateBoardSelection() {
   const selectedBoardClassification = document.getElementById('academic_classification_board').value;
-  const BoardPrograms = document.getElementById('board-programs');
-  const NonBoardProgram = document.getElementById('NonBoardProgram');
+  const boardProgramsDropdown = document.getElementById('boardProgramsDropdown');
+  const nonBoardProgramsDropdown = document.getElementById('nonBoardProgramsDropdown');
 
   // Hide all programFields initially
-  BoardPrograms.style.display = 'none';
-  NonBoardProgram.style.display = 'none';
+  boardProgramsDropdown.style.display = 'none';
+  nonBoardProgramsDropdown.style.display = 'none';
 
-  if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb' || selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb' || selectedBoardClassification === 'als_pept_passerb') {
-    BoardPrograms.style.display = 'block';
-    NonBoardProgram.style.display = 'none';
+  if (
+    selectedBoardClassification === 'grade_12b' ||
+    selectedBoardClassification === 'shs_graduateb' ||
+    selectedBoardClassification === 'hs_graduateb' ||
+    selectedBoardClassification === 'second_degreeb' ||
+    selectedBoardClassification === 'transfereeb' ||
+    selectedBoardClassification === 'vocational_completersb' ||
+    selectedBoardClassification === 'als_pept_passerb'
+  ) {
+    boardProgramsDropdown.style.display = 'block';
   } else if (selectedBoardClassification === '') {
-    BoardPrograms.style.display = 'none';
-    NonBoardProgram.style.display = 'none';
+    boardProgramsDropdown.style.display = 'none';
+    nonBoardProgramsDropdown.style.display = 'none';
   } 
 }
 
 function updateNonBoardSelection() {
-  const selectednonBoardClassification = document.getElementById('academic_classification_nonboard').value;
-  const BoardPrograms = document.getElementById('board-programs');
-  const NonBoardProgram = document.getElementById('NonBoardProgram');
+  const selectedNonBoardClassification = document.getElementById('academic_classification_nonboard').value;
+  const boardProgramsDropdown = document.getElementById('boardProgramsDropdown');
+  const nonBoardProgramsDropdown = document.getElementById('nonBoardProgramsDropdown');
 
   // Hide all programFields initially
-  BoardPrograms.style.display = 'none';
-  NonBoardProgram.style.display = 'none';
+  boardProgramsDropdown.style.display = 'none';
+  nonBoardProgramsDropdown.style.display = 'none';
 
-  if (selectednonBoardClassification === 'grade_12n' || selectednonBoardClassification === 'shs_graduaten' || selectednonBoardClassification === 'hs_graduaten' || selectednonBoardClassification === 'second_degreen' || selectednonBoardClassification === 'transfereen' || selectednonBoardClassification === 'vocational_completersn' || selectednonBoardClassification === 'als_pept_passern') {
-    BoardPrograms.style.display = 'none';
-    NonBoardProgram.style.display = 'block';
-  } else if (selectednonBoardClassification === '') {
-    BoardPrograms.style.display = 'none';
-    NonBoardProgram.style.display = 'none';
+  if (
+    selectedNonBoardClassification === 'grade_12n' ||
+    selectedNonBoardClassification === 'shs_graduaten' ||
+    selectedNonBoardClassification === 'hs_graduaten' ||
+    selectedNonBoardClassification === 'second_degreen' ||
+    selectedNonBoardClassification === 'transfereen' ||
+    selectedNonBoardClassification === 'vocational_completersn' ||
+    selectedNonBoardClassification === 'als_pept_passern'
+  ) {
+    nonBoardProgramsDropdown.style.display = 'block';
+  } else if (selectedNonBoardClassification === '') {
+    boardProgramsDropdown.style.display = 'none';
+    nonBoardProgramsDropdown.style.display = 'none';
   } 
 }
 
-  // Copy the selected nature of degree to Tab-2 input field
-  //document.getElementById("nature_of_degree").value = natureOfDegree;
-
 function updateDegreeFields() {
+  const selectedBoardClassification = document.getElementById('academic_classification_board').value;
+  const selectedBoardProgram = document.getElementById('board-programs').value;
+  const selectednonBoardClassification = document.getElementById('academic_classification_nonboard').value;
+  const selectednonBoardProgram = document.getElementById('NonBoardProgram').value;
 
-    // Hide all programFields initially
-    hsBoardFields.style.display = 'none';
-    tvnFields.style.display = 'none';
-    alsFields.style.display = 'none';
-  
-    if (selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb' || selectedBoardClassification === 'second_degreeb') {
-      hsBoardFields.style.display = 'block';
-      tvnFields.style.display = 'none';
-      alsFields.style.display = 'none';
-    } else if (selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb') {
-      tvnFields.style.display = 'block';
-      hsBoardFields.style.display = 'none';
-      alsFields.style.display = 'none';
-    } else {
-      alsFields.style.display = 'block';
-      hsBoardFields.style.display = 'none';
-      tvnFields.style.display = 'none';
-    }
+  // Hide all programFields initially
+  document.getElementById('hsboardFields').style.display = 'none';
+  document.getElementById('tvnFields').style.display = 'none';
+  document.getElementById('alsFields').style.display = 'none';
+
+  if ((selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb') && selectedBoardProgram !== '') {
+    document.getElementById('hsboardFields').style.display = 'block';
+  } else if ((selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb' || selectedBoardClassification === 'second_degreeb') && selectedBoardProgram !== '') {
+    document.getElementById('tvnFields').style.display = 'block';
+  } else if (selectedBoardClassification === 'als_pept_passerb' && selectedBoardProgram !== '') {
+    document.getElementById('alsFields').style.display = 'block';
+  } else  if ((selectednonBoardClassification === 'grade_12n' || selectednonBoardClassification === 'shs_graduaten' || selectednonBoardClassification === 'hs_graduaten' || selectednonBoardClassification === 'transfereen' || selectednonBoardClassification === 'vocational_completersn' || selectednonBoardClassification === 'second_degreen') && selectednonBoardProgram !== '') {
+    document.getElementById('tvnFields').style.display = 'block';
+  } else if (selectednonBoardClassification === 'als_pept_passern' && selectednonBoardProgram !== '') {
+    document.getElementById('alsFields').style.display = 'block';
+  }
 
   // Get the selected value from the board program dropdown
   var selectedValueBoard = document.getElementById("board-programs").value;
@@ -273,29 +288,6 @@ function alsSelection() {
   }
 }
 
-function submitNonBoardForm() {
-  var natureOfDegree = document.getElementById("categoryDropdown").value;
-
-  if (natureOfDegree === "Non-board") {
-    // Assuming you have an input field with ID: gwaGrade
-    var gwaGrade = parseFloat(document.getElementById("gwaGrade").value);
-
-    // Check if GWA is within the accepted range (80-99)
-    if (gwaGrade >= 80 && gwaGrade <= 99) {
-      document.getElementById("nonBoardGwaResult").innerText = "GWA: " + gwaGrade.toFixed(2) + "%";
-
-      // Check if GWA is above the required threshold (80%)
-      if (gwaGrade >= 80) {
-        // Show non-board programs dropdown
-        document.getElementById("nonBoardProgramsDropdown").style.display = "block";
-      } else {
-        alert("You didn't pass the required GWA (80% or above) for non-board programs.");
-      }
-    } else {
-      alert("Sorry! your GWA didn't pass the required General Weighted Average for Non-board Program. We advise you not to continue filling the Admission Form, Thank you.");
-    }
-  }
-}
 function updateApplicantName() {
   // Get values from the input fields
   var lastName = document.getElementById("last_name").value;
