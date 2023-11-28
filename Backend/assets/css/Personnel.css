@@ -1458,7 +1458,39 @@ select {
 #toast.show {
     opacity: 1;
 }
+#addStudent {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #addStudent .bx {
+	font-size: 15px;
 
+	color: var(--dark);
+  }
+  #toggleSelection {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #toggleSelection .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #deleteSelected {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #deleteSelected .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
 #viewButton {
     border: none;
     background: none;

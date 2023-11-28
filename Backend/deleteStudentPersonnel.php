@@ -1,28 +1,28 @@
 <?php
-
+session_start();
 include("config.php");
 
-// Check if the request contains the necessary parameters
-if (isset($_POST['id'])) {
-    $id = $_POST['id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $id = $_POST["id"];
 
-    // Perform the delete operation
-    $deleteQuery = "DELETE FROM admission_data WHERE id = ?";
-    $stmt = $conn->prepare($deleteQuery);
-    $stmt->bind_param("i", $id);
+    // Move the record to the backup table before deleting
+    $stmtMoveToBackup = $conn->prepare("INSERT INTO deleted_admission_data SELECT * FROM admission_data WHERE id = ?");
+    $stmtMoveToBackup->bind_param("i", $id);
+    $stmtMoveToBackup->execute();
 
-    if ($stmt->execute()) {
-        echo "Row deleted successfully!";
+    // Perform the delete operation in your main table
+    $stmtDelete = $conn->prepare("DELETE FROM admission_data WHERE id = ?");
+    $stmtDelete->bind_param("i", $id);
+
+    if ($stmtDelete->execute()) {
+        $response = array("success" => true);
     } else {
-        echo "Error deleting row: " . $stmt->error;
+        $response = array("success" => false);
     }
 
-    // Close the statement
-    $stmt->close();
-} else {
-    echo "Invalid request. Please provide an 'id' parameter.";
+    // Return the response as JSON
+    header("Content-Type: application/json");
+    echo json_encode($response);
+    exit;
 }
-
-// Close the database connection
-$conn->close();
 ?>

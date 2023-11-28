@@ -9,7 +9,8 @@ $sql = "SELECT * FROM `programs` WHERE
         `Courses` LIKE '%$search%' OR 
         `Nature_of_Degree` LIKE '%$search%' OR 
         `Description` LIKE '%$search%' OR 
-        `Overall_Slots` LIKE '%$search%'";
+        `Overall_Slots` LIKE '%$search%'
+        ORDER BY `Nature_of_Degree` ASC";  // ASC for ascending order, DESC for descending order
 $result = $conn->query($sql);
 ?>
 
@@ -309,13 +310,13 @@ $result = $conn->query($sql);
         var editableCells = addCourseRow.querySelectorAll('.editable');
 
         // Create an object to store the new course data
-        var newCourseData = {};
+        var newStudentData = {};
 
         // Loop through each editable cell and store the new value
         editableCells.forEach(function(cell) {
             var fieldName = cell.getAttribute('data-field');
             var newValue = cell.innerText.trim();
-            newCourseData[fieldName] = newValue;
+            newStudentData[fieldName] = newValue;
         });
 
         // Send an AJAX request to add the new course to the database
@@ -349,7 +350,7 @@ $result = $conn->query($sql);
             }
         };
         xhr.send(JSON.stringify({
-            newCourseData: newCourseData
+            newStudentData: newStudentData
         }));
     }
 

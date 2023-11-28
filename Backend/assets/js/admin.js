@@ -26,39 +26,6 @@ menuBar.addEventListener('click', function () {
 
 //search bar
 
-const searchButton = document.querySelector('#content nav form .form-input button');
-const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
-const searchForm = document.querySelector('#content nav form');
-
-searchButton.addEventListener('click', function (e) {
-  if (window.innerWidth < 576) {
-    e.preventDefault();
-    searchForm.classList.toggle('show');
-    if (searchForm.classList.contains('show')) {
-      searchButtonIcon.classList.replace('bx-search', 'bx-x');
-      // Set the color to green when bx-x is added
-      searchButtonIcon.style.color = 'green';
-    } else {
-      searchButtonIcon.classList.replace('bx-x', 'bx-search');
-      // Reset the color when bx-x is removed
-      searchButtonIcon.style.color = ''; // Set to an empty string to use the default color
-    }
-  }
-})
-
-if (window.innerWidth < 768) {
-  sidebar.classList.add('hide');
-} else if (window.innerWidth > 576) {
-  searchButtonIcon.classList.replace('bx-x', 'bx-search');
-  searchForm.classList.remove('show');
-}
-
-window.addEventListener('resize', function () {
-  if (this.innerWidth > 576) {
-    searchButtonIcon.classList.replace('bx-x', 'bx-search');
-    searchForm.classList.remove('show');
-  }
-})
 
 
 

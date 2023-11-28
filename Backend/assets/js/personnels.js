@@ -120,31 +120,6 @@ switchMode.addEventListener('change', function () {
 
 
 //side bar
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdownItems = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
-
-    dropdownItems.forEach(function (item) {
-        const fullText = item.getAttribute('data-fulltext');
-        const abbreviation = item.querySelector('.text');
-
-        // Save the original abbreviation
-        const originalAbbreviation = abbreviation.textContent;
-
-        item.addEventListener('mouseover', function () {
-            // Apply a smaller font size and show the full text on two lines when hovering
-            abbreviation.style.fontSize = '12px';
-            abbreviation.style.whiteSpace = 'normal'; // Allow multiple lines
-            abbreviation.textContent = fullText;
-        });
-
-        item.addEventListener('mouseout', function () {
-            // Restore the original state when not hovering
-            abbreviation.style.fontSize = ''; // Empty string resets to the default size
-            abbreviation.style.whiteSpace = 'nowrap'; // Display on one line
-            abbreviation.textContent = originalAbbreviation;
-        });
-    });
-});
 
 document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');

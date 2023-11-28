@@ -4,7 +4,7 @@ include("config.php");
 session_start();
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
@@ -15,6 +15,21 @@ $stmt->execute();
 $stmt->bind_result($name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
+
+function getCourses($conn)
+{
+    $stmt = $conn->prepare("SELECT ProgramID, Courses, Description, Nature_of_Degree FROM programs ORDER BY Nature_of_Degree, Courses");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $courses = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
+
+    $stmt->close();
+    return $courses;
+}
 
 
 ?>
@@ -32,7 +47,7 @@ $stmt->close();
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -61,7 +76,7 @@ $stmt->close();
             <li class="">
                 <a href="studentresult.php" id="student-result-link">
                     <i class='bx bxs-window-alt'></i>
-                    <span class="text">Student Result</span>
+                    <span class="text">Forms</span>
                 </a>
             </li>
 
@@ -71,107 +86,69 @@ $stmt->close();
                     <span class="text">Announcements</span>
                 </a>
             </li>
-           <li class="dropdown" id="courses-dropdown">
-                <a href="#" class="dropdown-toggle" id="course-link">
-                    <i class='bx bxs-graduation'></i>
-                    <span class="text">Colleges</span>
-					<i class="bx bx-chevron-down" id="chevron-icon"></i> <!-- Dropdown indicator -->
-                 
-                </a>
-                <ul class="dropdown-content">
-                <li>
-                        <a id="course-bsa" href="BSA.php" data-fulltext="Bachelor of Science in Agriculture">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">BSA</span>
-                        </a>
-                </li>
-                    <li>
-                        <a id="course-cah" href="BSAB.php" data-fulltext="Bachelor of Science in Agribusiness major in Enterprise Management">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">BSAB</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cah" href="#" data-fulltext="College of Arts and Humanities">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CAH</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-ceat" href="#" data-fulltext="College of Engineering and Applied Technology">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CEAT</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cf" href="#" data-fulltext="College of Forestry">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CF</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-ca" href="#" data-fulltext="College of Agriculture">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CA</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-chet" href="#" data-fulltext="College of Home Economics and Technology">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CHET</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cis" href="#" data-fulltext="College of Information Sciences">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CIS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cns" href="#" data-fulltext="College of Natural Sciences">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CNS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cnas" href="#" data-fulltext="College of Numeracy and Applied Sciences">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CNAS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cn" href="#" data-fulltext="CCollege of Nursing">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CN</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cpag" href="#" data-fulltext="College of Public Administration and Governance">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CPAG</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-css" href="#" data-fulltext="COLLEGE OF SOCIAL SCIENCES">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CSS</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a id="course-cvm" href="#" data-fulltext="College of Veterinary Medicine">
-                            <i class='bx bx-hive'></i>
-                            <span class="text">CVM</span>
-                        </a>
-                    </li>
 
 
-    <!-- Add more course items here -->
+            <li class="dropdown" id="courses-dropdown">
+    <a href="#" class="dropdown-toggle" id="course-link">
+        <i class='bx bxs-graduation'></i>
+        <span class="text">Colleges</span>
+        <i class="bx bx-chevron-down" id="chevron-icon"></i>
+    </a>
+    <ul class="dropdown-content">
+        <?php
+        $courses = getCourses($conn);
 
+        foreach ($courses as $course) {
+            echo '<li>';
+            echo '<a href="Colleges.php?degree_applied=' . $course['ProgramID'] . '" class="course-item" data-description="' . $course['Description'] . '">';
+            echo '<i class="bx bx-hive"></i>';
+            echo '<span class="text">' . $course['Courses'] . '</span>';
+            echo '</a>';
+            echo '</li>';
+        }
+        
+        
+        ?>
+    </ul>
+</li>
 
-
-                </ul>
-            </li>
+<!-- ... (your existing code) ... -->
+<style>
+    .course-item .text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       
+    }
+
+    .course-item:hover .text {
+        font-size: 10px; /* Adjust the font size as needed */
+        max-height: 3em; /* Adjust the number of lines you want to display */
+        white-space: normal;
+    }
+</style>
+
+<!-- ... (your existing code) ... -->
+
+<script>
+    $(document).ready(function () {
+        // Handle hover on course item
+        $('.course-item').hover(function () {
+            // Store the original course name
+            var originalName = $(this).find('.text').text();
+            $(this).data('original-name', originalName);
+
+            // Display the Description content when hovering
+            var description = $(this).data('description');
+            $(this).find('.text').text(description);
+        }, function () {
+            // Restore the original course name when not hovering
+            var originalName = $(this).data('original-name');
+            $(this).find('.text').text(originalName);
+        });
+    });
+</script>
+
 
         </ul>
     </section>
@@ -182,7 +159,36 @@ $stmt->close();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            
+
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'masterlist.php') {
+            ?>
+                <form action="masterlist.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'Applicants.php') {
+            ?>
+                <form action="Applicants.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+
             <form id="search-form">
                 <div class="form-input" style="display: none;">
                     <input type="text" id="searchInput" placeholder="Search...">
@@ -190,7 +196,7 @@ $stmt->close();
                 </div>
             </form>
             <div id="clock">8:10:45</div>
-           
+
             <a href="#" class="profile" id="profile-button">
                 <img src="assets/images/human icon.png" alt="User Profile">
             </a>
@@ -202,7 +208,6 @@ $stmt->close();
     </section>
 
 
- 
     <!-- Add the profile popup container here -->
     <div class="profile-popup" id="profile-popup">
         <!-- Popup content -->
@@ -211,7 +216,7 @@ $stmt->close();
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
                 <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
             </div>
-           
+
 
             <hr>
             <div class="profile-menu">
@@ -225,43 +230,43 @@ $stmt->close();
 
 
                 </div>
-                <a href="EditInfo.php" id="settings" class="profile-item" ><i class='bx bx-cog'></i> Settings</a>              
-    
+                <a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
+
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-     <div class="dropdown" id="help-dropdown">
-                   <!-- Content for Help and Support dropdown -->
-                  <!-- Trigger for the FAQ pop-up -->
-      <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
-        <a href="#" onclick="toggleDevonContent()">Connect With us</a>
-        <div id="devon-content"class style="display: none;">
-       <div class="social-icons-container">
-     <!-- Facebook -->
-     <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
+                <div class="dropdown" id="help-dropdown">
+                    <!-- Content for Help and Support dropdown -->
+                    <!-- Trigger for the FAQ pop-up -->
+                    <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
+                    <a href="#" onclick="toggleDevonContent()">Connect With us</a>
+                    <div id="devon-content" class style="display: none;">
+                        <div class="social-icons-container">
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
 
-    <!-- Email -->
-     <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
+                            <!-- Email -->
+                            <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
 
-    <!-- Twitter -->
-      <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
+                            <!-- Twitter -->
+                            <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
 
-    <!-- Instagram -->
-      <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
 
-    <!-- YouTube -->
-      <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
-   </div>
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+                        </div>
+
+                    </div>
+                </div>
+                <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
 
             </div>
-           </div>
-            <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
 
         </div>
-
-   </div>
-</div>
+    </div>
     <!-- CONTENT -->
-   <script src="assets/js/personnels.js"></script>
+    <script src="assets/js/personnels.js"></script>
 </body>
- <!-- #region -->
-</html>
+<!-- #region -->
 
+</html>

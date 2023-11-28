@@ -3,7 +3,7 @@
 include("config.php");
 
 // Check if the user is an admin, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'faculty') {
     header("Location: loginpage.php");
     exit();
 }
@@ -134,26 +134,13 @@ $studentFormData = getAllStudentFormData();
         <nav>
             <i class='bx bx-menu'></i>
            
-            <?php
-// Check if the current page is Courses.php
-$current_page = basename($_SERVER['PHP_SELF']);
-if ($current_page === 'Courses.php') {
-?>
-    <form action="Courses.php" method="GET">
-        <div class="form-input">
-            <input type="search" name="search" placeholder="Search...">
-            <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
-        </div>
-    </form>
-<?php
-}
-?>
-            <form id="search-form">
-                <div class="form-input" style="display: none;">
-                    <input type="text" id="searchInput" placeholder="Search...">
-                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
-                </div>
-            </form>
+<form action="Courses.php" method="GET">
+				<div class="form-input">
+					<input type="search" name="search" placeholder="Search...">
+					<button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+				</div>
+			</form>
+
 
            
 

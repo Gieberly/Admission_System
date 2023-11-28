@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "Your registration is not yet approved. Please wait for admin approval.";
                 }
                 
-            } elseif ($userType == 'staff') {
+            } elseif ($userType == 'Staff') {
                 if (strtolower($status) == 'approved') {
                     header("Location: ../Backend/personnel.php");
                     exit();

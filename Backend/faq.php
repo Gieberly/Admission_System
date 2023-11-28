@@ -4,7 +4,7 @@ include("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
