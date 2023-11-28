@@ -917,6 +917,40 @@ nav {
 	background-color: var(--light-blue);
   	color: var(--gray);
 }
+#content main .table-data .order table tr td .button.edit-btn {
+	background-color: var(--blue);
+	color:var(--light);
+}
+#content main .table-data .order table tr td .button.edit-btn:hover {
+	background-color: var(--light-blue);
+  	color: var(--gray);
+}
+#content main .table-data .order table tr td .button.save {
+	background-color: var(--green);
+	color:var(--light);
+}
+#content main .table-data .order table tr td .button.save:hover {
+	background-color: var(--light-green);
+  	color: var(--gray);
+}
+#content main .table-data .order table tr td .button.delete-btn {
+	background-color: var(--red); 
+ 	color: var(--light); 
+}
+#content main .table-data .order table tr td .button.delete-btn:hover {
+	background-color: var(--light-red);
+  	color:var(--gray);
+}
+#content main .table-data .order table tr td .button.save-btn {
+    background-color: var(--green);
+    color: var(--light);
+}
+
+#content main .table-data .order table tr td .button.save-btn:hover {
+    background-color: var(--light-green);
+    color: var(--gray);
+}
+
 
 #content main .head-title {
 	display: flex;
@@ -1401,7 +1435,7 @@ nav {
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-}
+} 
 
 .editable:focus {
 	outline: none;

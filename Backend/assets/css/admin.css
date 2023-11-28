@@ -659,6 +659,9 @@ nav {
 
 	color: var(--dark);
   }
+  #sortButton:hover .bx {
+    color: var(--blue);
+}
 
   #sortAZ {
     border: none;
@@ -671,12 +674,46 @@ nav {
 
 	color: var(--dark);
   }
+ #delete-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#delete-btn .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #delete-btn:hover i {
+    color: var(--red);
+}
+
+  #edit-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#edit-btn .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #edit-btn:hover i {
+    color: var(--blue);
+}
   #addCourses {
     border: none;
     background: none;
     padding: 0;
     font-size: 0;
   }
+
+  #delete-btn:hover i {
+    color: var(--red);
+}
+
   #addCourses .bx {
 	font-size: 15px;
 
@@ -787,18 +824,10 @@ nav {
 	margin: 20px 2px;
 	cursor: pointer;
 	transition-duration: 0.4s;
-	float: right;
+
 }
 
-#content main .button.save {
-	background-color: var(--yellow);
-	color:var(--dark);
-}
 
-#content main .button.save:hover {
-	background-color: var(--light-yellow);
-  	color: var(--gray);
-}
 
 #content main .button.send {
 	background-color: var(--orange); 
@@ -825,25 +854,9 @@ nav {
   	color: var(--gray);
 }
 
-#content main .button.edit {
-	background-color: var(--blue);
-	color:var(--dark);
-}
 
-#content main .button.edit:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
-}
 
-#content main .button.save-btn {
-	background-color: var(--green);
-	color:var(--dark);
-}
 
-#content main .button.save-btn:hover {
-	background-color: var(--light-gren);
-  	color: var(--gray);
-}
 
 #content main .head-title {
 	display: flex;
@@ -1161,14 +1174,7 @@ nav {
 	cursor: pointer;
 	transition-duration: 0.4s;
 }
-#content main .table-data .order table tr td .button.edit-btn {
-	background-color: var(--blue);
-	color:var(--light);
-}
-#content main .table-data .order table tr td .button.edit-btn:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
-}
+
 #content main .table-data .order table tr td .button.save {
 	background-color: var(--green);
 	color:var(--light);
@@ -1177,15 +1183,17 @@ nav {
 	background-color: var(--light-green);
   	color: var(--gray);
 }
-#content main .table-data .order table tr td .button.delete-btn {
-	background-color: var(--red); 
- 	color: var(--light); 
-}
-#content main .table-data .order table tr td .button.delete-btn:hover {
-	background-color: var(--light-red);
-  	color:var(--gray);
+
+
+#content main .table-data .order table tr td .button.save-btn {
+    background-color: var(--green);
+    color: var(--light);
 }
 
+#content main .table-data .order table tr td .button.save-btn:hover {
+    background-color: var(--light-green);
+    color: var(--gray);
+}
 
 
 #content main .table-data .todo {
@@ -1336,20 +1344,7 @@ select {
 	text-overflow: '';
 }
 
-/* Style for the buttons */
-.update-button,
-        .save-button {
-            padding: 4px 8px;
-            margin: 4px;
-            font-size: 8px;
-            cursor: pointer;
-            border: 1px solid #3498db;
-            color: #070707;
-            background-color: #3498db;
-            border-radius: 4px;
-            display: block;
-            width: 40px; /
-}
+
 /* Custom styles for the toast */
 #toast {
     position: fixed;

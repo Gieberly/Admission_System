@@ -9,8 +9,7 @@ $sql = "SELECT * FROM `programs` WHERE
         `Courses` LIKE '%$search%' OR 
         `Nature_of_Degree` LIKE '%$search%' OR 
         `Description` LIKE '%$search%' OR 
-        `Overall_Slots` LIKE '%$search%'
-        ORDER BY `Nature_of_Degree` ASC";  // ASC for ascending order, DESC for descending order
+        `Overall_Slots` LIKE '%$search%'";
 $result = $conn->query($sql);
 ?>
 
@@ -92,8 +91,15 @@ $result = $conn->query($sql);
                                         echo "<td class='editable' data-field='Overall_Slots'>{$row['Overall_Slots']}</td>";
 
                                         echo "<td>
-                                              <button type='button' class='button delete-btn' onclick='deleteCourse({$row['ProgramID']})'>Delete</button>
-                                              <button type='button' class='button edit-btn' onclick='editCourse({$row['ProgramID']})'>Edit</button>
+                                        <button type='button' id='edit-btn' class='button edit-btn' onclick='editCourse({$row['ProgramID']})'>
+                                            <i class='bx bx-edit-alt'></i>
+                                            </button>
+
+                                        <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteCourse({$row['ProgramID']})'>
+                                        <i class='bx bx-trash'></i>
+                                         </button>
+                                             
+                                    
                                                </td>";
                                         echo "</tr>";
                                         $count++;
@@ -180,90 +186,98 @@ $result = $conn->query($sql);
             }
         });
     }
-
     function editCourse(programID) {
-        // Get the row element
-        var row = document.querySelector(`tr[data-id='${programID}']`);
+    // Get the row element
+    var row = document.querySelector(`tr[data-id='${programID}']`);
 
-        // Get all editable cells in the row
-        var editableCells = row.querySelectorAll('.editable');
+    // Get all editable cells in the row
+    var editableCells = row.querySelectorAll('.editable');
 
-        // Add corner borders and remove inner borders for each editable cell
-        editableCells.forEach(function(cell, index) {
-            cell.contentEditable = true;
-            cell.classList.add('editing');
+    // Add corner borders and remove inner borders for each editable cell
+    editableCells.forEach(function(cell, index) {
+        cell.contentEditable = true;
+        cell.classList.add('editing');
 
-            // Add corner borders
-            cell.style.borderBottom = '2px solid blue';
+        // Add corner borders
+        cell.style.borderBottom = '2px solid blue';
 
-            // Remove inner borders
-            if (index > 0) {
-                editableCells[index - 1].style.borderRight = 'none';
-                cell.style.borderLeft = 'none';
-            }
+        // Remove inner borders
+        if (index > 0) {
+            editableCells[index - 1].style.borderRight = 'none';
+            cell.style.borderLeft = 'none';
+        }
+    });
+
+    // Change the content of the "Edit" button to a "Save" icon
+    var editButton = row.querySelector('.edit-btn');
+    editButton.innerHTML = '<i class="bx bx-save"></i>';
+    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+    editButton.onclick = function() {
+        saveCourse(programID);
+
+        // Hide the blue bottom border after saving
+        editableCells.forEach(function(cell) {
+            cell.style.borderBottom = 'none';
         });
+    };
+}
 
-        // Change the "Edit" button to a "Save" button
-        var editButton = row.querySelector('.edit-btn');
-        editButton.innerHTML = 'Save';
-        editButton.onclick = function() {
-            saveCourse(programID);
+
+function saveCourse(programID) {
+    // Get the row element
+    var row = document.querySelector(`tr[data-id='${programID}']`);
+
+    // Get all editable cells in the row
+    var editableCells = row.querySelectorAll('.editable');
+
+    // Create an object to store the updated data
+    var updatedData = {};
+
+    // Loop through each editable cell and store the updated value
+    editableCells.forEach(function(cell) {
+        var fieldName = cell.getAttribute('data-field');
+        var updatedValue = cell.innerText.trim();
+        updatedData[fieldName] = updatedValue;
+    });
+
+    // Send an AJAX request to update the data in the database
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'save_course.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Display a toast notification for successful save
+            var toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
+
+            // Change the "Save" button back to "Edit" with the "Edit" icon
+            var editButton = row.querySelector('.edit-btn');
+            editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
+            editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
+            editButton.onclick = function() {
+                editCourse(programID);
+            };
+
+            // Restore the original blue styling for the "Edit" button
+            editButton.style.backgroundColor = 'var(--blue)';
+            editButton.style.color = 'var(--light)';
 
             // Hide the blue bottom border after saving
             editableCells.forEach(function(cell) {
                 cell.style.borderBottom = 'none';
             });
-        };
-    }
+        }
+    };
+    xhr.send(JSON.stringify({
+        programID: programID,
+        updatedData: updatedData
+    }));
+}
 
-    function saveCourse(programID) {
-        // Get the row element
-        var row = document.querySelector(`tr[data-id='${programID}']`);
 
-        // Get all editable cells in the row
-        var editableCells = row.querySelectorAll('.editable');
-
-        // Create an object to store the updated data
-        var updatedData = {};
-
-        // Loop through each editable cell and store the updated value
-        editableCells.forEach(function(cell) {
-            var fieldName = cell.getAttribute('data-field');
-            var updatedValue = cell.innerText.trim();
-            updatedData[fieldName] = updatedValue;
-        });
-
-        // Send an AJAX request to update the data in the database
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'save_course.php', true);
-        xhr.setRequestHeader('Content-Type', 'application/json');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Display a toast notification for successful save
-                var toast = document.getElementById('toast');
-                toast.classList.add('show');
-                setTimeout(function() {
-                    toast.classList.remove('show');
-                }, 3000);
-
-                // Change the "Save" button back to "Edit"
-                var editButton = row.querySelector('.edit-btn');
-                editButton.innerHTML = 'Edit';
-                editButton.onclick = function() {
-                    editCourse(programID);
-                };
-
-                // Hide the blue bottom border after saving
-                editableCells.forEach(function(cell) {
-                    cell.style.borderBottom = 'none';
-                });
-            }
-        };
-        xhr.send(JSON.stringify({
-            programID: programID,
-            updatedData: updatedData
-        }));
-    }
 
 
 
@@ -310,13 +324,13 @@ $result = $conn->query($sql);
         var editableCells = addCourseRow.querySelectorAll('.editable');
 
         // Create an object to store the new course data
-        var newStudentData = {};
+        var newCourseData = {};
 
         // Loop through each editable cell and store the new value
         editableCells.forEach(function(cell) {
             var fieldName = cell.getAttribute('data-field');
             var newValue = cell.innerText.trim();
-            newStudentData[fieldName] = newValue;
+            newCourseData[fieldName] = newValue;
         });
 
         // Send an AJAX request to add the new course to the database
@@ -350,7 +364,7 @@ $result = $conn->query($sql);
             }
         };
         xhr.send(JSON.stringify({
-            newStudentData: newStudentData
+            newCourseData: newCourseData
         }));
     }
 

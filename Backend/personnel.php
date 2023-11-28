@@ -24,8 +24,8 @@ if ($result->num_rows > 0) {
     $totalSlots = 0;
 }
 
-// Fetch the count of records from the admission_data table
-$sql = "SELECT COUNT(*) AS total_students FROM admission_data";
+// Fetch the count of records from the admission_data table without NOR or NOA in the Result column
+$sql = "SELECT COUNT(*) AS total_students FROM admission_data WHERE Result IS NULL OR Result NOT LIKE '%NOR%' AND Result NOT LIKE '%NOA%'";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -35,9 +35,35 @@ if ($result->num_rows > 0) {
 } else {
     $totalStudents = 0;
 }
+// Fetch the count of records from the admission_data table with "NOA" in the Result column
+$sql = "SELECT COUNT(*) AS admitted_students FROM admission_data WHERE Result LIKE '%NOA%'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of the first row
+    $row = $result->fetch_assoc();
+    $admittedStudents = $row['admitted_students'];
+} else {
+    $admittedStudents = 0;
+}
+// Fetch the count of records from the admission_data table with "NOR" in the Result column
+$sql = "SELECT COUNT(*) AS readmitted_students FROM admission_data WHERE Result LIKE '%NOR%'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Output data of the first row
+    $row = $result->fetch_assoc();
+    $readmittedStudents = $row['readmitted_students'];
+} else {
+    $readmittedStudents = 0;
+}
 
 $conn->close();
+
+
+
 ?>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,13 +73,13 @@ $conn->close();
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
-<section id="content">    
-<main>
-        <!--Dashboard-->
+    <section id="content">
+        <main>
+            <!--Dashboard-->
             <div id="dashboard-content">
                 <div class="head-title">
                     <div class="left">
@@ -68,37 +94,39 @@ $conn->close();
 
                 <ul class="box-info">
                     <li id="available-box">
-                    <a href="PersonnelEditSlot.php">
-                        <i class='bx bx-clipboard'></i></a>
+                        <a href="PersonnelEditSlot.php">
+                            <i class='bx bx-clipboard'></i></a>
                         <span class="text">
-                        <h3><?php echo $totalSlots; ?></h3>
+                            <h3><?php echo $totalSlots; ?></h3>
                             <p>Available Slots</p>
                         </span>
                     </li>
 
                     <li id="admission-box">
-                    <a href="masterlist.php">
-                        <i class='bx bxs-group'></i></a>
+                        <a href="masterlist.php">
+                            <i class='bx bxs-group'></i>
+                        </a>
                         <span class="text">
-                        <h3><?php echo $totalStudents; ?></h3>
+                            <h3><?php echo $totalStudents; ?></h3>
                             <p>Students For Admission</p>
                         </span>
                     </li>
 
+
                     <li id="admitted-box">
-                    <a href="your_destination_url_here">
-                        <i class='bx bx-user-check'></i></a>
+                        <a href="your_destination_url_here">
+                            <i class='bx bx-user-check'></i></a>
                         <span class="text">
-                            <h3>2543</h3>
+                        <h3><?php echo $admittedStudents; ?></h3>
                             <p>Admitted Students</p>
                         </span>
                     </li>
 
                     <li id="readmitted-box">
-                    <a href="your_destination_url_here">
-                        <i class='bx bxs-user-x'></i></a>
+                        <a href="your_destination_url_here">
+                            <i class='bx bxs-user-x'></i></a>
                         <span class="text">
-                            <h3>1020</h3>
+                        <h3><?php echo $readmittedStudents; ?></h3>
                             <p>Students For Readmission</p>
                         </span>
                     </li>
@@ -106,7 +134,7 @@ $conn->close();
 
             </div>
 
- 
+
 
 
 
@@ -115,5 +143,6 @@ $conn->close();
         <!-- MAIN -->
 
     </section>
-            </body>
+</body>
+
 </html>

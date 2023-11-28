@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $conn->close();
 } else {
     // If the request is not a POST request, redirect or handle accordingly
-    header("Location: colleges.php");
+    header("Location: Applicants.php");
     exit();
 }
 ?>

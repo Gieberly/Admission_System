@@ -62,12 +62,12 @@ $stmt->fetch();
             <div id="master-list-content">
                 <div class="head-title">
                     <div class="left">
-                        <h1>Colleges</h1>
+                        <h1>Applicants</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Colleges</a></li>
+                            <li><a href="#">Applicants</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
                             <li>
-                                <p">Department</p>
+                            <li><a class="active" href="personnel.php">Home</a></li>
                             </li>
                         </ul>
                     </div>
@@ -151,11 +151,11 @@ $stmt->fetch();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr data-id='{$row['id']}'>";
                                                 echo "<td>{$count}</td>";
-                                                echo "<td  data-field='applicant_number'>{$row['applicant_number']}</td>";
+                                                echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
                                                 echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
                                                 echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
                                                 echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
-                                                echo "<td  data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                                echo "<td class='editable'data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
@@ -173,7 +173,7 @@ $stmt->fetch();
                                             echo "<tr><td colspan='13'>No admission data found</td></tr>";
                                         }
                                         ?>
-
+ 
 
 
                                     </tbody>
@@ -248,88 +248,96 @@ $stmt->fetch();
                                     }
 
                                     function editAdmissionData(id) {
-                                        // Get the row element
-                                        var row = document.querySelector(`tr[data-id='${id}']`);
+    // Get the row element
+    var row = document.querySelector(`tr[data-id='${id}']`);
 
-                                        // Get all editable cells in the row
-                                        var editableCells = row.querySelectorAll('.editable');
+    // Get all editable cells in the row
+    var editableCells = row.querySelectorAll('.editable');
 
-                                        // Add corner borders and remove inner borders for each editable cell
-                                        editableCells.forEach(function(cell, index) {
-                                            cell.contentEditable = true;
-                                            cell.classList.add('editing');
+    // Add corner borders and remove inner borders for each editable cell
+    editableCells.forEach(function(cell, index) {
+        cell.contentEditable = true;
+        cell.classList.add('editing');
 
-                                            // Add corner borders
-                                            cell.style.borderBottom = '2px solid blue';
+        // Add corner borders
+        cell.style.borderBottom = '2px solid blue';
 
-                                            // Remove inner borders
-                                            if (index > 0) {
-                                                editableCells[index - 1].style.borderRight = 'none';
-                                                cell.style.borderLeft = 'none';
-                                            }
-                                        });
+        // Remove inner borders
+        if (index > 0) {
+            editableCells[index - 1].style.borderRight = 'none';
+            cell.style.borderLeft = 'none';
+        }
+    });
 
-                                        // Change the "Edit" button to a "Save" button
-                                        var editButton = row.querySelector('.edit-btn');
-                                        editButton.innerHTML = 'Save';
-                                        editButton.onclick = function() {
-                                            saveStudent(id);
+    // Change the "Edit" button to a "Save" button and change its color to green
+    var editButton = row.querySelector('.edit-btn');
+    editButton.innerHTML = 'Save';
+    editButton.classList.add('save-btn'); // Add this line to add a class to the button
+    editButton.onclick = function() {
+        saveStudent(id);
 
-                                            // Hide the blue bottom border after saving
-                                            editableCells.forEach(function(cell) {
-                                                cell.style.borderBottom = 'none';
-                                            });
-                                        };
-                                    }
+        // Hide the blue bottom border after saving
+        editableCells.forEach(function(cell) {
+            cell.style.borderBottom = 'none';
+        });
+    };
+}
 
-                                    function saveStudent(id) {
-                                        // Get the row element
-                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-                                        // Get all editable cells in the row
-                                        var editableCells = row.querySelectorAll('.editable');
+function saveStudent(id) {
+    // Get the row element
+    var row = document.querySelector(`tr[data-id='${id}']`);
 
-                                        // Create an object to store the updated data
-                                        var updatedData = {};
+    // Get all editable cells in the row
+    var editableCells = row.querySelectorAll('.editable');
 
-                                        // Loop through each editable cell and store the updated value
-                                        editableCells.forEach(function(cell) {
-                                            var fieldName = cell.getAttribute('data-field');
-                                            var updatedValue = cell.innerText.trim();
-                                            updatedData[fieldName] = updatedValue;
-                                        });
+    // Create an object to store the updated data
+    var updatedData = {};
 
-                                        // Send an AJAX request to update the data in the database
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('POST', 'save_student.php', true);
-                                        xhr.setRequestHeader('Content-Type', 'application/json');
-                                        xhr.onreadystatechange = function() {
-                                            if (xhr.readyState === 4 && xhr.status === 200) {
-                                                // Display a toast notification for successful save
-                                                var toast = document.getElementById('toast');
-                                                toast.classList.add('show');
-                                                setTimeout(function() {
-                                                    toast.classList.remove('show');
-                                                }, 3000);
+    // Loop through each editable cell and store the updated value
+    editableCells.forEach(function(cell) {
+        var fieldName = cell.getAttribute('data-field');
+        var updatedValue = cell.innerText.trim();
+        updatedData[fieldName] = updatedValue;
+    });
 
-                                                // Change the "Save" button back to "Edit"
-                                                var editButton = row.querySelector('.edit-btn');
-                                                editButton.innerHTML = 'Edit';
-                                                editButton.onclick = function() {
-                                                    editStudent(id);
-                                                };
+    // Send an AJAX request to update the data in the database
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'save_student.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Display a toast notification for successful save
+            var toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(function() {
+                toast.classList.remove('show');
+            }, 3000);
 
-                                                // Hide the blue bottom border after saving
-                                                editableCells.forEach(function(cell) {
-                                                    cell.style.borderBottom = 'none';
-                                                });
-                                            }
-                                        };
-                                        xhr.send(JSON.stringify({
-                                            id: id,
-                                            updatedData: updatedData
-                                        }));
-                                    }
+            // Change the "Save" button back to "Edit"
+            var editButton = row.querySelector('.edit-btn');
+            editButton.innerHTML = 'Edit';
+            editButton.classList.remove('save-btn'); // Remove the class to remove the green styling
+            editButton.onclick = function() {
+                editAdmissionData(id);
+            };
+
+            // Restore the original blue styling for the "Edit" button
+            editButton.style.backgroundColor = 'var(--blue)';
+            editButton.style.color = 'var(--light)';
+
+            // Hide the blue bottom border after saving
+            editableCells.forEach(function(cell) {
+                cell.style.borderBottom = 'none';
+            });
+        }
+    };
+    xhr.send(JSON.stringify({
+        id: id,
+        updatedData: updatedData
+    }));
+}
+
 
                                     function showSuccessToast() {
                                         // Get the toast element
