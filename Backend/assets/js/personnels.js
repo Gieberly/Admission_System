@@ -40,18 +40,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const dropdownLinks = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
     dropdownLinks.forEach(link => {
         if (currentURL.includes(link.getAttribute('href'))) {
-            document.querySelector('#course-link').parentElement.classList.add('active');
+            document.querySelector('').parentElement.classList.add('active');
         }
     });
 
-    // Add an event listener for the "Colleges" dropdown to unhide the sidebar
-    const coursesDropdown = document.getElementById('courses-dropdown');
-    const coursesDropdownLink = document.getElementById('course-link');
-    coursesDropdownLink.addEventListener('click', function (event) {
-        event.preventDefault();
-        sidebar.classList.remove('hide');
-        localStorage.setItem('sidebarState', 'visible');
-    });
 });
 
 // TOGGLE SIDEBAR

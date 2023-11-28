@@ -65,6 +65,14 @@ function getCourses($conn)
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+            <li >
+                <a href="Applicants.php" >
+                <i class='bx bxs-user-detail' ></i>
+                    <span class="text">Applicants</span>
+                  
+                </a>
+
+            </li>
 
             <li class="">
                 <a href="masterlist.php" id="master-list-link">
@@ -88,66 +96,7 @@ function getCourses($conn)
             </li>
 
 
-            <li class="dropdown" id="courses-dropdown">
-    <a href="#" class="dropdown-toggle" id="course-link">
-        <i class='bx bxs-graduation'></i>
-        <span class="text">Colleges</span>
-        <i class="bx bx-chevron-down" id="chevron-icon"></i>
-    </a>
-    <ul class="dropdown-content">
-        <?php
-        $courses = getCourses($conn);
 
-        foreach ($courses as $course) {
-            echo '<li>';
-            echo '<a href="Colleges.php?degree_applied=' . $course['ProgramID'] . '" class="course-item" data-description="' . $course['Description'] . '">';
-            echo '<i class="bx bx-hive"></i>';
-            echo '<span class="text">' . $course['Courses'] . '</span>';
-            echo '</a>';
-            echo '</li>';
-        }
-        
-        
-        ?>
-    </ul>
-</li>
-
-<!-- ... (your existing code) ... -->
-<style>
-    .course-item .text {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      
-    }
-
-    .course-item:hover .text {
-        font-size: 10px; /* Adjust the font size as needed */
-        max-height: 3em; /* Adjust the number of lines you want to display */
-        white-space: normal;
-    }
-</style>
-
-<!-- ... (your existing code) ... -->
-
-<script>
-    $(document).ready(function () {
-        // Handle hover on course item
-        $('.course-item').hover(function () {
-            // Store the original course name
-            var originalName = $(this).find('.text').text();
-            $(this).data('original-name', originalName);
-
-            // Display the Description content when hovering
-            var description = $(this).data('description');
-            $(this).find('.text').text(description);
-        }, function () {
-            // Restore the original course name when not hovering
-            var originalName = $(this).data('original-name');
-            $(this).find('.text').text(originalName);
-        });
-    });
-</script>
 
 
         </ul>

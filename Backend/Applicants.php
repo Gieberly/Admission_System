@@ -151,11 +151,11 @@ $stmt->fetch();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr data-id='{$row['id']}'>";
                                                 echo "<td>{$count}</td>";
-                                                echo "<td class='editable' data-field='applicant_number'>{$row['applicant_number']}</td>";
-                                                echo "<td class='editable' data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
-                                                echo "<td class='editable' data-field='degree_applied'>{$row['degree_applied']}</td>";
-                                                echo "<td class='editable' data-field='applicant_name'>{$row['applicant_name']}</td>";
-                                                echo "<td class='editable' data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                                echo "<td  data-field='applicant_number'>{$row['applicant_number']}</td>";
+                                                echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
+                                                echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
+                                                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
+                                                echo "<td  data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";

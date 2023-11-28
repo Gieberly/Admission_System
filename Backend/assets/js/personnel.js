@@ -62,37 +62,6 @@ window.addEventListener('resize', function () {
 
 
 
-const switchMode = document.getElementById('switch-mode');
-
-switchMode.addEventListener('change', function () {
-	if(this.checked) {
-		document.body.classList.add('dark');
-	} else {
-		document.body.classList.remove('dark');
-	}
-})
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-
-    dropdownToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function (e) {
-            e.preventDefault();
-            const dropdownContent = toggle.nextElementSibling;
-            const chevronIcon = toggle.querySelector('.bx-chevron-down');
-
-            // Toggle the visibility of the dropdown content
-            if (dropdownContent.style.display === 'block') {
-                dropdownContent.style.display = 'none';
-                chevronIcon.style.transform = 'rotate(0deg)';
-            } else {
-                dropdownContent.style.display = 'block';
-                chevronIcon.style.transform = 'rotate(180deg)';
-            }
-        });
-    });
-});
 
 
 //side bar
@@ -246,16 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById(tabId).classList.add('active');
     });
 });
-//dropdown for nature of degree
-function updateSelection(answer) {
-    console.log(answer.value);
-    if(answer.value == 1){
-        document.getElementById('nonBoard').classList.remove('nonboardProgram');
-        document.getElementById('Board').classList.add('boardProgram');
-    } else {
-        document.getElementById('Board').classList.remove('boardProgram');
-        document.getElementById('nonBoard').classList.add('nonboardProgram');
-    }
-};
+
 
 
