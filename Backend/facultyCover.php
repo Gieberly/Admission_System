@@ -1,14 +1,13 @@
 <?php
-
 include("config.php");
 
-// Check if the user is an admin, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'faculty') {
-    header("Location: loginpage.php");
+session_start();
+
+// Check if the user is logged in as a Faculty
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
+    header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
     exit();
 }
-
-// Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
@@ -17,57 +16,22 @@ $stmt->bind_result($name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 
-// Function to get all staff members
-function getAllStaff() {
-    global $conn;
-    $query = "SELECT id, name, email, userType, status FROM users WHERE userType = 'staff'";
-    $result = $conn->query($query);
-    return $result;
-}
+function getCourses($conn)
+{
+    $stmt = $conn->prepare("SELECT ProgramID, Courses, Description, Nature_of_Degree FROM programs ORDER BY Nature_of_Degree, Courses");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $courses = [];
 
-// Function to update staff status
-function updateStaffStatus($staffId, $newStatus) {
-    global $conn;
-    $query = "UPDATE users SET status = ? WHERE id = ? AND userType = 'staff'";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $newStatus, $staffId);
-    return $stmt->execute();
-}
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
 
-// Function to delete staff member
-function deleteStaff($staffId) {
-    global $conn;
-    $query = "DELETE FROM users WHERE id = ? AND userType = 'staff'";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $staffId);
-    return $stmt->execute();
-}
-
-// Check if the form for updating status is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateStatus'])) {
-    $staffId = $_POST['staffId'];
-    $newStatus = $_POST['newStatus'];
-    updateStaffStatus($staffId, $newStatus);
-}
-
-// Check if the form for deleting staff member is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
-    $staffId = $_POST['staffId'];
-    deleteStaff($staffId);
+    $stmt->close();
+    return $courses;
 }
 
 
-
-// Function to get all student form data
-function getAllStudentFormData() {
-    global $conn;
-    $query = "SELECT id,applicant_number,degree_applied,nature_of_degree, applicant_name, email, math_grade, science_grade, english_grade, gwa_grade, rank FROM admission_data";
-    $result = $conn->query($query);
-    return $result;
-}
-
-// Display all student form data in the table
-$studentFormData = getAllStudentFormData();
 ?>
 
 
@@ -77,13 +41,13 @@ $studentFormData = getAllStudentFormData();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSU OUR Admission Admin</title>
+    <title>BSU OUR Admission Faculty</title>
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets\css\admin.css" />
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="assets/css//personnel.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -91,39 +55,44 @@ $studentFormData = getAllStudentFormData();
     <section id="sidebar">
         <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
-            <span class="text">Admin</span>
+            <span class="text">Faculty</span>
         </a>
 
         <ul class="side-menu top">
-            <li class="active">
-                <a href="adminDashboard.php" id="dashboard-link">
+            <li class="">
+                <a href="facultydashboard.php" id="dashboard-link">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-
-            <li class="">
-                <a href="Courses.php" id="courses-link">
-                <i class='bx bxs-graduation'></i>
-                    <span class="text">Courses</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="master-list-link">
-                    <i class='bx bxs-user-pin'></i>
+            <li >
+                <a href="facultyApplicants.php" >
+                <i class='bx bxs-user-detail' ></i>
                     <span class="text">Applicants</span>
+                  
                 </a>
+
             </li>
 
             <li class="">
-                <a href="#" id="student-result-link">
-                    <i class='bx bxs-window-alt'></i>
-                    <span class="text">Personnels</span>
+                <a href="masterlist.php" id="master-list-link">
+                    <i class='bx bxs-user-pin'></i>
+                    <span class="text">Master List</span>
                 </a>
             </li>
 
-           
+
+            <li class="">
+                <a href="faq.php" id="announcements-link">
+                    <i class='bx bxs-book-content'></i>
+                    <span class="text">Announcements</span>
+                </a>
+            </li>
+
+
+
+
+
         </ul>
     </section>
     <!-- SIDEBAR -->
@@ -133,93 +102,114 @@ $studentFormData = getAllStudentFormData();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-           
-<form action="Courses.php" method="GET">
-				<div class="form-input">
-					<input type="search" name="search" placeholder="Search...">
-					<button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
-				</div>
-			</form>
 
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'masterlist.php') {
+            ?>
+                <form action="masterlist.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'facultyApplicants.php') {
+            ?>
+                <form action="facultyApplicants.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
 
-           
-
-
+            <form id="search-form">
+                <div class="form-input" style="display: none;">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
+                </div>
+            </form>
             <div id="clock">8:10:45</div>
-           
+
             <a href="#" class="profile" id="profile-button">
                 <img src="assets/images/human icon.png" alt="User Profile">
             </a>
 
         </nav>
-        <!-- NAVBAR -->
 
-        <!-- MAIN -->
 
-        <main>
-        </main>
-        <!-- MAIN -->
 
     </section>
+
 
     <!-- Add the profile popup container here -->
     <div class="profile-popup" id="profile-popup">
         <!-- Popup content -->
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
-                <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture"
-                    id="profile-picture">
-                <p class="profile-name"><?php echo $name; ?></p>
+                <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
+                <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
             </div>
+
 
             <hr>
             <div class="profile-menu">
-                <a href="#" id="settings" class="profile-item">  <i class='bx bx-sun'></i>Display</a>
-         
-       <div class="dropdown" id="settings-dropdown">
-                    <a href="#">Dark Mode 
+                <a href="#" id="settings" class="profile-item"> <i class='bx bx-sun'></i>Display</a>
+
+                <div class="dropdown" id="settings-dropdown">
+                    <a href="#">Dark Mode
                         <input type="checkbox" id="switch-mode" hidden>
                         <label for="switch-mode" class="switch-mode"></label></a>
 
-                
+
 
                 </div>
-<a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>              
-<a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
+                <a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
 
-<div class="dropdown" id="help-dropdown">
-    <!-- Content for Help and Support dropdown -->
-    <!-- Trigger for the FAQ pop-up -->
-    <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ (Frequently Asked Questions)</a>
-    
-    <!-- Trigger for the Contact Us pop-up -->
-    <a href="#" onclick="openPopup('contact-popup')">Contact Us</a>
-    
-    <!-- Trigger for the Report a Problem pop-up -->
-    <!-- <a href="#" onclick="openPopup('report-popup')">Report a Problem</a>-->
-</div>
+                <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
+                <div class="dropdown" id="help-dropdown">
+                    <!-- Content for Help and Support dropdown -->
+                    <!-- Trigger for the FAQ pop-up -->
+                    <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
+                    <a href="#" onclick="toggleDevonContent()">Connect With us</a>
+                    <div id="devon-content" class style="display: none;">
+                        <div class="social-icons-container">
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
 
-<a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
-    <script>
-        //log out prompt
-        function confirmLogout() {
-        // Display a confirmation dialog
-        var confirmLogout = confirm("Are you sure you want to log out?");
+                            <!-- Email -->
+                            <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
 
-        // If the user clicks "OK," redirect to logout.php
-        if (confirmLogout) {
-            window.location.href = "../backend/logout.php";
-        } else {
-            alert("Logout canceled");
-        }
-    }
-    </script>            
+                            <!-- Twitter -->
+                            <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
+
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
+
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+                        </div>
+
+                    </div>
+                </div>
+                <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+
+            </div>
+
         </div>
     </div>
-</div>
-
     <!-- CONTENT -->
-    <script src="assets\js\admin.js"></script>
+    <script src="assets/js/personnels.js"></script>
 </body>
+<!-- #region -->
 
 </html>

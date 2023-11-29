@@ -1,46 +1,50 @@
 <?php
 
 include("config.php");
-include("personnelcover.php");
+include("facultyCover.php");
 
 
-// Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
-    header("Location: loginpage.php");
+// Check if the user is logged in as a Faculty
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
+    header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
     exit();
 }
+// Fetch user's department
+$userId = $_SESSION['user_id'];
+$fetchDepartmentQuery = "SELECT Department FROM users WHERE id = ?";
+$stmtFetchDepartment = $conn->prepare($fetchDepartmentQuery);
+$stmtFetchDepartment->bind_param("i", $userId);
+$stmtFetchDepartment->execute();
+$stmtFetchDepartment->bind_result($department);
+$stmtFetchDepartment->fetch();
+$stmtFetchDepartment->close();
 
-
-// Retrieve student data from the database
+// Handle search
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied 
-          FROM admission_data 
-          WHERE 
-            `applicant_name` LIKE '%$search%' OR 
-            `applicant_number` LIKE '%$search%' OR 
-            `academic_classification` LIKE '%$search%' OR 
-            `email` LIKE '%$search%' OR 
-            `math_grade` LIKE '%$search%' OR 
-            `science_grade` LIKE '%$search%' OR 
-            `english_grade` LIKE '%$search%' OR 
-            `gwa_grade` LIKE '%$search%' OR 
-            `rank` LIKE '%$search%' OR 
-            `result` LIKE '%$search%' OR 
-            `nature_of_degree` LIKE '%$search%' OR 
-            `degree_applied` LIKE '%$search%'
-          ORDER BY applicant_name ASC";
+// Fetch the list of students without a result in the faculty's department with search functionality
+$fetchStudentListQuery = "SELECT * FROM admission_data 
+                          WHERE degree_applied = ? 
+                          AND (Result IS NULL OR Result NOT IN ('NOR', 'NOA')) 
+                          AND (gwa_grade IS NOT NULL AND gwa_grade <> '0.00')
+                          AND (applicant_name LIKE '%$search%' OR 
+                               applicant_number LIKE '%$search%' OR 
+                               academic_classification LIKE '%$search%' OR 
+                               email LIKE '%$search%' OR 
+                               math_grade LIKE '%$search%' OR 
+                               science_grade LIKE '%$search%' OR 
+                               english_grade LIKE '%$search%' OR 
+                               gwa_grade LIKE '%$search%' OR 
+                               Result LIKE '%$search%' OR 
+                               nature_of_degree LIKE '%$search%' OR 
+                               degree_applied LIKE '%$search%')
+                          ORDER BY gwa_grade DESC";
 
-$result = $conn->query($query);
-
-// Fetch user information from the database based on user ID
-$userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
-$stmt->bind_param("i", $userID);
-$stmt->execute();
-$stmt->bind_result($name, $email, $userType, $status);
-$stmt->fetch();
-
+$stmtFetchStudentList = $conn->prepare($fetchStudentListQuery);
+$stmtFetchStudentList->bind_param("s", $department);
+$stmtFetchStudentList->execute();
+$result = $stmtFetchStudentList->get_result();
+$stmtFetchStudentList->close();
 ?>
 
 
@@ -97,7 +101,7 @@ $stmt->fetch();
                                     <button style="display: none;" type="button" id="deleteSelected">
                                         <i class='bx bx-trash'></i> Delete Selected
                                     </button>
-
+                                    <box-icon name='abacus' id="openModalButton"></box-icon>
 
                                 </div>
                             </div>
@@ -119,7 +123,7 @@ $stmt->fetch();
                                             <th>English</th>
                                             <th>GWA</th>
 
-                                           
+                                            <th>Result</th>
                                             <th>Action</th>
                                             <th style="display: none;" id="selectColumn">Select</th>
                                         </tr>
@@ -135,7 +139,7 @@ $stmt->fetch();
                                             <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="english_grade"></td>
                                             <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="gwa_grade"></td>
 
-                                            
+                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Result"></td>
                                             <td>
                                                 <button type='button' class='button cancel-btn' onclick='cancelAddStudent()'>Cancel</button>
                                                 <button type='button' class='button save-btn' onclick='saveNewStudent()'>Save</button>
@@ -145,35 +149,34 @@ $stmt->fetch();
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        if ($result->num_rows > 0) {
-                                            $count = 1;
-                                            while ($row = $result->fetch_assoc()) {
-                                                echo "<tr data-id='{$row['id']}'>";
-                                                echo "<td>{$count}</td>";
-                                                echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
-                                                echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
-                                                echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
-                                                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
-                                                echo "<td data-field='academic_classification'>{$row['academic_classification']}</td>";
-                                                echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
-                                                echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
-                                                echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
-                                                echo "<td class='editable' data-field='gwa_grade'>{$row['gwa_grade']}</td>";
-                                                
-                                                echo "<td>
-                                                 <button type='button'  id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'> <i class='bx bx-trash'></i></button>
-                                                 <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
-                                                 </td>";
-                                                 echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
-                                                echo "</tr>";
-                                                $count++;
-                                            }
-                                        } else {
-                                            echo "<tr><td colspan='13'>No admission data found</td></tr>";
-                                        }
-                                        ?>
- 
+                                    <?php
+            $count = 1;
+            while ($row = $result->fetch_assoc()) {
+                echo "<tr data-id='{$row['id']}'>";
+                echo "<td>{$count}</td>";
+                echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
+                echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
+                echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
+                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
+                echo "<td data-field='academic_classification'>{$row['academic_classification']}</td>";
+                echo "<td data-field='math_grade'>{$row['math_grade']}</td>";
+                echo "<td data-field='science_grade'>{$row['science_grade']}</td>";
+                echo "<td data-field='english_grade'>{$row['english_grade']}</td>";
+                echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
+                echo "<td class='editable' data-field='Result'>{$row['Result']}</td>";
+                echo "<td>
+                    <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
+                    <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
+                    </td>";
+                echo "<td id='checkbox-{$row['id']}'><input type='checkbox' style='display: none;' class='select-checkbox'></td>";
+                echo "</tr>";
+                $count++;
+            }
+
+            if ($count == 1) {
+                echo "<tr><td colspan='13'>No admission data found</td></tr>";
+            }
+            ?>
 
 
                                     </tbody>
@@ -215,6 +218,27 @@ $stmt->fetch();
                                             transform: translateY(0);
                                         }
                                     }
+
+                                     /* Styles for the modal overlay */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styles for the modal content */
+        .modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
                                 </style>
 
                                 <script>

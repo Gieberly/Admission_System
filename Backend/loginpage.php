@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_type'] = $userType;
 
             // Check if the user is a student and has filled out the admission form
-            if ($userType == 'student') {
+            if ($userType == 'Student') {
                 $checkAdmissionQuery = "SELECT id FROM admission_data WHERE email = ?";
                 $stmtCheckAdmission = $conn->prepare($checkAdmissionQuery);
                 $stmtCheckAdmission->bind_param("s", $email);
@@ -35,9 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     header("Location: ../Backend/form.php");
                     exit();
                 }
-            } elseif ($userType == 'faculty') {
+            } elseif ($userType == 'Faculty') {
                 if (strtolower($status) == 'approved') {
-                    header("Location: ../Backend/faculty.php");  // Redirect to faculty.php if approved
+                    header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
                     exit();
                 } elseif (strtolower($status) == 'pending') {
                     echo "Your registration is pending approval.";
