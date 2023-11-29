@@ -709,32 +709,40 @@ nav {
     padding: 0;
     font-size: 0;
   }
+  #addCourses i:hover {
+    color:var(--green);
+    transform: scale(1.2); /* Adjust the scale factor as needed */
+}
+#addCourses .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
 
   #delete-btn:hover i {
     color: var(--red);
 }
 
-  #addCourses .bx {
+
+  
+#viewButton {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#viewButton i {
+	cursor: pointer;
 	font-size: 15px;
 
 	color: var(--dark);
   }
-.nonboardProgram {
-	display: none;
-	border: 1px solid var(--dark);
-	font-size: 10px;
-	width: 140px;
-	height: 20px;
-	padding: 2px 2px;
+  #viewButton i:hover {
+    color: var(--green);
+    transform: scale(1.2); /* Adjust the scale factor as needed */
 }
-.boardProgram {
-	display: none;
-	border: 1px solid var(--dark);
-	font-size: 10px;
-	width: 140px;
-	height: 20px;
-	padding: 2px 2px;	
-}
+
+
 
 /*Range*/
 .ForRange {
@@ -824,7 +832,7 @@ nav {
 	margin: 20px 2px;
 	cursor: pointer;
 	transition-duration: 0.4s;
-
+    float: right;
 }
 
 
@@ -1175,22 +1183,15 @@ nav {
 	transition-duration: 0.4s;
 }
 
-#content main .table-data .order table tr td .button.save {
-	background-color: var(--green);
-	color:var(--light);
-}
-#content main .table-data .order table tr td .button.save:hover {
-	background-color: var(--light-green);
-  	color: var(--gray);
-}
 
 
-#content main .table-data .order table tr td .button.save-btn {
+
+#content main .table-data .order table tr td .button.saved-btn {
     background-color: var(--green);
     color: var(--light);
 }
 
-#content main .table-data .order table tr td .button.save-btn:hover {
+#content main .table-data .order table tr td .button.saved-btn:hover {
     background-color: var(--light-green);
     color: var(--gray);
 }
@@ -1364,18 +1365,6 @@ select {
     opacity: 1;
 }
 
-#viewButton {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-#viewButton i {
-	cursor: pointer;
-	font-size: 15px;
-
-	color: var(--dark);
-  }
 
  /* Your styles go here */
  .social-icons-container {

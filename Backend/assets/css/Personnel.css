@@ -873,83 +873,10 @@ nav {
 	float: right;
 }
 
-#content main .button.save {
-	background-color: var(--yellow);
-	color:var(--dark);
-}
 
-#content main .button.save:hover {
-	background-color: var(--light-yellow);
-  	color: var(--gray);
-}
 
-#content main .button.send {
-	background-color: var(--orange); 
- 	color: var(--dark); 
-}
 
-#content main .button.send:hover {
-	background-color: var(--light-orange);
-  	color:var(--gray);
-}
 
-#content main .button.import:hover {
-	background-color: var(--light-yellow);
-  	color: var(--gray);
-}
-
-#content main .button.export {
-	background-color: var(--blue);
-	color:var(--dark);
-}
-
-#content main .button.export:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
-}
-
-#content main .button.edit {
-	background-color: var(--blue);
-	color:var(--dark);
-}
-
-#content main .button.edit:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
-}
-#content main .table-data .order table tr td .button.edit-btn {
-	background-color: var(--blue);
-	color:var(--light);
-}
-#content main .table-data .order table tr td .button.edit-btn:hover {
-	background-color: var(--light-blue);
-  	color: var(--gray);
-}
-#content main .table-data .order table tr td .button.save {
-	background-color: var(--green);
-	color:var(--light);
-}
-#content main .table-data .order table tr td .button.save:hover {
-	background-color: var(--light-green);
-  	color: var(--gray);
-}
-#content main .table-data .order table tr td .button.delete-btn {
-	background-color: var(--red); 
- 	color: var(--light); 
-}
-#content main .table-data .order table tr td .button.delete-btn:hover {
-	background-color: var(--light-red);
-  	color:var(--gray);
-}
-#content main .table-data .order table tr td .button.save-btn {
-    background-color: var(--green);
-    color: var(--light);
-}
-
-#content main .table-data .order table tr td .button.save-btn:hover {
-    background-color: var(--light-green);
-    color: var(--gray);
-}
 
 
 #content main .head-title {
@@ -983,11 +910,8 @@ nav {
 	pointer-events: unset;
 	/*button download*/
 }
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
 	/*button download*/
-}
+
 .btn-download {
 	height: 36px;
 	padding: 0 16px;
@@ -1003,6 +927,69 @@ nav {
 .btn-download:hover {
 	background: var(--blue);
 }
+
+  
+#viewButton {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#viewButton i {
+	cursor: pointer;
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #viewButton i:hover {
+    color: var(--green);
+    transform: scale(1.2); /* Adjust the scale factor as needed */
+}
+
+#toggleSelection {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+  #toggleSelection i:hover {
+    color:var(--green);
+    transform: scale(1.2); /* Adjust the scale factor as needed */
+}
+#toggleSelection .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #delete-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#delete-btn .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #delete-btn:hover i {
+    color: var(--red);
+}
+#edit-btn {
+    border: none;
+    background: none;
+    padding: 0;
+    font-size: 0;
+  }
+#edit-btn .bx {
+	font-size: 15px;
+
+	color: var(--dark);
+  }
+  #edit-btn:hover i {
+    color: var(--blue);
+}
+
 #content main .box-info {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -1279,39 +1266,9 @@ nav {
     transition-duration: 0.4s;
 }
 
-#content main .table-data .order table tr td .button.edit {
-    /* Add styles for edit button */
-    background-color: var(--blue);
-}
 
-#content main .table-data .order table tr td .button.edit:hover {
-    /* Add styles for edit button on hover */
-    background-color: var(--light-blue);
-    color: var(--gray);
-}
 
-#content main .table-data .order table tr td .button.save {
-    /* Add styles for save button */
-    background-color: var(--green);
-}
 
-#content main .table-data .order table tr td .button.save:hover {
-    /* Add styles for save button on hover */
-    background-color: var(--light-green);
-    color: var(--gray);
-}
-
-#content main .table-data .order table tr td .button.delete {
-    /* Add styles for delete button */
-    background-color: var(--red);
-    color: var(--light);
-}
-
-#content main .table-data .order table tr td .button.delete:hover {
-    /* Add styles for delete button on hover */
-    background-color: var(--light-red);
-    color: var(--gray);
-}
 
 #content main .table-data .todo {
 	flex-grow: 1;
@@ -1460,21 +1417,7 @@ select {
 	text-overflow: '';
 }
 
-/* Style for the buttons */
-.update-button,
-        .save-button {
-            padding: 4px 8px;
-            margin: 4px;
-            font-size: 8px;
-            cursor: pointer;
-            border: 1px solid #3498db;
-            color: #070707;
-            background-color: #3498db;
-            border-radius: 4px;
-            display: block;
-            width: 40px; /
-}
-/* Custom styles for the toast */
+
 #toast {
     position: fixed;
     top: 10%;

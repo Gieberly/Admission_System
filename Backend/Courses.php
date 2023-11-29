@@ -73,7 +73,7 @@ $result = $conn->query($sql);
 
                                         <td>
                                             <button type='button' class='button cancel-btn' onclick='cancelAddCourse()'>Cancel</button>
-                                            <button type='button' class='button save-btn' onclick='saveNewCourse()'>Save</button>
+                                            <button type='button' class='button saved-btn' onclick='saveNewCourse()'>Save</button>
 
                                         </td>
                                     </tr>
@@ -83,7 +83,7 @@ $result = $conn->query($sql);
                                 if ($result->num_rows > 0) {
                                     $count = 1;
                                     while ($row = $result->fetch_assoc()) {
-                                        echo "<tr data-id='{$row['ProgramID']}'>";
+                                        echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
                                         echo "<td>{$count}</td>";
                                         echo "<td class='editable' data-field='Courses'>{$row['Courses']}</td>";
                                         echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
@@ -153,6 +153,7 @@ $result = $conn->query($sql);
             transform: translateY(0);
         }
     }
+
 </style>
 <script>
 
@@ -261,14 +262,13 @@ function saveCourse(programID) {
                 editCourse(programID);
             };
 
-            // Restore the original blue styling for the "Edit" button
-            editButton.style.backgroundColor = 'var(--blue)';
-            editButton.style.color = 'var(--light)';
+  
 
             // Hide the blue bottom border after saving
             editableCells.forEach(function(cell) {
                 cell.style.borderBottom = 'none';
             });
+            
         }
     };
     xhr.send(JSON.stringify({
@@ -293,28 +293,33 @@ function saveCourse(programID) {
             toast.classList.remove('show');
         }, 3000);
     }
-
     function addCourse() {
+    // Get the "Add Course" row
+    var addCourseRow = document.getElementById('addCourseRow');
 
-        // Get the "Add Course" row
-        var addCourseRow = document.getElementById('addCourseRow');
+    // Toggle the visibility of the "Add Course" row
+    addCourseRow.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
 
-        // Show the "Add Course" row
-        addCourseRow.style.display = 'table-row';
+    // Toggle the visibility of the list rows
+    var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
+    listRows.forEach(function(row) {
+        row.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
+    });
 
-        // Clear the content of editable cells in the "Add Course" row
-        var editableCells = addCourseRow.querySelectorAll('.editable');
-        editableCells.forEach(function(cell) {
-            cell.innerText = '';
-        });
+    // Change the button text based on visibility
+    var addButton = document.getElementById('addCourses');
+    addButton.innerHTML = addCourseRow.style.display === 'none' ?
+        '<i class=\'bx bx-add-to-queue\'></i> Add Course' :
+        '<i class=\'bx bx-arrow-back\'></i> Hide Add Course';
 
-        // Change the button to "Save" and set its onclick function
-        var addButton = document.getElementById('addCourses');
-        addButton.innerHTML = 'Save';
-        addButton.onclick = function() {
-            saveNewCourse();
-        };
+    // If the "Add Course" row is visible, focus on the first editable cell
+    if (addCourseRow.style.display !== 'none') {
+        var editableCell = addCourseRow.querySelector('.editable');
+        editableCell.focus();
     }
+}
+
+
 
     function saveNewCourse() {
         // Get the "Add Course" row
@@ -370,21 +375,24 @@ function saveCourse(programID) {
 
 
 
-
     function cancelAddCourse() {
-        // Get the "Add Course" row
-        var addCourseRow = document.getElementById('addCourseRow');
+    // Get the "Add Course" row
+    var addCourseRow = document.getElementById('addCourseRow');
 
-        // Hide the "Add Course" row
-        addCourseRow.style.display = 'none';
+    // Hide the "Add Course" row
+    addCourseRow.style.display = 'none';
 
-        // Change the button back to "Add Course"
-        var addButton = document.getElementById('addCourses');
-        addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Course';
-        addButton.onclick = function() {
-            addCourse();
-        };
-    }
+    // Show the list rows
+    var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
+    listRows.forEach(function(row) {
+        row.style.display = 'table-row';
+    });
+
+    // Change the button text back to "Add Course"
+    var addButton = document.getElementById('addCourses');
+    addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Course';
+}
+
 
     function deleteCourse(programID) {
         // Confirm with the user before deleting

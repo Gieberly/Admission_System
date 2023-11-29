@@ -87,7 +87,7 @@ $stmt->fetch();
                                     <button type="button" id="viewButton">
                                         <i class='bx bx-filter'></i>
                                     </button>
-                                    <i class='bx bx-folder-minus' ></i>
+                                    
                                     <button type='button' id="addStudent" onclick='addStudent()'>
                                         <i class='bx bx-add-to-queue'></i> Add Student
                                     </button>
@@ -155,15 +155,15 @@ $stmt->fetch();
                                                 echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
                                                 echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
                                                 echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
-                                                echo "<td class='editable'data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                                echo "<td data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
                                                 echo "<td class='editable' data-field='gwa_grade'>{$row['gwa_grade']}</td>";
                                                 echo "<td class='editable' data-field='result'>{$row['result']}</td>";
                                                 echo "<td>
-                                                 <button type='button' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'>Delete</button>
-                                                 <button type='button' class='button edit-btn' onclick='editAdmissionData({$row['id']})'>Edit</button>
+                                                 <button type='button'  id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'> <i class='bx bx-trash'></i></button>
+                                                 <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
                                                  </td>";
                                                  echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
                                                 echo "</tr>";
@@ -247,7 +247,7 @@ $stmt->fetch();
                                         });
                                     }
 
-                                    function editAdmissionData(id) {
+function editAdmissionData(id) {
     // Get the row element
     var row = document.querySelector(`tr[data-id='${id}']`);
 
@@ -271,8 +271,8 @@ $stmt->fetch();
 
     // Change the "Edit" button to a "Save" button and change its color to green
     var editButton = row.querySelector('.edit-btn');
-    editButton.innerHTML = 'Save';
-    editButton.classList.add('save-btn'); // Add this line to add a class to the button
+    editButton.innerHTML = '<i class="bx bx-save"></i>';
+    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
     editButton.onclick = function() {
         saveStudent(id);
 
@@ -316,15 +316,13 @@ function saveStudent(id) {
 
             // Change the "Save" button back to "Edit"
             var editButton = row.querySelector('.edit-btn');
-            editButton.innerHTML = 'Edit';
-            editButton.classList.remove('save-btn'); // Remove the class to remove the green styling
+           editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
+            editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
             editButton.onclick = function() {
                 editAdmissionData(id);
             };
 
-            // Restore the original blue styling for the "Edit" button
-            editButton.style.backgroundColor = 'var(--blue)';
-            editButton.style.color = 'var(--light)';
+
 
             // Hide the blue bottom border after saving
             editableCells.forEach(function(cell) {
