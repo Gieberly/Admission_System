@@ -10,7 +10,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
 
 // Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT lname, email, role, register_date FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT name, email, userType,password FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
 $stmt->bind_result($name, $email, $userType, $status);
@@ -20,7 +20,7 @@ $stmt->close();
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, fname,lname, email, role, last_log FROM users WHERE role = 'staff'";
+    $query = "SELECT id, name, email, status FROM users WHERE userType = 'staff'";
     $result = $conn->query($query);
     return $result;
 }
@@ -37,7 +37,7 @@ function updateStaffStatus($staffId, $newStatus) {
 // Function to delete staff member
 function deleteStaff($staffId) {
     global $conn;
-    $query = "DELETE FROM users WHERE id = ? AND role = 'staff'";
+    $query = "DELETE FROM users WHERE id = ? AND userType = 'staff'";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $staffId);
     return $stmt->execute();
@@ -282,8 +282,7 @@ function getAllStudentFormData() {
         <tr>
             <td><?php echo $counter++; ?></td>
             <td><?php echo $row['app_number']; ?></td>
-            <td><?php echo $row['fname']; ?></td>
-            <td><?php echo $row['lname']; ?></td>
+            <td><?php echo $row['name']; ?></td>
             <td><?php echo $row['course']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <!-- Add more columns as needed -->
@@ -355,7 +354,7 @@ function getAllStudentFormData() {
             ?>
             <tr>
                 <td><?php echo $counter++; ?></td>
-                <td><?php echo $row['fname']; ?></td>
+                <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['email']; ?></td>
                
                 <td><?php echo $row['last_log']; ?></td>
