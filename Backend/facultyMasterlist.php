@@ -25,7 +25,7 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 // Fetch the list of students without a result in the faculty's department with search functionality
 $fetchStudentListQuery = "SELECT * FROM admission_data 
                           WHERE degree_applied = ? 
-                          AND (Result IS NULL OR Result NOT IN ('NOR', 'NOA')) 
+                          AND Result IN ('NOR', 'NOA')
                           AND (gwa_grade IS NOT NULL AND gwa_grade <> '0.00')
                           AND (applicant_name LIKE '%$search%' OR 
                                applicant_number LIKE '%$search%' OR 
@@ -35,11 +35,16 @@ $fetchStudentListQuery = "SELECT * FROM admission_data
                                science_grade LIKE '%$search%' OR 
                                english_grade LIKE '%$search%' OR 
                                gwa_grade LIKE '%$search%' OR 
-                               gwa_grade LIKE '%$search%' OR 
                                Result LIKE '%$search%' OR 
                                nature_of_degree LIKE '%$search%' OR 
                                degree_applied LIKE '%$search%')
-                          ORDER BY gwa_grade DESC";
+                          ORDER BY 
+                            CASE 
+                              WHEN Result = 'NOA' THEN 1
+                              WHEN Result = 'NOR' THEN 2
+                              ELSE 3
+                            END,
+                            applicant_name ASC";
 
 
 $stmtFetchStudentList = $conn->prepare($fetchStudentListQuery);
@@ -94,9 +99,7 @@ $stmtFetchStudentList->close();
                                         <i class='bx bx-filter'></i>
                                     </button>
 
-                                    <button type='button' id="addStudent" onclick='addStudent()'>
-                                        <i class='bx bx-add-to-queue'></i> Add Student
-                                    </button>
+                                  
                                     <button type="button" id="toggleSelection">
                                         <i class='bx bx-select-multiple'></i> Toggle Selection
                                     </button>
@@ -126,7 +129,8 @@ $stmtFetchStudentList->close();
                                             <th>GWA</th>
 
                                             <th>Result</th>
-                                            <th>Action</th>
+                                            <th>Status</th>
+                                           
                                             <th style="display: none;" id="selectColumn">All <br> <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)"></th>
 
 
@@ -163,6 +167,7 @@ $stmtFetchStudentList->close();
                                             <td data-field="english_grade"></td>
                                             <td data-field="gwa_grade"></td>
                                             <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="set_result_value"></td>
+                                            
                                             <td>
                                                 <button type='button' class='button cancel-btn' onclick='cancelSetResult()'>Cancel</button>
                                                 <button type='button' class='button save-btn' onclick='saveSetResult()'>Save</button>
@@ -186,10 +191,8 @@ $stmtFetchStudentList->close();
                                             echo "<td data-field='english_grade'>{$row['english_grade']}</td>";
                                             echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
                                             echo "<td class='editable' data-field='Result'>{$row['Result']}</td>";
-                                            echo "<td>
-                    <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
-                    <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
-                    </td>";
+                                            echo "<td>{$row['status']}</td>";
+                                            
                                             echo "<td id='checkbox-{$row['id']}'><input type='checkbox' style='display: none;' class='select-checkbox'></td>";
                                             echo "</tr>";
                                             $count++;
@@ -588,58 +591,57 @@ $stmtFetchStudentList->close();
                                         });
                                     }
 
-    
-                                    function cancelSetResult() {
-        // Hide the row for setting the result
-        var setResultRow = document.getElementById('setResultRow');
-        setResultRow.style.display = 'none';
+                                    
+
+                                    // Function to set the "Result" column value for selected rows
+                                    function setResultForSelectedRows() {
+                                        var checkboxes = document.querySelectorAll('.select-checkbox:checked');
+
+                                        if (checkboxes.length > 0) {
+                                            // Show the row for setting the result
+                                            var setResultRow = document.getElementById('setResultRow');
+                                            setResultRow.style.display = 'table-row';
+
+                                            // Set the input field value to an empty string
+                                            var resultInput = setResultRow.querySelector('[data-field="set_result_value"]');
+                                            resultInput.innerText = '';
+
+                                            // Set focus to the input field
+                                            resultInput.focus();
+
+                                            // Set the "Result" value when the Save button is clicked
+                                            var saveButton = setResultRow.querySelector('.save-btn');
+                                            saveButton.onclick = function() {
+                                                var resultValue = resultInput.innerText.trim().toUpperCase();
+                                                if (resultValue === "NOR" || resultValue === "NOA") {
+                                                    checkboxes.forEach(function(checkbox) {
+                                                        var row = checkbox.closest('tr');
+                                                        var resultCell = row.querySelector('[data-field="Result"]');
+                                                        resultCell.innerText = resultValue;
+                                                    });
+
+                                                    // Hide the row after setting the result
+                                                    setResultRow.style.display = 'none';
+
+                                                    // Show a success toast or perform any other notification
+                                                    showSuccessToast();
+                                                } else {
+                                                    alert('Please enter either NOR or NOA.');
+                                                }
+                                            };
+
+                                            // Set the Cancel button functionality
+                                            var cancelButton = setResultRow.querySelector('.cancel-btn');
+                                            cancelButton.onclick = function() {
+                                                // Hide the row without setting the result
+                                                setResultRow.style.display = 'none';
+                                            };
+                                        } else {
+                                            alert('Please select at least one row to set the Result.');
+                                        }
                                     }
-  // Function to save changes for selected rows
-function saveSetResult() {
-    // Get the selected checkboxes
-    var checkboxes = document.querySelectorAll('.select-checkbox:checked');
 
-    if (checkboxes.length > 0) {
-        // Collect data to send to the server
-        var formData = new FormData();
-
-        // Add selected student IDs to the form data
-        checkboxes.forEach(function (checkbox) {
-            var row = checkbox.closest('tr');
-            var studentId = row.getAttribute('data-id');
-            formData.append('selected_students[]', studentId);
-        });
-
-        // Add result value to the form data
-        var resultInput = document.querySelector('[data-field="set_result_value"]');
-        var resultValue = resultInput.innerText.trim().toUpperCase();
-        formData.append('result_value', resultValue);
-
-        // Make an AJAX request to save changes
-        var xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Hide the row after setting the result
-                    document.getElementById('setResultRow').style.display = 'none';
-
-                    // Show a success toast or perform any other notification
-                    showSuccessToast();
-                } else {
-                    alert('Error saving changes. Please try again.');
-                }
-            }
-        };
-
-        xhr.open('POST', 'save_changes.php'); // Replace 'save_changes.php' with the actual PHP script to handle saving changes
-        xhr.send(formData);
-    } else {
-        alert('Please select at least one row to set the Result.');
-    }
-}
-
-
-
+                                    
                                 </script>
 
 

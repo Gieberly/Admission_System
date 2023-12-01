@@ -1,21 +1,29 @@
-
 <?php
-session_start();
 include("config.php");
-include("adminCover.php");
+include("facultyCover.php");
 
-// Handle search query
-$search = isset($_GET['search']) ? $_GET['search'] : '';
+// Check if the user is logged in and has the faculty user type
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
+    header("Location: loginpage.php");
+    exit();
+}
 
-// Modify the SQL query to order by Nature_of_Degree and then by Courses
-$sql = "SELECT * FROM `programs` WHERE 
-        `Courses` LIKE '%$search%' OR 
-        `Nature_of_Degree` LIKE '%$search%' OR 
-        `Description` LIKE '%$search%' OR 
-        `Overall_Slots` LIKE '%$search%'
-        ORDER BY `Nature_of_Degree` ASC, `Courses` ASC";
+// Fetch user's department
+$userId = $_SESSION['user_id'];
+$fetchDepartmentQuery = "SELECT Department FROM users WHERE id = ?";
+$stmtFetchDepartment = $conn->prepare($fetchDepartmentQuery);
+$stmtFetchDepartment->bind_param("i", $userId);
+$stmtFetchDepartment->execute();
+$stmtFetchDepartment->bind_result($userDepartment);
+$stmtFetchDepartment->fetch();
+$stmtFetchDepartment->close();
 
-$result = $conn->query($sql);
+$fetchProgramDetailsQuery = "SELECT * FROM programs WHERE Description = ?";
+$stmtFetchProgramDetails = $conn->prepare($fetchProgramDetailsQuery);
+$stmtFetchProgramDetails->bind_param("s", $userDepartment); // Using $userDepartment instead of undefined $department
+$stmtFetchProgramDetails->execute();
+$stmtFetchProgramDetails->bind_result($programID, $courses, $natureOfDegree, $description, $overallSlots);
+
 ?>
 <section id="content">
     <main>
@@ -23,9 +31,9 @@ $result = $conn->query($sql);
         <div id="dashboard-content">
             <div class="head-title">
                 <div class="left">
-                    <h1>Courses</h1>
+                    <h1>Slots</h1>
                     <ul class="breadcrumb">
-                        <li><a href="#">Courses</a></li>
+                        <li><a href="#">Slots</a></li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li><a class="active" href="adminDashboard.php">Home</a></li>
                     </ul>
@@ -36,21 +44,12 @@ $result = $conn->query($sql);
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
-                            <h3>List of Courses</h3>
+                            <h3><?php echo $userDepartment; ?> Slots</h3>
 
                             <div class="headfornaturetosort">
                                 
 
-                                <label for="rangeInput"></label>
-                                <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
-                                <button type="button" id="viewButton">
-                                    <i class='bx bx-filter'></i>
-                                </button>
-
-
-                                <button type='button' id="addCourses" onclick='addCourse()'>
-                                    <i class='bx bx-add-to-queue'></i> Add Course
-                                </button>
+                              
 
 
 
@@ -60,60 +59,45 @@ $result = $conn->query($sql);
                             <table id="searchableTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Courses</th>
-                                       
-                                        <th>Nature of Degree</th>
+                                        
+                                        <th>Course</th>
+                                    
                                         <th>Slots</th>
 
                                         <th>Action</th>
                                     </tr>
-                                    <tr id="addCourseRow" style="display: none;">
-                                        <td>#</td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Courses"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Description"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Nature_of_Degree"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Overall_Slots"></td>
 
-                                        <td>
-                                            <button type='button' class='button cancel-btn' onclick='cancelAddCourse()'>Cancel</button>
-                                            <button type='button' class='button saved-btn' onclick='saveNewCourse()'>Save</button>
-
-                                        </td>
-                                    </tr>
                                 </thead>
                                 <tbody> 
                                 <?php
-                                if ($result->num_rows > 0) {
-                                    $count = 1;
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
-                                        echo "<td>{$count}</td>";
-                                      
-                                        echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
-                                        echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-                                        echo "<td class='editable' data-field='Overall_Slots'>{$row['Overall_Slots']}</td>";
-
-                                        echo "<td>
+                                    // Fetch all rows and display in the table
+                                    $counter = 1;
+                                    while ($stmtFetchProgramDetails->fetch()) {
+                                        echo "<tr data-id='{$programID}' class='list-row'>";
                                         
-
-                                        <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteCourse({$row['ProgramID']})'>
-                                        <i class='bx bx-trash'></i>
-                                        <button type='button' id='edit-btn' class='button edit-btn' onclick='editCourse({$row['ProgramID']})'>
-                                            <i class='bx bx-edit-alt'></i>
-                                            </button>
-                                         </button>
-                                             
-                                    
-                                               </td>";
+                                        echo "<td  data-field='Description' contenteditable>{$description}</td>";
+                                        echo "<td class='editable' data-field='Overall_Slots' contenteditable>{$overallSlots}</td>";
+                                        echo "<td>
+                                               
+                                                <button type='button' id='edit-btn' class='button edit-btn' onclick='editCourse({$programID})'>
+                                                    <i class='bx bx-edit-alt'></i>
+                                                </button>
+                                              </td>";
                                         echo "</tr>";
-                                        $count++;
+                                        $counter++;
                                     }
-                                } else {
-                                    echo "<tr><td colspan='6'>No courses found</td></tr>";
-                                }
-                                ?>
+                                    ?>
+
                             </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</section>
+
+</tbody>
                         </table>
                     </div>
                 </div>

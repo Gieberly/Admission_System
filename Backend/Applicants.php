@@ -29,7 +29,7 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%'
-          ORDER BY applicant_name ASC";
+          ORDER BY nature_of_degree ASC, degree_applied ASC, applicant_name ASC";
 
 $result = $conn->query($query);
 
@@ -118,7 +118,7 @@ $stmt->fetch();
                                             <th>Science</th>
                                             <th>English</th>
                                             <th>GWA</th>
-<th>Result</th>
+
                                            
                                             <th>Action</th>
                                             <th style="display: none;" id="selectColumn">Select</th>
@@ -152,14 +152,14 @@ $stmt->fetch();
                                                 echo "<td>{$count}</td>";
                                                 echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
                                                 echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
-                                                echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
+                                                echo "<td  data-field='degree_applied'>{$row['degree_applied']}</td>";
                                                 echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
-                                                echo "<td class='editable' <td data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                                echo "<td  <td data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
                                                 echo "<td class='editable' data-field='gwa_grade'>{$row['gwa_grade']}</td>";
-                                                echo "<td class='editable' data-field='result'>{$row['result']}</td>";
+
                                                 echo "<td>
                                                  <button type='button'  id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'> <i class='bx bx-trash'></i></button>
                                                  <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
@@ -323,10 +323,12 @@ function saveStudent(id) {
 
 
 
-            // Hide the blue bottom border after saving
-            editableCells.forEach(function(cell) {
-                cell.style.borderBottom = 'none';
-            });
+// Hide the blue bottom border after saving and make cells non-editable
+editableCells.forEach(function(cell) {
+    cell.style.borderBottom = 'none';
+    cell.contentEditable = false; // Add this line to make the cell non-editable
+});
+
         }
     };
     xhr.send(JSON.stringify({

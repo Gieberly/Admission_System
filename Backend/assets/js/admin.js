@@ -1,26 +1,63 @@
-const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+document.addEventListener('DOMContentLoaded', function () {
+    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
+    const currentURL = window.location.href;
 
-allSideMenu.forEach(item=> {
-	const li = item.parentElement;
+    // Retrieve the sidebar state from local storage
+    const sidebarState = localStorage.getItem('sidebarState');
+    const sidebar = document.getElementById('sidebar');
 
-	item.addEventListener('click', function () {
-		allSideMenu.forEach(i=> {
-			i.parentElement.classList.remove('active');
-		})
-		li.classList.add('active');
-	})
+    // Set the initial state of the sidebar based on local storage
+    if (sidebarState === 'hidden') {
+        sidebar.classList.add('hide');
+    }
+
+    allSideMenu.forEach(item => {
+        const li = item.parentElement;
+
+        // Check if the current URL matches the href attribute of the sidebar item
+        if (currentURL.includes(item.getAttribute('href'))) {
+            li.classList.add('active');
+        }
+
+        item.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            allSideMenu.forEach(i => {
+                i.parentElement.classList.remove('active');
+            });
+
+            li.classList.add('active');
+
+            // Navigate to the clicked link
+            const destinationURL = item.getAttribute('href');
+            setTimeout(() => {
+                window.location.href = destinationURL;
+            }, 300); // Adjust the timeout to match the transition duration
+        });
+    });
+
+    // Check if the current URL includes any of the dropdown links and set "Colleges" as active
+    const dropdownLinks = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
+    dropdownLinks.forEach(link => {
+        if (currentURL.includes(link.getAttribute('href'))) {
+            document.querySelector('').parentElement.classList.add('active');
+        }
+    });
+
 });
-
-
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 
 menuBar.addEventListener('click', function () {
-	sidebar.classList.toggle('hide');
-})
-  
+    // Toggle the 'hide' class on the sidebar
+    sidebar.classList.toggle('hide');
+
+    // Store the state of the sidebar in local storage
+    const sidebarState = sidebar.classList.contains('hide') ? 'hidden' : 'visible';
+    localStorage.setItem('sidebarState', sidebarState);
+});
 
 
 

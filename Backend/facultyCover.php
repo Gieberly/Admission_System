@@ -79,7 +79,7 @@ function getCourses($conn)
             </li>
 
             <li class="">
-                <a href="masterlist.php" id="master-list-link">
+                <a href="facultyMasterlist.php" id="master-list-link">
                     <i class='bx bxs-user-pin'></i>
                     <span class="text">Master List</span>
                 </a>
@@ -87,9 +87,9 @@ function getCourses($conn)
 
 
             <li class="">
-                <a href="faq.php" id="announcements-link">
+                <a href="FacultyDepSlot.php" id="announcements-link">
                     <i class='bx bxs-book-content'></i>
-                    <span class="text">Announcements</span>
+                    <span class="text">Slots</span>
                 </a>
             </li>
 

@@ -29,8 +29,7 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%')
             AND (`result` = 'NOR' OR `result` = 'NOA')
-          ORDER BY applicant_name ASC";
-
+            ORDER BY applicant_name ASC, nature_of_degree ASC, degree_applied ASC";
 
 $result = $conn->query($query);
 
