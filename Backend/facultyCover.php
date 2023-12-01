@@ -38,10 +38,13 @@ function getCourses($conn)
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSU OUR Admission Faculty</title>
+    <title>BSU OUR Admission Unit Personnel</title>
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css//personnel.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -57,6 +60,7 @@ function getCourses($conn)
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
             <span class="text">Faculty</span>
         </a>
+
 
         <ul class="side-menu top">
             <li class="">

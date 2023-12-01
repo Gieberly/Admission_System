@@ -91,7 +91,7 @@ $stmtFetchStudentList->close();
                                     <button type="button" id="viewButton">
                                         <i class='bx bx-filter'></i>
                                     </button>
-                                    
+
                                     <button type='button' id="addStudent" onclick='addStudent()'>
                                         <i class='bx bx-add-to-queue'></i> Add Student
                                     </button>
@@ -101,7 +101,7 @@ $stmtFetchStudentList->close();
                                     <button style="display: none;" type="button" id="deleteSelected">
                                         <i class='bx bx-trash'></i> Delete Selected
                                     </button>
-                                    <box-icon name='abacus' id="openModalButton"></box-icon>
+
 
                                 </div>
                             </div>
@@ -125,7 +125,9 @@ $stmtFetchStudentList->close();
 
                                             <th>Result</th>
                                             <th>Action</th>
-                                            <th style="display: none;" id="selectColumn">Select</th>
+                                            <th style="display: none;" id="selectColumn">All <br> <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll(this)"></th>
+
+
                                         </tr>
                                         <tr id="addStudentRow" style="display: none;">
                                             <td>#</td>
@@ -147,36 +149,54 @@ $stmtFetchStudentList->close();
                                             </td>
 
                                         </tr>
+                                        <tr id="setResultRow" style="display: none;">
+                                            <td>#</td>
+                                            <td data-field="applicant_number"></td>
+                                            <td data-field="nature_of_degree"></td>
+                                            <td data-field="degree_applied"></td>
+                                            <td data-field="applicant_name"></td>
+                                            <td data-field="academic_classification"></td>
+                                            <td data-field="math_grade"></td>
+                                            <td data-field="science_grade"></td>
+                                            <td data-field="english_grade"></td>
+                                            <td data-field="gwa_grade"></td>
+                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="set_result_value"></td>
+                                            <td>
+                                                <button type='button' class='button cancel-btn' onclick='cancelSetResult()'>Cancel</button>
+                                                <button type='button' class='button save-btn' onclick='saveSetResult()'>Save</button>
+                                            </td>
+                                        </tr>
+
                                     </thead>
                                     <tbody>
-                                    <?php
-            $count = 1;
-            while ($row = $result->fetch_assoc()) {
-                echo "<tr data-id='{$row['id']}'>";
-                echo "<td>{$count}</td>";
-                echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
-                echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
-                echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
-                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
-                echo "<td data-field='academic_classification'>{$row['academic_classification']}</td>";
-                echo "<td data-field='math_grade'>{$row['math_grade']}</td>";
-                echo "<td data-field='science_grade'>{$row['science_grade']}</td>";
-                echo "<td data-field='english_grade'>{$row['english_grade']}</td>";
-                echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
-                echo "<td class='editable' data-field='Result'>{$row['Result']}</td>";
-                echo "<td>
+                                        <?php
+                                        $count = 1;
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr data-id='{$row['id']}'>";
+                                            echo "<td>{$count}</td>";
+                                            echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
+                                            echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
+                                            echo "<td data-field='degree_applied'>{$row['degree_applied']}</td>";
+                                            echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
+                                            echo "<td data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                            echo "<td data-field='math_grade'>{$row['math_grade']}</td>";
+                                            echo "<td data-field='science_grade'>{$row['science_grade']}</td>";
+                                            echo "<td data-field='english_grade'>{$row['english_grade']}</td>";
+                                            echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
+                                            echo "<td class='editable' data-field='Result'>{$row['Result']}</td>";
+                                            echo "<td>
                     <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
                     <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
                     </td>";
-                echo "<td id='checkbox-{$row['id']}'><input type='checkbox' style='display: none;' class='select-checkbox'></td>";
-                echo "</tr>";
-                $count++;
-            }
+                                            echo "<td id='checkbox-{$row['id']}'><input type='checkbox' style='display: none;' class='select-checkbox'></td>";
+                                            echo "</tr>";
+                                            $count++;
+                                        }
 
-            if ($count == 1) {
-                echo "<tr><td colspan='13'>No admission data found</td></tr>";
-            }
-            ?>
+                                        if ($count == 1) {
+                                            echo "<tr><td colspan='13'>No admission data found</td></tr>";
+                                        }
+                                        ?>
 
 
                                     </tbody>
@@ -219,26 +239,7 @@ $stmtFetchStudentList->close();
                                         }
                                     }
 
-                                     /* Styles for the modal overlay */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Styles for the modal content */
-        .modal-content {
-            background: #fff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+                                    /* Styles for the modal overlay */
                                 </style>
 
                                 <script>
@@ -271,94 +272,94 @@ $stmtFetchStudentList->close();
                                         });
                                     }
 
-function editAdmissionData(id) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${id}']`);
+                                    function editAdmissionData(id) {
+                                        // Get the row element
+                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
+                                        // Get all editable cells in the row
+                                        var editableCells = row.querySelectorAll('.editable');
 
-    // Add corner borders and remove inner borders for each editable cell
-    editableCells.forEach(function(cell, index) {
-        cell.contentEditable = true;
-        cell.classList.add('editing');
+                                        // Add corner borders and remove inner borders for each editable cell
+                                        editableCells.forEach(function(cell, index) {
+                                            cell.contentEditable = true;
+                                            cell.classList.add('editing');
 
-        // Add corner borders
-        cell.style.borderBottom = '2px solid blue';
+                                            // Add corner borders
+                                            cell.style.borderBottom = '2px solid blue';
 
-        // Remove inner borders
-        if (index > 0) {
-            editableCells[index - 1].style.borderRight = 'none';
-            cell.style.borderLeft = 'none';
-        }
-    });
+                                            // Remove inner borders
+                                            if (index > 0) {
+                                                editableCells[index - 1].style.borderRight = 'none';
+                                                cell.style.borderLeft = 'none';
+                                            }
+                                        });
 
-    // Change the "Edit" button to a "Save" button and change its color to green
-    var editButton = row.querySelector('.edit-btn');
-    editButton.innerHTML = '<i class="bx bx-save"></i>';
-    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-    editButton.onclick = function() {
-        saveStudent(id);
+                                        // Change the "Edit" button to a "Save" button and change its color to green
+                                        var editButton = row.querySelector('.edit-btn');
+                                        editButton.innerHTML = '<i class="bx bx-save"></i>';
+                                        editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+                                        editButton.onclick = function() {
+                                            saveStudent(id);
 
-        // Hide the blue bottom border after saving
-        editableCells.forEach(function(cell) {
-            cell.style.borderBottom = 'none';
-        });
-    };
-}
-
-
-function saveStudent(id) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${id}']`);
-
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
-
-    // Create an object to store the updated data
-    var updatedData = {};
-
-    // Loop through each editable cell and store the updated value
-    editableCells.forEach(function(cell) {
-        var fieldName = cell.getAttribute('data-field');
-        var updatedValue = cell.innerText.trim();
-        updatedData[fieldName] = updatedValue;
-    });
-
-    // Send an AJAX request to update the data in the database
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'save_student.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Display a toast notification for successful save
-            var toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(function() {
-                toast.classList.remove('show');
-            }, 3000);
-
-            // Change the "Save" button back to "Edit"
-            var editButton = row.querySelector('.edit-btn');
-           editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
-            editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
-            editButton.onclick = function() {
-                editAdmissionData(id);
-            };
+                                            // Hide the blue bottom border after saving
+                                            editableCells.forEach(function(cell) {
+                                                cell.style.borderBottom = 'none';
+                                            });
+                                        };
+                                    }
 
 
+                                    function saveStudent(id) {
+                                        // Get the row element
+                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-            // Hide the blue bottom border after saving
-            editableCells.forEach(function(cell) {
-                cell.style.borderBottom = 'none';
-            });
-        }
-    };
-    xhr.send(JSON.stringify({
-        id: id,
-        updatedData: updatedData
-    }));
-}
+                                        // Get all editable cells in the row
+                                        var editableCells = row.querySelectorAll('.editable');
+
+                                        // Create an object to store the updated data
+                                        var updatedData = {};
+
+                                        // Loop through each editable cell and store the updated value
+                                        editableCells.forEach(function(cell) {
+                                            var fieldName = cell.getAttribute('data-field');
+                                            var updatedValue = cell.innerText.trim();
+                                            updatedData[fieldName] = updatedValue;
+                                        });
+
+                                        // Send an AJAX request to update the data in the database
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open('POST', 'save_student.php', true);
+                                        xhr.setRequestHeader('Content-Type', 'application/json');
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                // Display a toast notification for successful save
+                                                var toast = document.getElementById('toast');
+                                                toast.classList.add('show');
+                                                setTimeout(function() {
+                                                    toast.classList.remove('show');
+                                                }, 3000);
+
+                                                // Change the "Save" button back to "Edit"
+                                                var editButton = row.querySelector('.edit-btn');
+                                                editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
+                                                editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
+                                                editButton.onclick = function() {
+                                                    editAdmissionData(id);
+                                                };
+
+
+
+                                                // Hide the blue bottom border after saving
+                                                editableCells.forEach(function(cell) {
+                                                    cell.style.borderBottom = 'none';
+                                                });
+                                            }
+                                        };
+                                        xhr.send(JSON.stringify({
+                                            id: id,
+                                            updatedData: updatedData
+                                        }));
+                                    }
 
 
                                     function showSuccessToast() {
@@ -549,27 +550,91 @@ function saveStudent(id) {
                                         }
                                     }
 
-                             // Function to toggle the visibility of the Select column and checkboxes
-function toggleSelectionVisibility() {
-    // Toggle the visibility of the Select column in the table header
-    var selectColumn = document.getElementById('selectColumn');
-    selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
+                                    /// Function to toggle the visibility of the Select column, checkboxes, and the row for setting the result
+                                    function toggleSelectionVisibility() {
+                                        // Toggle the visibility of the Select column in the table header
+                                        var selectColumn = document.getElementById('selectColumn');
+                                        selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
 
-    // Toggle the visibility of the checkboxes in each row
-    var checkboxes = document.querySelectorAll('.select-checkbox');
-    checkboxes.forEach(function(checkbox) {
-        checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
-    });
+                                        // Toggle the visibility of the checkboxes in each row
+                                        var checkboxes = document.querySelectorAll('.select-checkbox');
+                                        checkboxes.forEach(function(checkbox) {
+                                            checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
+                                        });
 
-    // Toggle the visibility of the "Delete Selected" button
-    var deleteSelectedButton = document.getElementById('deleteSelected');
-    deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
-}
+                                        // Toggle the visibility of the "Delete Selected" button
+                                        var deleteSelectedButton = document.getElementById('deleteSelected');
+                                        deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
 
-// Add an event listener to the "Toggle Selection" button
-document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+                                        // Toggle the visibility of the row for setting the result
+                                        var setResultRow = document.getElementById('setResultRow');
+                                        setResultRow.style.display = (setResultRow.style.display === 'none' || setResultRow.style.display === '') ? 'table-row' : 'none';
+                                    }
 
-        </script>
+                                    // Add an event listener to the "Toggle Selection" button
+                                    document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+
+
+                                    // Add an event listener to the "Toggle Selection" button
+                                    document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+
+                                    function toggleSelectAll(checkbox) {
+                                        var checkboxes = document.querySelectorAll('.select-checkbox');
+                                        checkboxes.forEach(function(cb) {
+                                            cb.checked = checkbox.checked;
+                                        });
+                                    }
+
+                                    // Function to set the "Result" column value for selected rows
+                                    function setResultForSelectedRows() {
+                                        var checkboxes = document.querySelectorAll('.select-checkbox:checked');
+
+                                        if (checkboxes.length > 0) {
+                                            // Show the row for setting the result
+                                            var setResultRow = document.getElementById('setResultRow');
+                                            setResultRow.style.display = 'table-row';
+
+                                            // Set the input field value to an empty string
+                                            var resultInput = setResultRow.querySelector('[data-field="set_result_value"]');
+                                            resultInput.innerText = '';
+
+                                            // Set focus to the input field
+                                            resultInput.focus();
+
+                                            // Set the "Result" value when the Save button is clicked
+                                            var saveButton = setResultRow.querySelector('.save-btn');
+                                            saveButton.onclick = function() {
+                                                var resultValue = resultInput.innerText.trim().toUpperCase();
+                                                if (resultValue === "NOR" || resultValue === "NOA") {
+                                                    checkboxes.forEach(function(checkbox) {
+                                                        var row = checkbox.closest('tr');
+                                                        var resultCell = row.querySelector('[data-field="Result"]');
+                                                        resultCell.innerText = resultValue;
+                                                    });
+
+                                                    // Hide the row after setting the result
+                                                    setResultRow.style.display = 'none';
+
+                                                    // Show a success toast or perform any other notification
+                                                    showSuccessToast();
+                                                } else {
+                                                    alert('Please enter either NOR or NOA.');
+                                                }
+                                            };
+
+                                            // Set the Cancel button functionality
+                                            var cancelButton = setResultRow.querySelector('.cancel-btn');
+                                            cancelButton.onclick = function() {
+                                                // Hide the row without setting the result
+                                                setResultRow.style.display = 'none';
+                                            };
+                                        } else {
+                                            alert('Please select at least one row to set the Result.');
+                                        }
+                                    }
+
+                                    
+                                </script>
 
 
 

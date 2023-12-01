@@ -60,7 +60,6 @@ $stmtFetchNORStudentCount->close();
 $conn->close();
 
 
-
 ?>
 
 <head>
