@@ -11,10 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
 
     if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $hashedPassword, $userType, $status);
+        $stmt->bind_result($id, $password, $userType, $status);
         $stmt->fetch();
 
-        if (password_verify($password, $hashedPassword)) {
+        if ($password = $_POST['password']) {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
 
@@ -85,6 +85,14 @@ $conn->close();
         <div class="icon">
             <a href="#" class="logo"><img src="assets/images/BSU Logo1.png" alt="BSU Logo"></a>
             <h2 class="scname">Benguet State University</h2>
+            <div class="alert">
+                <?php
+                if (isset($_SESSION['status'])) {
+                    echo "<h4>" . $_SESSION['status'] . "</h4>";
+                    unset($_SESSION['status']);
+                }
+                ?>
+            </div>
         </div>
     </header>
     <style>

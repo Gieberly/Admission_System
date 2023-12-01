@@ -1,47 +1,6 @@
 <?php
 session_start();
-include("config.php");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $userType = $_POST['userType'];
-    $status = ($userType == 'staff') ? 'approved' : 'pending';
-
-    // Check if the email already exists
-    $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
-    $stmtCheckEmail = $conn->prepare($checkEmailQuery);
-    $stmtCheckEmail->bind_param("s", $email);
-    $stmtCheckEmail->execute();
-    $stmtCheckEmail->store_result();
-
-    if ($stmtCheckEmail->num_rows > 0) {
-        // Email already exists, inform the user
-        echo "Email already in use. Please choose another email.";
-        $stmtCheckEmail->close();
-        $conn->close();
-        exit(); // Stop execution
-    }
-     // Proceed with user registration if the email is unique
-     $_SESSION['registered_email'] = $email;
-
-
-    $stmt = $conn->prepare("INSERT INTO users (name, email, password, userType, status) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $name, $email, $hashedPassword, $userType, $status);
-
-    if ($stmt->execute()) {
-        header("Location: loginpage.php");
-        exit();
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-
-    $stmt->close();
-}
-
-$conn->close();
+include ('config.php');
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +19,14 @@ $conn->close();
         <div class="icon">
             <a href="#" class="logo"><img src="assets/images/BSU Logo1.png" alt="BSU Logo"></a>
             <h2 class="scname">Benguet State University</h2>
+            <div class="alert">
+                <?php
+                if (isset($_SESSION['status'])) {
+                    echo "<h4>" . $_SESSION['status'] . "</h4>";
+                    unset($_SESSION['status']);
+                }
+                ?>
+            </div>
         </div>
     </header>
 
@@ -79,8 +46,8 @@ $conn->close();
 
       
         <div class="form" id="registrationForm" style="display: block;">
-            <form  method="POST" id="RegForm">
-                <h2>Register</h2>
+        <form method="POST" id="RegForm" action="validate_user.php">
+            <h2>Register</h2>
                 <input type="text" name="name" placeholder="Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" id="registerEmail" name="password" placeholder="Password" required>
@@ -92,7 +59,7 @@ $conn->close();
                     <option value="student">Student</option>
                     <option value="staff">Staff</option>
                 </select>
-                <button class="btnn" type="submit">Register</button>
+                <button class="btnn" type="submit" name="register_btn">Register</button>
                 <p class="link">Already have an account<br>
                     <a href="loginpage.php" id="loginLink">Login</a> here
                 </p>
@@ -109,6 +76,15 @@ $conn->close();
     </footer>
 
     <script src="assets\js\reg.js"></script>
+    <script>
+    // JavaScript to show an alert if there is a message
+    document.addEventListener('DOMContentLoaded', function () {
+        var alertMessage = "<?php echo isset($_SESSION['status']) ? $_SESSION['status'] : ''; ?>";
+        if (alertMessage !== "") {
+            alert(alertMessage);
+        }
+    });
+</script>
 </body>
 
 </html>
