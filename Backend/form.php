@@ -484,7 +484,7 @@ $conn->close();
     </div>
 
       <div class="index-btn-wrapper" id="index-btn-wrapper">
-        <div class="index-btn" id="nextButton" onclick="run(1, 2);">Next</div>
+        <div class="index-btn" id="nextButton" onclick="run(1,2);">Next</div>
       </div>
     </div>
 

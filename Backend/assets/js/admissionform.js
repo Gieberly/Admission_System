@@ -38,17 +38,11 @@ if (gradeRequirement) {
         return false;
     }
 }
-      // Validate the checkbox in Tab 1
-      function checkGuidelinesAndProceed() {
-        var guidelinesCheckbox = document.getElementById('read-guidelines');
-
-        if (!guidelinesCheckbox.checked) {
-            alert('Please check the box to confirm that you have read the guidelines.');
-        } else {
-            // If the checkbox is checked, proceed to the second tab or perform any other action
-            run(1, 2);
-        }
-    }
+// Validate the checkbox in Tab 1
+if (!document.getElementById("read-guidelines").checked) {
+  alert("Please check the box to confirm that you have read the guidelines.");
+  return false;
+}
 
     } else if (hideTab === 2) {
       // Handle the file input label click
