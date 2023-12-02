@@ -87,6 +87,26 @@
           .index-btn-wrapper:hover{
             opacity: 0.8;
           }
+
+          .index-btn-wrapper2{
+            display: flex;
+            margin-top: 20px;
+          }
+          
+          .index-btn2{
+            margin: 20px 15px 0 0;
+            background: #04AA6D;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 17px;
+            cursor: pointer;
+            transition: 0.3s;
+          }
+          
+          .index-btn2:hover{
+            opacity: 0.8;
+          }
           
           .progress-bar {
             display: flex;
