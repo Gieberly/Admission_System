@@ -15,6 +15,8 @@ function run(hideTab, showTab) {
     if (hideTab === 1) {
 // Prompt for grades or values based on the nature of the degree and academic classification
 var gradeRequirement = false;
+var boardAcademicClassification = ""; // Make sure to assign a proper value
+var nonBoardAcademicClassification = ""; // Make sure to assign a proper value
 
 if (boardAcademicClassification === "grade_12b" || boardAcademicClassification === "shs_graduateb" || boardAcademicClassification === "hs_graduateb") {
     gradeRequirement = true;
@@ -115,7 +117,7 @@ function updateSelection() {
     nonBoardClassificationFields.style.display = 'block';
   }
   // Copy the selected nature of degree to Tab-2 input field
-  document.getElementById("nature_of_degree").value = selectNatureDegree;
+  //document.getElementById("nature_of_degree").value = selectNatureDegree;
 }
 
 function updateBoardSelection() {
