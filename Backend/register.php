@@ -79,7 +79,6 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
     <section class="content">
         <div class="side">
             <h1>Welcome to<br><span>Benguet State <br>University </span> <br>Admission</h1>
-            <button class="cn" id="joinUsButton">JOIN US</button>
         </div>
 
 

@@ -112,32 +112,6 @@
     letter-spacing: 2px;
 }
 
-.content .cn{
-    width: 140px;
-    height: 40px;
-    background: #23f810;
-    border: none;
-    margin-bottom: 10px;
-    margin-left: 20px;
-    margin-top: 15px;
-    font-size: 18px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: .4s ease;
-    
-}
-
-.content .cn a{
-    text-decoration: none;
-    color: #000;
-    transition: .3s ease;
-    margin: 0 auto;
-}
-
-.cn:hover{
-    background-color: #fff;
-}
-
 .content span{
     color: #23f810;
     font-size: 65px
