@@ -43,7 +43,6 @@ if (!document.getElementById("read-guidelines").checked) {
   alert("Please check the box to confirm that you have read the guidelines.");
   return false;
 }
-
     } else if (hideTab === 2) {
       // Handle the file input label click
       $('label[for="id_picture"]').click(function () {
@@ -76,24 +75,24 @@ if (!document.getElementById("read-guidelines").checked) {
         return false;
       }
     }
-    // Mark the step as completed
-    completedSteps[hideTab - 1] = true;
+ // Mark the step as completed
+ completedSteps[hideTab - 1] = true;
+}
+
+// Progress bar
+for (i = 1; i < showTab; i++) {
+  $("#step-" + i).css("opacity", "1");
+  if (completedSteps[i - 1]) {
+    $("#step-" + i).html('<i class="fas fa-check"></i>'); // Add a checkmark
   }
+}
 
-  // Progress bar
-  for (i = 1; i < showTab; i++) {
-    $("#step-" + i).css("opacity", "1");
-    if (completedSteps[i - 1]) {
-      $("#step-" + i).html('<i class="fas fa-check"></i>'); // Add a checkmark
-    }
-  }
+// Switch tab
+$("#tab-" + hideTab).css("display", "none");
+$("#tab-" + showTab).css("display", "block");
+$("input, select").css("background", "#fff");
 
-  // Switch tab
-  $("#tab-" + hideTab).css("display", "none");
-  $("#tab-" + showTab).css("display", "block");
-  $("input, select").css("background", "#fff");
-
-  window.scrollTo(0, 0);
+window.scrollTo(0, 0);
 }
 
 function updateSelection() {

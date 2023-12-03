@@ -479,15 +479,14 @@ $conn->close();
         <p class="note-color"><label class="checkbox-container">
         <input type="checkbox" id="read-guidelines" required>
         <span class="checkmark"></span> NOTE: CHECK AND PROCEED ONLY TO THE NEXT STEP IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE REQUIREMENTS WILL NOT BE ENTERTAINED!</p>
-      </label>
-      
+      </label> 
+
     </div>
 
       <div class="index-btn-wrapper" id="index-btn-wrapper">
         <div class="index-btn" id="nextButton" onclick="run(1,2);">Next</div>
       </div>
     </div>
-
 
     <!--Form 2-->
     <div class="tab" id="tab-2">
@@ -523,7 +522,6 @@ $conn->close();
         <p class="binformation"> Background Information of Applicant</p>
         <p class="personal_information"> Personal Information</p>
         <!--Full name-->
-
 
         <div class="form-container">
           <!-- Full name -->
@@ -767,13 +765,8 @@ $conn->close();
           true.I affirm that I have read and understood all the instructions contained in this application form that
           the
           information suplied are true.</p>
-
-
         <br><br>
-
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
-    
-
       </div>
       <br><br>
       <div class="index-btn-wrapper2">
@@ -781,6 +774,7 @@ $conn->close();
         <div class="index-btn2" onclick="run(2, 3);">Next</div>
       </div>
     </div>
+
     <!--Form 3-->
     <div class="tab" id="tab-3">
       <br>
