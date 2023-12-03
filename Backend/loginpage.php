@@ -94,6 +94,14 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
 <body>
+    <!-- Announcements -->
+    <div class="announcement_popup">
+		<h2>Admission Policy</h2>
+		<p>The Office of the University Registrar (OUR) is a service unit of the University responsible for the repository and official source of the academic records of all University students and student-related data/reports. Coupled with this responsibility is the mandate to maintain and protect the integrity and confidentiality of student records.
+            General Functions of the Office of the University Registrar</p>
+        <button id="close">Close</button>
+	</div>
+    <!-- Announcements -->
     <header>
         <div class="icon">
             <a href="#" class="logo"><img src="assets/images/BSU Logo1.png" alt="BSU Logo"></a>

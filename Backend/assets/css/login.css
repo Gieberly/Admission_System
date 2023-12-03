@@ -18,6 +18,54 @@
         background: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
         z-index: -1; /* Place the overlay behind the content */
     }
+/*Anonuncement Popup*/
+    .announcement_popup {
+	    background-color: #202020;
+        width: 400px;
+        padding: 5px 5px;
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        display: none;
+    }
+    .announcement_popup::before {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 0.5px;
+        background-color: #ccc; /* Change the color to your preference */
+        margin-bottom: 10px; /* Adjust the margin as needed */
+    }
+    .announcement_popup h2 {
+	    text-align: center;
+	    color: #ffffff;
+        font-size: 12px;
+        font-weight: bold; /* Add this line to make the font bold */
+    }
+    .announcement_popup p {
+	    text-align: left;
+	    color: #ffffff;
+        font-size: 10px;
+    }
+    .announcement_popup p::after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background-color: #ccc; /* Change the color to your preference */
+        margin-top: 10px; /* Adjust the margin as needed */
+    }
+    .announcement_popup button {
+	    display: block;
+	    background-color: transparent;
+	    font-size: 12px;
+	    color: #ffffff;
+	    outline: none;
+        border: none;
+        margin-bottom: 10px;
+    }
+/*Anonuncement Popup*/
     header {
         background: rgba(14, 14, 14); /* Add a semi-transparent black background to the header for better readability */
         padding: 10px; /* Adjust the padding to reduce the height */
