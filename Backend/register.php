@@ -6,8 +6,6 @@ include("config.php");
 $sql = "SELECT * FROM Programs ORDER BY Nature_of_Degree ASC, Description ASC";
 $result = $conn->query($sql);
 
-$error_message = ""; // Initialize an empty error message
-$success_message = ""; // Initialize an empty success message
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
@@ -16,9 +14,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
-    $status = ($userType == 'Student') ? 'Approved' : 'Pending'; // Set status based on user type
-    $department = ($userType == 'Faculty') ? $_POST['description'] : NULL; // Set department based on user type
-
+    
+    // Set status and department based on user type
+    if ($userType == 'Student') {
+        $status = 'Approved';
+        $department = NULL;
+    } elseif ($userType == 'Staff' || $userType == 'Faculty') {
+        $status = 'Pending';
+        $department = ($userType == 'Faculty') ? $_POST['description'] : NULL;
+    } else {
+        $status = NULL;
+        $department = NULL;
+    }
     // Check if the email already exists
     $emailExistsQuery = "SELECT * FROM users WHERE email = '$email'";
     $result = $conn->query($emailExistsQuery);
