@@ -482,7 +482,7 @@ $conn->close();
     </div>
 
       <div class="index-btn-wrapper" id="index-btn-wrapper">
-        <div class="index-btn" id="nextButton" onclick="run(1,2);">Next</div>
+        <div class="index-btn" onclick="run(1,2);">Next</div>
       </div>
     </div>
 
@@ -856,6 +856,8 @@ $conn->close();
         <div class="index-btn2" onclick="run(3, 4);">Next</div>
       </div>
     </div>
+
+    <!--Form 4-->
     <div class="tab" id="tab-4">
 
       <div class="page-containerr">
@@ -864,8 +866,6 @@ $conn->close();
       <div class="index-btn-wrapper">
         <div class="index-btn" onclick="run(4, 3);">Previous</div>
         <button class="index-btn" type="submit" name="submit" style="background: blue;">Submit</button>
-
-
       </div>
     </div>
     <!-- Style for the Alert Messages -->    
