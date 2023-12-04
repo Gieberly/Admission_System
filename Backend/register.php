@@ -2,50 +2,44 @@
 session_start();
 include("config.php");
 
-
 // Fetch data from the database and sort by Nature_of_Degree and Description
 $sql = "SELECT * FROM Programs ORDER BY Nature_of_Degree ASC, Description ASC";
 $result = $conn->query($sql);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+$error_message = ""; // Initialize an empty error message
+$success_message = ""; // Initialize an empty success message
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Retrieve user input
     $name = $_POST['name'];
+    $last_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
-    $department = $_POST['description']; 
-// Set default status to "pending" for Staff and Faculty
-$status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'approved';
+    $status = ($userType == 'Student') ? 'Approved' : 'Pending'; // Set status based on user type
+    $department = ($userType == 'Faculty') ? $_POST['description'] : NULL; // Set department based on user type
+
     // Check if the email already exists
-    $checkEmailQuery = "SELECT id FROM users WHERE email = ?";
-    $stmtCheckEmail = $conn->prepare($checkEmailQuery);
-    $stmtCheckEmail->bind_param("s", $email);
-    $stmtCheckEmail->execute();
-    $stmtCheckEmail->store_result();
+    $emailExistsQuery = "SELECT * FROM users WHERE email = '$email'";
+    $result = $conn->query($emailExistsQuery);
 
-    if ($stmtCheckEmail->num_rows > 0) {
-        // Email already exists, inform the user
-        echo "Email already in use. Please choose another email.";
-        $stmtCheckEmail->close();
-        $conn->close();
-        exit(); // Stop execution
-    }
-
-    // Proceed with user registration if the email is unique
-    $_SESSION['registered_email'] = $email;
-    $stmt = $conn->prepare("INSERT INTO users (name, email, password, userType, status, Department) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssss", $name, $email, $hashedPassword, $userType, $status, $department);
-
-    if ($stmt->execute()) {
-        header("Location: loginpage.php");
-        exit();
+    if ($result->num_rows > 0) {
+        $error_message = "Email address already exists. Please choose a different email.";
     } else {
-        echo "Error: " . $stmt->error;
+        // Email does not exist, proceed with registration
+        $sql = "INSERT INTO users (name, last_name, email, password, userType, status, Department) 
+                VALUES ('$name', '$last_name', '$email', '$password', '$userType', '$status', '$department')";
+
+        if ($conn->query($sql) === TRUE) {
+            $success_message = "You have successfully Registered!";
+
+            // Redirect to loginpage.php after 3 seconds
+            header("refresh:3;url=loginpage.php");
+        } else {
+            $error_message = "Error: " . $sql . "<br>" . $conn->error;
+        }
     }
-
-    $stmt->close();
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -54,11 +48,17 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin and Faculty login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        // Your other JavaScript code here
+    </script>
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
+
 
 <body>
     <header>
@@ -73,6 +73,45 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
 
             background-image: url('assets/images/banner.jpg');
         }
+
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            animation: slideUp 0.5s ease;
+            text-shadow: 0 0 5px red;
+        }
+
+        .success-message {
+            color: #155724;
+            /* Dark green text color */
+            background-color: #d4edda;
+            /* Light green background color */
+            border: 1px solid #c3e6cb;
+            /* Border color */
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 15px;
+            animation: slideUp 0.5s ease;
+            text-shadow: 0 0 5px green;
+            /* Dark green outer shadow */
+        }
+
+        /* Keyframes for the slide-up animation */
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 
 
@@ -83,24 +122,35 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
 
 
         <div class="form" id="registrationForm" style="display: block;">
-            <form method="POST" id="RegForm" onsubmit="return validateForm();">
+        <form method="POST" id="RegForm" onsubmit="return validateForm();">
                 <h2>Register</h2>
-                <input type="text" name="name" placeholder="Full Name" autocomplete="name" required>
+                <?php if (!empty($error_message)) : ?>
+                    <div class="error-message"><?php echo $error_message; ?></div>
+                <?php endif; ?>
+                <!-- Display the success message with slide-up animation and red outer color -->
+                <?php if (!empty($success_message)) : ?>
+                    <div class="success-message"><?php echo $success_message; ?></div>
+                <?php endif; ?>
+            
+                <input type="text" name="name" placeholder="First Name" autocomplete="name" required>
+                <input type="text" name="last_name" placeholder="Last Name" autocomplete="family-name" required>
                 <input type="email" name="email" placeholder="Email" autocomplete="on">
                 <input type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
-                <input type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required>
+                <input type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required oninput="validatePassword()">
+                <div id="passwordError" class="error-message"></div>
+
                 <br>
-              
+
                 <select id="userType" name="userType" required onchange="toggleDepartmentDropdown()">
-                <option value="" disabled selected>Select User Type</option>
-                <option value="Student">Student</option>
+                    <option value="" disabled selected>Select User Type</option>
+                    <option value="Student">Student</option>
                     <option value="Staff">Staff</option>
                     <option value="Faculty">Faculty</option>
                 </select>
                 <!-- Style for the "Select Department" dropdown -->
-              
+
                 <select name="description" id="description">
-                   <option value="" disabled selected>Select Department:</option>
+                    <option value="" disabled selected>Select Department:</option>
                     <?php
                     if ($result->num_rows > 0) {
                         $currentNature = null;
@@ -132,12 +182,20 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
             </form>
 
         </div>
-        
+
+
     </section>
-    
+
+
     <style>
-       /* Style for the dropdowns */
-       select {
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        /* Style for the dropdowns */
+        select {
             font-size: 16px;
             padding: 2px;
             width: 100%;
@@ -153,15 +211,16 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
             font-size: 14px;
         }
 
-       
+
         .hidden {
             display: none;
         }
+
         #description {
             display: none;
         }
     </style>
- <script>
+    <script>
         // JavaScript to show/hide "Select Department" dropdown based on "Select User Type"
         function toggleDepartmentDropdown() {
             var userTypeDropdown = document.getElementById("userType");
@@ -175,7 +234,59 @@ $status = ($userType === 'Staff' || $userType === 'Faculty') ? 'pending' : 'appr
                 departmentDropdown.style.display = "none";
             }
         }
+  document.addEventListener("DOMContentLoaded", function () {
+        // Hide the password error message initially
+        var errorContainer = document.getElementById("passwordError");
+        errorContainer.style.display = "none";
+    });
+
+    function validatePassword() {
+        var password = document.getElementById("registerEmail").value;
+        var confirmPassword = document.getElementsByName("confirm_password")[0].value;
+        var confirmPwdInput = document.getElementsByName("confirm_password")[0];
+        var errorContainer = document.getElementById("passwordError");
+
+        if (password !== confirmPassword) {
+            // Passwords don't match, show error message and highlight the field
+            confirmPwdInput.classList.add("password-error");
+            errorContainer.innerHTML = "Passwords don't match";
+            errorContainer.style.display = "block"; // Show the error message
+            return false;
+        } else {
+            // Passwords match, reset the border color and clear error message
+            confirmPwdInput.classList.remove("password-error");
+            errorContainer.innerHTML = "";
+            errorContainer.style.display = "none"; // Hide the error message
+            return true;
+        }
+    }
+
+    function validateForm() {
+        var password = document.getElementById("registerEmail").value;
+        var confirmPassword = document.getElementsByName("confirm_password")[0].value;
+
+        // Check if passwords match
+        if (password !== confirmPassword) {
+            alert("Password and Confirm Password do not match");
+            return false;
+        }
+
+        // Call validatePassword only if the user attempts to register
+        if (password !== "" || confirmPassword !== "") {
+            return validatePassword();
+        }
+
+        return true;
+    }
     </script>
+
+    <style>
+        /* Style for the password fields with red background shadow */
+        .password-error {
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        }
+    </style>
+
 
     <footer>
 

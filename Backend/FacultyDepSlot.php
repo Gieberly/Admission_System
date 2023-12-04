@@ -98,13 +98,6 @@ $stmtFetchProgramDetails->bind_result($programID, $courses, $natureOfDegree, $de
 </section>
 
 </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </main>
-</section>
 
 <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
     <div class="toast-header">
