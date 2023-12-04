@@ -63,7 +63,7 @@ $result = $conn->query($query);
                                                 echo "<td>{$count}</td>";
                                                 echo "<td>{$row['applicant_number']}</td>";
                                                 echo "<td>{$row['nature_of_degree']}</td>";
-                                                <!-- ... (add other table cells as needed) -->
+                                                // (add other table cells as needed)
                                                 echo "<td>
                                                       <button type='button' class='button restore-btn' onclick='restoreRecord({$row['id']})'>Restore</button>
                                                       <button type='button' class='button permanently-delete-btn' onclick='permanentlyDeleteRecord({$row['id']})'>Permanently Delete</button>

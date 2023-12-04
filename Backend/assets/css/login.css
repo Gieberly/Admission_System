@@ -21,7 +21,7 @@
 /*Anonuncement Popup*/
     .announcement_popup {
 	    background-color: #202020;
-        width: 400px;
+        width: 800px;
         padding: 5px 5px;
         position: fixed;
         top: 0;
@@ -65,6 +65,12 @@
         border: none;
         margin-bottom: 10px;
     }
+    /* Responsive Styles */
+@media only screen and (max-width: 800px) {
+    .announcement_popup {
+        width: 80%; /* Adjust the width for smaller screens */
+    }
+}
 /*Anonuncement Popup*/
     header {
         background: rgba(14, 14, 14); /* Add a semi-transparent black background to the header for better readability */
