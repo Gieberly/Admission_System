@@ -868,7 +868,7 @@ $conn->close();
 
       </div>
     </div>
-          
+    <!-- Style for the Alert Messages -->    
     <div id="customAlert" class="custom-alert">
   <div class="custom-alert-content">
     <span class="custom-alert-close" onclick="closeCustomAlert()">&times;</span>
