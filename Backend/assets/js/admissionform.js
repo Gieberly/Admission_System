@@ -34,13 +34,13 @@ if (gradeRequirement) {
     var inputValue = parseFloat(document.getElementById("inputValue").value);
 
     if (isNaN(inputValue) || inputValue < 0 || inputValue > 100) {
-        alert("Please enter a valid value before proceeding.");
+      showCustomAlert("Please enter a valid value before proceeding.");
         return false;
     }
 }
 // Validate the checkbox in Tab 1
 if (!document.getElementById("read-guidelines").checked) {
-  alert("Please check the box to confirm that you have read the guidelines.");
+  showCustomAlert("Please check the box to confirm that you have read the guidelines.");
   return false;
 }
     } else if (hideTab === 2) {
@@ -210,14 +210,14 @@ function hsBoardSelection() {
 
   // Check if any grade is lower than 86 or greater than 100
   if (englishGrade < 86 || mathGrade < 86 || scienceGrade < 86 || gwaGrade < 86 || englishGrade > 100 || mathGrade > 100 || scienceGrade > 100 || gwaGrade > 100) {
-    alert("Sorry! Your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
+    showCustomAlert("Sorry! Your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
   } else if (englishGrade >= 86 && mathGrade >= 86 && scienceGrade >= 86 && gwaGrade >= 86 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99 && gwaGrade <= 99) {
     // Grades are valid and within the required range
-    alert('Congratulations! Your Grades are eligible for the Board Program. Please proceed with completing the Admission Form.');
+    showCustomAlert('Congratulations! Your Grades are eligible for the Board Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
     document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
-    alert("Please enter valid grades between 86 and 99.");
+    showCustomAlert("Please enter valid grades between 86 and 99.");
   }
 }
 
@@ -226,14 +226,14 @@ function tvnSelection() {
 
   // Check if GWA is lower than 80 or greater than 100
   if (gwaGrade < 80 || gwaGrade > 100) {
-    alert('Sorry! Your GWA didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
+    showCustomAlert('Sorry! Your GWA didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
   } else if (gwaGrade >= 80 && gwaGrade <= 99) {
     // GWA is valid and within the required range
-    alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
+    showCustomAlert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
     document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
-    alert('Please enter a valid GWA between 80 and 99.');
+    showCustomAlert('Please enter a valid GWA between 80 and 99.');
   }
 }
 
@@ -242,14 +242,14 @@ function alsSelection() {
 
   // Check if GWA is lower than 80 or greater than 100
   if (prcGrade < 80 || prcGrade > 100) {
-    alert('Sorry! Your PRC didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
+    showCustomAlert('Sorry! Your PRC didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
   } else if (prcGrade >= 80 && prcGrade <= 99) {
     // GWA is valid and within the required range
-    alert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
+    showCustomAlert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
     // Show Board Programs Dropdown
     document.getElementById('index-btn-wrapper').style.display = 'block';
   } else {
-    alert('Please enter a valid PRC between 80 and 99.');
+    showCustomAlert('Please enter a valid PRC between 80 and 99.');
   }
 }
 
@@ -377,3 +377,17 @@ function generateApplicantNumber() {
 
 // Call the function when the page loads
 window.onload = generateApplicantNumber;
+
+//Alert Message
+function showCustomAlert(message) {
+  var customAlert = document.getElementById("customAlert");
+  var customAlertMessage = document.getElementById("customAlertMessage");
+
+  customAlertMessage.textContent = message;
+  customAlert.style.display = "block";
+}
+
+function closeCustomAlert() {
+  var customAlert = document.getElementById("customAlert");
+  customAlert.style.display = "none";
+}

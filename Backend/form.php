@@ -119,8 +119,6 @@ $conn->close();
   <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
   <link rel="stylesheet" href="assets\css\admissionform.css">
   <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -870,6 +868,13 @@ $conn->close();
 
       </div>
     </div>
+          
+    <div id="customAlert" class="custom-alert">
+  <div class="custom-alert-content">
+    <span class="custom-alert-close" onclick="closeCustomAlert()">&times;</span>
+    <p id="customAlertMessage"></p>
+  </div>
+</div>
 
 
   </form>
