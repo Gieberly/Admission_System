@@ -49,13 +49,13 @@ $admissionData = $resultAdmission->fetch_assoc();
 <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
             <span class="text">Student</span>
         </a>
 
         <ul class="side-menu top">
-            <li class="active">
+            <li class="">
                 <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
@@ -75,10 +75,6 @@ $admissionData = $resultAdmission->fetch_assoc();
                     <span class="text">Student Result</span>
                 </a>
             </li>
-
-
-
-
         </ul>
     </section>
     <!-- SIDEBAR -->
@@ -168,8 +164,6 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 </div>
 </div>
-
-
         <!-- CONTENT -->
         <script src="assets/js/student.js"></script>
 </body>
