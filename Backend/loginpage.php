@@ -4,17 +4,19 @@ include("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $hashedPassword = $_POST['password'];
     $stmt = $conn->prepare("SELECT id, password, userType, status FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $stmt->store_result();
 
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $password, $userType, $status);
+    if ($stmt->num_rows > 0) 
+    {
+        $stmt->bind_result($id, $hashedPassword, $userType, $status);
         $stmt->fetch();
 
-        if ($password = $_POST['password']) {
+        if (password_verify($password, $hashedPassword)) 
+        {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
 
@@ -44,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif (strtolower($status) == 'rejected') {
                     echo "Your registration has been rejected. Please contact the administrator.";
                 } else {
-                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                    echo "Your registration is not yet approved. Please Verify your account.";
                 }
             } elseif ($userType == 'admin') {
                 header("Location: ../backend/admin.php");
@@ -111,14 +113,13 @@ $conn->close();
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button class="btnn" type="submit">Login</button>
-                <p class="link">Don't have an account<br>
-                    <a href="register.php" id="signupLink">Sign up </a> here
+                <p class="link">
+                    <a href="reset-password.php">Forgot Password?</a>
+                    or Don't have an account?<a href="register.php" id="signupLink">Sign up </a> here
                 </p>
+                
             </form>
-        </div>
-      
-      
-           
+        </div> 
         </div>
         </div>
     </section>
