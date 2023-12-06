@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("config.php"); 
+include("config.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
@@ -17,24 +17,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
+            // Store additional user information in session
+            $_SESSION['user_name'] = $name;
+            $_SESSION['user_email'] = $email;
+            $_SESSION['user_department'] = $department; // Assuming $department is available
 
-            // Check if the user is a student and has filled out the admission form
+
             if ($userType == 'Student') {
-                $checkAdmissionQuery = "SELECT id FROM admission_data WHERE email = ?";
-                $stmtCheckAdmission = $conn->prepare($checkAdmissionQuery);
-                $stmtCheckAdmission->bind_param("s", $email);
-                $stmtCheckAdmission->execute();
-                $stmtCheckAdmission->store_result();
-
-                if ($stmtCheckAdmission->num_rows > 0) {
-                    // User has already filled out the admission form, redirect to student dashboard
-                    header("Location: ../Backend/student.php");
-                    exit();
-                } else {
-                    // User needs to fill out the admission form, redirect to admission form
-                    header("Location: ../Backend/form.php");
-                    exit();
-                }
+                header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
+                exit();
             } elseif ($userType == 'Faculty') {
                 if (strtolower($status) == 'approved') {
                     header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
@@ -46,7 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } else {
                     echo "Your registration is not yet approved. Please wait for admin approval.";
                 }
-                
             } elseif ($userType == 'Staff') {
                 if (strtolower($status) == 'approved') {
                     header("Location: ../Backend/personnel.php");
@@ -67,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             }
         } else {
-            echo "Incorrect password or email";
+            echo "Incorrect password";
         }
     } else {
         echo "User not found";
@@ -86,21 +76,22 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin and Faculty login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
+
 <body>
     <!-- Announcements -->
     <div class="announcement_popup">
-		<h2>Admission Policy</h2>
-		<p>The Office of the University Registrar (OUR) is a service unit of the University responsible for the repository and official source of the academic records of all University students and student-related data/reports. Coupled with this responsibility is the mandate to maintain and protect the integrity and confidentiality of student records.
+        <h2>Admission Policy</h2>
+        <p>The Office of the University Registrar (OUR) is a service unit of the University responsible for the repository and official source of the academic records of all University students and student-related data/reports. Coupled with this responsibility is the mandate to maintain and protect the integrity and confidentiality of student records.
             General Functions of the Office of the University Registrar</p>
         <button id="close">Close</button>
-	</div>
+    </div>
     <!-- Announcements -->
     <header>
         <div class="icon">
@@ -116,21 +107,22 @@ $conn->close();
     <section class="content">
         <div class="side">
             <h1>Welcome to<br><span>Benguet State <br>University </span> <br>Admission</h1>
+            <button class="cn" id="joinUsButton">JOIN US</button>
         </div>
         <div class="form" id="loginForm" style="display: block;">
-            <form action="loginpage.php" method="POST" >
+            <form action="loginpage.php" method="POST">
                 <h2>Login</h2>
-                <input type="email" autocomplete="email" name="email" placeholder="Email" required>
-                <input type="password" autocomplete="password" name="password" placeholder="Password" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
                 <button class="btnn" type="submit">Login</button>
                 <p class="link">Don't have an account<br>
                     <a href="register.php" id="signupLink">Sign up </a> here
                 </p>
             </form>
         </div>
-      
-      
-           
+
+
+
         </div>
         </div>
     </section>
@@ -138,4 +130,5 @@ $conn->close();
     </footer>
     <script src="assets\js\login.js"></script>
 </body>
+
 </html>
