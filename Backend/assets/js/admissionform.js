@@ -370,11 +370,17 @@ function validateEmail() {
 
   // Check if the entered email matches the regular expression
   if (emailRegex.test(emailInput.value)) {
-    emailError.textContent = ""; // Clear error message
+    // Check if the email ends with "@gmail.com"
+    if (emailInput.value.toLowerCase().endsWith("@gmail.com")) {
+      emailError.textContent = ""; // Clear error message
+    } else {
+      emailError.textContent = "Please enter a valid email address.";
+    }
   } else {
-    emailError.textContent = "Please enter valid and same email address you enter when you register.";
+    emailError.textContent = "Please enter a valid email address.";
   }
 }
+
 function validatePhoneNumber(inputId) {
   var phoneNumberInput = document.getElementById(inputId);
   var phoneNumberError = document.getElementById(inputId + "-error");
@@ -387,6 +393,7 @@ function validatePhoneNumber(inputId) {
     phoneNumberError.textContent = "Please enter a valid Philippine phone number.";
   }
 }
+
 document.addEventListener("DOMContentLoaded", function () {
   // Get the current date
   var currentDate = new Date();
