@@ -684,29 +684,7 @@ $conn->close();
             </select>
           </div>
         </div>
-
-        <p class="personal_information">Academic Classification</p>
-        <div class="form-container">
-          <!-- Academic Classification -->
-          <div class="form-group">
-            <label class="small-label" for="academic_classification">Academic Classification</label>
-            <select name="academic_classification" class="input" id="academic_classification" required>
-              <option value="" disabled selected>Select Academic Classification</option>
-              <option value="grade_12">Currently enrolled as Grade 12 student (Graduating for the current year)
-              </option>
-              <option value="shs_graduate">Senior High School Graduate (who did not enroll in any other school after
-                graduation)</option>
-              <option value="hs_graduate">High School Graduate (who did not enroll in any other school after
-                graduation)
-              </option>
-              <option value="als_pept_passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="transferee">Transferee (previously enrolled as a college student from another school)
-              </option>
-              <option value="vocational_completers">Vocational/Technical-Vocational Completers</option>
-              <option value="second_degree">Second (2nd) Degree</option>
-            </select>
-          </div>
-        </div>
+          
         <p class="personal_information">Academic Background </p>
         <div class="form-container">
           <!-- Academic Background -->
@@ -735,36 +713,30 @@ $conn->close();
               placeholder="Enter Name and Address">
           </div>
         </div>
+
           <div class="form-container">
+             <!-- Learner's Reference Number -->
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
             <input type="number" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*"
               maxlength="12" required>
           </div>
-
-
+          <!-- Academic Classification -->
+          <div class="form-group">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <input type="text" name="academic_classification" class="input" id="academic_classification" readonly required>
+          </div>
+          <!-- Degree -->
           <div class="form-group">
             <label class="small-label" for="degree_applied">Degree</label>
-            <!-- Display the selected program in this input field -->
             <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
           </div>
-
-
+          <!-- Nature of Degree -->
           <div class="form-group">
-            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
+            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of Degree</label>
             <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
-
           </div>
         </div>
-        <p class="attestation-head">Attestation and Consent</p>
-
-        <p class="attestation-note">I affirm that I have read and understood all the instructions contained in this
-          application form that the information suplied are true. I affirm that I have read and understood all the
-          instructions contained in this application form that the information suplied are true. I affirm that I have
-          read and understood all the instructions contained in this application form that the information suplied are
-          true.I affirm that I have read and understood all the instructions contained in this application form that
-          the
-          information suplied are true.</p>
         <br><br>
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
       </div>

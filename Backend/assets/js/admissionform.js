@@ -109,9 +109,15 @@ function updateSelection() {
   } else if (selectedNatureDegree === 'Non-board') {
     nonBoardClassificationFields.style.display = 'block';
   }
-  // Copy the selected nature of degree to Tab-2 input field
-  //document.getElementById("nature_of_degree").value = selectNatureDegree;
+  // Get the selected value from the categoryDropdown in Tab-1
+  var selectedNature = document.getElementById('categoryDropdown').value;
+
+  // Set the selected value in the nature_of_degree input field in Tab-2
+  document.getElementById('nature_of_degree').value = selectedNature;
 }
+
+// Attach the updateNatureOfDegree function to the onchange event of the categoryDropdown
+document.getElementById('categoryDropdown').onchange = updateNatureOfDegree;
 
 function updateBoardSelection() {
   const selectedBoardClassification = document.getElementById('academic_classification_board').value;
@@ -136,6 +142,17 @@ function updateBoardSelection() {
     boardProgramsDropdown.style.display = 'none';
     nonBoardProgramsDropdown.style.display = 'none';
   } 
+   // Get the selected value from the board program dropdown
+   var selectedValueACBoard = document.getElementById("academic_classification_board").value;
+
+   // Get the selected value from the non-board program dropdown
+   var selectedValueACNonBoard = document.getElementById("academic_classification_nonboard").value;
+ 
+   // Determine which dropdown is selected and update the input fields accordingly
+   var selectedValue = selectedValueACBoard || selectedValueACNonBoard;
+ 
+   // Set the selected value in the first input field
+   document.getElementById("academic_classification").value = selectedValue;
 }
 
 function updateNonBoardSelection() {
@@ -161,6 +178,17 @@ function updateNonBoardSelection() {
     boardProgramsDropdown.style.display = 'none';
     nonBoardProgramsDropdown.style.display = 'none';
   } 
+  // Get the selected value from the board program dropdown
+  var selectedValueACBoard = document.getElementById("academic_classification_board").value;
+
+  // Get the selected value from the non-board program dropdown
+  var selectedValueACNonBoard = document.getElementById("academic_classification_nonboard").value;
+
+  // Determine which dropdown is selected and update the input fields accordingly
+  var selectedValue = selectedValueACBoard || selectedValueACNonBoard;
+
+  // Set the selected value in the first input field
+  document.getElementById("academic_classification").value = selectedValue;
 }
 
 function updateDegreeFields() {
@@ -187,10 +215,10 @@ function updateDegreeFields() {
   }
 
   // Get the selected value from the board program dropdown
-  var selectedValueBoard = document.getElementById("board-programs").value;
+ var selectedValueBoard = document.getElementById("board-programs").value;
 
   // Get the selected value from the non-board program dropdown
-  var selectedValueNonBoard = document.getElementById("NonBoardProgram").value;
+ var selectedValueNonBoard = document.getElementById("NonBoardProgram").value;
 
   // Determine which dropdown is selected and update the input fields accordingly
   var selectedValue = selectedValueBoard || selectedValueNonBoard;
