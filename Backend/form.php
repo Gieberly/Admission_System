@@ -634,10 +634,9 @@ $conn->close();
               autocomplete="email:" required oninput="validateEmail()">
             <p id="email-error" style="color: red;"></p>
           </div>
-
         </div>
-        <p class="personal_information">Contact person(s) in case of emergency</p>
 
+        <p class="personal_information">Contact person(s) in case of emergency</p>
         <div class="form-container">
           <!-- Contact Person 1 -->
           <div class="form-group">
@@ -652,7 +651,7 @@ $conn->close();
             <p id="contact_person_1_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_1">Relationship with Contact Person</label>
+            <label class="relationship-label" for="relationship_1">Relationship</label>
             <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
@@ -674,7 +673,7 @@ $conn->close();
             <p id="contact_person_2_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_2">Relationship with Contact Person</label>
+            <label class="relationship-label" for="relationship_2">Relationship</label>
             <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
@@ -706,7 +705,7 @@ $conn->close();
               placeholder="Enter Name and Address">
           </div>
         </div>
-
+        <br>
         <div class="form-container">
              <!-- Learner's Reference Number -->
           <div class="form-group">
@@ -838,7 +837,7 @@ $conn->close();
     <!-- Style for the Alert Messages -->    
     <div id="customAlert" class="custom-alert">
   <div class="custom-alert-content">
-    <span class="custom-alert-close" onclick="closeCustomAlert()">&times;</span>
+    <span class="custom-alert-close" onclick="closeCustomAlert()"></span>
     <p id="customAlertMessage"></p>
   </div>
 </div>

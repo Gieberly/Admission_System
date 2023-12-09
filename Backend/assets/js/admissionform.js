@@ -56,7 +56,7 @@ if (!document.getElementById("read-guidelines").checked) {
       });
       var pictureInput = $('input[name="id_picture"]');
     if (pictureInput[0].files.length === 0) {
-      alert("Please upload an ID picture.");
+      showCustomAlert("Please upload an ID picture.");
       return false;
     }
 
@@ -457,9 +457,15 @@ function showCustomAlert(message) {
 
   customAlertMessage.textContent = message;
   customAlert.style.display = "block";
+
+   // Hide the alert after 5 seconds
+   setTimeout(function() {
+    closeCustomAlert();
+  }, 10000);
 }
 
 function closeCustomAlert() {
   var customAlert = document.getElementById("customAlert");
   customAlert.style.display = "none";
 }
+
