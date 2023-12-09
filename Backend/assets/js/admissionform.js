@@ -384,7 +384,7 @@ function validateEmail() {
 function validatePhoneNumber(inputId) {
   var phoneNumberInput = document.getElementById(inputId);
   var phoneNumberError = document.getElementById(inputId + "-error");
-  var phoneNumberRegex = /^(09\d{9}|0\d{10})$/;
+  var phoneNumberRegex = /^(09\d{9}|(\+63|0)\d{10})$/;
 
   // Check if the entered phone number matches the regular expression
   if (phoneNumberRegex.test(phoneNumberInput.value)) {
