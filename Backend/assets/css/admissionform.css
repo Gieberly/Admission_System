@@ -399,7 +399,7 @@ p.privacy-notice {
 .form-container {
   display: flex;
   flex-direction: row;
-  gap: 20px; /* Adjust the gap between form groups */
+  gap: 15px; /* Adjust the gap between form groups */
 }
 
 .form-group {
@@ -638,13 +638,7 @@ p.personal_information {
     width: 200px; /* Adjust the width to align with other labels */
     margin-bottom: -6px; /* Adjust the margin to match other labels */
   }
-  #degree_applied {
-    width: 100%; /* Input fields occupy the available width */
-    padding: 9px; /* Adjust padding for consistency */
-    margin-top: 15px; /* Match margin with other input fields */
-    border: 1px solid #ccc; /* Match border with other input fields */
-    border-radius: 5px; /* Match border radius with other input fields */
-  }
+ 
   /*Alert Message Style*/
   .custom-alert {
     display: none;

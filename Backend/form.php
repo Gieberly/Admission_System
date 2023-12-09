@@ -656,8 +656,7 @@ $conn->close();
             <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
-
+              <option value="guardian">Guardian</option>
             </select>
           </div>
         </div>
@@ -679,8 +678,7 @@ $conn->close();
             <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
-
+              <option value="guardian">Guardian</option>
             </select>
           </div>
         </div>
@@ -693,33 +691,33 @@ $conn->close();
               High School</label>
             <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required
               placeholder="Enter Name and Address">
-
           </div>
-        </div>
-        <div class="form-container">
+          <!-- ALS/PEPT -->
           <div class="form-group">
             <label class="small-label" for="als_pept_name_address" style="white-space: nowrap;">ALS/PEPT was
               taken:</label>
             <input type="text" name="als_pept_name_address" class="input" id="als_pept_name_address" required
               placeholder="Enter Name and Address">
-
           </div>
-        </div>
-        <div class="form-container">
+             <!-- College/University -->
           <div class="form-group">
-
             <label class="small-label" for="college_name_address">College/University:</label>
             <input type="text" name="college_name_address" class="input" id="college_name_address" required
               placeholder="Enter Name and Address">
           </div>
         </div>
 
-          <div class="form-container">
+        <div class="form-container">
              <!-- Learner's Reference Number -->
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
             <input type="number" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*"
               maxlength="12" required>
+          </div>
+          <!-- Nature of Degree -->
+          <div class="form-group">
+            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of Degree</label>
+            <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
           </div>
           <!-- Academic Classification -->
           <div class="form-group">
@@ -730,11 +728,6 @@ $conn->close();
           <div class="form-group">
             <label class="small-label" for="degree_applied">Degree</label>
             <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
-          </div>
-          <!-- Nature of Degree -->
-          <div class="form-group">
-            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of Degree</label>
-            <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
           </div>
         </div>
         <br><br>
