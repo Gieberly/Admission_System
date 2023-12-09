@@ -563,7 +563,6 @@ $conn->close();
         <p class="birthplace"></p>
         <div class="form-container">
           <!-- Birthplace -->
-          <!-- Birthplace -->
           <div class="form-group">
             <label class="small-label" for="birthplace">Birthplace</label>
             <input type="text" name="birthplace" class="input" id="birthplace"
@@ -732,7 +731,6 @@ $conn->close();
         <br><br>
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
       </div>
-      <br><br>
       <div class="index-btn-wrapper2">
         <div class="index-btn2" onclick="run(2, 1);">Previous</div>
         <div class="index-btn2" onclick="run(2, 3);">Next</div>

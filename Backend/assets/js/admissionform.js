@@ -117,7 +117,7 @@ function updateSelection() {
 }
 
 // Attach the updateNatureOfDegree function to the onchange event of the categoryDropdown
-document.getElementById('categoryDropdown').onchange = updateNatureOfDegree;
+//document.getElementById('categoryDropdown').onchange = updateNatureOfDegree;
 
 function updateBoardSelection() {
   const selectedBoardClassification = document.getElementById('academic_classification_board').value;
@@ -345,19 +345,23 @@ function calculateAge() {
   // Calculate the age based on the birthdate
   var today = new Date();
   var birthDate = new Date(birthdate);
+
   var age = today.getFullYear() - birthDate.getFullYear();
 
-  // Check if the birthday has occurred this year
-  var isBirthdayPassed = today.getMonth() < birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate());
+  // Check if the birthday for this year has passed
+  var isBirthdayPassed =
+    today.getMonth() > birthDate.getMonth() ||
+    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
 
   // Adjust age if birthday hasn't occurred yet
   if (!isBirthdayPassed) {
     age--;
   }
+
   // Set the calculated age in the age input field
   document.getElementById("age").value = age;
 }
+
 
 function validateEmail() {
   var emailInput = document.getElementById("email");
