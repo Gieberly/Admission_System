@@ -624,7 +624,7 @@ $conn->close();
           <!-- Facebook Account Name -->
           <div class="form-group">
             <label class="small-label" for="facebook">Facebook Account Name</label>
-            <input type="text" name="facebook" class="input" id="facebook" placeholder="account should be your name"
+            <input type="text" name="facebook" class="input" id="facebook" placeholder="Use Real Name"
               required>
           </div>
           <!--Email Address -->
@@ -837,7 +837,7 @@ $conn->close();
     <!-- Style for the Alert Messages -->    
     <div id="customAlert" class="custom-alert">
   <div class="custom-alert-content">
-    <span class="custom-alert-close" onclick="closeCustomAlert()"></span>
+    <span onclick="closeCustomAlert()"></span>
     <p id="customAlertMessage"></p>
   </div>
 </div>

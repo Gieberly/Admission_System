@@ -621,9 +621,6 @@ p.personal_information {
           border: 1px solid #ccc;
           border-radius: 5px;
         }
-        #facebook::placeholder {
-          font-size: 16px; /* Adjust the font size as needed */
-        }
         
         #email {
           width: 100%; /* You can adjust the width as needed */
