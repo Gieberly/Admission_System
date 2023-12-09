@@ -142,18 +142,40 @@ function updateBoardSelection() {
     boardProgramsDropdown.style.display = 'none';
     nonBoardProgramsDropdown.style.display = 'none';
   } 
-   // Get the selected value from the board program dropdown
-   var selectedValueACBoard = document.getElementById("academic_classification_board").value;
 
-   // Get the selected value from the non-board program dropdown
-   var selectedValueACNonBoard = document.getElementById("academic_classification_nonboard").value;
- 
-   // Determine which dropdown is selected and update the input fields accordingly
-   var selectedValue = selectedValueACBoard || selectedValueACNonBoard;
- 
-   // Set the selected value in the first input field
-   document.getElementById("academic_classification").value = selectedValue;
+  // Update the value to be shown on the input field in tab-2 based on the selected classification
+  var selectedValue = '';
+
+  switch (selectedBoardClassification) {
+    case 'grade_12b':
+      selectedValue = 'Currently enrolled as Grade 12 student (Graduating for the current year)';
+      break;
+    case 'shs_graduateb':
+      selectedValue = 'Senior High School Graduate (who did not enroll in any other school after graduation)';
+      break;
+    case 'hs_graduateb':
+      selectedValue = 'High School Graduate (who did not enroll in any other school after graduation)';
+      break;
+    case 'als_pept_passerb':
+      selectedValue = 'ALS A&E SHS level passer/ PEPT Passer';
+      break;
+    case 'transfereeb':
+      selectedValue = 'Transferee (previously enrolled as a college student from another school)';
+      break;
+    case 'vocational_completersb':
+      selectedValue = 'Vocational/Technical-Vocational Completers';
+      break;
+    case 'second_degreeb':
+      selectedValue = 'Second (2nd) Degree';
+      break;
+    default:
+      break;
+  }
+
+  // Set the selected value in the first input field
+  document.getElementById("academic_classification").value = selectedValue;
 }
+
 
 function updateNonBoardSelection() {
   const selectedNonBoardClassification = document.getElementById('academic_classification_nonboard').value;
@@ -178,18 +200,40 @@ function updateNonBoardSelection() {
     boardProgramsDropdown.style.display = 'none';
     nonBoardProgramsDropdown.style.display = 'none';
   } 
-  // Get the selected value from the board program dropdown
-  var selectedValueACBoard = document.getElementById("academic_classification_board").value;
 
-  // Get the selected value from the non-board program dropdown
-  var selectedValueACNonBoard = document.getElementById("academic_classification_nonboard").value;
+  // Update the value to be shown on the input field in tab-2 based on the selected classification
+  var selectedValue = '';
 
-  // Determine which dropdown is selected and update the input fields accordingly
-  var selectedValue = selectedValueACBoard || selectedValueACNonBoard;
+  switch (selectedNonBoardClassification) {
+    case 'grade_12n':
+      selectedValue = 'Currently enrolled as Grade 12 student (Graduating for the current year)';
+      break;
+    case 'shs_graduaten':
+      selectedValue = 'Senior High School Graduate (who did not enroll in any other school after graduation)';
+      break;
+    case 'hs_graduaten':
+      selectedValue = 'High School Graduate (who did not enroll in any other school after graduation)';
+      break;
+    case 'als_pept_passern':
+      selectedValue = 'ALS A&E SHS level passer/ PEPT Passer';
+      break;
+    case 'transfereen':
+      selectedValue = 'Transferee (previously enrolled as a college student from another school)';
+      break;
+    case 'vocational_completersn':
+      selectedValue = 'Vocational/Technical-Vocational Completers';
+      break;
+    case 'second_degreen':
+      selectedValue = 'Second (2nd) Degree';
+      break;
+    default:
+      break;
+  }
 
   // Set the selected value in the first input field
   document.getElementById("academic_classification").value = selectedValue;
 }
+
 
 function updateDegreeFields() {
   const selectedBoardClassification = document.getElementById('academic_classification_board').value;
