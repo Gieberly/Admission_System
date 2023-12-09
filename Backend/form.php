@@ -163,6 +163,7 @@ $conn->close();
       <span class="step" id="step-4">4</span>
     </div>
 
+    <!-- Form 1 -->
     <div class="tab" id="tab-1">
       <div class="page-container">
         <h2>GENERAL GUIDELINES</h2>
@@ -485,6 +486,7 @@ $conn->close();
         <div class="index-btn" onclick="run(1,2);">Next</div>
       </div>
     </div>
+          </div>
 
     <!--Form 2-->
     <div class="tab" id="tab-2">
