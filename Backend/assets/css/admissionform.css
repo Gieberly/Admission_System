@@ -444,10 +444,11 @@ p.attestation-note {
 .applicant_number {
   display: flex;
   align-items: center;
+  font-size: 16px;
 }
 
 .applicant_number label {
-  width: 150px; /* Adjust the width of the label */
+  width: 250px; /* Adjust the width of the label */
 }
 
 .applicant_number input {

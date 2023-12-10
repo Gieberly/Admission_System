@@ -157,10 +157,6 @@ $conn->close();
       <span class="step" id="step-1">1</span>
       <span class="step-connector"></span>
       <span class="step" id="step-2">2</span>
-      <span class="step-connector"></span>
-      <span class="step" id="step-3">3</span>
-      <span class="step-connector"></span>
-      <span class="step" id="step-4">4</span>
     </div>
 
     <!-- Form 1 -->
@@ -728,24 +724,25 @@ $conn->close();
             <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
           </div>
         </div>
-
-        <!-- Application Date and Number -->
+            <br><br>
+        <!-- Application Date -->
         <div class="form-container">
-        <div class="form-group">
-          <label for="application_date">Date of Application</label>
-          <input type="date" name="application_date" class="input" id="application_date" required>
-        </div>
         <div class="applicant_number">
-        <label for="applicant_number" class="applicant_number">Applicant Number:</label>
-        <input type="text" name="applicant_number" id="applicant_number" readonly>
-      </div>
+            <label for="application_date"><strong>DATE OF APPLICATION:</strong></label>
+            <input type="date" name="application_date" class="input" id="application_date" required>
+          </div>
         </div>
-        <br>
+        <!-- Application Number -->
+        <div class="form-container">
+          <div class="applicant_number">
+            <label for="applicant_number" class="applicant_number"><strong>APPLICANT NUMBER:</strong></label>
+            <input type="text" name="applicant_number" id="applicant_number" readonly>
+          </div>
+          </div>
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
       </div>
       <div class="index-btn-wrapper2">
         <div class="index-btn2" onclick="run(2, 1);">Previous</div>
-        <div class="index-btn2" onclick="run(2, 3);">Next</div>
         <button class="index-btn2" type="submit" name="submit" style="background: blue;">Submit</button>
       </div>
     </div>
@@ -754,83 +751,16 @@ $conn->close();
     <div class="tab" id="tab-3">
       <br>
       <h2>ACKNOWLEDGEMENT SLIP OF APPLICATION FOR ADMISSION</h2>
-
-      <table class="table-3-class">
-        <tr>
-          <td>Document
-            Code:
-          </td>
-          <td>QF-ADM-
-            08
-          </td>
-          <td>Rev.
-            No.:
-          </td>
-          <td>01&nbsp</td>
-        </tr>
-        <tr>
-          <td>Effectivity
-            Date:
-
-          </td>
-          <td>January 5,
-            2023
-          </td>
-          <td colspan="2">&nbsp</td>
-        </tr>
-
-      </table>
-      <h3 class="privacy-heading">PRIVACY NOTICE</h3>
-      <p class="privacy-notice">
-        Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar,
-        concerned Personnel of BSU La Trinidad, BSU Buguias Campus, and Bokod Campus are committed to keep with utmost
-        confidentiality all sensitive personal information collected from applicants. Personal information is
-        collected,
-        accessed, used, and disclosed on a "need to know basis" and only as reasonably required. Confidential
-        information either within or outside the University will not be communicated except to persons authorized to
-        receive such information. Authorized hardware, software, or other authorized equipment shall be used only in
-        accessing, processing, and transmitting such information. Read more on BSU Data Privacy Notice: <a
-          href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students">http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students</a>.
-      </p>
-
       <p class="to-be-filled">To be filled-out by Applicant</p>
-
       <div class="form-container">
         <div class="form-group">
           <label for="applicant_name">Name of Applicant</label>
           <input type="text" placeholder="Enter Full Name" name="applicant_name" id="applicant_name">
         </div>
-
-
         <div class="form-group">
           <label for="slip_degree">Degree applied</label>
           <input type="text" name="slip_degree" id="slip_degree" class="input" readonly required>
         </div>
-
-        <div class="form-group">
-          <label for="application_date">Date of Application</label>
-          <input type="date" name="application_date" class="input" id="application_date" required>
-        </div>
-      </div>
-      <p class="attestation-head" style="text-align: center;">Attestation and Consent</p>
-
-      <p class="attestation-note">I affirm that I have read and understood all the instructions contained in this
-        application form that the information suplied are true. I affirm that I have read and understood all the
-        instructions contained in this application form that the information suplied are true. I affirm that I have
-        read
-        and understood all the instructions contained in this application form that the information suplied are true.I
-        affirm that I have read and understood all the instructions contained in this application form that the
-        information suplied are true.</p>
-
-      <div class="applicant_number">
-        <label for="applicant_number" class="applicant_number">Applicant Number:</label>
-        <input type="text" name="applicant_number" id="applicant_number" readonly>
-      </div>
-      <p class="signature-label">Applicant's E-Signature:</p>
-     
-      <div class="index-btn-wrapper2">
-        <div class="index-btn2" onclick="run(3, 2);">Previous</div>
-        <div class="index-btn2" onclick="run(3, 4);">Next</div>
       </div>
     </div>
 
