@@ -728,12 +728,25 @@ $conn->close();
             <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
           </div>
         </div>
-        <br><br>
+
+        <!-- Application Date and Number -->
+        <div class="form-container">
+        <div class="form-group">
+          <label for="application_date">Date of Application</label>
+          <input type="date" name="application_date" class="input" id="application_date" required>
+        </div>
+        <div class="applicant_number">
+        <label for="applicant_number" class="applicant_number">Applicant Number:</label>
+        <input type="text" name="applicant_number" id="applicant_number" readonly>
+      </div>
+        </div>
+        <br>
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
       </div>
       <div class="index-btn-wrapper2">
         <div class="index-btn2" onclick="run(2, 1);">Previous</div>
         <div class="index-btn2" onclick="run(2, 3);">Next</div>
+        <button class="index-btn2" type="submit" name="submit" style="background: blue;">Submit</button>
       </div>
     </div>
 
@@ -821,17 +834,6 @@ $conn->close();
       </div>
     </div>
 
-    <!--Form 4-->
-    <div class="tab" id="tab-4">
-
-      <div class="page-containerr">
-        <p>Make sure you filled-out all the fields correctly before submitting</p>
-      </div>
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(4, 3);">Previous</div>
-        <button class="index-btn" type="submit" name="submit" style="background: blue;">Submit</button>
-      </div>
-    </div>
     <!-- Style for the Alert Messages -->    
     <div id="customAlert" class="custom-alert">
   <div class="custom-alert-content">
