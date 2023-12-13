@@ -49,28 +49,28 @@ $admissionData = $resultAdmission->fetch_assoc();
 <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
             <span class="text">Student</span>
         </a>
 
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#" id="profile-link">
+            <li class="">
+                <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-profile-link">
+                <a href="studentannouncement_sidebar.php" id="student-profile-link">
                     <i class='bx bxs-megaphone'></i>
                     <span class="text">Announcements</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-result-link">
+                <a href="studentresult_sidebar.php" id="student-result-link">
                     <i class='bx bxs-window-alt'></i>
                     <span class="text">Student Result</span>
                 </a>
@@ -351,7 +351,8 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 
                                         <div class="Picture">
-                                            <h2 class="pi">Personal Information</h2>
+                                            <h2 class="pi">Background Information of Applicant</h2>
+                                            <p>Personal Information</p>
                                             <div id="date-of-application"><?php echo $admissionData['application_date']; ?></div>
                                             <br>
                                             <div id="result-id-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture"></div>
@@ -369,7 +370,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                                             </div>
                                             <div class="column">
                                                 <p class="genderp">
-                                                    <strong>Gender at birth:</strong><br>
+                                                    <strong>Sex at birth:</strong><br>
                                                     <span id="result-Gender"><?php echo $admissionData['gender']; ?></span>
                                                 </p>
                                             </div>
