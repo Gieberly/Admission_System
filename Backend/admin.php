@@ -71,20 +71,7 @@ function getAllStudentFormData() {
  $studentFormData = getAllStudentFormData();
 ?>
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BSU OUR Admission Admin</title>
-    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets\css\admin.css" />
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    
-</head>
+<?php include 'header.php'?>
 
 <body>
     <!-- SIDEBAR -->
@@ -116,6 +103,12 @@ function getAllStudentFormData() {
                 </a>
             </li>
 
+            <li class="">
+                <a href="#" id="student-result-link">
+                    <i class='bx bxs-window-alt'></i>
+                    <span class="text">Data</span>
+                </a>
+            </li>
            
         </ul>
     </section>
@@ -236,6 +229,13 @@ function getAllStudentFormData() {
                             <li><i class='bx bx-chevron-right'></i></li>
                             <li><a class="active" href="#top">Home</a></li>
                         </ul>
+                    </div>
+                </div>
+                <!-- Import & Export link -->
+                <div class="col-md-12 head">
+                    <div class="float-right">
+                        <a href="javascript:void(0);" class="btn btn-success" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
+                        <a href="exportData.php" class="btn btn-primary"><i class="exp"></i> Export</a>
                     </div>
                 </div>
                 <!--master list-->
@@ -462,6 +462,5 @@ function getAllStudentFormData() {
 
     <!-- CONTENT -->
     <script src="assets\js\admin.js"></script>
-</body>
+<?php include 'footer.php'?>
 
-</html>
