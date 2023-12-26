@@ -77,7 +77,7 @@ include("config.php");
             <button class="cn" id="joinUsButton">JOIN US</button>
         </div>
         <div class="form" id="loginForm" style="display: block;">
-            <form action="loginpage.php" method="POST" >
+            <form method="POST" >
                 <h2>Login</h2>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
