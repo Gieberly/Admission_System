@@ -1,8 +1,10 @@
 <?php
 $host = "localhost";
 $user = "root";
-$password = "";
+$password = ""; // Add your MySQL user password here if applicable
 $database = "bsu_admission_db";
+
+// Create connection
 $conn = new mysqli($host, $user, $password, $database);
 // Check connection
 if ($conn->connect_error) {
