@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 require 'vendor/autoload.php';
 
-function sendemail_verify($name, $email, $token)
+function sendemail_verify($lname, $email, $token)
 {
     $mail = new PHPMailer(true);
    $mail->isSMTP();
@@ -21,7 +21,7 @@ function sendemail_verify($name, $email, $token)
    $mail->SMTPSecure = "tls";
    $mail->Port = 587;
 
-   $mail->setFrom('bsumain99@gmail.com', $name);
+   $mail->setFrom('bsumain99@gmail.com', $lname);
    $mail->addAddress($email);
 
    $mail->isHTML(true);
@@ -42,7 +42,9 @@ function sendemail_verify($name, $email, $token)
 }
 
 if (isset($_POST['register_btn'])) {
-    $name = $_POST['name'];
+    $lname = $_POST['lname'];
+    $fname = $_POST['fname'];
+    $mname = $_POST['mname'];
     $email = $_POST['email'];
     $password = $_POST['password'];
     $userType = $_POST['userType'];
@@ -55,15 +57,15 @@ if (isset($_POST['register_btn'])) {
 
 // Check if the email already exists
 if (mysqli_num_rows($check_email_query_run) > 0) {
-    $_SESSION['status'] = "EMAIL id ALREADY EXISTS";
+    $_SESSION['status'] = "EMAIL or ACCOUNT ALREADY EXISTS";
     header("Location: register.php");
 } else {
     // Insert User Data
-    $query = "INSERT INTO users (name, email, password, userType, token) VALUES ('$name', '$email', '$password', '$userType', '$token')";
+    $query = "INSERT INTO users (lname,fname,mname, email, password, userType, token) VALUES ('$lname','$fname','$mname', '$email', '$password', '$userType', '$token')";
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
-        sendemail_verify($name, $email, $token);
+        sendemail_verify($lname, $email, $token);
         $_SESSION['status'] = "Registration Successful! Activate your account now";
         header("Location: register.php");
     } else {

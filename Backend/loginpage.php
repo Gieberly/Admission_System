@@ -1,74 +1,3 @@
-<?php
-session_start();
-include("config.php");
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $stmt = $conn->prepare("SELECT id, password, userType, status FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($id, $hashedPassword, $userType, $status);
-        $stmt->fetch();
-
-        if (password_verify($password, $hashedPassword)) {
-            $_SESSION['user_id'] = $id;
-            $_SESSION['user_type'] = $userType;
-            // Store additional user information in session
-            $_SESSION['user_name'] = $name;
-            $_SESSION['user_email'] = $email;
-            $_SESSION['user_department'] = $department; // Assuming $department is available
-
-
-            if ($userType == 'Student') {
-                header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
-                exit();
-            } elseif ($userType == 'Faculty') {
-                if (strtolower($status) == 'approved') {
-                    header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
-                    exit();
-                } elseif (strtolower($status) == 'pending') {
-                    echo "Your registration is pending approval.";
-                } elseif (strtolower($status) == 'rejected') {
-                    echo "Your registration has been rejected. Please contact the administrator.";
-                } else {
-                    echo "Your registration is not yet approved. Please wait for admin approval.";
-                }
-            } elseif ($userType == 'Staff') {
-                if (strtolower($status) == 'approved') {
-                    header("Location: ../Backend/personnel.php");
-                    exit();
-                } elseif (strtolower($status) == 'pending') {
-                    echo "Your registration is pending approval.";
-                } elseif (strtolower($status) == 'rejected') {
-                    echo "Your registration has been rejected. Please contact the administrator.";
-                } else {
-                    echo "Your registration is not yet approved. Please wait for admin approval.";
-                }
-            } elseif ($userType == 'admin') {
-                header("Location: ../Backend/admin.php");
-                exit();
-            } else {
-                echo "User not found";
-                header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
-                exit();
-            }
-        } else {
-            echo "Incorrect password";
-        }
-    } else {
-        echo "User not found";
-        // Additional error handling or redirection can be added here
-    }
-
-    $stmt->close();
-}
-
-$conn->close();
-?>
 
 <!-- Your HTML login form here -->
 
@@ -89,7 +18,7 @@ $conn->close();
             <h2 class="scname">Benguet State University</h2>
             <div class="alert">
                 <?php
-                if (isset($_SESSION['status'])) {
+                if (isset($_SESSION['err_status'])) {
                     echo "<h4>" . $_SESSION['status'] . "</h4>";
                     unset($_SESSION['status']);
                 }
@@ -108,7 +37,7 @@ $conn->close();
             <button class="cn" id="joinUsButton">JOIN US</button>
         </div>
         <div class="form" id="loginForm" style="display: block;">
-            <form method="POST" >
+            <form method="POST" action="logincode.php">
                 <h2>Login</h2>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>

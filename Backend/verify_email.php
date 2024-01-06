@@ -11,11 +11,11 @@ if (isset($_GET['token']))
     if (mysqli_num_rows($verify_query_run) > 0) 
     {
         $row = mysqli_fetch_array($verify_query_run);
-        echo $row['verify_token'];
+        echo $row['token'];
 
-        if ($row['status'] == "0") {
+        if ($row['status'] == "pending") {
             $clicked_token = $row['token'];
-            $update_query = "UPDATE users SET status = '1' WHERE token = '$clicked_token' LIMIT 1";
+            $update_query = "UPDATE users SET status = 'verified' WHERE token = '$clicked_token' LIMIT 1";
             $update_query_run = mysqli_query($conn, $update_query);
             if ($update_query_run) {
                 $_SESSION['status'] = "Your Account has been verified successfully!";
