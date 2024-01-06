@@ -46,7 +46,7 @@ if (isset($_POST['register_btn'])) {
     $fname = $_POST['fname'];
     $mname = $_POST['mname'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
     $token = md5(rand());
 

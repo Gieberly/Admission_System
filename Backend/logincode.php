@@ -1,47 +1,72 @@
 <?php
 session_start();
-include('config.php');
+include("config.php");
 
-if(isset($_POST['login_btn']))
-{
-    if(!empty(trim($_POST['email'])) && !empty(trim($_POST['password'])))
-    {
-        $email = mysqli_real_escape_string($conn,$_POST['email']);
-        $password = mysqli_real_escape_string($conn,$_POST['password']);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $stmt = $conn->prepare("SELECT id, password, userType, status FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-        $login_query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' LIMIT 1";
-        $login_query_run = mysqli_query($conn, $login_query);
+    if ($stmt->num_rows > 0) {
+        $stmt->bind_result($id, $hashedPassword, $userType, $status);
+        $stmt->fetch();
 
-        if(mysqli_num_rows($login_query_run)>0)
-        {
-            $row = mysqli_fetch_array($login_query_run);
-            
-            if($row['status'] == 'verified')
-            {
-                header("Location:../Backend/admin.php");
-                exit(0);
+        if (password_verify($password, $hashedPassword)) {
+            $_SESSION['user_id'] = $id;
+            $_SESSION['user_type'] = $userType;
+            // Store additional user information in session
+            $_SESSION['last_name'] = $lname;
+            $_SESSION['user_email'] = $email;
+            $_SESSION['user_department'] = $department; // Assuming $department is available
+
+
+            if ($userType == 'Student') {
+                header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
+                exit();
+            } elseif ($userType == 'Faculty') {
+                if (strtolower($status) == 'approved') {
+                    header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
+                    exit();
+                } elseif (strtolower($status) == 'pending') {
+                    echo "Your registration is pending approval.";
+                } elseif (strtolower($status) == 'rejected') {
+                    echo "Your registration has been rejected. Please contact the administrator.";
+                } else {
+                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                }
+            } elseif ($userType == 'Staff') {
+                if (strtolower($status) == 'approved') {
+                    header("Location: ../Backend/personnel.php");
+                    exit();
+                } elseif (strtolower($status) == 'pending') {
+                    echo "Your registration is pending approval.";
+                } elseif (strtolower($status) == 'rejected') {
+                    echo "Your registration has been rejected. Please contact the administrator.";
+                } else {
+                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                }
+            } elseif ($userType == 'admin') {
+                header("Location: ../backend/admin.php");
+                exit();
+            } else {
+                echo "User not found";
+                header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
+                exit();
             }
-            else
-            {
-                $_SESSION['err_status'] = "Please verify your account";
-                header("Location:loginpage.php");
-                exit(0);
-            }
+        } else {
+            echo "Incorrect password";
         }
-        else
-        {
-            $_SESSION['err_status'] = "Invalid email or password";
-            header("Location:../Backend/loginpage.php");
-        }
+    } else {
+        echo "User not found";
+        // Additional error handling or redirection can be added here
     }
-    else
-    {
-        $_SESSION['err_status'] = "All files are mandatory";
-        header("Location:../Backend/loginpage.php");
-    }
-}
-else
-{
 
+    $stmt->close();
 }
+
+$conn->close();
+?>
 ?>

@@ -10,17 +10,17 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
 
 // Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT name, email, userType,password FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT lname, email, userType,password FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
-$stmt->bind_result($name, $email, $userType, $status);
+$stmt->bind_result($lname, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, name, email, status FROM users WHERE userType = 'staff'";
+    $query = "SELECT id, lname, email, status FROM users WHERE userType = 'staff'";
     $result = $conn->query($query);
     return $result;
 }
@@ -74,46 +74,7 @@ function getAllStudentFormData() {
 <?php include 'header.php'?>
 
 <body>
-    <!-- SIDEBAR -->
-    <section id="sidebar">
-        <a class="brand">
-            <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
-            <span class="text">Admin</span>
-        </a>
-
-        <ul class="side-menu top">
-            <li class="active">
-                <a href="#" id="dashboard-link">
-                    <i class='bx bxs-dashboard'></i>
-                    <span class="text">Dashboard</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="master-list-link">
-                    <i class='bx bxs-user-pin'></i>
-                    <span class="text">Applicants</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="student-result-link">
-                    <i class='bx bxs-window-alt'></i>
-                    <span class="text">Personnels</span>
-                </a>
-            </li>
-
-            <li class="">
-                <a href="#" id="student-result-link">
-                    <i class='bx bxs-window-alt'></i>
-                    <span class="text">Data</span>
-                </a>
-            </li>
-           
-        </ul>
-    </section>
-    <!-- SIDEBAR -->
-
+<?php include 'sidebar-admin.php'?>
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->
