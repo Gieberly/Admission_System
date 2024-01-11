@@ -49,8 +49,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
     $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
     
-
-
 // Check if a file was uploaded
 if ($id_picture['error'] === UPLOAD_ERR_OK) {
     // Ensure the file is an image (optional)
@@ -79,8 +77,6 @@ $id_picture_data = $target_path;
     exit();
 }
 
-
-
 // Prepare SQL statement for inserting data into admission_data table
 $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date, english_grade, math_grade, science_grade, gwa_grade, Rank, Result) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
@@ -106,9 +102,9 @@ $stmt->close();
     unset($_SESSION['registered_email']);
 }
 
-
 $conn->close();
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -123,8 +119,6 @@ $conn->close();
   <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
   <link rel="stylesheet" href="assets\css\admissionform.css">
   <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-
-
 </head>
 
 <body>
@@ -163,12 +157,9 @@ $conn->close();
       <span class="step" id="step-1">1</span>
       <span class="step-connector"></span>
       <span class="step" id="step-2">2</span>
-      <span class="step-connector"></span>
-      <span class="step" id="step-3">3</span>
-      <span class="step-connector"></span>
-      <span class="step" id="step-4">4</span>
     </div>
 
+    <!-- Form 1 -->
     <div class="tab" id="tab-1">
       <div class="page-container">
         <h2>GENERAL GUIDELINES</h2>
@@ -200,113 +191,7 @@ $conn->close();
         <ul>
           <li>Notice of the result of the application for admission shall be announced in your student dashboard</li>
           </ul>
-          <div class="message">
-     <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GWA.</span>
-  
-       
-        <h2>Course guide for Application</h2>
-        <div class="page-container">
-          <div class="form-container">
-            <div class="form-group">
-              <label class="small-label" for="categoryDropdown">Select Program</label>
-              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
-                <option value="" disabled selected>Select nature of degree</option>
-                <option value="Board">Board</option>
-                <option value="Non-board">Non-Board</option>
-              </select>
-            </div>
-          
-            <!-- Input grades for Board selection -->
-            <div id="boardFields" class="programFields">
-              <label class="small-label" for="englishGrade">English Grade</label>
-              <input type="number" class="input" name="englishGrade" id="englishGrade"
-                placeholder="Enter English grade">
-
-              <label class="small-label" for="mathGrade">Math Grade</label>
-              <input type="number" class="input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
-
-              <label class="small-label" for="scienceGrade">Science Grade</label>
-              <input type="number" class="input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
-
-              <button type="button" onclick="calculateGWA()">Submit</button>
-              <p id="gwaResult"></p>
-            </div>
-
-            <!-- Input field for Non-Board selection -->
-            <div id="nonBoardField" class="programFields">
-              <label class="small-label" for="gwaGrade">GWA Grade</label>
-              <input type="number" class="input" name="gwaGrade" id="gwaGrade" placeholder="Enter GWA grade">
-
-              <button type="button" onclick="submitNonBoardForm()">Submit</button>
-              <p id="nonBoardGwaResult"></p>
-            </div>
-
-
-            <div class="form-group">
-              <div id="boardProgramsDropdown" class="programFields">
-                <label for="board-programs">Board Programs</label>
-                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
-                  <option value="">Board Programs</option>
-                  <?php
-                    if ($result->num_rows > 0) {
-                        $currentNature = null;
-                        while ($row = $result->fetch_assoc()) {
-                            $nature = $row['Nature_of_Degree'];
-                            $description = $row['Description'];
-
-                            if ($nature != $currentNature) {
-                                if ($currentNature !== null) {
-                                    echo "</optgroup>";
-                                }
-                                echo "<optgroup label=\"$nature\">";
-                                $currentNature = $nature;
-                            }
-
-                            echo "<option value=\"$description\">$description</option>";
-                        }
-                        echo "</optgroup>";
-                    } else {
-                        echo "<option value=\"\">No programs available</option>";
-                    }
-                    ?>
-                </select>
-              </div>
-
-
-
-              <div id="nonBoardProgramsDropdown" class="programFields">
-                <label for="NonBoardProgram">Non-Board Programs</label>
-                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
-
-                  <option value="">Non-Board Programs</option>
-                  <?php
-            if ($resultNonBoard->num_rows > 0) {
-                $currentNature = null;
-                while ($row = $resultNonBoard->fetch_assoc()) {
-                    $nature = $row['Nature_of_Degree'];
-                    $description = $row['Description'];
-
-                    if ($nature != $currentNature) {
-                        if ($currentNature !== null) {
-                            echo "</optgroup>";
-                        }
-                        echo "<optgroup label=\"$nature\">";
-                        $currentNature = $nature;
-                    }
-
-                    echo "<option value=\"$description\">$description</option>";
-                }
-                echo "</optgroup>";
-            } else {
-                echo "<option value=\"\">No programs available</option>";
-            }
-            ?>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
-        </div>
+        
         <p class="coa"><strong><em>Classification of the applicant.</em></strong> An Applicant may only be classified
           in
           one category (except for second degree transferee):</p>
@@ -341,8 +226,7 @@ $conn->close();
               family
               name/surname of the husband</li>
             <li>Hard copy One (1) 2x2 recent formal studio "type" photo (not necessarily taken in a studio) with
-              nametag
-            </li>
+              nametag</li>
             <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
               present the original copy for comparison purposes.</li>
             <li>Certification of Enrollment from the last school attended (most recent).</li>
@@ -443,22 +327,162 @@ $conn->close();
         </ol>
         <p></p>
 
-        <p><label class="checkbox-container">
+        <div class="message">
+     <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GWA.</span>
+  
+        <h2>Course guide for Application</h2>
+        <div class="page-container">
+          <div class="form-container">
+            <div class="form-group">
+              <label class="small-label" for="categoryDropdown">Nature of Degree</label>
+              <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
+                <option value="" disabled selected>Select Nature of Degree</option>
+                <option value="Board">Board</option>
+                <option value="Non-board">Non-Board</option>
+              </select>
+            </div>
+
+             <!-- Input Academic Classification Selection (Board)-->
+            <div class="programFields" id="boardclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification_board" onchange="updateBoardSelection()">
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="grade_12b">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduateb">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduateb">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passerb">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereeb">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersb">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreeb">Second (2nd) Degree</option>
+            </select>
+          </div>
+
+            <!-- Input Academic Classification Selection (Non-Board) -->
+            <div class="programFields" id="nonclassificationFields">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="updateNonBoardSelection()">
+              <option value="" disabled selected>Select Academic Classification</option>
+              <option value="grade_12n">Currently enrolled as Grade 12 student (Graduating for the current year)</option>
+              <option value="shs_graduaten">Senior High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="hs_graduaten">High School Graduate (who did not enroll in any other school after graduation)</option>
+              <option value="als_pept_passern">ALS A&E SHS level passer/ PEPT Passer</option>
+              <option value="transfereen">Transferee (previously enrolled as a college student from another school)</option>
+              <option value="vocational_completersn">Vocational/Technical-Vocational Completers</option>
+              <option value="second_degreen">Second (2nd) Degree</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+              <!-- Board Programs -->
+              <div id="boardProgramsDropdown" class="programFields">
+                <label for="board-programs">Board Programs</label>
+                <select name="board-programs" id="board-programs" class="input" onchange="updateDegreeFields()">
+                  <option value="">Select Board Program</option>
+                  <?php
+                    if ($result->num_rows > 0) {
+                        $currentNature = null;
+                        while ($row = $result->fetch_assoc()) {
+                            $nature = $row['Nature_of_Degree'];
+                            $description = $row['Description'];
+
+                            if ($nature != $currentNature) {
+                                if ($currentNature !== null) {
+                                    echo "</optgroup>";
+                                }
+                                echo "<optgroup label=\"$nature\">";
+                                $currentNature = $nature;
+                            }
+
+                            echo "<option value=\"$description\">$description</option>";
+                        }
+                        echo "</optgroup>";
+                    } else {
+                        echo "<option value=\"\">No programs available</option>";
+                    }
+                    ?>
+                </select>
+              </div>
+              
+              <!-- Non-Board Programs -->
+              <div id="nonBoardProgramsDropdown" class="programFields">
+                <label for="NonBoardProgram">Non-Board Programs</label>
+                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateDegreeFields()">
+
+                  <option value="">Select Non-Board Program</option>
+                  <?php
+            if ($resultNonBoard->num_rows > 0) {
+                $currentNature = null;
+                while ($row = $resultNonBoard->fetch_assoc()) {
+                    $nature = $row['Nature_of_Degree'];
+                    $description = $row['Description'];
+
+                    if ($nature != $currentNature) {
+                        if ($currentNature !== null) {
+                            echo "</optgroup>";
+                        }
+                        echo "<optgroup label=\"$nature\">";
+                        $currentNature = $nature;
+                    }
+
+                    echo "<option value=\"$description\">$description</option>";
+                }
+                echo "</optgroup>";
+            } else {
+                echo "<option value=\"\">No programs available</option>";
+            }
+            ?>
+                </select>
+              </div>
+            </div>
+          
+            <!-- Input grades for Highschool-Board selection -->
+            <div id="hsboardFields" class="programFields">
+              <label class="small-label" for="englishGrade">English Grade</label>
+              <input type="number" class="input grades-input" name="englishGrade" id="englishGrade" placeholder="Enter English grade">
+
+              <label class="small-label" for="mathGrade">Math Grade</label>
+              <input type="number" class="input grades-input" name="mathGrade" id="mathGrade" placeholder="Enter Math grade">
+
+              <label class="small-label" for="scienceGrade">Science Grade</label>
+              <input type="number" class="input grades-input" name="scienceGrade" id="scienceGrade" placeholder="Enter Science grade">
+
+              <label class="small-label" for="gwaGrade">GWA</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="bgwaGrade" placeholder="Enter GWA">
+
+              <button type="button" onclick="hsBoardSelection()">Submit</button>
+            </div>
+
+            <!-- Input grades for Transferee/Vocational/SeconDegree/Non-board selection -->
+            <div id="tvnFields" class="programFields">
+              <label class="small-label" for="gwaGrade">GWA</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="tvgwaGrade" placeholder="Enter GWA">
+
+              <button type="button" onclick="tvnSelection()">Submit</button>
+            </div>
+
+            <!-- Input grades for ALS/PEPT selection -->
+            <div id="alsFields" class="programFields">
+              <label class="small-label" for="gwaGrade">Overall PRC</label>
+              <input type="number" class="input grades-input" name="gwaGrade" id="prcGrade" placeholder="Enter Overall PRC">
+
+              <button type="button" onclick="alsSelection()">Submit</button>
+            </div>
+
+          </div>
+        </div>
+        
+        <p class="note-color"><label class="checkbox-container">
         <input type="checkbox" id="read-guidelines" required>
         <span class="checkmark"></span> NOTE: CHECK AND PROCEED ONLY TO THE NEXT STEP IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE REQUIREMENTS WILL NOT BE ENTERTAINED!</p>
-      </label>
-      
+      </label> 
+
     </div>
 
-     
-
-
-
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(1, 2);">Next</div>
+      <div class="index-btn-wrapper" id="index-btn-wrapper">
+        <div class="index-btn" onclick="run(1,2);">Next</div>
       </div>
     </div>
-
+          </div>
 
     <!--Form 2-->
     <div class="tab" id="tab-2">
@@ -494,7 +518,6 @@ $conn->close();
         <p class="binformation"> Background Information of Applicant</p>
         <p class="personal_information"> Personal Information</p>
         <!--Full name-->
-
 
         <div class="form-container">
           <!-- Full name -->
@@ -535,7 +558,6 @@ $conn->close();
         </div>
         <p class="birthplace"></p>
         <div class="form-container">
-          <!-- Birthplace -->
           <!-- Birthplace -->
           <div class="form-group">
             <label class="small-label" for="birthplace">Birthplace</label>
@@ -597,7 +619,7 @@ $conn->close();
           <!-- Facebook Account Name -->
           <div class="form-group">
             <label class="small-label" for="facebook">Facebook Account Name</label>
-            <input type="text" name="facebook" class="input" id="facebook" placeholder="account should be your name"
+            <input type="text" name="facebook" class="input" id="facebook" placeholder="Use Real Name"
               required>
           </div>
           <!--Email Address -->
@@ -607,10 +629,9 @@ $conn->close();
               autocomplete="email:" required oninput="validateEmail()">
             <p id="email-error" style="color: red;"></p>
           </div>
-
         </div>
-        <p class="personal_information">Contact person(s) in case of emergency</p>
 
+        <p class="personal_information">Contact person(s) in case of emergency</p>
         <div class="form-container">
           <!-- Contact Person 1 -->
           <div class="form-group">
@@ -625,12 +646,11 @@ $conn->close();
             <p id="contact_person_1_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_1">Relationship with Contact Person</label>
+            <label class="relationship-label" for="relationship_1">Relationship</label>
             <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
-
+              <option value="guardian">Guardian</option>
             </select>
           </div>
         </div>
@@ -648,38 +668,15 @@ $conn->close();
             <p id="contact_person_2_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_2">Relationship with Contact Person</label>
+            <label class="relationship-label" for="relationship_2">Relationship</label>
             <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
-
+              <option value="guardian">Guardian</option>
             </select>
           </div>
         </div>
-
-        <p class="personal_information">Academic Classification</p>
-        <div class="form-container">
-          <!-- Academic Classification -->
-          <div class="form-group">
-            <label class="small-label" for="academic_classification">Academic Classification</label>
-            <select name="academic_classification" class="input" id="academic_classification" required>
-              <option value="" disabled selected>Select Academic Classification</option>
-              <option value="Currently enrolled as Grade 12 student">Currently enrolled as Grade 12 student (Graduating for the current year)
-              </option>
-              <option value="Senior High School Graduate">Senior High School Graduate (who did not enroll in any other school after
-                graduation)</option>
-              <option value="High School Graduate">High School Graduate (who did not enroll in any other school after
-                graduation)
-              </option>
-              <option value="ALS A&E SHS level passer/ PEPT Passer">ALS A&E SHS level passer/ PEPT Passer</option>
-              <option value="Transferee">Transferee (previously enrolled as a college student from another school)
-              </option>
-              <option value="Technical-Vocational Completers">Vocational/Technical-Vocational Completers</option>
-              <option value="Second Degree">Second (2nd) Degree</option>
-            </select>
-          </div>
-        </div>
+          
         <p class="personal_information">Academic Background </p>
         <div class="form-container">
           <!-- Academic Background -->
@@ -688,165 +685,92 @@ $conn->close();
               High School</label>
             <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required
               placeholder="Enter Name and Address">
-
           </div>
-        </div>
-        <div class="form-container">
+          <!-- ALS/PEPT -->
           <div class="form-group">
             <label class="small-label" for="als_pept_name_address" style="white-space: nowrap;">ALS/PEPT was
               taken:</label>
             <input type="text" name="als_pept_name_address" class="input" id="als_pept_name_address" required
               placeholder="Enter Name and Address">
-
           </div>
-        </div>
-        <div class="form-container">
+             <!-- College/University -->
           <div class="form-group">
-
             <label class="small-label" for="college_name_address">College/University:</label>
             <input type="text" name="college_name_address" class="input" id="college_name_address" required
               placeholder="Enter Name and Address">
           </div>
         </div>
-          <div class="form-container">
+        <br>
+        <div class="form-container">
+             <!-- Learner's Reference Number -->
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
             <input type="number" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*"
               maxlength="12" required>
           </div>
-
-
+          <!-- Nature of Degree -->
+          <div class="form-group">
+            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of Degree</label>
+            <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
+          </div>
+          <!-- Academic Classification -->
+          <div class="form-group">
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <input type="text" name="academic_classification" class="input" id="academic_classification" readonly required>
+          </div>
+          <!-- Degree -->
           <div class="form-group">
             <label class="small-label" for="degree_applied">Degree</label>
-            <!-- Display the selected program in this input field -->
             <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
           </div>
-
-
-          <div class="form-group">
-            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-            <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
-
+        </div>
+            <br><br>
+        <!-- Application Date -->
+        <div class="form-container">
+        <div class="applicant_number">
+            <label for="application_date"><strong>DATE OF APPLICATION:</strong></label>
+            <input type="date" name="application_date" class="input" id="application_date" required>
           </div>
         </div>
-        <p class="attestation-head">Attestation and Consent</p>
-
-        <p class="attestation-note">I affirm that I have read and understood all the instructions contained in this
-          application form that the information suplied are true. I affirm that I have read and understood all the
-          instructions contained in this application form that the information suplied are true. I affirm that I have
-          read and understood all the instructions contained in this application form that the information suplied are
-          true.I affirm that I have read and understood all the instructions contained in this application form that
-          the
-          information suplied are true.</p>
-
-
-        <br><br>
-
+        <!-- Application Number -->
+        <div class="form-container">
+          <div class="applicant_number">
+            <label for="applicant_number" class="applicant_number"><strong>APPLICANT NUMBER:</strong></label>
+            <input type="text" name="applicant_number" id="applicant_number" readonly>
+          </div>
+          </div>
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
-    
-
       </div>
-      <br><br>
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(2, 1);">Previous</div>
-        <div class="index-btn" onclick="run(2, 3);">Next</div>
+      <div class="index-btn-wrapper2">
+        <div class="index-btn2" onclick="run(2, 1);">Previous</div>
+        <button class="index-btn2" type="submit" name="submit" style="background: blue;">Submit</button>
       </div>
     </div>
+
     <!--Form 3-->
     <div class="tab" id="tab-3">
       <br>
       <h2>ACKNOWLEDGEMENT SLIP OF APPLICATION FOR ADMISSION</h2>
-
-      <table class="table-3-class">
-        <tr>
-          <td>Document
-            Code:
-          </td>
-          <td>QF-ADM-
-            08
-          </td>
-          <td>Rev.
-            No.:
-          </td>
-          <td>01&nbsp</td>
-        </tr>
-        <tr>
-          <td>Effectivity
-            Date:
-
-          </td>
-          <td>January 5,
-            2023
-          </td>
-          <td colspan="2">&nbsp</td>
-        </tr>
-
-      </table>
-      <h3 class="privacy-heading">PRIVACY NOTICE</h3>
-      <p class="privacy-notice">
-        Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar,
-        concerned Personnel of BSU La Trinidad, BSU Buguias Campus, and Bokod Campus are committed to keep with utmost
-        confidentiality all sensitive personal information collected from applicants. Personal information is
-        collected,
-        accessed, used, and disclosed on a "need to know basis" and only as reasonably required. Confidential
-        information either within or outside the University will not be communicated except to persons authorized to
-        receive such information. Authorized hardware, software, or other authorized equipment shall be used only in
-        accessing, processing, and transmitting such information. Read more on BSU Data Privacy Notice: <a
-          href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students">http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students</a>.
-      </p>
-
       <p class="to-be-filled">To be filled-out by Applicant</p>
-
       <div class="form-container">
         <div class="form-group">
           <label for="applicant_name">Name of Applicant</label>
           <input type="text" placeholder="Enter Full Name" name="applicant_name" id="applicant_name">
         </div>
-
-
         <div class="form-group">
           <label for="slip_degree">Degree applied</label>
           <input type="text" name="slip_degree" id="slip_degree" class="input" readonly required>
         </div>
-
-        <div class="form-group">
-          <label for="application_date">Date of Application</label>
-          <input type="date" name="application_date" class="input" id="application_date" required>
-        </div>
-      </div>
-      <p class="attestation-head" style="text-align: center;">Attestation and Consent</p>
-
-      <p class="attestation-note">I affirm that I have read and understood all the instructions contained in this
-        application form that the information suplied are true. I affirm that I have read and understood all the
-        instructions contained in this application form that the information suplied are true. I affirm that I have
-        read
-        and understood all the instructions contained in this application form that the information suplied are true.I
-        affirm that I have read and understood all the instructions contained in this application form that the
-        information suplied are true.</p>
-
-      <div class="applicant_number">
-        <label for="applicant_number" class="applicant_number">Applicant Number:</label>
-        <input type="text" name="applicant_number" id="applicant_number" readonly>
-      </div>
-      <p class="signature-label">Applicant's E-Signature:</p>
-     
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(3, 2);">Previous</div>
-        <div class="index-btn" onclick="run(3, 4);">Next</div>
       </div>
     </div>
-    <div class="tab" id="tab-4">
 
-      <div class="page-containerr">
-        <p>Make sure you filled-out all the fields correctly before submitting</p>
-      </div>
-      <div class="index-btn-wrapper">
-        <div class="index-btn" onclick="run(4, 3);">Previous</div>
-        <button class="index-btn" type="submit" name="submit" style="background: blue;">Submit</button>
-
-
-      </div>
-    </div>
+    <!-- Style for the Alert Messages -->    
+    <div id="customAlert" class="custom-alert">
+  <div class="custom-alert-content">
+    <span onclick="closeCustomAlert()"></span>
+    <p id="customAlertMessage"></p>
+  </div>
+</div>
 
 
   </form>
@@ -858,7 +782,7 @@ $conn->close();
   <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
 
 
-  <script src="assets\js\admissionform.js"></script>
+  <script defer src="assets\js\admissionform.js"></script>
 
 
 </body>
