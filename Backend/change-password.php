@@ -33,9 +33,24 @@ include ('config.php');
     <section class="content">
         <div class="form" id="loginForm" style="display: block;">
             <form action="reset-password-code.php" method="POST" >
-                <h2>Reset Password</h2>
-                <input type="email" name="email" placeholder="Enter Email Address" required>
-                <button class="btnn" type="submit" name ="reset_password">Send Password Reset Link</button>
+                <input type="hidden" value="
+                <?php 
+                if(isset($_GET['token']))
+                {
+                    echo $_GET['token'];
+                }
+                ?>">
+            <h2>Change Password</h2>
+                <input type="email" name="email" placeholder="Enter Email Address" required value="
+                <?php 
+                if(isset($_GET['email']))
+                {
+                    echo $_GET['email'];
+                }
+                ?>">
+                <input type="password" id="registerEmail" name="new_password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+                <button class="btnn" type="submit" name ="change_password">Update Password</button>
             </form>
         </div> 
         </div>

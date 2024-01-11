@@ -71,10 +71,10 @@ function getAllStudentFormData() {
  $studentFormData = getAllStudentFormData();
 ?>
 
-<?php include 'header.php'?>
+<?php include ('header.php')?>
 
 <body>
-<?php include 'sidebar-admin.php'?>
+<?php include ('sidebar-admin.php')?>
     <!-- CONTENT -->
     <section id="content">
         <!-- NAVBAR -->

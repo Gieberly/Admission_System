@@ -1,4 +1,3 @@
-
 <!-- Your HTML login form here -->
 
 <!-- Rest of your HTML code -->
@@ -30,6 +29,16 @@
         body {
             background-image: url('assets/images/banner.jpg');
         }
+        .divider {
+            
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            height: 1px;
+            background-color: #ccc; /* Adjust the color as needed */
+            top: 50%; /* Adjust the vertical position of the line */
+            transform: translateY(-50%);
+        }
     </style>
     <section class="content">
         <div class="side">
@@ -39,18 +48,28 @@
         <div class="form" id="loginForm" style="display: block;">
             <form method="POST" action="logincode.php">
                 <h2>Login</h2>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button class="btnn" type="submit" name= "login_btn">Login</button>
-                <p class="link">
-                    <a href="reset-password.php">Forgot Password?</a>
-                    or Don't have an account?<a href="register.php" id="signupLink">Sign up </a> here
-                </p>
+                <div class="input-group">
+                    <input type="email" name="email" placeholder="Email" required>
+                </div>
                 
-            </form>
+                <div class="input-group">
+                    <input type="password" name="password" placeholder="Password" required>
+                </div>
+                <br>
+                <div class="button-group">
+                    <button class="btnn" type="submit" name= "login_btn">Login</button>
+                    <p style= "text-align:left"><a href="reset-password.php" >Forgot Password? </a> 
+                    <br> Did not receive your Verification Email? <a href="register.php">Resend Link</a>
+                    </p>
+                    <div class="divider"></div> 
+                    <p style= "text-align:center"> OR</p>                    
+                    <button class="btnn" type="submit" name= "signup_btn"><a href="register.php">Sign Up</a></button>
+                </div> 
+                
+                <br>
+                
+                       
         </div> 
-        </div>
-        </div>
     </section>
     <footer>
     </footer>
