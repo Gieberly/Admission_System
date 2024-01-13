@@ -90,7 +90,7 @@ $stmt->bind_param("sssssissssiisssississssssssssddddss",
     $_SESSION['admission_form_filled'] = true;
 
     // Redirect to student dashboard
-    header("Location: ../Backend/student.php");
+    header("Location: ../Backend/studentcover.php");
     exit();
 } else {
     echo "Error: " . $stmt->error;

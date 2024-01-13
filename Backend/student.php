@@ -1,7 +1,7 @@
 <?php
-include("config.php");
 
 session_start();
+include("config.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -49,28 +49,28 @@ $admissionData = $resultAdmission->fetch_assoc();
 <body>
     <!-- SIDEBAR -->
     <section id="sidebar">
-        <a href="#" class="brand">
+        <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
             <span class="text">Student</span>
         </a>
 
         <ul class="side-menu top">
-            <li class="active">
-                <a href="#" id="profile-link">
+            <li class="">
+                <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-profile-link">
+                <a href="studentannouncement_sidebar.php" id="student-profile-link">
                     <i class='bx bxs-megaphone'></i>
                     <span class="text">Announcements</span>
                 </a>
             </li>
 
             <li class="">
-                <a href="#" id="student-result-link">
+                <a href="studentresult_sidebar.php" id="student-result-link">
                     <i class='bx bxs-window-alt'></i>
                     <span class="text">Student Result</span>
                 </a>
@@ -88,7 +88,6 @@ $admissionData = $resultAdmission->fetch_assoc();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            <a>Categories</a>
             <form id="search-form">
                 <div class="form-input" style="display: none;">
                     <input type="text" id="searchInput" placeholder="Search...">
@@ -117,13 +116,13 @@ $admissionData = $resultAdmission->fetch_assoc();
                         <ul class="breadcrumb">
                             <li><a href="#">Announcement</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="student.html">Home</a></li>
+                            <li><a class="active" href="#">Home</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <ul class="box-info">
-                    <li id="available-box" class="box-icon">
+                    <li id="available-box">
                         <i class='bx bx-clipboard'></i>
                         <span class="text">
                             <h3>1020</h3>
@@ -335,9 +334,9 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-download" onclick="generatePDF()">
+                    <a href="#" class="btn-calendar" onclick="generatePDF()">
             <i class='bx bxs-cloud-download'></i>
-            <span class="text">Download PDF</span>
+            <span class="text">Set Apointment</span>
         </a>
     
                 </div>
@@ -352,7 +351,8 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 
                                         <div class="Picture">
-                                            <h2 class="pi">Personal Information</h2>
+                                            <h2 class="pi">Background Information of Applicant</h2>
+                                            <p>Personal Information</p>
                                             <div id="date-of-application"><?php echo $admissionData['application_date']; ?></div>
                                             <br>
                                             <div id="result-id-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture"></div>
@@ -370,7 +370,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                                             </div>
                                             <div class="column">
                                                 <p class="genderp">
-                                                    <strong>Gender at birth:</strong><br>
+                                                    <strong>Sex at birth:</strong><br>
                                                     <span id="result-Gender"><?php echo $admissionData['gender']; ?></span>
                                                 </p>
                                             </div>
@@ -623,7 +623,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 
 
                 </div>
-
+            </div>
 
 
         </main>
@@ -666,7 +666,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 <div class="dropdown" id="help-dropdown">
                    <!-- Content for Help and Support dropdown -->
                   <!-- Trigger for the FAQ pop-up -->
-<a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ </a>
+<a href="student_faq.php" onclick="openPopup('faq-popup')">FAQ </a>
 <a href="#" onclick="toggleDevonContent()">Connect With us</a>
 <div id="devon-content"class style="display: none;">
 <div class="social-icons-container">
@@ -682,8 +682,8 @@ $admissionData = $resultAdmission->fetch_assoc();
     <!-- Instagram -->
     <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
 
-    <!-- YouTube -->
-    <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+    <!-- BSU website -->
+    <a href="http://www.bsu.edu.ph/" target="_blank" title="BSU_website"><i class='bx bx-world'></i></a>
 </div>
 
             </div>

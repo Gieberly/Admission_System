@@ -650,6 +650,26 @@ nav {
 	background: var(--green)
 }
 
+#content main .head-title .btn-calendar {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--green);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+	transition: background 0.3s ease;
+	/* Add transition for a smooth color change */
+}
+
+#content main .head-title .btn-calendar:hover {
+	background: var(--green)
+}
+
+
 
 #clock {
 	font-size: 24px;

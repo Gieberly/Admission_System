@@ -18,19 +18,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
             // Store additional user information in session
-            $_SESSION['user_name'] = $name;
+       
             $_SESSION['user_email'] = $email;
-            $_SESSION['user_department'] = $department; // Assuming $department is available
+         
 
 
-            if ($userType == 'Student') {
-                header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
-                exit();
+  // Check if the user is a student and has filled out the admission form
+  if ($userType == 'Student') {
+    $checkAdmissionQuery = "SELECT id FROM admission_data WHERE email = ?";
+    $stmtCheckAdmission = $conn->prepare($checkAdmissionQuery);
+    $stmtCheckAdmission->bind_param("s", $email);
+    $stmtCheckAdmission->execute();
+    $stmtCheckAdmission->store_result();
+
+    if ($stmtCheckAdmission->num_rows > 0) {
+        // User has already filled out the admission form, redirect to student dashboard
+        header("Location: ../Backend/studentcontent_sidebar.php");
+        exit();
+    } else {
+        // User needs to fill out the admission form, redirect to admission form
+        header("Location: ../Backend/studentform.php");
+        exit();
+    }
+
             } elseif ($userType == 'Faculty') {
                 if (strtolower($status) == 'approved') {
                     header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
                     exit();
-                } elseif (strtolower($status) == 'pending') {
+                } elseif (strtolower($status) == 'Pending') {
                     echo "Your registration is pending approval.";
                 } elseif (strtolower($status) == 'rejected') {
                     echo "Your registration has been rejected. Please contact the administrator.";
@@ -41,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 if (strtolower($status) == 'approved') {
                     header("Location: ../Backend/personnel.php");
                     exit();
-                } elseif (strtolower($status) == 'pending') {
+                } elseif (strtolower($status) == 'Pending') {
                     echo "Your registration is pending approval.";
                 } elseif (strtolower($status) == 'rejected') {
                     echo "Your registration has been rejected. Please contact the administrator.";

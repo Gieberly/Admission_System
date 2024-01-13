@@ -95,7 +95,7 @@ $studentFormData = getAllStudentFormData();
         </a>
 
         <ul class="side-menu top">
-            <li class="active">
+            <li class="">
                 <a href="adminDashboard.php" id="dashboard-link">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>

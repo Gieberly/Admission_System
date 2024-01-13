@@ -13,12 +13,6 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Check if the user already has data in the database
-if ($result && $result->num_rows > 0) {
-  // Redirect the user to student.php
-  header("Location: ../Backend/student.php");
-  exit();
-}
 
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {

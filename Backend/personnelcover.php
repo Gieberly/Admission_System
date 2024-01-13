@@ -65,6 +65,12 @@ function getCourses($conn)
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+            <li class="">
+                <a href="StaffSet_AppointmentDate.php" id="master-list-link">
+                <i class='bx bxs-calendar'></i>
+                    <span class="text">Appointments</span>
+                </a>
+            </li>
             <li >
                 <a href="Applicants.php" >
                 <i class='bx bxs-user-detail' ></i>
@@ -73,7 +79,7 @@ function getCourses($conn)
                 </a>
 
             </li>
-
+          
             <li class="">
                 <a href="masterlist.php" id="master-list-link">
                     <i class='bx bxs-user-pin'></i>
@@ -91,7 +97,7 @@ function getCourses($conn)
             <li class="">
                 <a href="faq.php" id="announcements-link">
                     <i class='bx bxs-book-content'></i>
-                    <span class="text">Announcements</span>
+                    <span class="text">Events</span>
                 </a>
             </li>
 
