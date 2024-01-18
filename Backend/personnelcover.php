@@ -4,7 +4,7 @@ include("config.php");
 session_start();
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
@@ -15,6 +15,21 @@ $stmt->execute();
 $stmt->bind_result($name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
+
+function getCourses($conn)
+{
+    $stmt = $conn->prepare("SELECT ProgramID, Courses, Description, Nature_of_Degree FROM programs ORDER BY Nature_of_Degree, Courses");
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $courses = [];
+
+    while ($row = $result->fetch_assoc()) {
+        $courses[] = $row;
+    }
+
+    $stmt->close();
+    return $courses;
+}
 
 
 ?>
@@ -32,7 +47,7 @@ $stmt->close();
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -50,7 +65,21 @@ $stmt->close();
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+            <li class="">
+                <a href="StaffSet_AppointmentDate.php" id="master-list-link">
+                <i class='bx bxs-calendar'></i>
+                    <span class="text">Appointments</span>
+                </a>
+            </li>
+            <li >
+                <a href="Applicants.php" >
+                <i class='bx bxs-user-detail' ></i>
+                    <span class="text">Applicants</span>
+                  
+                </a>
 
+            </li>
+          
             <li class="">
                 <a href="masterlist.php" id="master-list-link">
                     <i class='bx bxs-user-pin'></i>
@@ -61,16 +90,21 @@ $stmt->close();
             <li class="">
                 <a href="studentresult.php" id="student-result-link">
                     <i class='bx bxs-window-alt'></i>
-                    <span class="text">Student Result</span>
+                    <span class="text">Forms</span>
                 </a>
             </li>
 
             <li class="">
                 <a href="faq.php" id="announcements-link">
                     <i class='bx bxs-book-content'></i>
-                    <span class="text">Announcements</span>
+                    <span class="text">Events</span>
                 </a>
             </li>
+
+
+
+
+
         </ul>
     </section>
     <!-- SIDEBAR -->
@@ -80,7 +114,36 @@ $stmt->close();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-            <a>Categories</a>
+
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'masterlist.php') {
+            ?>
+                <form action="masterlist.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'Applicants.php') {
+            ?>
+                <form action="Applicants.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+
             <form id="search-form">
                 <div class="form-input" style="display: none;">
                     <input type="text" id="searchInput" placeholder="Search...">
@@ -88,7 +151,7 @@ $stmt->close();
                 </div>
             </form>
             <div id="clock">8:10:45</div>
-           
+
             <a href="#" class="profile" id="profile-button">
                 <img src="assets/images/human icon.png" alt="User Profile">
             </a>
@@ -100,7 +163,6 @@ $stmt->close();
     </section>
 
 
- 
     <!-- Add the profile popup container here -->
     <div class="profile-popup" id="profile-popup">
         <!-- Popup content -->
@@ -109,7 +171,7 @@ $stmt->close();
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
                 <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
             </div>
-           
+
 
             <hr>
             <div class="profile-menu">
@@ -123,43 +185,43 @@ $stmt->close();
 
 
                 </div>
-                <a href="EditInfo.php" id="settings" class="profile-item" ><i class='bx bx-cog'></i> Settings</a>              
-    
+                <a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
+
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-     <div class="dropdown" id="help-dropdown">
-                   <!-- Content for Help and Support dropdown -->
-                  <!-- Trigger for the FAQ pop-up -->
-      <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
-        <a href="#" onclick="toggleDevonContent()">Connect With us</a>
-        <div id="devon-content"class style="display: none;">
-       <div class="social-icons-container">
-     <!-- Facebook -->
-     <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
+                <div class="dropdown" id="help-dropdown">
+                    <!-- Content for Help and Support dropdown -->
+                    <!-- Trigger for the FAQ pop-up -->
+                    <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
+                    <a href="#" onclick="toggleDevonContent()">Connect With us</a>
+                    <div id="devon-content" class style="display: none;">
+                        <div class="social-icons-container">
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
 
-    <!-- Email -->
-     <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
+                            <!-- Email -->
+                            <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
 
-    <!-- Twitter -->
-      <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
+                            <!-- Twitter -->
+                            <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
 
-    <!-- Instagram -->
-      <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
 
-    <!-- YouTube -->
-      <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
-   </div>
+                            <!-- YouTube -->
+                            <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
+                        </div>
+
+                    </div>
+                </div>
+                <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
 
             </div>
-           </div>
-            <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
 
         </div>
-
-   </div>
-</div>
+    </div>
     <!-- CONTENT -->
-   <script src="assets/js/personnels.js"></script>
+    <script src="assets/js/personnels.js"></script>
 </body>
- <!-- #region -->
-</html>
+<!-- #region -->
 
+</html>

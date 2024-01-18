@@ -4,7 +4,7 @@ include("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
@@ -30,8 +30,37 @@ function getReapplicationSteps($conn) {
     }
 
     return $steps;
+    
+}
+function getApplicationDates($conn) {
+    $dates = array();
+
+    $sql = "SELECT * FROM ApplicationDate";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $dates[] = $row;
+        }
+    }
+
+    return $dates;
 }
 
+function getReleasingOfResults($conn) {
+    $results = array();
+
+    $sql = "SELECT ReleaseDate FROM ReleasingOfResults";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+    }
+
+    return $results;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -63,23 +92,33 @@ function getReapplicationSteps($conn) {
                         <ul class="breadcrumb">
                             <li><a href="#">Announcement</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Home</a></li>
+                            <li><p>FAQ</p></li>
                         </ul>
                     </div>
                 </div>
-                <div class="table-data">
-                        <div class="order">
-                            <div class="head">
+
                 <!--form-->
                 <div class="tabs">
                     <button class="tab-button" data-tab="tab3"  onclick="window.location.href='faq.php'">FAQ</button>
                     <button class="tab-button" data-tab="tab5" onclick="window.location.href='PersonnelEditSlot.php'">Slot</button>
-                    <button class="tab-button active" data-tab="tab4"  onclick="window.location.href='Reapplication.php'">Readmission Date</button>
-                    <button class="tab-button" data-tab="tab6"  onclick="window.location.href='ReleasingDate.php'">Releasing of Result</button>
-                    <button class="button save" id="addcoursepop" >Add Steps</button>
+                    <button class="tab-button active" data-tab="tab4"  onclick="window.location.href='Reapplication.php'">Admission</button>
+
+                  
 
                 </div>
+                     
+<div class="table-data">
+                        <div class="order">
+                        
+                            <div class="head">
+						<h3>Steps for Reapplication</h3>
+                        <button class="button save" id="addcoursepop" >Add Steps</button>
+						
+					</div>
+                
+                   
 
+       
                 <div class="tab-content" id="tab4" style="display: block;">
               
                 <div>
@@ -118,6 +157,7 @@ function getReapplicationSteps($conn) {
     ?>
         </tbody>
     </table>
+    
     <div id="edit-reapp-step-section" style="display: none;">
     <h2>Edit Re-application Step</h2>
     <form id="edit-reapp-step-form" action="editReappSteps.php" method="post">
@@ -137,7 +177,7 @@ function getReapplicationSteps($conn) {
     </form>
 </div>
 
-    </div></div></div>
+    </div></div>
     <script>
    function editReappStep(stepID, stepText) {
         // Set values in the edit form
@@ -174,13 +214,109 @@ function getReapplicationSteps($conn) {
     });
     document.getElementById('announcements-link').parentElement.classList.add('active');
 
+// ... your existing JavaScript code ...
+
+function editApplicationDate(dateID, startDate, endDate) {
+    // Set values in the edit form
+    document.getElementById('edit-date-ID').value = dateID;
+    document.getElementById('edit-start-date').value = startDate;
+    document.getElementById('edit-end-date').value = endDate;
+
+    // Show the edit form and hide other sections
+    document.getElementById('edit-date-section').style.display = 'block';
+  
+
+}
+
+function saveEditedApplicationDate() {
+    // Submit the form for saving the edited application date
+    document.getElementById('edit-date-form').submit();
+}
+
+function editReleasingDate(releaseDate) {
+    // Set values in the edit form
+    document.getElementById('edit-release-date').value = releaseDate;
+
+    // Show the edit form and hide other sections
+    document.getElementById('edit-releasing-date-section').style.display = 'block';
+}
+
+function saveEditedReleasingDate() {
+    // Submit the form for saving the edited releasing date
+    document.getElementById('edit-releasing-date-form').submit();
+}
+
+
 </script>
 
     </div>
+    <div class="todo">
+					<div class="head">
+						<h3>Set Admission</h3>
+						<i class='bx bx-plus' ></i>
+						<i class='bx bx-filter' ></i>
+					</div>
+  <?php
+                $applicationDates = getApplicationDates($conn);
+
+                foreach ($applicationDates as $index => $date) {
+                    echo "<tr>";
+                    echo "<td>" . date('F j, Y', strtotime($date['StartDate'])) . "</td>";
+                    echo "<td> to </td>";
+                    echo "<td>" . date('F j, Y', strtotime($date['EndDate'])) . "</td>";
+                     echo "<td>";
+                     
+                    echo "<button class='button edit' onclick='editApplicationDate(" . $date['ApplicationDateID'] . ", \"" . $date['StartDate'] . "\", \"" . $date['EndDate'] . "\")'>Edit</button>";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            ?>    
+            
+<div id="edit-date-section" style="display: none;">
+    <h2>Edit Application Date</h2>
+    <form id="edit-date-form" action="editApplicationDate.php" method="post">
+        <input type="hidden" id="edit-date-ID" name="dateID">
+        <label for="edit-start-date">Start Date:</label>
+        <input type="date" id="edit-start-date" name="startDate" required>
+        <label for="edit-end-date">End Date:</label>
+        <input type="date" id="edit-end-date" name="endDate" required>
+        <button type="button" class="button save" onclick="saveEditedApplicationDate()">Save Date</button>
+    </form>
+</div>
+
+<?php
+            $releasingDates = getReleasingOfResults($conn);
+
+            foreach ($releasingDates as $index => $date) {
+                echo "<tr>";
+                echo "<td>" . ($index + 1) . "</td>";
+                echo "<td>" . $date['ReleaseDate'] . "</td>";
+                echo "<td>";
+                echo "<button class='button edit' onclick='editReleasingDate(\"" . $date['ReleaseDate'] . "\")'>Edit</button>";
+                echo "</td>";
+                echo "</tr>";
+            }
+            ?>
+            <!-- Edit Releasing of Results Date Form -->
+<div id="edit-releasing-date-section" style="display: none;">
+    <h2>Edit Releasing of Results Date</h2>
+    <form id="edit-releasing-date-form" action="editReleasingDate.php" method="post">
+        <label for="edit-release-date">Release Date:</label>
+        <input type="date" id="edit-release-date" name="releaseDate" required>
+        <button type="button" class="button save" onclick="saveEditedReleasingDate()">Save Release Date</button>
+    </form>
+</div>
+
+</div>
+
+        </div>
+				</div>
 
 
+</div>
 
-
+</main>
+</section>
   
 
 </body>

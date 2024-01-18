@@ -4,7 +4,7 @@ include("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
@@ -57,35 +57,39 @@ function getCourses($conn) {
 
         <main>
 
-    <div id="announcements-content">
+        <div id="announcements-content">
                 <div class="head-title">
                     <div class="left">
                         <h1>Annoucement</h1>
                         <ul class="breadcrumb">
                             <li><a href="#">Announcement</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Slot</a></li>
+                            <li><p>FAQ</p></li>
                         </ul>
                     </div>
                 </div>
-                <div class="table-data">
-                        <div class="order">
-                            <div class="head">
                 <!--form-->
                 <div class="tabs">
                     <button class="tab-button " data-tab="tab3"  onclick="window.location.href='faq.php'">FAQ</button>
                     <button class="tab-button active" data-tab="tab4" onclick="window.location.href='PersonnelEditSlot.php'">Slot</button>
                     <button class="tab-button" data-tab="tab5"  onclick="window.location.href='Reapplication.php'">Readmission Date</button>
-                    <button class="tab-button" data-tab="tab6"  onclick="window.location.href='ReleasingDate.php'">Releasing of Result</button>
-                    <button class="button save" id="addcoursepop" >Add Course</button>
 
                 </div>
-
-                <div class="tab-content" id="tab4" style="display: block;">
+                <div class="table-data">
+                        <div class="order">
+                        
+                            <div class="head">
+						<h3>Steps for Reapplication</h3>
+                        <button class="button save" id="addcoursepop" >Add Steps</button>
+						
+					</div>
+                
+                    <div class="tab-content" id="tab4" style="display: block;">
               
-                <div>
-                <table id=courses-table>
-                <colgroup>
+              <div>
+              <table id=courses-table>
+              <colgroup>
+                           
                                         <col style="width: 5%;">
                                         <col style="width: 40%;">
                                         <col style="width: 15%;">

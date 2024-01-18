@@ -4,7 +4,7 @@ include("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
@@ -71,15 +71,21 @@ function getFAQs($conn) {
                 
 
            
-                <div class="table-data">
-                        <div class="order">
+            
+                  
                         <div class="tabs">
                     <button class="tab-button active" data-tab="tab3"  onclick="window.location.href='faq.php'">FAQ</button>
                     <button class="tab-button" data-tab="tab4" onclick="window.location.href='PersonnelEditSlot.php'">Slot</button>
                     <button class="tab-button" data-tab="tab5"  onclick="window.location.href='Reapplication.php'">Readmission Date</button>
-                    <button class="tab-button" data-tab="tab6"  onclick="window.location.href='ReleasingDate.php'">Releasing of Result</button>
-                    <button class="button save" id="addcoursepop" >Add Course</button>
-
+            
+                </div>
+                <div class="table-data">
+                <div class="order">
+                        
+                        <div class="head">
+                    <h3>Frequently Asked</h3>
+                    <button class="button save" id="addcoursepop" >Add Question</button>
+                    
                 </div>
 
 <div class="tab-content" id="tab3" style="display: block;">             

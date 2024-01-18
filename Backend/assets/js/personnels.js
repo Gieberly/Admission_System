@@ -2,6 +2,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
     const currentURL = window.location.href;
 
+    // Retrieve the sidebar state from local storage
+    const sidebarState = localStorage.getItem('sidebarState');
+    const sidebar = document.getElementById('sidebar');
+
+    // Set the initial state of the sidebar based on local storage
+    if (sidebarState === 'hidden') {
+        sidebar.classList.add('hide');
+    }
+
     allSideMenu.forEach(item => {
         const li = item.parentElement;
 
@@ -27,19 +36,28 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
+    // Check if the current URL includes any of the dropdown links and set "Colleges" as active
+    const dropdownLinks = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
+    dropdownLinks.forEach(link => {
+        if (currentURL.includes(link.getAttribute('href'))) {
+            document.querySelector('').parentElement.classList.add('active');
+        }
+    });
+
 });
-
-
- 
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 
 menuBar.addEventListener('click', function () {
-	sidebar.classList.toggle('hide');
-})
+    // Toggle the 'hide' class on the sidebar
+    sidebar.classList.toggle('hide');
 
+    // Store the state of the sidebar in local storage
+    const sidebarState = sidebar.classList.contains('hide') ? 'hidden' : 'visible';
+    localStorage.setItem('sidebarState', sidebarState);
+});
 
 
 
@@ -94,28 +112,24 @@ switchMode.addEventListener('change', function () {
 
 
 //side bar
+
 document.addEventListener('DOMContentLoaded', function () {
-    const dropdownItems = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
-    dropdownItems.forEach(function (item) {
-        const fullText = item.getAttribute('data-fulltext');
-        const abbreviation = item.querySelector('.text');
+    dropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (e) {
+            e.preventDefault();
+            const dropdownContent = toggle.nextElementSibling;
+            const chevronIcon = toggle.querySelector('.bx-chevron-down');
 
-        // Save the original abbreviation
-        const originalAbbreviation = abbreviation.textContent;
-
-        item.addEventListener('mouseover', function () {
-            // Apply a smaller font size and show the full text on two lines when hovering
-            abbreviation.style.fontSize = '12px';
-            abbreviation.style.whiteSpace = 'normal'; // Allow multiple lines
-            abbreviation.textContent = fullText;
-        });
-
-        item.addEventListener('mouseout', function () {
-            // Restore the original state when not hovering
-            abbreviation.style.fontSize = ''; // Empty string resets to the default size
-            abbreviation.style.whiteSpace = 'nowrap'; // Display on one line
-            abbreviation.textContent = originalAbbreviation;
+            // Toggle the visibility of the dropdown content
+            if (dropdownContent.style.display === 'block') {
+                dropdownContent.style.display = 'none';
+                chevronIcon.style.transform = 'rotate(0deg)';
+            } else {
+                dropdownContent.style.display = 'block';
+                chevronIcon.style.transform = 'rotate(180deg)';
+            }
         });
     });
 });

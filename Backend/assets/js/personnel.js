@@ -9,7 +9,7 @@ allSideMenu.forEach(item=> {
 		})
 		li.classList.add('active');
 	})
-});
+}); 
 
  
 
@@ -62,44 +62,7 @@ window.addEventListener('resize', function () {
 
 
 
-const switchMode = document.getElementById('switch-mode');
 
-switchMode.addEventListener('change', function () {
-	if(this.checked) {
-		document.body.classList.add('dark');
-	} else {
-		document.body.classList.remove('dark');
-	}
-})
-
-
-
-//side bar
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdownItems = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
-
-    dropdownItems.forEach(function (item) {
-        const fullText = item.getAttribute('data-fulltext');
-        const abbreviation = item.querySelector('.text');
-
-        // Save the original abbreviation
-        const originalAbbreviation = abbreviation.textContent;
-
-        item.addEventListener('mouseover', function () {
-            // Apply a smaller font size and show the full text on two lines when hovering
-            abbreviation.style.fontSize = '12px';
-            abbreviation.style.whiteSpace = 'normal'; // Allow multiple lines
-            abbreviation.textContent = fullText;
-        });
-
-        item.addEventListener('mouseout', function () {
-            // Restore the original state when not hovering
-            abbreviation.style.fontSize = ''; // Empty string resets to the default size
-            abbreviation.style.whiteSpace = 'nowrap'; // Display on one line
-            abbreviation.textContent = originalAbbreviation;
-        });
-    });
-});
 
 //side bar
 
@@ -252,16 +215,6 @@ document.addEventListener('DOMContentLoaded', function () {
       document.getElementById(tabId).classList.add('active');
     });
 });
-//dropdown for nature of degree
-function updateSelection(answer) {
-    console.log(answer.value);
-    if(answer.value == 1){
-        document.getElementById('nonBoard').classList.remove('nonboardProgram');
-        document.getElementById('Board').classList.add('boardProgram');
-    } else {
-        document.getElementById('Board').classList.remove('boardProgram');
-        document.getElementById('nonBoard').classList.add('nonboardProgram');
-    }
-};
+
 
 

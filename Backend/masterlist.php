@@ -5,14 +5,36 @@ include("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'staff') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
 
 // Retrieve student data from the database
-$query = "SELECT id, applicant_name,applicant_number, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied FROM admission_data";
+$search = isset($_GET['search']) ? $_GET['search'] : '';
+
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied 
+          FROM admission_data 
+          WHERE 
+            (`applicant_name` LIKE '%$search%' OR 
+            `applicant_number` LIKE '%$search%' OR 
+            `academic_classification` LIKE '%$search%' OR 
+            `email` LIKE '%$search%' OR 
+            `math_grade` LIKE '%$search%' OR 
+            `science_grade` LIKE '%$search%' OR 
+            `english_grade` LIKE '%$search%' OR 
+            `gwa_grade` LIKE '%$search%' OR 
+            `rank` LIKE '%$search%' OR 
+            `result` LIKE '%$search%' OR 
+            `nature_of_degree` LIKE '%$search%' OR 
+            `degree_applied` LIKE '%$search%')
+            AND (`result` = 'NOR' OR `result` = 'NOA')
+            ORDER BY applicant_name ASC, nature_of_degree ASC, degree_applied ASC";
+
 $result = $conn->query($query);
+
+
+
 // Fetch user information from the database based on user ID
 $userID = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
@@ -48,67 +70,35 @@ $stmt->fetch();
                             <li><a class="active" href="staff.html">Home</a></li>
                         </ul>
                     </div>
+                    <a href="#" class="btn-download" id="downloadLink">Download </a>
+                    
+                    
                 </div>
                 <!--master list-->
                 <div id="master-list">
     <div class="table-data">
                 <div class="order">
                 <div class="head">
-                                <h3>List of Students</h3>
+                                <h3>List of Students</h3>  
                             <div class="headfornaturetosort">
                                 <!--Drop Down for Nature of Degree--> 
-<select class="NatureDropdown" id="NatureofDegree" onchange="filterStudents()">
-    <option value="all">All</option>
-    <option value="Non-Board">Non-Board</option>
-    <option value="Board">Board</option>
-</select>
-                                  
-                                   <!-- Dropdown for Non-Board Programs -->
-                                   <select class="nonboardProgram" id="nonBoard">
-                                       <option value disabled selected>Non-Board Programs</option>
-                                       <option value="BSIT">BSED</option>
-                                       <option value="BLIS">LET</option>
-                                   </select>
-               
-                                   <!-- Dropdown for Board Programs -->
-                                   <select class="boardProgram" id="Board">
-                                   <label for="board-programs">Board Programs</label>
-                                       <option value="BSIT">BSED</option>
-                                       <option value="BLIS">LET</option>
-                                   </select>
+
+
                                 
  <label for="rangeInput"></label>
 <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
 <button type="button" id="viewButton">
-    <i class='bx bx-show'></i> 
+<i class='bx bx-filter' ></i>
 </button>
 
-                                    <button type="button" id="sortButton">
-                                    <i class='bx bx-sort'></i> Sort
-                                    </button>
 
 
-                            </div>
+
+                    </div>
                             </div>
             <div id="table-container">
-                <table>
-                <colgroup>
-                                        <col style="width: 3%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 8%;">
-                                        <col style="width: 17%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 13%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 5%;">
-                                        <col style="width: 9%;">
-                                      
-                                       
-                                    </colgroup>
+            <table id="studentTable">
+
                     <thead>
                         <tr>
                             <th>#</th>
@@ -117,14 +107,15 @@ $stmt->fetch();
                             <th>Nature of Degree</th>
                             <th>Program</th>
                             <th>Name</th>
-                            <th>Email</th>
+                            <th>Academic Clasiffication</th>
                             <th>Math</th>
+                            
                             <th>Science</th>
                             <th>English</th>
                             <th>GWA</th>
-                            <th>Rank</th>
                             <th>Result</th>
-                            <th>Action</th>
+                            
+                          
                         </tr>
                     </thead>
                     <tbody>
@@ -135,20 +126,19 @@ while ($row = $result->fetch_assoc()) {
     <tr>
         <td><?php echo $counter++; ?> <?php echo '<span style="display: none;">' . $row['id'] . '</span>'; ?>
         </td>
-        <td><?php echo $row['applicant_number']; ?></td>
-        <td data-column="nature_of_degree"><?php echo $row['nature_of_degree']; ?></td> <!-- Add this line -->
-        <td><?php echo $row['degree_applied']; ?></td>
-        <td><?php echo $row['applicant_name']; ?></td>
-        <td><?php echo $row['email']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="math_grade"><?php echo $row['math_grade']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="science_grade"><?php echo $row['science_grade']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="english_grade"><?php echo $row['english_grade']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="gwa_grade"><?php echo $row['gwa_grade']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="rank"><?php echo $row['rank']; ?></td>
-        <td contenteditable="true" class="edit" data-id="<?php echo $row['id']; ?>" data-column="result"><?php echo $row['result']; ?></td>
-        <td>
-            <button class="save" data-id="<?php echo $row['id']; ?>">Save</button>
-        </td>
+        
+        <td data-id="<?php echo $row['id']; ?>" data-column="applicant_number"><?php echo $row['applicant_number']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="nature_of_degree"><?php echo $row['nature_of_degree']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="degree_applied"><?php echo $row['degree_applied']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="applicant_name"><?php echo $row['applicant_name']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="academic_classification"><?php echo $row['academic_classification']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="math_grade"><?php echo $row['math_grade']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="science_grade"><?php echo $row['science_grade']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="english_grade"><?php echo $row['english_grade']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="gwa_grade"><?php echo $row['gwa_grade']; ?></td>
+        <td data-id="<?php echo $row['id']; ?>" data-column="result"><?php echo $row['result']; ?></td>
+       
+
     </tr>
     <?php
 }
@@ -164,85 +154,15 @@ while ($row = $result->fetch_assoc()) {
     <div class="toast-body" id="toast-body"></div>
 </div>
 
+
+
+
+
 <script>
-$(document).ready(function () {
-    // Enable editing on click
-    $('.edit').on('blur', function () {
-        var id = $(this).data('id');
-        var column = $(this).data('column');
-        var value = $(this).text();
 
-        // Update the column via AJAX
-        $.ajax({
-            url: 'saveChanges.php',
-            type: 'POST',
-            data: {
-                id: id,
-                column: column,
-                value: value
-            },
-            success: function (response) {
-                console.log(response);
-            }
-        });
-    });
+ 
 
-    $('.save').on('click', function () {
-    var id = $(this).data('id');
-
-    // Update "Result" via AJAX
-    $.ajax({
-        url: 'saveChanges.php',
-        type: 'POST',
-        data: {
-            id: id,
-            column: 'result',
-            value: $('.edit[data-id="' + id + '"][data-column="result"]').text()
-        },
-        success: function (response) {
-            // Display a toast notification
-            showToast('');
-            console.log(response);
-        }
-    });
-});
-
-// JavaScript to show and hide the toast
-function showToast(message) {
-    var toast = new bootstrap.Toast(document.getElementById('toast-body'));
-    document.getElementById('toast-body').innerText = message;
-    $('#toast').addClass('show');
-    toast.show();
-
-    // Automatically hide the toast after 3 seconds (adjust as needed)
-    setTimeout(function () {
-        $('#toast').removeClass('show');
-    }, 3000);
-}
-
-
-});
-
-function filterStudents() {
-    var selectedValue = document.getElementById("NatureofDegree").value.toLowerCase(); // Convert to lowercase
-
-    // Get all table rows
-    var rows = document.querySelectorAll("#table-container table tbody tr");
-
-    // Loop through each row and show/hide based on the selected value
-    rows.forEach(function (row) {
-        var natureOfDegree = row.querySelector("td[data-column='nature_of_degree']").innerText.trim().toLowerCase(); // Convert to lowercase
-
-        if (selectedValue === "all" || selectedValue === natureOfDegree) {
-            row.style.display = "";
-        } else {
-            row.style.display = "none";
-        }
-    });
-    
-}
-
-$('#viewButton i').on('click', function () {
+ $('#viewButton i').on('click', function () {
             var rangeInput = $('#rangeInput').val();
             var range = rangeInput.split('-');
 
@@ -270,6 +190,58 @@ $('#viewButton i').on('click', function () {
                 }
             });
         }
+        document.addEventListener('DOMContentLoaded', function () {
+    // Add an event listener to the Download button
+    document.getElementById('downloadLink').addEventListener('click', function () {
+        // Call the function to generate and download the CSV
+        downloadTableAsCSV('studentTable');
+    });
+
+    // Function to generate and download the CSV
+    function downloadTableAsCSV(tableId) {
+        // Get the table element by id
+        var table = document.getElementById(tableId);
+
+        // Create an empty array to store the rows of the CSV
+        var rows = [];
+
+        // Iterate over the rows of the table
+        for (var i = 0; i < table.rows.length; i++) {
+            var row = [];
+            // Iterate over the cells of each row
+            for (var j = 0; j < table.rows[i].cells.length; j++) {
+                // Check if the current column is the 'Name' column (columns 4 to 8)
+                if (j >= 4 && j <= 8) {
+                    row.push(table.rows[i].cells[j].innerText);
+                }
+                // Check if the current column is not the 'Name' column
+                else if (j !== 4) {
+                    row.push(table.rows[i].cells[j].innerText);
+                }
+            }
+            // Join the row array with commas and add to the rows array
+            rows.push(row.join(', '));
+        }
+
+        // Join the rows array with newline characters to create the CSV data
+        var csvData = rows.join('\n');
+
+        // Create a Blob containing the CSV data
+        var blob = new Blob([csvData], { type: 'text/csv' });
+
+        // Create a download link for the Blob
+        var downloadLink = document.createElement('a');
+        downloadLink.href = URL.createObjectURL(blob);
+        downloadLink.download = 'student_data.csv';
+
+        // Append the download link to the document and trigger the download
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+
+        // Remove the download link from the document
+        document.body.removeChild(downloadLink);
+    }
+});
 
 
  </script>
