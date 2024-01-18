@@ -20,7 +20,7 @@ $stmt->close();
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, lname, email, status FROM users WHERE userType = 'staff'";
+    $query = "SELECT id, fname, email, status, created_date FROM users WHERE userType = 'staff'";
     $result = $conn->query($query);
     return $result;
 }
@@ -338,7 +338,7 @@ function getAllStudentFormData() {
                             <th> First Name</th>
                             <th>Email</th>
                            
-                            <th>Last log</th>
+                            <th>Created Date</th>
                             <th>Update Status</th>
                             <th>Action</th>
 
@@ -355,10 +355,10 @@ function getAllStudentFormData() {
             ?>
             <tr>
                 <td><?php echo $counter++; ?></td>
-                <td><?php echo $row['name']; ?></td>
+                <td><?php echo $row['fname']; ?></td>
                 <td><?php echo $row['email']; ?></td>
                
-                <td><?php echo $row['last_log']; ?></td>
+                <td><?php echo $row['created_date']; ?></td>
                 <td>
                     <form method="post" action="">
                         <input type="hidden" name="staffId" value="<?php echo $row['id']; ?>">
