@@ -25,10 +25,10 @@ if(isset($_POST['login_btn'])){
                 $_SESSION['user_department'] = $department; // Assuming $department is available
 
 
-                if ($userType == 'student') {
-                    header("Location: ../Backend/student.php"); // Redirect to studentform.php
+                if ($userType == 'Student') {
+                    header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
                     exit();
-                } elseif ($userType == 'faculty') {
+                } elseif ($userType == 'Faculty') {
                     if (strtolower($status) == 'verified') {
                         header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
                         exit();
@@ -39,7 +39,7 @@ if(isset($_POST['login_btn'])){
                     } else {
                         echo "Your registration is not yet approved. Please wait for admin approval.";
                     }
-                } elseif ($userType == 'staff') {
+                } elseif ($userType == 'Staff') {
                     if (strtolower($status) == 'verified') {
                         header("Location: ../Backend/personnel.php");
                         exit();

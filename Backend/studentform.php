@@ -17,8 +17,8 @@ $result = $stmt->get_result();
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {
   $row = $result->fetch_assoc();
-  $last_name = $row['last_name'];
-  $name = $row['name'];
+  $last_name = $row['lname'];
+  $name = $row['lname'];
   $email = $row['email'];
 } else {
 
@@ -42,7 +42,7 @@ $resultNonBoard = $conn->query($sqlNonBoard);
 
 // Fetch 'Classification' values for 'Non-Board' from the 'NonBoardAcadClass' table
 $sqlNonBoardClassifications = "SELECT Classification FROM NonBoardAcadClass";
-$resultNonBoardClassifications = $conn->query($sqlNonBoardClassifications);
+$resultNonBoardClassisfications = $conn->query($sqlNonBoardClassifications);
 
 // Fetch data from the academicclassification table for the Classification column
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
