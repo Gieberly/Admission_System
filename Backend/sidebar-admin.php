@@ -28,9 +28,9 @@
             </li>
 
             <li class="">
-                <a href="#" id="student-result-link">
+                <a href="#" id="data-result-link">
                     <i class='bx bxs-window-alt'></i>
-                    <span class="text">Data</span>
+                    <span class="text">Colleges</span>
                 </a>
             </li>
            

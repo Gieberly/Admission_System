@@ -321,7 +321,7 @@ CREATE TABLE `department` (
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`id`, `college_code`, `course`, `dept_desc`, `classification`) VALUES
+INSERT INTO `department` (`dept_id`, `college_name`, `course`, `dept_desc`, `classification`) VALUES
 (7, 'CA', 'BSA', 'Bachelor of Science in Agriculture', 'board'),
 (8, 'CA', 'BSAB', 'Bachelor of Science in Agribusiness ', 'non-board'),
 (9, 'CIS', 'BSCD', 'Bachelor of Science in Development Communication', 'non-board'),

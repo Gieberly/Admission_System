@@ -57,6 +57,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
 }
 
 
+//Function to get all Departments
+function getAllDept() {
+    global $conn;
+    $query = "SELECT college_name, dept_name, course, slots,used_slots,dept_chair FROM department ";
+    $result = $conn->query($query);
+    return $result;
+}
+
+// Function to update Departments status
+function updateDeptfStatus($deptId, $newStatus) {
+    global $conn;
+    $query = "UPDATE department SET status = ? WHERE id = ? AND dept_name = 'dept_name'";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("si", $newStatus, $deptId);
+    return $stmt->execute();
+}
+
+// Function to delete Departments
+function deleteDept($deptId) {
+    global $conn;
+    $query = "DELETE FROM department WHERE id = ? AND dept_name = 'dept_name'";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $staffId);
+    return $stmt->execute();
+}
+
+// Check if the form for updating Departments is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateStatus'])) {
+    $deptId = $_POST['deptId'];
+    $newStatus = $_POST['newStatus'];
+    updateDeptStatus($staffId, $newStatus);
+}
+
+// Check if the form for deleting Departments member is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteDept'])) {
+    $staffId = $_POST['deptId'];
+    deleteDept($staffId);
+}
+
+
 
 // Function to get all student form data
 function getAllStudentFormData() {
@@ -359,7 +399,7 @@ function getAllStudentFormData() {
 
             </div>
 
-         
+        <?php include('colleges.php');?>
         </main>
         <!-- MAIN -->
 
@@ -423,5 +463,8 @@ function getAllStudentFormData() {
 
     <!-- CONTENT -->
     <script src="assets\js\admin.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <?php include 'footer.php'?>
 

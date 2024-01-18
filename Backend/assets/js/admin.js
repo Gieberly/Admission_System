@@ -181,49 +181,56 @@ document.addEventListener('DOMContentLoaded', function () {
     const NonqualifiedItem = document.getElementById('readmitted-box');
 });
 
-//pressing Sidebar
 document.addEventListener('DOMContentLoaded', function () {
     const dashboardLink = document.getElementById('dashboard-link');
     const dashboardContent = document.getElementById('dashboard-content');
     const MasterListLink = document.getElementById('master-list-link');
     const MasterListContent = document.getElementById('master-list-content');
-    const StudentResultLink = document.getElementById('student-result-link'); 
+    const StudentResultLink = document.getElementById('student-result-link');
     const StudentResultContent = document.getElementById('student-result-content');
-  
-    
+    const DataResultLink = document.getElementById('data-result-link');
+    const DataResultContent = document.getElementById('data-result-content');
+
     // Initially hide the content divs by default
     dashboardContent.style.display = 'block';
     MasterListContent.style.display = 'none';
     StudentResultContent.style.display = 'none';
-  
+    DataResultContent.style.display = 'none';  // Display 'Data' tab by default
 
     // Add event listeners to the links
     dashboardLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         dashboardContent.style.display = 'block';
         MasterListContent.style.display = 'none';
         StudentResultContent.style.display = 'none';
-     
+        DataResultContent.style.display = 'none';
     });
 
     MasterListLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         dashboardContent.style.display = 'none';
         MasterListContent.style.display = 'block';
         StudentResultContent.style.display = 'none';
-       
+        DataResultContent.style.display = 'none';
     });
 
     StudentResultLink.addEventListener('click', function (event) {
-        event.preventDefault(); // Prevent the default link behavior
+        event.preventDefault();
         dashboardContent.style.display = 'none';
         MasterListContent.style.display = 'none';
         StudentResultContent.style.display = 'block';
-      
+        DataResultContent.style.display = 'none';
     });
 
-  
+    DataResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'block';
+    });
 });
+
 
 // tab like buttons for Student Result and Forms
   const tabButtons = document.querySelectorAll('.tab-button');

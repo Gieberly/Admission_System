@@ -1086,7 +1086,8 @@ nav {
 	width: 0px;
 	max-width: 0px;
 	overflow: hidden;
-	white-space: nowrap;
+	word-wrap: break-word;
+	white-space: pre-line;
 	text-overflow: ellipsis;
   }
  
@@ -1312,4 +1313,11 @@ cursor: pointer;
 
 button:hover {
 background-color: #45a049;
+}
+
+.nav-tabs {
+	background-color: #f8f9fa;
+}
+.nav-tabs .nav-item {
+	margin-bottom: 0;
 }
