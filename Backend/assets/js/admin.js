@@ -231,6 +231,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+$(document).ready(function(){
+    // Initialize the tabs
+    $('#dataTabs a').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    // Hide other tab contents when a tab is shown
+    $('#dataTabs a').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // activated tab
+        $('.tab-pane').not(target).removeClass('show active');
+    });
+});
 
 // tab like buttons for Student Result and Forms
   const tabButtons = document.querySelectorAll('.tab-button');

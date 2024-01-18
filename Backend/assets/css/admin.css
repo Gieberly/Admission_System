@@ -707,7 +707,9 @@ nav {
 
 /* Style for tab content */
 .tab-content {
+
 	display: none;
+
   }
   
   /* Display the active tab content */
@@ -1315,9 +1317,3 @@ button:hover {
 background-color: #45a049;
 }
 
-.nav-tabs {
-	background-color: #f8f9fa;
-}
-.nav-tabs .nav-item {
-	margin-bottom: 0;
-}
