@@ -61,8 +61,8 @@ $admissionData = $resultAdmission->fetch_assoc();
                         </ul>
                     </div>
                     <a href="#" class="btn-calendar" >
-            <i class='bx bxs-calendar'></i>
-            <span class="text">Set Appointment</span>
+              <i class='bx bxs-download' ></i>
+            <span class="text">Download</span>
         </a>
     
                 </div>
