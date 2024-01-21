@@ -307,57 +307,57 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
-function generatePDF() {
-    // Create a new jsPDF instance
-    var pdf = new jsPDF();
+// function generatePDF() {
+//     // Create a new jsPDF instance
+//     var pdf = new jsPDF();
 
-    // Set font size and style
-    pdf.setFontSize(16);
-    pdf.setFont("helvetica", "normal");
+//     // Set font size and style
+//     pdf.setFontSize(16);
+//     pdf.setFont("helvetica", "normal");
 
-    // Add a title to the PDF
-    pdf.text('User Profile', 20, 20);
+//     // Add a title to the PDF
+//     pdf.text('User Profile', 20, 20);
 
-    // Add ID picture to the PDF
-    var idPicture = new Image();
-    idPicture.src = document.getElementById('result-id-picture').getElementsByTagName('img')[0].src;
-    pdf.addImage(idPicture, 'JPEG', 150, 30, 50, 50);
+//     // Add ID picture to the PDF
+//     var idPicture = new Image();
+//     idPicture.src = document.getElementById('result-id-picture').getElementsByTagName('img')[0].src;
+//     pdf.addImage(idPicture, 'JPEG', 150, 30, 50, 50);
 
-    // Set font size and style for the content
-    pdf.setFontSize(12);
+//     // Set font size and style for the content
+//     pdf.setFontSize(12);
 
-    // Define the content to be included in the PDF
-    var content = `
-        Personal Information:
-        Application Date: ${document.getElementById('date-of-application').innerText}
-        Full Name: ${document.getElementById('result-Full-Name').innerText}
-        Gender: ${document.getElementById('result-Gender').innerText}
-        Birthdate: ${document.getElementById('result-Birthdate').innerText}
+//     // Define the content to be included in the PDF
+//     var content = `
+//         Personal Information:
+//         Application Date: ${document.getElementById('date-of-application').innerText}
+//         Full Name: ${document.getElementById('result-Full-Name').innerText}
+//         Gender: ${document.getElementById('result-Gender').innerText}
+//         Birthdate: ${document.getElementById('result-Birthdate').innerText}
 
-        Permanent Home Address:
-        Address: ${document.getElementById('result-ZipCode').innerText}
-        Zip Code: ${document.getElementById('result-ZipCode').innerText}
+//         Permanent Home Address:
+//         Address: ${document.getElementById('result-ZipCode').innerText}
+//         Zip Code: ${document.getElementById('result-ZipCode').innerText}
 
-        Contact Information:
-        Telephone/Mobile No.: ${document.getElementById('result-Telephone').innerText}
-        Facebook Account Name: ${document.getElementById('result-Facebook').innerText}
-        Email Address: ${document.getElementById('result-Email').innerText}
+//         Contact Information:
+//         Telephone/Mobile No.: ${document.getElementById('result-Telephone').innerText}
+//         Facebook Account Name: ${document.getElementById('result-Facebook').innerText}
+//         Email Address: ${document.getElementById('result-Email').innerText}
 
-        Academic Background:
-        High School/Senior High School: ${document.getElementById('high_school_name_address').innerText}
-        ALS/PEPT: ${document.getElementById('result-ALS').innerText}
-        College/University: ${document.getElementById('college_name_address').innerText}
-        Learner's Reference Number: ${document.getElementById('result-LRN').innerText}
-        Degree: ${document.getElementById('result-Degree').innerText}
-        Nature of Degree: ${document.getElementById('result-natureDegree').innerText}
-    `;
+//         Academic Background:
+//         High School/Senior High School: ${document.getElementById('high_school_name_address').innerText}
+//         ALS/PEPT: ${document.getElementById('result-ALS').innerText}
+//         College/University: ${document.getElementById('college_name_address').innerText}
+//         Learner's Reference Number: ${document.getElementById('result-LRN').innerText}
+//         Degree: ${document.getElementById('result-Degree').innerText}
+//         Nature of Degree: ${document.getElementById('result-natureDegree').innerText}
+//     `;
 
-    // Add the content to the PDF
-    pdf.text(content, 20, 90);
+//     // Add the content to the PDF
+//     pdf.text(content, 20, 90);
 
-    // Save the PDF file
-    pdf.save('user_profile.pdf');
-}
+//     // Save the PDF file
+//     pdf.save('user_profile.pdf');
+// }
 
 //log out prompt
 function confirmLogout() {

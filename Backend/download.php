@@ -97,6 +97,11 @@ $conn->close();
 
 <button onclick="downloadPDF()"> Download </button>
 
+    <!-- <a href="#" class="btn-calendar" onclick="downloadPDF()">
+            <i class='bx bxs-cloud-download'></i>
+            <span class="text">Download</span>
+        </a> -->
+
 <body>
       <div class="page-containerr" id="DownloadForm">
         <!-- LOGO -->
@@ -299,8 +304,6 @@ $conn->close();
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
         </div><br>
-
-
 </div>
 </body>
 

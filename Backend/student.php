@@ -334,11 +334,11 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-calendar" onclick="generatePDF()">
-            <i class='bx bxs-cloud-download'></i>
-            <span class="text">Set Apointment</span>
+
+        <a href="download.php?user_id=<?php echo $_SESSION['user_id'];?>" class="btn-calendar">
+                    <i class='bx bxs-cog'></i>
+            <span class="text">Generate Application Form</span>
         </a>
-    
                 </div>
                 <!--profile-->
                 <div id="student-profile">

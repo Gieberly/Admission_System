@@ -80,8 +80,10 @@ $studentData = $resultUser->fetch_assoc();
                     $studentData = $resultUser->fetch_assoc();
 
                     ?>
-                    <p align="right">
-                        <a href="download.php?user_id=<?php echo $_SESSION['user_id'];?>" ><input type="button" class="btn-calendar" value="Generate Application Form"></input></a></p>
+                    <a href="download.php?user_id=<?php echo $_SESSION['user_id'];?>" class="btn-calendar">
+                    <i class='bx bxs-cog'></i>
+            <span class="text">Generate Application Form</span>
+        </a>
                 </div>
                 <!--profile-->
                 <div id="student-profile">
