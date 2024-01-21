@@ -12,17 +12,6 @@
   input[type="file"] {
     display: none; /* Hide the file input */
   }
-  
-  label[for="id_picture"] {
-    background-color: #3498db;
-    color: white;
-    padding: 5px 10px;
-    cursor: pointer;
-  }
-  
-  label[for="id_picture"]:hover {
-    background-color: #2980b9;
-  }
  
   /* Style for the buttons */
   button {
@@ -42,33 +31,15 @@
   background-color: green /* Darker color on hover, adjust as needed */
   }
   
-  
-  
   /* Media query for responsiveness */
   @media (max-width: 768px) {
-  .signature-wrapper {
-    align-items: center;
-  }
-  
-  .signature-label {
-    text-align: center;
-  }
-  
-  #signature-container {
-    justify-content: center;
-  }
-  
-  .signature-pad {
-    max-width: 100%; /* Adjust width for smaller screens */
-  }
-  }
+}
   
   #result-id-picture {
 	width: 150px;
 	height: 150px;
 	border: 1px solid #000000;
 	display: flex;
-
 	justify-content: space-between;
 	border-radius: 5px;
 }
@@ -142,7 +113,7 @@
   width: 100%; /* Input fields occupy the available width */
   margin-bottom: 10px;
   border-radius: 5px; /* Adding border radius */
-  padding: 8px; /* Optional: Adjust padding for better appearance */
+  padding: 5px; /* Optional: Adjust padding for better appearance */
   border: 1px solid #ccc; /* Optional: Border for input fields */
   }
   
@@ -156,7 +127,7 @@
   text-align: center; /* Center align the text */
   font-size: 12px; /* Adjust the font size as needed */
   font-weight: bold; /* Make the font bold */
-  margin: 20px; /* Add margin at the bottom */
+  margin: 5px; /* Add margin at the bottom */
   
   }
   
@@ -165,7 +136,17 @@
   font-size: 11px; /* Adjust the font size as needed */
   line-height: 1.5; /* Adjust the line height for readability */
   }
-  
+
+  .student_signature p {
+    border-top: 1px solid black;
+    padding-right: 5px;
+    width: 25%;
+    font-style: italic;
+    float: right; /* Float the text to the left */
+    clear: left; /* Clear the float to avoid layout issues */
+    text-align: center;
+}
+
   .applicant_number {
   display: flex;
   align-items: center;
@@ -271,10 +252,39 @@
   /* Add this CSS for the grid layout with five fields in each row */
   .form-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Five equal-width columns */
-  gap: 5px; /* Adjust the gap between form groups */
+  grid-template-columns: repeat(4, 1fr);  /*Five equal-width columns */
+  gap: 10px; /* Adjust the gap between form groups */
   }
-  
+  .form-container1 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two equal-width columns */
+    gap: 10px; /* Adjust the gap between form groups */
+  }
+  .form-container2 {
+    display: grid;
+    grid-template-columns: 15% 17% 7% 17% 19% 19%;
+    gap: 10px; /* Adjust the gap between form groups */
+  }
+  .form-container3 {
+    display: grid;
+    grid-template-columns: 3fr 1fr;  /* 75% for address, 25% for zip code */
+    gap: 10px; /* Adjust the gap between form groups */
+  }
+  .form-container4 {
+    display: grid;
+    grid-template-columns: repeat(3, 40% 25% 25%); /* 27% for the first and second columns, 44% for the third column */
+    gap: 10px; /* Adjust the gap between form groups */
+  }
+  .form-container5 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 10px; /* Adjust the gap between form groups */
+  }
+  .form-container6 {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;  /* 25% - 50% - 25% */
+    gap: 10px; /* Adjust the gap between form groups */
+  }
   .form-group {
   display: inline-block;
   margin-right: 15px; /* Adjust this value as needed */
@@ -282,81 +292,13 @@
   
   /* Optional: Adjust the width of the label and input if needed */
   .small-label {
-  width: 150px; /* Adjust the width as needed */
-  font-size: 11px; /* Adjust this value as needed */
+  /* width: 150px; Adjust the width as needed */
+  font-size: 12px; /* Adjust this value as needed */
   margin-bottom: 5px;
-  }
-  
-  .input {
-  width: 100%; /* Input fields occupy the available width */
-  padding: 2px;
-  margin-top: 2px;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  }
-  
-  #gradeFieldsContainer {
-    display: block; /* Set the default display property to block or inline-block */
   }
   
   .hide {
     display: none; /* Set display property to none to hide the element */
-  }
-  
-  .grades-input {
-  font-size: 11px; /* Adjust this value as needed */
-  }
-  
-  /* Adjust the width and size of the Gender and Birthdate fields */
-  #gender {
-  padding: 5px; /* Adjust the padding as needed */
-  }
-  
-  #birthdate {
-  padding: 7.4px; /* Adjust the padding as needed */
-  }
-  #civil_status{
-  padding: 5px; /* Adjust the padding as needed */
-  }
-  
-        /* Adjust the width and size of the Gender and Birthdate fields */
-        #gender {
-          padding: 10px; /* Adjust the padding as needed */
-        }
-        
-        #birthdate {
-          padding: 7.4px; /* Adjust the padding as needed */
-        }
-        #civil_status{
-          padding: 9.4px; /* Adjust the padding as needed */
-        }
-        #phone {
-          width: 100%; /* You can adjust the width as needed */
-          padding: 8px;
-          margin-top: 5px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-        }
-        
-        #facebook {
-          width: 100%; /* You can adjust the width as needed */
-          padding: 8px;
-          margin-top: 5px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-        }
-        
-        #email {
-          width: 100%; /* You can adjust the width as needed */
-          padding: 8px;
-          margin-top: 5px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-        }
-         /* Style the "Relationship with Contact Person" labels */
-  .relationship-label {
-    width: 150px; /* Adjust the width as needed */
-  font-size: 12px; /* Adjust this value as needed */
   }
   
   /* Apply styles to the page container */
