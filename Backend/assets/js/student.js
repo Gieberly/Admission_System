@@ -392,3 +392,24 @@ function toggleSettingContent() {
     }
 }
 
+
+
+//Print and Download 
+
+function printContent(elementId) {
+    var content = document.getElementById(elementId);
+    window.print();
+}
+
+function downloadContent(elementId, fileName) {
+    var content = document.getElementById(elementId).outerHTML;
+    var blob = new Blob([content], { type: 'text/html' });
+    
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}

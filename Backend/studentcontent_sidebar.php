@@ -50,6 +50,16 @@ $admissionData = $resultAdmission->fetch_assoc();
     <section id="content">
     <main>
   <!--Student Profile-->
+
+  <?php
+$studentId = $_SESSION['user_id'];
+$stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmtUser->bind_param("i", $studentId);
+$stmtUser->execute();
+$resultUser = $stmtUser->get_result();
+$studentData = $resultUser->fetch_assoc();
+
+?>
   <div id="student-profile-content">
                 <div class="head-title">
                     <div class="left">
@@ -60,11 +70,18 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-calendar" >
-              <i class='bx bxs-download' ></i>
-            <span class="text">Download</span>
-        </a>
-    
+                           
+                    <?php
+                    $studentId = $_SESSION['user_id'];
+                    $stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
+                    $stmtUser->bind_param("i", $studentId);
+                    $stmtUser->execute();
+                    $resultUser = $stmtUser->get_result();
+                    $studentData = $resultUser->fetch_assoc();
+
+                    ?>
+                    <p align="right">
+                        <a href="download.php?user_id=<?php echo $_SESSION['user_id'];?>" ><input type="button" class="btn-calendar" value="Generate Application Form"></input></a></p>
                 </div>
                 <!--profile-->
                 <div id="student-profile">
