@@ -2,7 +2,7 @@
 <?php
 // Include the configuration file
 include('config.php');
-include("personnelcover.php");
+
 
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

@@ -142,7 +142,7 @@ $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard
             button.addEventListener('click', function () {
                 var programId = this.getAttribute('data-program-id');
                 // Redirect to studentform.php with the Program ID as a parameter
-                window.location.href = 'studentform.php?program_id=' + programId;
+                window.location.href = 'studentforms.php?program_id=' + programId;
             });
         });
     });
