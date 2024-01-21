@@ -25,12 +25,23 @@ if ($result && $result->num_rows > 0) {
   exit();
 }
 
-// Get the current day and month with leading zeros
-$currentDay = date('d');
-$currentMonth = date('m');
+// Get the current year's last two digits
+$currentYearLastTwoDigits = date('y');
 
-// Generate the applicant number in the format 00-00-000
-$applicantNumber = sprintf("%02d-%02d-%04d", $currentDay, $currentMonth, $user_id);
+// Fetch semester data from the table school_semester
+$sqlSemester = "SELECT semester FROM school_semester WHERE id = 1"; // Assuming the semester data is in row with id = 1
+$resultSemester = $conn->query($sqlSemester);
+
+if ($resultSemester && $resultSemester->num_rows > 0) {
+  $rowSemester = $resultSemester->fetch_assoc();
+  $semester = $rowSemester['semester'];
+} else {
+  $semester = 0; // Default value if semester data is not found
+}
+
+// Generate the applicant number in the format YEAR-SEM-ID
+$applicantNumber = sprintf("%02d-%d-%05d", $currentYearLastTwoDigits, $semester, $user_id);
+
 
 $sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
 $result = $conn->query($sql);
@@ -83,57 +94,87 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
-  
-// Check if a file was uploaded
-if (isset($id_picture) && $id_picture['error'] === UPLOAD_ERR_OK) {
-  // Ensure the file is an image using exif_imagetype
-  $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
-  $detected_type = exif_imagetype($id_picture['tmp_name']);
 
-  if (!in_array($detected_type, $allowed_types)) {
+  // Check if a file was uploaded
+  if (isset($id_picture) && $id_picture['error'] === UPLOAD_ERR_OK) {
+    // Ensure the file is an image using exif_imagetype
+    $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
+    $detected_type = exif_imagetype($id_picture['tmp_name']);
+
+    if (!in_array($detected_type, $allowed_types)) {
       echo "Invalid file type. Please upload a valid image.";
       exit();
-  }
+    }
 
-  // Move the uploaded file to the 'uploads' folder
-  $upload_folder = 'assets/uploads/';
-  $file_name = uniqid() . '_' . basename($id_picture['name']);
-  $target_path = $upload_folder . $file_name;
+    // Move the uploaded file to the 'uploads' folder
+    $upload_folder = 'assets/uploads/';
+    $file_name = uniqid() . '_' . basename($id_picture['name']);
+    $target_path = $upload_folder . $file_name;
 
-  if (move_uploaded_file($id_picture['tmp_name'], $target_path)) {
+    if (move_uploaded_file($id_picture['tmp_name'], $target_path)) {
       echo "File uploaded successfully!";
-  } else {
+    } else {
       echo "Error moving file to the server.";
       exit();
+    }
+
+    // Save file path in the database
+    $id_picture_data = $target_path;
+  } else {
+    echo "Error uploading ID picture. Please ensure it's a valid image file.";
+    exit();
   }
 
-  // Save file path in the database
-  $id_picture_data = $target_path;
-} else {
-  echo "Error uploading ID picture. Please ensure it's a valid image file.";
-  exit();
-}
+  // Prepare SQL statement for inserting data into admission_data table
+  $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-// Prepare SQL statement for inserting data into admission_data table
-$stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+  // Bind parameters
+  $stmt->bind_param(
+    "sssssissssiisssississssssssss",
+    $id_picture_data,
+    $applicant_name,
+    $gender,
+    $birthdate,
+    $birthplace,
+    $age,
+    $civil_status,
+    $citizenship,
+    $nationality,
+    $permanent_address,
+    $zip_code,
+    $phone,
+    $facebook,
+    $email,
+    $contact_person_1,
+    $contact_person_1_mobile,
+    $relationship_1,
+    $contact_person_2,
+    $contact_person_2_mobile,
+    $relationship_2,
+    $academic_classification,
+    $high_school_name_address,
+    $als_pept_name_address,
+    $college_name_address,
+    $lrn,
+    $degree_applied,
+    $nature_of_degree,
+    $applicant_number,
+    $application_date,
+  );
 
-// Bind parameters
-$stmt->bind_param("sssssissssiisssississssssssss", 
-  $id_picture_data, $applicant_name, $gender, $birthdate, $birthplace, $age, $civil_status, $citizenship, $nationality, $permanent_address, $zip_code, $phone, $facebook, $email, $contact_person_1, $contact_person_1_mobile, $relationship_1, $contact_person_2, $contact_person_2_mobile, $relationship_2, $academic_classification, $high_school_name_address, $als_pept_name_address, $college_name_address, $lrn, $degree_applied, $nature_of_degree, $applicant_number, $application_date, );
 
+  // Execute the SQL statement
+  if ($stmt->execute()) {
+    echo "Form submitted successfully!";
+    // Redirect the user to student.php or another appropriate page
+    header("Location: ../Backend/studentcontent_sidebar.php");
+    exit();
+  } else {
+    echo "Error submitting form: " . $stmt->error;
+  }
 
-// Execute the SQL statement
-if ($stmt->execute()) {
-  echo "Form submitted successfully!";
-  // Redirect the user to student.php or another appropriate page
-  header("Location: ../Backend/student.php");
-  exit();
-} else {
-  echo "Error submitting form: " . $stmt->error;
-}
-
-// Close the statement
-$stmt->close();
+  // Close the statement
+  $stmt->close();
   // Unset the session variable to remove the stored email (optional)
   unset($_SESSION['registered_email']);
 }
@@ -184,10 +225,38 @@ $conn->close();
 
     <div class="tab" id="tab-1">
       <div class="page-container">
-        <div class="message">
-          <span class="important-text">PLEASE ENTER THE CORRECT GRADE OR GWA.THIS IS NOT A BASIS FOR RANKING, BUT TO GUIDE YOU IN CHOOSING YOUR COURSE IF YOU MEET THE REQUIRED GRADE AND GWA.</span>
+        <h2>GENERAL INSTRUCTIONS</h2>
+        <p class="section-title"><strong><u></u></strong></p>
+        <ol class="rac-list">
+          <li>Read and understand the Admission Guidelines and requirements before proceeding to the next step.</li>
+          <li>Fill out all the fields completely and accurately in this application form for admission.</li>
+          <li>Submit the Application form with complete requirements.</li>
+        </ol>
 
-          <h2>Course Guide for Application</h2>
+
+        <p class="coa"><strong><em>Classification of the applicant.</em></strong> An Applicant may only be classified
+          in
+          one category (except for second degree transferee):</p>
+        <ol class="rac-list">
+          <li><b>Senior High School Graduates</b> - those who did not enroll in any technical/vocational/college
+            degree
+            program in any other school after graduation.</li>
+          <li><b>High School of the Old High school curriculum</b> - those who did not enroll in any college degree
+            program in any other school after graduation from high school.</li>
+          <li><b>Grade 12</b> as of application period (Currently enrolled as Grade 12).</li>
+          <li><b>ALS/PEPT Completers</b> - those whose ALS/PEPT Certificate of Rating indicates that they are eligible
+            for College Admission/Rating is equivalent to Senior High and similar terms.</li>
+          <li><b>Transferees</b> - those who started college schooling in another school and intend to continue
+            schooling in BSU.</li>
+          <li><b>Second Degree</b> - those who have already graduated from a degree program in College. This may
+            either
+            be Second degree (BSU graduate of a Baccalaureate program) or Second Degree-transferees (Graduates of a
+            Baccalaureate degree from another school who will enroll another degree in BSU).</li>
+        </ol>
+        <br>
+        <div class="message">
+
+          <h2>Program Guide for Requirments in Application</h2>
           <div class="page-container">
             <div class="form-container">
               <div class="form-group">
@@ -201,7 +270,7 @@ $conn->close();
 
               <!-- Board Programs -->
               <div id="boardProgramsDropdown" class="programFields">
-                <label for="board-programs">Board Programs</label>
+                <label class="small-label" for="board-programs">Board Programs</label>
                 <select name="board-programs" id="board-programs" class="input" onchange="updateBoardSelection()">
                   <option value="">Select Board Program</option>
                   <?php
@@ -218,7 +287,7 @@ $conn->close();
 
               <!-- Non-Board Programs -->
               <div id="nonBoardProgramsDropdown" class="programFields">
-                <label for="NonBoardProgram">Non-Board Programs</label>
+                <label class="small-label" for="NonBoardProgram">Non-Board Programs</label>
                 <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateNonBoardSelection()">
 
                   <option value="">Select Non-Board Program</option>
@@ -236,7 +305,7 @@ $conn->close();
               <!-- Input Academic Classification Selection (Board)-->
               <div id="boardclassificationFields" class="programFields">
                 <label class="small-label" for="academic_classification_board">Academic Classification</label>
-                <select name="academic_classification" class="input" id="academic_classification_board" onchange="updateBoardGradeSelection()">
+                <select name="academic_classification" class="input" id="academic_classification_board" onchange="BoardRequirements()">
                   <option value="">Select Academic Classification</option>
                   <?php
                   // Check if the query was successful
@@ -256,7 +325,7 @@ $conn->close();
               <!-- Input Academic Classification Selection (Non-Board) -->
               <div class="programFields" id="nonclassificationFields">
                 <label class="small-label" for="academic_classification_nonboard">Academic Classification</label>
-                <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="updateNonBoardGradeSelection()">
+                <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="NonBoardRequirements()">
                   <option value="">Select Academic Classification</option>
                   <?php
                   // Loop through fetched Non-Board classifications and populate the options
@@ -267,16 +336,14 @@ $conn->close();
                   ?>
                 </select>
               </div>
-              <div id="gradeFieldsContainer">
-                <!-- Content of gradeFieldsContainer goes here -->
-              </div>
+              <br>
 
-              <div id="non_board_results">
-                <!-- Content of non_board_results goes here -->
-              </div>
 
 
             </div>
+            <br>
+            <div id="classificationInfo"></div>
+
 
           </div>
 
@@ -313,19 +380,15 @@ $conn->close();
               tag <i>(Signature over printed name)</i></p>
           </div>
         </div>
-        <input type="file" name="id_picture" id="id_picture" accept="image/*" style="display: none" required>
+        <input type="file" name="id_picture" id="id_picture" accept="image/*" style="position: absolute; left: -9999px; opacity: 0;" required>
+
 
 
         <u>
           <p class="head_information"> Privacy Notice</p>
         </u>
-        <p class="privacy-notice-text">Persuant to the data Privacy Act of 2012 and BSU Data Privacy, Personnel from
-          the
-          office of the University Registrar,.Persuant to the data Privacy Act of 2012 and BSU Data Privacy, Personnel
-          from the office of the University Registrar,.Persuant to the data Privacy Act of 2012 and BSU Data Privacy,
-          Personnel from the office of the University Registrar,.Persuant to the data Privacy Act of 2012 and BSU Data
-          Privacy, Personnel from the office of the University Registrar,.Persuant to the data Privacy Act of 2012 and
-          BSU Data Privacy, Personnel from the office of the University Registrar,.</p>
+        <p class="privacy-notice-text">Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar, concerned Personnel of BSU La Trinidad, BSU Buguias Campus and Bokod Campus are committed to keep with utmost confidentiality, all sensitive personal information collected from applicants. Personal information are collected, accessed, used and or disclosed on a “need to know basis” and only as reasonably required. Confidential information either within or outside the University will not be communicated, except to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be used only in accessing, processing and transmitting such information. Read more on BSU Data Privacy Notice: <a href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students" target="_blank">Click here to visit the BSU Data Privacy Notice for Students</a>
+        </p>
 
         <p class="binformation"> Background Information of Applicant</p>
         <p class="personal_information"> Personal Information</p>
@@ -401,15 +464,15 @@ $conn->close();
         </div>
 
         <p class="personal_information">Permanent Home Address</p>
-        <div class="form-container">
+        <div class="form-container2">
           <div class="form-group">
             <label class="small-label" for="permanent_address">Address</label>
-            <input type="text" name="permanent_address" class="input" id="permanent_address" placeholder="House # & Street, Barangay/Subdivision, Municipality(town)/City, Province, Country/State" required>
+            <input type="text" name="permanent_address" class="input-address" id="permanent_address" placeholder="House # & Street, Barangay/Subdivision, Municipality(town)/City, Province, Country/State" required>
           </div>
           <!-- zip-code -->
           <div class="form-group">
             <label class="small-label" for="zip_code">Zip Code</label>
-            <input type="number" name="zip_code" class="input" id="zip_code" placeholder="Zip Code" required>
+            <input type="number" name="zip_code" class="input-zip" id="zip_code" placeholder="Zip Code" required>
           </div>
         </div>
 
@@ -449,11 +512,11 @@ $conn->close();
             <p id="contact_person_1_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_1">Relationship with Contact Person</label>
+            <label class="small-label" for="relationship_1">Relationship w/ Contact Person</label>
             <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
+              <option value="guardian">Guardian</option>
 
             </select>
           </div>
@@ -470,11 +533,11 @@ $conn->close();
             <p id="contact_person_2_mobile-error" style="color: red;"></p>
           </div>
           <div class="form-group">
-            <label class="relationship-label" for="relationship_2">Relationship with Contact Person</label>
+            <label class="small-label" for="relationship_2">Relationship w/ Contact Person</label>
             <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
               <option value="" disabled selected>Select Relationship</option>
               <option value="parent">Parent</option>
-              <option value="guardian">guardian</option>
+              <option value="guardian">Guardian</option>
 
             </select>
           </div>
@@ -484,9 +547,8 @@ $conn->close();
         <div class="form-container">
           <!-- Academic Classification -->
           <div class="form-group">
-            <label class="small-label" for="academic_classificationd">Academic Classification</label>
-
-            <input type="text" name="academic_classification" class="input" id="academic_classificationd" readonly required>
+            <label class="small-label" for="academic_classification">Academic Classification</label>
+            <input type="text" name="academic_classification" class="input" id="academic_classification" readonly required>
           </div>
         </div>
         <p class="personal_information">Academic Background </p>
@@ -498,16 +560,14 @@ $conn->close();
             <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required placeholder="Enter Name and Address">
 
           </div>
-        </div>
-        <div class="form-container">
+
           <div class="form-group">
             <label class="small-label" for="als_pept_name_address" style="white-space: nowrap;">ALS/PEPT was
               taken:</label>
             <input type="text" name="als_pept_name_address" class="input" id="als_pept_name_address" required placeholder="Enter Name and Address">
 
           </div>
-        </div>
-        <div class="form-container">
+
           <div class="form-group">
 
             <label class="small-label" for="college_name_address">College/University:</label>
@@ -517,7 +577,7 @@ $conn->close();
         <div class="form-container">
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-            <input type="number" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*" maxlength="12" required>
+            <input type="text" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*" maxlength="12" oninput="validateLRN(this)" required>
           </div>
 
 
@@ -534,17 +594,7 @@ $conn->close();
 
           </div>
         </div>
-        <p class="attestation-head">Attestation and Consent</p>
-
-        <p class="attestation-note">I affirm that I have read and understood all the instructions contained in this
-          application form that the information suplied are true. I affirm that I have read and understood all the
-          instructions contained in this application form that the information suplied are true. I affirm that I have
-          read and understood all the instructions contained in this application form that the information suplied are
-          true.I affirm that I have read and understood all the instructions contained in this application form that
-          the
-          information suplied are true.</p>
-
-
+      
         <br><br>
 
         <!-- Inside your HTML form (admissionform.html), add the following lines where you see fit, perhaps after the signature pad for the student -->
@@ -553,16 +603,16 @@ $conn->close();
       </div>
 
 
-      <div class="applicant_number">
+      <div class="applicant_number" style="display: none;">
         <label for="applicant_number" class="applicant_number">Applicant Number:</label>
         <input type="text" name="applicant_number" id="applicant_number" readonly value="<?php echo $applicantNumber; ?>">
       </div>
-      <div class="form-group">
+      <div class="form-group" style="display: none;">
         <label for="applicant_name">Name of Applicant</label>
         <input type="text" placeholder="Enter Full Name" name="applicant_name" id="applicant_name">
       </div>
 
-      <div class="applicant_number">
+      <div class="applicant_number" style="display: none;">
         <label for="application_date"><strong>DATE OF APPLICATION:</strong></label>
         <input type="date" name="application_date" class="input" id="application_date" value="<?php echo date('Y-m-d'); ?>" required>
       </div>

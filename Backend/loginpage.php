@@ -23,23 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
          
 
 
-  // Check if the user is a student and has filled out the admission form
-  if ($userType == 'Student') {
-    $checkAdmissionQuery = "SELECT id FROM admission_data WHERE email = ?";
-    $stmtCheckAdmission = $conn->prepare($checkAdmissionQuery);
-    $stmtCheckAdmission->bind_param("s", $email);
-    $stmtCheckAdmission->execute();
-    $stmtCheckAdmission->store_result();
-
-    if ($stmtCheckAdmission->num_rows > 0) {
-        // User has already filled out the admission form, redirect to student dashboard
-        header("Location: ../Backend/studentcontent_sidebar.php");
+    if ($userType == 'Student') {
+        header("Location: ../Backend/studentDashboard.php");; // Redirect to studentform.php
         exit();
-    } else {
-        // User needs to fill out the admission form, redirect to admission form
-        header("Location: ../Backend/studentform.php");
-        exit();
-    }
 
             } elseif ($userType == 'Faculty') {
                 if (strtolower($status) == 'approved') {
