@@ -215,11 +215,12 @@ $conn->close();
     </div>
   </header>
 
-  <form id="myForm" action="studentform.php" method="post" autocomplete="off" enctype="multipart/form-data">
+  <form id="myForm" action="studentforms.php" method="post" autocomplete="off" enctype="multipart/form-data">
 
 
     <div style="text-align:center;">
       <span class="step" id="step-1">1</span>
+      <span class="step-connector"></span>
       <span class="step" id="step-2">2</span>
     </div>
 
@@ -380,7 +381,7 @@ $conn->close();
               tag <i>(Signature over printed name)</i></p>
           </div>
         </div>
-        <input type="file" name="id_picture" id="id_picture" accept="image/*" style="position: absolute; left: -9999px; opacity: 0;" required>
+        <input type="file" name="id_picture" id="id_picture" accept="image/*" required>
 
 
 

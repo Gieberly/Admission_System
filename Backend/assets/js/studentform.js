@@ -1,167 +1,130 @@
-
-// Function to check if all required fields in the Course Guide are complete
-function isCourseGuideComplete() {
-  var categoryDropdown = document.getElementById("categoryDropdown");
-  var boardProgramsDropdown = document.getElementById("board-programs");
-  var nonBoardProgramsDropdown = document.getElementById("NonBoardProgram");
-  var classificationDropdown;
-
-  if (categoryDropdown.value === "Board") {
-    classificationDropdown = document.getElementById("academic_classification_board");
-  } else if (categoryDropdown.value === "Non-board") {
-    classificationDropdown = document.getElementById("academic_classification_nonboard");
-  }
-
-  // Add additional checks based on your form requirements
-  if (categoryDropdown.value === "" || (categoryDropdown.value === "Board" && boardProgramsDropdown.value === "") || (categoryDropdown.value === "Non-board" && nonBoardProgramsDropdown.value === "") || classificationDropdown.value === "") {
-    return false;
-  }
-
-  return true;
-}
-
-
 // Default tab
 $(".tab").css("display", "none");
 $("#tab-1").css("display", "block");
 
+// Initialize an array to keep track of completed steps
+var completedSteps = [];
+
+
+// Add an event listener to input fields
+$("input, select").on("focus", function() {
+  $(this).css("background", "#fff"); // Reset background color when focused
+}).on("blur", function() {
+  if ($(this).val() === "") {
+    // If the field is empty, turn background color to red
+    $(this).css("background", "#ffdddd");
+    $(this).attr("placeholder", "Please fill up this field");
+  }
+});
+
 function run(hideTab, showTab) {
-  // Check if all required fields are filled in tab 1
-  if (hideTab === 1 && !isCourseGuideComplete()) {
-    alert("Please complete the Course Guide before proceeding.");
-    return;
+  if (hideTab < showTab) { // If not pressing the previous button
+    // Validation if pressing the next button
+    var currentTab = 0;
+    x = $('#tab-' + hideTab);
+    y = $(x).find("input, select");
+
+    if (hideTab === 1) {
+
+      
+      // Additional validation based on the natureOfDegree can be added here if needed
+
+      // If the nature of the degree is "Board", prompt for grades
+     
+
+      // Validate the checkbox in Tab 1
+      if (!document.getElementById("read-guidelines").checked) {
+        alert("Please check the box to confirm that you have read the guidelines.");
+        return false;
+      }
+
+    } else if (hideTab === 2) {
+      // Handle the file input label click
+      $('label[for="id_picture"]').click(function () {
+        $('input[name="id_picture"]').click();
+      });
+
+      // Display the selected file name
+      $('input[name="id_picture"]').change(function () {
+        var fileName = $(this).val().split("\\").pop();
+        $('label[for="id_picture"]').text(fileName);
+      });
+      var pictureInput = $('input[name="id_picture"]');
+    if (pictureInput[0].files.length === 0) {
+      alert("Please upload an ID picture.");
+      return false;
+    }
+
+    // Display a confirmation dialog for the user to check information before proceeding
+    if (!confirm("Are you sure you want to proceed to the next step? Please double-check your information on this page.")) {
+      return false;
+    }
   }
 
-  // Check if the checkbox is checked in tab 1
-  if (hideTab === 1 && !$("#read-guidelines").prop("checked")) {
-    alert("Please check the checkbox to confirm that you have read the Instructions and Requirements.");
-    return;
-  }
-
-  // Check if the user is in tab 2 and the ID picture file input is empty
-  if (hideTab === 2 && !isIdPictureUploaded()) {
-    alert("Please upload your ID picture before proceeding.");
-    return;
+    for (i = 0; i < y.length; i++) {
+      if ((hideTab === 2 || hideTab === 3) && y[i].value === "") {
+        // Handle empty fields with visual cues
+        $(y[i]).css("background", "#ffdddd");
+        y[i].placeholder = "Please fill up all the field";
+        y[i].focus();
+        return false;
+      }
+    }
+    // Mark the step as completed
+    completedSteps[hideTab - 1] = true;
   }
 
   // Progress bar
   for (i = 1; i < showTab; i++) {
     $("#step-" + i).css("opacity", "1");
+    if (completedSteps[i - 1]) {
+      $("#step-" + i).html('<i class="fas fa-check"></i>'); // Add a checkmark
+    }
   }
 
   // Switch tab
   $("#tab-" + hideTab).css("display", "none");
   $("#tab-" + showTab).css("display", "block");
-  $("input").css("background", "#fff");
-}
+  $("input, select").css("background", "#fff");
 
-// Function to check if the ID picture is uploaded in tab 2
-function isIdPictureUploaded() {
-  var idPictureInput = document.getElementById("id_picture");
-
-  // Check if the file input has files
-  if (idPictureInput.files && idPictureInput.files.length > 0) {
-    return true;
-  }
-
-  return false;
+  window.scrollTo(0, 0);
 }
 
 
-// Add event listener to the picture preview container to trigger file input click
-document.getElementById("id_picture_preview_container").addEventListener("click", function() {
-  document.getElementById("id_picture").click();
+// Handle clicking the image preview to change the image
+document.getElementById('id_picture_preview_container').addEventListener('click', function () {
+  document.getElementById('id_picture').click();
 });
 
-// Add event listener to the file input to handle file selection and update preview
-document.getElementById("id_picture").addEventListener("change", function() {
-  var input = this;
+// Handle the file input change event
+document.getElementById('id_picture').addEventListener('change', function (e) {
+  const fileInput = e.target;
+  const imagePreview = document.getElementById('id_picture_preview_img');
+  const uploadInstructions = document.getElementById('upload-instructions');
 
-  if (input.files && input.files[0]) {
-    var reader = new FileReader();
+  if (fileInput.files.length > 0) {
+    const file = fileInput.files[0];
 
+    // Check if the file size exceeds 5MB
+    const maxSizeInBytes = 5 * 1024 * 1024; // 5MB in bytes
+    if (file.size > maxSizeInBytes) {
+      alert("Please upload a picture with a size less than 5MB.");
+      // Optionally, you may want to clear the file input or take other actions
+      fileInput.value = ''; // Clear the file input
+      return false;
+    }
+    // Display the selected file as the image preview
+    const reader = new FileReader();
     reader.onload = function (e) {
-      // Update the image source in the preview container
-      document.getElementById("id_picture_preview_img").src = e.target.result;
-    };
+      imagePreview.src = e.target.result;
 
-    // Read the selected file as a data URL
-    reader.readAsDataURL(input.files[0]);
-  } else {
-    // Handle the case where no file is selected
-    alert("Please select a valid picture file.");
-    // Clear the current preview, if any
-    document.getElementById("id_picture_preview_img").src = "";
+      // Hide the upload instructions
+      uploadInstructions.style.display = 'none';
+    };
+    reader.readAsDataURL(file);
   }
 });
 
-
-
-function calculateAge() {
-  var birthdateInput = document.getElementById("birthdate");
-  var ageInput = document.getElementById("age");
-
-  if (birthdateInput.value) {
-    var birthdate = new Date(birthdateInput.value);
-    var today = new Date();
-    var age = today.getFullYear() - birthdate.getFullYear();
-
-    // Check if birthday has occurred this year
-    if (today.getMonth() < birthdate.getMonth() || (today.getMonth() === birthdate.getMonth() && today.getDate() < birthdate.getDate())) {
-      age--;
-    }
-
-    ageInput.value = age;
-    removeHighlight('age');
-  }
-}
-
-function removeHighlight(inputId) {
-  var inputElement = document.getElementById(inputId);
-  inputElement.style.background = "#fff"; // Set background to white to remove highlighting
-}
-
-document.getElementById("myForm").addEventListener("blur", function (event) {
-  var target = event.target;
-  if (target.tagName === "INPUT" && target.type !== "submit") {
-    // If the blurred element is an input (excluding submit buttons), highlight if empty
-    if (target.value.trim() === "") {
-      highlightEmptyField(target);
-    } else {
-      removeHighlight(target.id);
-    }
-  }
-}, true);
-
-function highlightEmptyField(inputElement) {
-  inputElement.style.background = "#ffdddd"; // Highlight empty field in red
-}
-
-function validatePhoneNumber(inputId) {
-  var phoneInput = document.getElementById(inputId);
-  var phoneError = document.getElementById(inputId + "-error");
-
-  // Regular expression for a valid Philippine mobile number
-  var regex = /^(09|\+639)\d{9}$/;
-
-  if (!regex.test(phoneInput.value)) {
-    phoneError.innerHTML = "Please enter a valid Philippine mobile number.";
-  } else {
-    phoneError.innerHTML = "";
-  }
-}
-function validateLRN(input) {
-    // Remove non-numeric characters
-    let inputValue = input.value.replace(/\D/g, '');
-
-    // Limit the input to 12 digits
-    if (inputValue.length > 12) {
-        inputValue = inputValue.slice(0, 12);
-    }
-
-    // Update the input value
-    input.value = inputValue;
-}
 
 function updateSelection() {
   var categoryDropdown = document.getElementById("categoryDropdown");
@@ -570,6 +533,66 @@ function NonBoardRequirements() {
   classificationInfoContainer.innerHTML = information;
   academicClassificationInput.value = classification; // Added this line
 }
+
+
+function updateApplicantName() {
+  // Get values from the input fields
+  var lastName = document.getElementById('last_name').value;
+  var firstName = document.getElementById('first_name').value;
+  var middleName = document.getElementById('middle_name').value;
+
+  // Concatenate the values and set them to the "Name of Applicant" field
+  var fullName = lastName + ', ' + firstName + ' ' + middleName;
+  document.getElementById('applicant_name').value = fullName;
+}
+
+
+function calculateAge() {
+  var birthdateInput = document.getElementById("birthdate");
+  var ageInput = document.getElementById("age");
+
+  if (birthdateInput.value) {
+    var birthdate = new Date(birthdateInput.value);
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear();
+
+    // Check if birthday has occurred this year
+    if (today.getMonth() < birthdate.getMonth() || (today.getMonth() === birthdate.getMonth() && today.getDate() < birthdate.getDate())) {
+      age--;
+    }
+
+    ageInput.value = age;
+
+  }
+}
+
+
+function validatePhoneNumber(inputId) {
+  var phoneInput = document.getElementById(inputId);
+  var phoneError = document.getElementById(inputId + "-error");
+
+  // Regular expression for a valid Philippine mobile number
+  var regex = /^(09|\+639)\d{9}$/;
+
+  if (!regex.test(phoneInput.value)) {
+    phoneError.innerHTML = "Please enter a valid Philippine mobile number.";
+  } else {
+    phoneError.innerHTML = "";
+  }
+}
+function validateLRN(input) {
+    // Remove non-numeric characters
+    let inputValue = input.value.replace(/\D/g, '');
+
+    // Limit the input to 12 digits
+    if (inputValue.length > 12) {
+        inputValue = inputValue.slice(0, 12);
+    }
+
+    // Update the input value
+    input.value = inputValue;
+}
+
 
 
 function updateApplicantName() {
