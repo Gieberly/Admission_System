@@ -22,14 +22,23 @@ $stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
 $stmtAdmission->bind_param("s", $email);
 $stmtAdmission->execute();
 $resultAdmission = $stmtAdmission->get_result();
-$admissionData = $resultAdmission->fetch_assoc();
 
-// Display the student's and admission data
+// Check if admission data is available
+if ($resultAdmission->num_rows > 0) {
+    $admissionData = $resultAdmission->fetch_assoc();
+
+    // Display the student's and admission data
+    // ... (your existing HTML code for displaying data)
+} else {
+    // Display a message indicating that data is not set
+    echo "Data not set";
+}
 ?>
 
 <!DOCTYPE html>
 <html>
-    <head>
+
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Profile</title>
@@ -40,16 +49,16 @@ $admissionData = $resultAdmission->fetch_assoc();
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="assets\js\jspdf.min.js"></script>
-<!-- Include the pdf.js library -->
+    <!-- Include the pdf.js library -->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    </head>
+</head>
 
-    <body>
+<body>
     <section id="content">
-    <main>
-  <!--Student Profile-->
-  <div id="student-profile-content">
+        <main>
+            <!--Student Profile-->
+            <div id="student-profile-content">
                 <div class="head-title">
                     <div class="left">
                         <h1>Profile</h1>
@@ -59,78 +68,94 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                   
+
                 </div>
                 <!--profile-->
                 <div id="student-profile">
                     <div class="table-data">
                         <div class="order">
                             <div class="order-profile">
-                           
 
-                            <div class="StudentResult-Content">
-                                <div id="StudentResult-picture" class="student-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
+
+                                <div class="StudentResult-Content">
+                                <div id="StudentResult-picture" class="student-picture">
+    <?php if (!empty($admissionData) && isset($admissionData['id_picture'])): ?>
+        <img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
+
+
+<div class="result-info">
+    <?php if (!empty($admissionData)): ?>
+        <div class="result-style">
+            <p class="result-p">
+                <strong>Applicant Name:</strong>
+                <span id="result-ApplicantName" class="applicant-name">
+                    <?php echo isset($admissionData['applicant_name']) ? $admissionData['applicant_name'] : 'Data not set'; ?>
+                </span>
+            </p>
+        </div>
+
+        <div class="result-style">
+            <p class="result-p">
+                <strong>Applicant Number:</strong>
+                <span id="result-ApplicantNumber" class="applicant-number">
+                    <?php echo isset($admissionData['applicant_number']) ? $admissionData['applicant_number'] : 'Data not set'; ?>
+                </span>
+            </p>
+        </div>
+
+        <div class="result-style">
+            <p class="result-p">
+                <strong>Program:</strong>
+                <span id="result-Program" class="program-info">
+                    <?php echo isset($admissionData['degree_applied']) ? $admissionData['degree_applied'] : 'Data not set'; ?>
+                </span>
+            </p>
+        </div>
+
+    
+
+    <?php else: ?>
+        <p>Data not set</p>
+    <?php endif; ?>
+</div>
+
+<div class="result-style">
+  <p class="result-p">
+ <strong>Status of Result:</strong>
+<a href="#" id="Pending" class="status-pending">Pending</a>
+</p>
+ </div>
+
+
                                 </div>
 
-                                <div class="result-info">
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Applicant Name:</strong>
-                                            <span id="result-ApplicantName" class="applicant-name"><?php echo $admissionData['applicant_name']; ?></span>
-                                        </p>
-                                    </div>
-
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Applicant Number:</strong>
-                                            <span id="result-ApplicantNumber" class="applicant-number"><?php echo $admissionData['applicant_number']; ?> </span>
-                                        </p>
-                                    </div>
 
 
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Program:</strong>
-                                            <span id="result-Program" class="program-info"><?php echo $admissionData['degree_applied']; ?></span>
-                                        </p>
-                                    </div>
-
-                                  
-                                 
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Status of Result:</strong>
-                                            <a href="#" id="Pending" class="status-pending">Pending</a>
-                                        </p>
-                                    </div>
-
-
-
-                                </div>
-                       
-                                    
-
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    </main></section>
+        </main>
+    </section>
     <script>
         $(document).ready(function() {
             $('#downloadPdf').on('click', function() {
                 // Create a new jsPDF instance
                 var pdf = new jsPDF();
-                
+
                 // Get the content of the main section
                 var content = $('#content')[0];
 
                 // Generate the PDF
-                pdf.fromHTML(content, 15, 15, { 'width': 170 });
+                pdf.fromHTML(content, 15, 15, {
+                    'width': 170
+                });
 
                 // Download the PDF
                 pdf.save('student_profile.pdf');
             });
         });
     </script>
-    </body>
+</body>
+
 </html>

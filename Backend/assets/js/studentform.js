@@ -321,20 +321,18 @@ function BoardRequirements() {
             <ol type="I"  class="custom-list">
             <h3>Requirements to Submit</h3>
               <strong>
-              <li>ALS/PEPT Completer:</li>
+              <li>Grade 12 as of application period (Currently enrolled as Grade 12):</li>
           </strong>
           <ol class="rac-list" type="a">
             <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
             <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
               family
               name/surname of the husband</li>
-            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+            <li>Hard copy One (1) 2x2 recent formal studio "type" photo with
               nametag and signature
             </li>
-            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
-              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
-              purposes.</li>
-            <li>Certification of Enrollment from the last school attended (most recent).</li>
+            <li>Certified photocopy of Grade 11 Card</li>
+            <li>Certification of Enrollment from the last school attended.</li>
           </ol>
               </ol>`;
             break;
