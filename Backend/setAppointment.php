@@ -1,90 +1,106 @@
+
 <?php
-include('config.php'); // Include the database connection file
+include("config.php");
+include("studentcover.php");
 
-// Fetch user's appointment data from the admission_data table
-$sql = "SELECT appointment_date, appointment_time FROM admission_data WHERE id = 1"; // Assuming the user's ID is 1, modify it accordingly
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $row = $result->fetch_assoc();
-    $appointmentDate = $row["appointment_date"];
-    $appointmentTime = $row["appointment_time"];
-} else {
-    $appointmentDate = "";
-    $appointmentTime = "";
+// Check if the user is a student member, otherwise redirect them
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
+    header("Location: loginpage.php");
+    exit();
 }
 
-$conn->close(); // Close the database connection
+// Retrieve the student's information from the users table
+$userEmail = $_SESSION['user_email'];
+
+// Prepare and execute the SQL query to fetch admission data based on the user's email
+$sql = "SELECT * FROM admission_data WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Retrieve the student's information from the users table
+$studentId = $_SESSION['user_id'];
+$stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmtUser->bind_param("i", $studentId);
+$stmtUser->execute();
+$resultUser = $stmtUser->get_result();
+$studentData = $resultUser->fetch_assoc();
+
+// Retrieve the admission data based on the user's email
+$email = $studentData['email'];
+$stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
+$stmtAdmission->bind_param("s", $email);
+$stmtAdmission->execute();
+$resultAdmission = $stmtAdmission->get_result();
+$admissionData = $resultAdmission->fetch_assoc();
+
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve and sanitize form data
+    $appointmentDate = mysqli_real_escape_string($conn, $_POST['appointment_date']);
+    $appointmentTime = mysqli_real_escape_string($conn, $_POST['appointment_time']);
+
+    // Update the database
+    $stmtUpdate = $conn->prepare("UPDATE admission_data SET appointment_date = ?, appointment_time = ? WHERE email = ?");
+    $stmtUpdate->bind_param("sss", $appointmentDate, $appointmentTime, $email);
+
+    if ($stmtUpdate->execute()) {
+        echo "Appointment updated successfully!";
+        // Update the $admissionData array with the new values
+        $admissionData['appointment_date'] = $appointmentDate;
+        $admissionData['appointment_time'] = $appointmentTime;
+    } else {
+        echo "Error updating appointment: " . $stmtUpdate->error;
+    }
+
+    // Close the statement
+    $stmtUpdate->close();
+}
+
+// Close the database connection
+$conn->close();
 ?>
-
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Appointment System</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
+    <title>Student Profile</title>
+    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="assets/css/student.css" />
+    <!-- Boxicons -->
+    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="assets\js\jspdf.min.js"></script>
+    <!-- Include the pdf.js library -->
 
-        h1 {
-            text-align: center;
-        }
-
-        .calendar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .month {
-            flex-basis: 30%;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        .available {
-            background-color: #aaffaa; /* Light green for available dates */
-            cursor: pointer;
-        }
-
-        .slot {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .time-selection {
-            margin-top: 10px;
-        }
-
-        .set-button {
-            margin-top: 10px;
-        }
-
-        .form-group {
-            margin-top: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+
 <body>
-    <h1>Available Dates</h1>
+
+    <section id="content">
+        <main>
+            <div id="student-result-content">
+                <div class="head-title">
+                    <div class="left">
+                        <h1>Set Appointment</h1>
+                        <ul class="breadcrumb">
+                            <li><a href="#">Appointment</a></li>
+                            <li><i class='bx bx-chevron-right'></i></li>
+                            <li><a class="active" href="studentcontent_sidebar.php">Home</a></li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!--result(NOA)-->
+                <div id="student-result">
+                    <div class="table-data">
+                        <div class="order">
+                        <h1>Available Dates</h1>
     <div class="calendar">
         <?php
         include 'config.php';
@@ -123,7 +139,7 @@ $conn->close(); // Close the database connection
         foreach ($calendarData as $month => $days) {
             echo "<div class='month'>";
             echo "<h2>$month</h2>";
-            echo "<table>";
+            echo "<table class='smalllabel'>";
             echo "<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>";
 
             $firstDayOfMonth = date('w', strtotime("1 $month")); // Get the day of the week for the first day of the month
@@ -182,20 +198,91 @@ $conn->close(); // Close the database connection
         // Close connection
         $conn->close();
         ?>
-<form action="submit_appointment.php" method="post">
-        <div class="form-group">
-            <label class="small-label" for="appointment_date">Appointment Date</label>
-            <input type="date" name="appointment_date" class="input" id="appointment-date" value="<?php echo $appointmentDate; ?>" required>
-        </div>
+ 
+<!-- Add this form within the <div id="student-profile"> section -->
+<form action="" method="post">
+                <div class="result-style">
+                    <p class="result-p">
+                        <strong>Appointment Date:</strong>
+                        <input type="date" name="appointment_date" id="appointment-date" value="<?php echo $admissionData['appointment_date']; ?>">
+                    </p>
+                </div>
 
-        <div class="form-group">
-            <label class="small-label" for="appointment_time">Appointment Time</label>
-            <input type="text" name="appointment_time" class="input" id="appointment-time" placeholder="" required>
-            <input type="submit" value="Set Appointment">
-        </div>
-        </form>
-        
-        <script>
+                <div class="result-style">
+                    <p class="result-p">
+                        <strong>Appointment Time:</strong>
+                        <input type="text" name="appointment_time" id="appointment-time"  value="<?php echo $admissionData['appointment_time']; ?>">
+                    </p>
+                </div>
+
+                <div class="result-style">
+                    <p class="result-p">
+                        <button type="submit">Update Appointment</button>
+                    </p>
+                </div>
+            </form>
+
+                        </div>
+                    </div>
+
+                    </div>
+<style>
+     
+        h1 {
+            text-align: center;
+        }
+
+        .calendar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .month {
+            flex-basis: 30%;
+        }
+
+        .smalllabel {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .smalllabel th, .smalllabel td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .smalllabel th{
+            background-color: #f2f2f2;
+        }
+
+        .available {
+            background-color: #aaffaa; /* Light green for available dates */
+            cursor: pointer;
+        }
+
+        .slot {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .time-selection {
+            margin-top: 10px;
+        }
+
+        .set-button {
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+    </style>
+   
+  
+            <script>
             function toggleSlots(element) {
                 // Hide all slots
                 var slots = document.querySelectorAll('.slot');
@@ -259,7 +346,17 @@ $conn->close(); // Close the database connection
                 };
                 xhr.send("month=" + encodeURIComponent(month) + "&day=" + encodeURIComponent(day) + "&time=" + encodeURIComponent(time));
             }
+            alert('Appointment updated successfully!');
+            window.location.href = '../Backend/Student_Transaction_page.php';
+      
         </script>
-    </div>
+                                </div>
+                       
+                </div>
+            </div>
+        </main>
+    </section>
+
 </body>
+
 </html>

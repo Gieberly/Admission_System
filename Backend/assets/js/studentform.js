@@ -1,3 +1,25 @@
+// Function to check if all required fields in the Course Guide are complete
+function isCourseGuideComplete() {
+  var categoryDropdown = document.getElementById("categoryDropdown");
+  var boardProgramsDropdown = document.getElementById("board-programs");
+  var nonBoardProgramsDropdown = document.getElementById("NonBoardProgram");
+  var classificationDropdown;
+
+  if (categoryDropdown.value === "Board") {
+    classificationDropdown = document.getElementById("academic_classification_board");
+  } else if (categoryDropdown.value === "Non-board") {
+    classificationDropdown = document.getElementById("academic_classification_nonboard");
+  }
+
+  // Add additional checks based on your form requirements
+  if (categoryDropdown.value === "" || (categoryDropdown.value === "Board" && boardProgramsDropdown.value === "") || (categoryDropdown.value === "Non-board" && nonBoardProgramsDropdown.value === "") || classificationDropdown.value === "") {
+    return false;
+  }
+
+  return true;
+}
+
+
 // Default tab
 $(".tab").css("display", "none");
 $("#tab-1").css("display", "block");
@@ -6,7 +28,7 @@ $("#tab-1").css("display", "block");
 var completedSteps = [];
 
 
-// Add an event listener to input fields
+// Add an event listener to input fields and select elements
 $("input, select").on("focus", function() {
   $(this).css("background", "#fff"); // Reset background color when focused
 }).on("blur", function() {
@@ -17,6 +39,46 @@ $("input, select").on("focus", function() {
   }
 });
 
+function validateTab1() {
+  // Validate the nature of degree selection
+  var natureOfDegree = $("#categoryDropdown").val();
+  if (natureOfDegree === "") {
+    alert("Please select the Nature of Degree.");
+    return false;
+  }
+
+  // Validate the board program selection (if applicable)
+  if (natureOfDegree === "Board") {
+    var boardProgram = $("#board-programs").val();
+    if (boardProgram === "") {
+      alert("Please select a Board Program.");
+      return false;
+    }
+  }
+
+  // Validate the academic classification selection
+  var academicClassification = (natureOfDegree === "Board") ?
+    $("#academic_classification_board").val() :
+    $("#academic_classification_nonboard").val();
+
+  if (academicClassification === "") {
+    alert("Please select Academic Classification.");
+    return false;
+  }
+
+  // Validate the checkbox in Tab 1
+  if (!document.getElementById("read-guidelines").checked) {
+    alert("Please check the box to confirm that you have read the guidelines.");
+    return false;
+  }
+
+  // Mark the step as completed
+  completedSteps[0] = true;
+
+  return true;
+}
+
+
 function run(hideTab, showTab) {
   if (hideTab < showTab) { // If not pressing the previous button
     // Validation if pressing the next button
@@ -24,6 +86,11 @@ function run(hideTab, showTab) {
     x = $('#tab-' + hideTab);
     y = $(x).find("input, select");
 
+    if (hideTab === 1 && !isCourseGuideComplete()) {
+      alert("Please complete the Course Guide before proceeding.");
+      return;
+    }
+    
     if (hideTab === 1) {
 
       
@@ -55,14 +122,11 @@ function run(hideTab, showTab) {
       return false;
     }
 
-    // Display a confirmation dialog for the user to check information before proceeding
-    if (!confirm("Are you sure you want to proceed to the next step? Please double-check your information on this page.")) {
-      return false;
-    }
+
   }
 
     for (i = 0; i < y.length; i++) {
-      if ((hideTab === 2 || hideTab === 3) && y[i].value === "") {
+      if ((hideTab === 2 ) && y[i].value === "") {
         // Handle empty fields with visual cues
         $(y[i]).css("background", "#ffdddd");
         y[i].placeholder = "Please fill up all the field";
@@ -545,8 +609,6 @@ function updateApplicantName() {
   var fullName = lastName + ', ' + firstName + ' ' + middleName;
   document.getElementById('applicant_name').value = fullName;
 }
-
-
 function calculateAge() {
   var birthdateInput = document.getElementById("birthdate");
   var ageInput = document.getElementById("age");
@@ -562,11 +624,9 @@ function calculateAge() {
     }
 
     ageInput.value = age;
-
-  }
+   
 }
-
-
+}
 function validatePhoneNumber(inputId) {
   var phoneInput = document.getElementById(inputId);
   var phoneError = document.getElementById(inputId + "-error");
@@ -581,27 +641,14 @@ function validatePhoneNumber(inputId) {
   }
 }
 function validateLRN(input) {
-    // Remove non-numeric characters
-    let inputValue = input.value.replace(/\D/g, '');
+  // Remove non-numeric characters
+  let inputValue = input.value.replace(/\D/g, '');
 
-    // Limit the input to 12 digits
-    if (inputValue.length > 12) {
-        inputValue = inputValue.slice(0, 12);
-    }
+  // Limit the input to 12 digits
+  if (inputValue.length > 12) {
+      inputValue = inputValue.slice(0, 12);
+  }
 
-    // Update the input value
-    input.value = inputValue;
-}
-
-
-
-function updateApplicantName() {
-  // Get values from the input fields
-  var lastName = document.getElementById('last_name').value;
-  var firstName = document.getElementById('first_name').value;
-  var middleName = document.getElementById('middle_name').value;
-
-  // Concatenate the values and set them to the "Name of Applicant" field
-  var fullName = lastName + ', ' + firstName + ' ' + middleName;
-  document.getElementById('applicant_name').value = fullName;
+  // Update the input value
+  input.value = inputValue;
 }

@@ -1,3 +1,4 @@
+
 <?php
 include("config.php");
 include("studentcover.php");
@@ -7,6 +8,16 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
     header("Location: loginpage.php");
     exit();
 }
+
+// Retrieve the student's information from the users table
+$userEmail = $_SESSION['user_email'];
+
+// Prepare and execute the SQL query to fetch admission data based on the user's email
+$sql = "SELECT * FROM admission_data WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userEmail);
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Retrieve the student's information from the users table
 $studentId = $_SESSION['user_id'];
@@ -24,7 +35,31 @@ $stmtAdmission->execute();
 $resultAdmission = $stmtAdmission->get_result();
 $admissionData = $resultAdmission->fetch_assoc();
 
-// Display the student's and admission data
+// Check if the form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve and sanitize form data
+    $appointmentDate = mysqli_real_escape_string($conn, $_POST['appointment_date']);
+    $appointmentTime = mysqli_real_escape_string($conn, $_POST['appointment_time']);
+
+    // Update the database
+    $stmtUpdate = $conn->prepare("UPDATE admission_data SET appointment_date = ?, appointment_time = ? WHERE email = ?");
+    $stmtUpdate->bind_param("sss", $appointmentDate, $appointmentTime, $email);
+
+    if ($stmtUpdate->execute()) {
+        echo "Appointment updated successfully!";
+        // Update the $admissionData array with the new values
+        $admissionData['appointment_date'] = $appointmentDate;
+        $admissionData['appointment_time'] = $appointmentTime;
+    } else {
+        echo "Error updating appointment: " . $stmtUpdate->error;
+    }
+
+    // Close the statement
+    $stmtUpdate->close();
+}
+
+// Close the database connection
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,7 +81,37 @@ $admissionData = $resultAdmission->fetch_assoc();
 </head>
 
 <body>
+<style>
+      .custom-list {
+            font-size: 14px;
+            margin-left: 20px; /* Adjust the left margin as needed */
+        }
 
+        .custom-list ol {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .custom-list ol li {
+            margin-bottom: 5px;
+        }
+
+        .requirements {
+            font-size: 12px; /* Adjust the font size for requirements */
+        }
+
+        .requirements h3 {
+            color: #333;
+        } .not-set {
+        color: red;
+    }
+
+
+        .requirements strong {
+            color: #007BFF;
+        }
+    </style>
     <section id="content">
         <main>
             <div id="student-result-content">
@@ -65,117 +130,237 @@ $admissionData = $resultAdmission->fetch_assoc();
                 <div id="student-result">
                     <div class="table-data">
                         <div class="order">
+                        <div id="table-container">
+                            <table id="searchableTable">
+                            <thead>
+                                        
+                                        <th>application date</th>
+                                            <th>degree applied</th>
+                                        
+                                         
+                                           
+                                          <!-- New Column -->
+                                            <th>Requirements</th> <!-- New Column -->
+                                            <th>Appointment Date</th>
+                                            <th>Action</th> <!-- Added Action column -->
+                                          
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        
+                                        // Loop through the result set and display data in the table
+                                        $count = 1; // Initialize the count
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                           // Display the count
+                                           echo "<td>" . $row['application_date'] . "</td>";
+                                           
+                                            echo "<td>" . $row['degree_applied'] . "</td>";
+                                          
+                                           
+                                          
+                                        
+                                        
+  // Generate Requirements based on academic_classification
+  $requirements = "";
+  switch ($row['academic_classification']) {
+      case "Senior High School Graduates":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>Senior High School Graduate who did not enroll in any college degree program/technical/vocational/degree program in any other school after graduation and will only enroll for the immediately following School Year:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                  </ol>
+              </ol>";
+          break;
 
-                            <div class="StudentResult-Content">
-                                <div id="StudentResult-picture" class="student-picture"><img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
-                                </div>
+      case "High School (Old Curriculum) Graduates":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree program in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                  </ol>
+              </ol>";
+          break;
 
-                                <div class="result-info">
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Applicant Name:</strong>
-                                            <span id="result-ApplicantName" class="applicant-name"><?php echo $admissionData['applicant_name']; ?></span>
-                                        </p>
-                                    </div>
+      case "Grade 12":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>ALS/PEPT Completer:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                  </ol>
+              </ol>";
+          break;
 
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Applicant Number:</strong>
-                                            <span id="result-ApplicantNumber" class="applicant-number"><?php echo $admissionData['applicant_number']; ?> </span>
-                                        </p>
-                                    </div>
+      case "ALS/PEPT Completers":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>ALS/PEPT Completer:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                  </ol>
+              </ol>";
+          break;
 
+      case "Transferees":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>Transferee:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                      <li>6. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
+                  </ol>
+              </ol>";
+          break;
 
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Program:</strong>
-                                            <span id="result-Program" class="program-info"><?php echo $admissionData['degree_applied']; ?></span>
-                                        </p>
-                                    </div>
+      case "Second Degree":
+          $requirements = "
+              <ol type='I' class='custom-list'>
+                 
+                  <strong>
+                      <li>Second Degree:</li>
+                  </strong>
+                  <ol class='rac-list'>
+                      <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                      <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                      <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                      <li>4. Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                      <li>5. Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school attended</li>
+                      <li>6. Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                      <li>7. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
+                  </ol>
+              </ol>";
+          break;
 
-                                    <!-- Inside the result-info div -->
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Appointment Date:</strong>
-                                            <?php
-                                            $appointmentDate = $admissionData['appointmentDate'];
-                                            if (!empty($appointmentDate)) {
-                                                echo '<span id="result-AppointmentDate" class="appointment-date">' . $appointmentDate . '</span>';
-                                            } else {
-                                                echo '<span id="result-AppointmentDate" class="appointment-date">Not set</span>';
-                                            }
-                                            ?>
-                                        </p>
-                                        <!-- Add a form or button to set an appointment -->
-                                        <div class="set-appointment">
-                                            <h2>Set Appointment</h2>
-                                            <form action="Student_SetAppointment.php" method="post">
-                                                <label for="selectedDate">Select Date:</label>
-                                                <select name="selectedDate" id="selectedDate" required>
-                                                    <?php
-                                                    // Fetch available appointment dates from the database
-                                                    $sql = "SELECT DISTINCT Date FROM Appointments";
-                                                    $result = $conn->query($sql);
+      // Add more cases for other academic_classifications
 
-                                                    if ($result->num_rows > 0) {
-                                                        while ($row = $result->fetch_assoc()) {
-                                                            echo "<option value='" . $row['Date'] . "'>" . $row['Date'] . "</option>";
-                                                        }
-                                                    } else {
-                                                        echo "<option value=''>No available dates</option>";
-                                                    }
-                                                    ?>
-                                                </select>
+      default:
+          // Default case if academic_classification is not handled
+          $requirements = "<li>Requirements not specified for this classification.</li>";
+  }
 
-                                                <!-- Add a div to display available slots based on selected date -->
-                                                <div id="availableSlots"></div>
+  // Apply styling to the requirements
+  echo "<td class='requirements'>" . $requirements . "</td>";
+   $appointmentDate = !empty($row['appointment_date']) ? $row['appointment_date'] : "<span class='not-set'>Not Set</span>";
+    echo "<td>" . $appointmentDate . " </td> ";
 
-                                                <!-- Add a new label and select input for appointment time -->
-                                                <label for="selectedTime">Select Time:</label>
-                                                <select name="selectedTime" id="selectedTime" required>
-                                                    <option value="AM">AM</option>
-                                                    <option value="PM">PM</option>
-                                                </select>
+  echo "<td><a href='set_appointment.php?id=" . $row['id'] . "'>DownLoad PDF</a></td>";
+  echo "</tr>";
+  $count++;
+}
 
-                                                <input type="submit" value="Set Appointment">
-                                            </form>
-                                        </div>
+// Your existing code...
+?>
 
-                                        <script>
-                                            $(document).ready(function() {
-                                                $('#selectedDate').change(function() {
-                                                    var selectedDate = $(this).val();
-                                                    $.ajax({
-                                                        url: 'getAvailableSlots.php',
-                                                        type: 'POST',
-                                                        data: {
-                                                            selectedDate: selectedDate
-                                                        },
-                                                        success: function(response) {
-                                                            $('#availableSlots').html(response);
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        </script>
-                                    </div>
-                                    <div class="result-style">
-                                        <p class="result-p">
-                                            <strong>Status of Result:</strong>
-                                            <a href="#" id="Pending" class="status-pending">Pending</a>
-                                        </p>
-                                    </div>
-
-
-
-                                </div>
-                            </div>
-
+                                </tbody>
+                            </table>
+                               <?php
+    // Check if there are any rows in the result set
+    if ($result->num_rows === 0) {
+        echo "<p>No transaction records found.</p>";
+    }
+    ?>
+                        </div>
 
                         </div>
                     </div>
 
+                    </div>
+<style>
+     
+        h1 {
+            text-align: center;
+        }
 
+        .calendar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .month {
+            flex-basis: 30%;
+        }
+
+        .smalllabel {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .smalllabel th, .smalllabel td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .smalllabel th{
+            background-color: #f2f2f2;
+        }
+
+        .available {
+            background-color: #aaffaa; /* Light green for available dates */
+            cursor: pointer;
+        }
+
+        .slot {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .time-selection {
+            margin-top: 10px;
+        }
+
+        .set-button {
+            margin-top: 10px;
+        }
+
+        .form-group {
+            margin-top: 20px;
+        }
+    </style>
+     
+                                </div>
+                       
                 </div>
             </div>
         </main>

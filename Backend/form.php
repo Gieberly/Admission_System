@@ -167,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if ($stmt->execute()) {
     echo "Form submitted successfully!";
     // Redirect the user to student.php or another appropriate page
-    header("Location: ../Backend/studentcontent_sidebar.php");
+    header("Location: ../Backend/index.php");
     exit();
   } else {
     echo "Error submitting form: " . $stmt->error;
