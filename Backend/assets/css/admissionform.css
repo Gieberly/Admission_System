@@ -57,7 +57,7 @@ body{
           margin: 10px 0;
           box-sizing: border-box;
           width: 100%;
-          border: 1px solid #aaaaaa;
+          border: none;
           padding: 2%; /* Use a percentage for padding */
           font-size: 1em; /* Relative font size */
         }

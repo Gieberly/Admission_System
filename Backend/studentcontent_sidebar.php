@@ -59,10 +59,10 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-calendar" >
-            <i class='bx bxs-calendar'></i>
-            <span class="text">Set Appointment</span>
-        </a>
+                    <a href="#" class="btn-calendar" id="downloadPdf"> <!-- Add an id attribute here -->
+                <i class='bx bxs-download'></i>
+                <span class="text">DOWNLOAD pdf</span>
+            </a>
     
                 </div>
                 <!--profile-->
@@ -119,5 +119,22 @@ $admissionData = $resultAdmission->fetch_assoc();
                 </div>
             </div>
     </main></section>
+    <script>
+        $(document).ready(function() {
+            $('#downloadPdf').on('click', function() {
+                // Create a new jsPDF instance
+                var pdf = new jsPDF();
+                
+                // Get the content of the main section
+                var content = $('#content')[0];
+
+                // Generate the PDF
+                pdf.fromHTML(content, 15, 15, { 'width': 170 });
+
+                // Download the PDF
+                pdf.save('student_profile.pdf');
+            });
+        });
+    </script>
     </body>
 </html>

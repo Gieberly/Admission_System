@@ -282,8 +282,8 @@ $conn->close();
    $appointmentDate = !empty($row['appointment_date']) ? $row['appointment_date'] : "<span class='not-set'>Not Set</span>";
     echo "<td>" . $appointmentDate . " </td> ";
 
-  echo "<td><a href='set_appointment.php?id=" . $row['id'] . "'>DownLoad PDF</a></td>";
-  echo "</tr>";
+  echo "<td><a href='download.php?id=" . $row['id'] . "'>DownLoad PDF</a> </td>";
+  echo "</tr>" ;
   $count++;
 }
 
