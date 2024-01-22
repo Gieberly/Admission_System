@@ -73,7 +73,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Process form data
     $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
-
     $applicant_name = $_POST['applicant_name'];
     $gender = $_POST['gender'];
     $birthdate = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate'])));
@@ -84,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nationality = $_POST['nationality'];
     $permanent_address = $_POST['permanent_address'];
     $zip_code = $_POST['zip_code'];
-    $phone = $_POST['phone'];
+    $phone_number = $_POST['phone_number'];
     $facebook = $_POST['facebook'];
     $email = $_POST['email'];
     $contact_person_1 = $_POST['contact_person_1'];
@@ -138,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Prepare SQL statement for inserting data into admission_data table
-    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters
     $stmt->bind_param(
@@ -154,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nationality,
         $permanent_address,
         $zip_code,
-        $phone,
+        $phone_number,
         $facebook,
         $email,
         $contact_person_1,
@@ -206,7 +205,7 @@ $conn->close();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets\css\admissionform.css">
+    <link rel="stylesheet" href="assets\css\studentform.css">
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
 
 
@@ -230,7 +229,7 @@ $conn->close();
         </div>
     </header>
 
-    <form id="registrationForm" action="form.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
+    <form id="registrationForm" action="studentforms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
 
 
         <div class="progress-bar">
@@ -499,8 +498,8 @@ $conn->close();
                 <div class="form-container">
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
-                        <label class="small-label" for="phone">Telephone/Mobile No.</label>
-                        <input type="tel" name="phone" class="input" id="phone" placeholder="Enter phone number" autocomplete="number" required oninput="validatePhoneNumber('phone')">
+                        <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required oninput="">
                         <p id="phone-error" style="color: red;"></p>
                     </div>
 
@@ -527,7 +526,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-                        <input type="tel" name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact_person_1_mobile')">
+                        <input type="tel" name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" placeholder="Enter mobile number" required oninput="">
                         <p id="contact_person_1_mobile-error" style="color: red;"></p>
                     </div>
                     <div class="form-group">
