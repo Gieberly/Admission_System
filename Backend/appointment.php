@@ -1,9 +1,10 @@
 
 <?php
 include ('config.php');
-function build_calendar($month, $year) {
-    $mysqli = new mysqli('localhost', 'root', '', 'bsu_admission_db');
-    $stmt = $mysqli->prepare("SELECT * FROM appointments WHERE MONTH(DATE) = ? AND YEAR(DATE) = ?");
+
+function build_calendar($month, $year, $conn) {
+    $fetchYearQuery = "SELECT * FROM appointments WHERE MONTH(DATE) = ? AND YEAR(DATE) = ?";
+    $stmt = $conn->prepare($fetchYearQuery);
     $stmt->bind_param('ss', $month, $year);
     $bookings = array();
     if($stmt->execute()){
@@ -105,17 +106,15 @@ function build_calendar($month, $year) {
 
                 <?php
                     $dataComponents = getdate();
-                    if(isset($_GET['month']) && isset($_GET['year']))
-                    {
+                    if (isset($_GET['month']) && isset($_GET['year'])) {
                         $month = $_GET['month'];
                         $year = $_GET['year'];
-                    }
-                    else
-                    {
-                        $month = $dataComponents['month'];
+                    } else {
+                        $month = $dataComponents['mon'];
                         $year = $dataComponents['year'];
                     }
-                    echo build_calendar($month,$year)
+                    
+                    echo build_calendar($month, $year, $conn);
                 ?>
             </div>
         </div>

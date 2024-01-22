@@ -8,12 +8,11 @@ if(isset($_POST['submit'])){
         $fname =$_POST['FIRSTNAME'];
         $mname =$_POST['MIDDLENAME'];
         $lname =$_POST['LASTNAME'];
-        $phone =$_POST['PHONE'];
         $email =$_POST['EMAIL'];
 		$AUTONUM=$_POST['AUTONUM'];
         $conn = new mysqli('localhost','root','','bookingsysystem');
 
-        $sql ="INSERT INTO bookings_record(FIRSTNAME,MIDDLENAME,LASTNAME,PHONE,EMAIL,DATE,AUTONUM)VALUES('$fname','$mname','$lname','$phone','$email','$date','$AUTONUM')";
+        $sql ="INSERT INTO bookings_record(FIRSTNAME,MIDDLENAME,LASTNAME,EMAIL,DATE,AUTONUM)VALUES('$fname','$mname','$lname','$email','$date','$AUTONUM')";
         
         if($conn->query($sql)){
             $message = "<div class='alert alert-success'>Booking Successfull</div>";
@@ -61,10 +60,6 @@ for ($i = 0; $i<6; $i++)
                     <div class="form-group">
                         <label for=""> LAST NAME</label>
                         <input type="text" class="form-control" name="LASTNAME" required>
-                    </div>
-                    <div class="form-group">
-                        <label for=""> PHONE NUMBER</label>
-                        <input type="text" class="form-control" name="PHONE" required>
                     </div>
                     <div class="form-group">
                         <label for=""> EMAIL</label>
