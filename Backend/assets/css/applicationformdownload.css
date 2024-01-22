@@ -1,4 +1,4 @@
-*{
+*{ 
     margin:0;
     padding: 0;
     font-family: "Times New Roman";
@@ -110,12 +110,15 @@
   }
   
   .form-group input {
-  width: 100%; /* Input fields occupy the available width */
-  margin-bottom: 10px;
-  border-radius: 5px; /* Adding border radius */
-  padding: 5px; /* Optional: Adjust padding for better appearance */
-  border: 1px solid #ccc; /* Optional: Border for input fields */
-  }
+    font-weight: bold;
+    font-size: 16px; /* Adjust the size according to your preference */
+    width: 100%;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    padding: 5px;
+    border: none;
+    border-bottom: 1px solid #cccccc;
+}
   
   p.to-be-filled{
   font-weight: bold;
@@ -295,6 +298,7 @@
   /* width: 150px; Adjust the width as needed */
   font-size: 12px; /* Adjust this value as needed */
   margin-bottom: 5px;
+  color: gray;
   }
   
   .hide {

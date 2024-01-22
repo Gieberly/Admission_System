@@ -1,3 +1,25 @@
+
+// Function to check if all required fields in the Course Guide are complete
+function isCourseGuideComplete() {
+  var categoryDropdown = document.getElementById("categoryDropdown");
+  var boardProgramsDropdown = document.getElementById("board-programs");
+  var nonBoardProgramsDropdown = document.getElementById("NonBoardProgram");
+  var classificationDropdown;
+
+  if (categoryDropdown.value === "Board") {
+    classificationDropdown = document.getElementById("academic_classification_board");
+  } else if (categoryDropdown.value === "Non-board") {
+    classificationDropdown = document.getElementById("academic_classification_nonboard");
+  }
+
+  // Add additional checks based on your form requirements
+  if (categoryDropdown.value === "" || (categoryDropdown.value === "Board" && boardProgramsDropdown.value === "") || (categoryDropdown.value === "Non-board" && nonBoardProgramsDropdown.value === "") || classificationDropdown.value === "") {
+    return false;
+  }
+
+  return true;
+}
+
 // Default tab
 $(".tab").css("display", "none");
 $("#tab-1").css("display", "block");
@@ -13,31 +35,7 @@ function run(hideTab, showTab) {
     y = $(x).find("input, select");
 
     if (hideTab === 1) {
-// Prompt for grades or values based on the nature of the degree and academic classification
-var gradeRequirement = false;
-var boardAcademicClassification = ""; // Make sure to assign a proper value
-var nonBoardAcademicClassification = ""; // Make sure to assign a proper value
 
-if (boardAcademicClassification === "grade_12b" || boardAcademicClassification === "shs_graduateb" || boardAcademicClassification === "hs_graduateb") {
-    gradeRequirement = true;
-} else if (boardAcademicClassification === "transfereeb" || boardAcademicClassification === "vocational_completersb" || boardAcademicClassification === "second_degreeb") {
-    gradeRequirement = true;
-} else if (boardAcademicClassification === "als_pept_passerb") {
-    gradeRequirement = true;
-} else if (nonBoardAcademicClassification === "grade_12n" || nonBoardAcademicClassification === "shs_graduaten" || nonBoardAcademicClassification === "hs_graduaten" || nonBoardAcademicClassification === "second_degreen" || nonBoardAcademicClassification === "transfereen" || nonBoardAcademicClassification === "vocational_completersn") {
-    gradeRequirement = true;
-} else if (nonBoardAcademicClassification === "als_pept_passern") {
-    gradeRequirement = true;
-}
-
-if (gradeRequirement) {
-    var inputValue = parseFloat(document.getElementById("inputValue").value);
-
-    if (isNaN(inputValue) || inputValue < 0 || inputValue > 100) {
-      showCustomAlert("Please enter a valid value before proceeding.");
-        return false;
-    }
-}
 // Validate the checkbox in Tab 1
 if (!document.getElementById("read-guidelines").checked) {
   showCustomAlert("Please check the box to confirm that you have read the guidelines.");
@@ -67,7 +65,7 @@ if (!document.getElementById("read-guidelines").checked) {
   }
 
     for (i = 0; i < y.length; i++) {
-      if ((hideTab === 2 || hideTab === 3) && y[i].value === "") {
+      if ((hideTab === 2) && y[i].value === "") {
         // Handle empty fields with visual cues
         $(y[i]).css("background", "#ffdddd");
         y[i].placeholder = "Please fill up all the field";
@@ -95,315 +93,415 @@ $("input, select").css("background", "#fff");
 window.scrollTo(0, 0);
 }
 
+
 function updateSelection() {
-  const selectedNatureDegree = document.getElementById('categoryDropdown').value;
-  const boardClassificationFields = document.getElementById('boardclassificationFields');
-  const nonBoardClassificationFields = document.getElementById('nonclassificationFields');
+  var categoryDropdown = document.getElementById("categoryDropdown");
+  var natureOfDegreeInput = document.getElementById("nature_of_degree");
+  var boardProgramsDropdown = document.getElementById("boardProgramsDropdown");
+  var nonBoardProgramsDropdown = document.getElementById("nonBoardProgramsDropdown");
 
-  // Hide both classification fields initially
-  boardClassificationFields.style.display = 'none';
-  nonBoardClassificationFields.style.display = 'none';
+  // Reset and hide other selections and fields
+  boardProgramsDropdown.style.display = "none";
+  nonBoardProgramsDropdown.style.display = "none";
+  document.getElementById("boardclassificationFields").style.display = "none";
+  document.getElementById("nonclassificationFields").style.display = "none";
+  $("#classificationInfo").html(""); // Clear grade input fields
+  $("#non_board_results").html(""); // Clear non-board results container
 
-  if (selectedNatureDegree === 'Board') {
-    boardClassificationFields.style.display = 'block';
-  } else if (selectedNatureDegree === 'Non-board') {
-    nonBoardClassificationFields.style.display = 'block';
+  if (categoryDropdown.value === "Board") {
+    boardProgramsDropdown.style.display = "block";
+  } else if (categoryDropdown.value === "Non-board") {
+    nonBoardProgramsDropdown.style.display = "block";
+    // Remove the line below to prevent the updateNonBoardGradeSelection function from being called
+    // updateNonBoardGradeSelection(); // Call the function to update non-board results
   }
-  // Get the selected value from the categoryDropdown in Tab-1
-  var selectedNature = document.getElementById('categoryDropdown').value;
 
-  // Set the selected value in the nature_of_degree input field in Tab-2
-  document.getElementById('nature_of_degree').value = selectedNature;
+  // Set the value of the selected option in the "Nature of Degree" dropdown to the input field
+  natureOfDegreeInput.value = categoryDropdown.value;
 }
 
-// Attach the updateNatureOfDegree function to the onchange event of the categoryDropdown
-//document.getElementById('categoryDropdown').onchange = updateNatureOfDegree;
+
+
 
 function updateBoardSelection() {
-  const selectedBoardClassification = document.getElementById('academic_classification_board').value;
-  const boardProgramsDropdown = document.getElementById('boardProgramsDropdown');
-  const nonBoardProgramsDropdown = document.getElementById('nonBoardProgramsDropdown');
+  // Get the selected value from the "Board Programs" dropdown
+  var selectedProgram = document.getElementById("board-programs").value;
 
-  // Hide all programFields initially
-  boardProgramsDropdown.style.display = 'none';
-  nonBoardProgramsDropdown.style.display = 'none';
+  // Check if a program is selected
+  if (selectedProgram !== "") {
+    // Show the related content for the selected program
+    document.getElementById("boardclassificationFields").style.display = "block";
 
-  if (
-    selectedBoardClassification === 'grade_12b' ||
-    selectedBoardClassification === 'shs_graduateb' ||
-    selectedBoardClassification === 'hs_graduateb' ||
-    selectedBoardClassification === 'second_degreeb' ||
-    selectedBoardClassification === 'transfereeb' ||
-    selectedBoardClassification === 'vocational_completersb' ||
-    selectedBoardClassification === 'als_pept_passerb'
-  ) {
-    boardProgramsDropdown.style.display = 'block';
-  } else if (selectedBoardClassification === '') {
-    boardProgramsDropdown.style.display = 'none';
-    nonBoardProgramsDropdown.style.display = 'none';
-  } 
-
-  // Update the value to be shown on the input field in tab-2 based on the selected classification
-  var selectedValue = '';
-
-  switch (selectedBoardClassification) {
-    case 'grade_12b':
-      selectedValue = 'Currently enrolled as Grade 12 student (Graduating for the current year)';
-      break;
-    case 'shs_graduateb':
-      selectedValue = 'Senior High School Graduate (who did not enroll in any other school after graduation)';
-      break;
-    case 'hs_graduateb':
-      selectedValue = 'High School Graduate (who did not enroll in any other school after graduation)';
-      break;
-    case 'als_pept_passerb':
-      selectedValue = 'ALS A&E SHS level passer/ PEPT Passer';
-      break;
-    case 'transfereeb':
-      selectedValue = 'Transferee (previously enrolled as a college student from another school)';
-      break;
-    case 'vocational_completersb':
-      selectedValue = 'Vocational/Technical-Vocational Completers';
-      break;
-    case 'second_degreeb':
-      selectedValue = 'Second (2nd) Degree';
-      break;
-    default:
-      break;
+    // Set the selected program's description as the value of the "degree_applied" input field
+    document.getElementById("degree_applied").value = $("#board-programs option:selected").text();
+  } else {
+    // If no program is selected, hide the related content and clear the "degree_applied" input field
+    document.getElementById("boardclassificationFields").style.display = "none";
+    document.getElementById("degree_applied").value = "";
   }
 
-  // Set the selected value in the first input field
-  document.getElementById("academic_classification").value = selectedValue;
+  // You can add more logic here based on the selected program if needed
 }
 
 
 function updateNonBoardSelection() {
-  const selectedNonBoardClassification = document.getElementById('academic_classification_nonboard').value;
-  const boardProgramsDropdown = document.getElementById('boardProgramsDropdown');
-  const nonBoardProgramsDropdown = document.getElementById('nonBoardProgramsDropdown');
+  // Get the selected value from the "Non-Board Programs" dropdown
+  var selectedNonBoardProgram = document.getElementById("NonBoardProgram").value;
 
-  // Hide all programFields initially
-  boardProgramsDropdown.style.display = 'none';
-  nonBoardProgramsDropdown.style.display = 'none';
+  // Check if a program is selected
+  if (selectedNonBoardProgram !== "") {
+    // Show the related content for the selected Non-Board program
+    document.getElementById("nonclassificationFields").style.display = "block";
 
-  if (
-    selectedNonBoardClassification === 'grade_12n' ||
-    selectedNonBoardClassification === 'shs_graduaten' ||
-    selectedNonBoardClassification === 'hs_graduaten' ||
-    selectedNonBoardClassification === 'second_degreen' ||
-    selectedNonBoardClassification === 'transfereen' ||
-    selectedNonBoardClassification === 'vocational_completersn' ||
-    selectedNonBoardClassification === 'als_pept_passern'
-  ) {
-    nonBoardProgramsDropdown.style.display = 'block';
-  } else if (selectedNonBoardClassification === '') {
-    boardProgramsDropdown.style.display = 'none';
-    nonBoardProgramsDropdown.style.display = 'none';
-  } 
+    // Set the selected Non-Board program's description as the value of the "degree_applied" input field
+    document.getElementById("degree_applied").value = $("#NonBoardProgram option:selected").text();
+  } else {
+    // If no Non-Board program is selected, hide the related content and clear the "degree_applied" input field
+    document.getElementById("nonclassificationFields").style.display = "none";
+    document.getElementById("degree_applied").value = "";
+  }
 
-  // Update the value to be shown on the input field in tab-2 based on the selected classification
-  var selectedValue = '';
+  // You can add more logic here based on the selected Non-Board program if needed
+}
 
-  switch (selectedNonBoardClassification) {
-    case 'grade_12n':
-      selectedValue = 'Currently enrolled as Grade 12 student (Graduating for the current year)';
+function BoardRequirements() {
+  var classificationDropdown = document.getElementById("academic_classification_board");
+  var classificationInfoContainer = document.getElementById("classificationInfo");
+  var academicClassificationInput = document.getElementById("academic_classification"); // Add this line
+
+  // Check if a classification is selected
+  if (classificationDropdown.value !== "") {
+    // Display the corresponding information based on the selected classification
+    switch (classificationDropdown.value) {
+      case "Senior High School Graduates":
+        classificationInfoContainer.innerHTML = `
+          <ol type="I"  class="custom-list">
+          <h3>Requirements to Submit</h3>
+            <strong>
+              <li>Senior High School Graduates who did not enroll in any college degree
+                program/technical/vocational/degree
+                program in any other school after graduation and will only enroll for the immediately following School
+                Year:</li>
+            </strong>
+            <ol class="rac-list" type="a">
+              <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+              <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+                family
+                name/surname of the husband</li>
+              <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+                nametag and signature</li>
+              <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
+                present the original copy for comparison purposes.</li>
+              <li>Certification of Enrollment from the last school attended (most recent).</li>
+            </ol>
+          </ol>`;
+        break;
+        case "High School (Old Curriculum) Graduates":
+          classificationInfoContainer.innerHTML = `
+          <ol type="I"  class="custom-list">
+          <h3>Requirements to Submit</h3>
+            <strong>
+                <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree
+                  program
+                  in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
+              </strong>
+              <ol class="rac-list" type="a">
+                <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+                  family
+                  name/surname of the husband</li>
+                <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+                  nametag and signature
+                </li>
+                <li>Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the
+                  applicant
+                  can present the original copy for comparison purposes.</li>
+                <li>Certification of Enrollment from the last school attended (most recent).</li>
+              </ol>
+            </ol>`;
+          break;
+          case "Grade 12":
+            classificationInfoContainer.innerHTML = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>ALS/PEPT Completer:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
+              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
+              purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+              </ol>`;
+            break;
+          case "ALS/PEPT Completers":
+            classificationInfoContainer.innerHTML = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>ALS/PEPT Completer:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
+              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
+              purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+              </ol>`;
+            break;
+            case "Transferees":
+            classificationInfoContainer.innerHTML = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>Transferee:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+              comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+              your previous School.</li>
+          </ol>
+              </ol>`;
+            break;
+            case "Second Degree":
+              classificationInfoContainer.innerHTML = `
+              <ol type="I"  class="custom-list">
+              <h3>Requirements to Submit</h3>
+                <strong>
+                <li>Second Degree:</li>
+                </strong>
+                <ol class="rac-list" type="a">
+                  <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                  <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+                    family
+                    name/surname of the husband</li>
+                  <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+                    nametag and signature
+                  </li>
+                  <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+                    Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+                    comparison purposes.</li>
+                  <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school
+                    attended</li>
+                  <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                  <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+                    your previous School.</li>
+                </ol>
+                </ol>`;
+              break;
+              default:
+                classificationInfoContainer.innerHTML = ""; // Clear the info container if no match
+            }
+        
+            // Update the value of the academic_classification input field
+            academicClassificationInput.value = classificationDropdown.value; // Add this line
+          } else {
+            // Clear the info container if no classification is selected
+            classificationInfoContainer.innerHTML = "";
+            academicClassificationInput.value = ""; // Clear the input field value if no classification is selected
+          }
+        }
+
+
+function NonBoardRequirements() {
+  var classificationDropdown = document.getElementById("academic_classification_nonboard");
+  var classificationInfoContainer = document.getElementById("classificationInfo");
+  var academicClassificationInput = document.getElementById("academic_classification"); // Added this line
+
+  // Define the information based on the selected classification
+  var classification = classificationDropdown.value;
+  var information = "";
+
+  switch (classification) {
+    case "Senior High School Graduates":
+      information = `
+        <ol type="I" class="custom-list">
+        <h3>Requirements to Submit</h3>
+          <strong>
+              
+            <li>Senior High School Graduate who did not enroll in any college degree
+              program/technical/vocational/degree
+              program in any other school after graduation and will only enroll for the immediately following School
+              Year:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature</li>
+            <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can
+              present the original copy for comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+        </ol>
+      `;
       break;
-    case 'shs_graduaten':
-      selectedValue = 'Senior High School Graduate (who did not enroll in any other school after graduation)';
-      break;
-    case 'hs_graduaten':
-      selectedValue = 'High School Graduate (who did not enroll in any other school after graduation)';
-      break;
-    case 'als_pept_passern':
-      selectedValue = 'ALS A&E SHS level passer/ PEPT Passer';
-      break;
-    case 'transfereen':
-      selectedValue = 'Transferee (previously enrolled as a college student from another school)';
-      break;
-    case 'vocational_completersn':
-      selectedValue = 'Vocational/Technical-Vocational Completers';
-      break;
-    case 'second_degreen':
-      selectedValue = 'Second (2nd) Degree';
-      break;
+      case "High School (Old Curriculum) Graduates":
+        information = `
+          <ol type="I"  class="custom-list">
+          <h3>Requirements to Submit</h3>
+            <strong>
+                <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree
+                  program
+                  in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
+              </strong>
+              <ol class="rac-list" type="a">
+                <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+                  family
+                  name/surname of the husband</li>
+                <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+                  nametag and signature
+                </li>
+                <li>Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the
+                  applicant
+                  can present the original copy for comparison purposes.</li>
+                <li>Certification of Enrollment from the last school attended (most recent).</li>
+              </ol>
+            </ol>`;
+          break;
+          case "Grade 12":
+            information = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>ALS/PEPT Completer:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
+              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
+              purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+              </ol>`;
+            break;
+          case "ALS/PEPT Completers":
+            information = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>ALS/PEPT Completer:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR
+              PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison
+              purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent).</li>
+          </ol>
+              </ol>`;
+            break;
+            case "Transferees":
+              information = `
+            <ol type="I"  class="custom-list">
+            <h3>Requirements to Submit</h3>
+              <strong>
+              <li>Transferee:</li>
+          </strong>
+          <ol class="rac-list" type="a">
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+            <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+              family
+              name/surname of the husband</li>
+            <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+              nametag and signature
+            </li>
+            <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+              Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+              comparison purposes.</li>
+            <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+            <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+              your previous School.</li>
+          </ol>
+              </ol>`;
+            break;
+            case "Second Degree":
+              information = `
+              <ol type="I"  class="custom-list">
+              <h3>Requirements to Submit</h3>
+                <strong>
+                <li>Second Degree:</li>
+                </strong>
+                <ol class="rac-list" type="a">
+                  <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                  <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the
+                    family
+                    name/surname of the husband</li>
+                  <li>Hard copy two (2) 2x2 recent formal studio "type" photo with
+                    nametag and signature
+                  </li>
+                  <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree
+                    Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for
+                    comparison purposes.</li>
+                  <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school
+                    attended</li>
+                  <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                  <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of
+                    your previous School.</li>
+                </ol>
+                </ol>`;
+              break;
+
     default:
+      information = "No specific requirements for the selected classification.";
       break;
   }
 
-  // Set the selected value in the first input field
-  document.getElementById("academic_classification").value = selectedValue;
+  // Update the content of the classificationInfoContainer
+  classificationInfoContainer.innerHTML = information;
+  academicClassificationInput.value = classification; // Added this line
 }
 
-
-function updateDegreeFields() {
-  const selectedBoardClassification = document.getElementById('academic_classification_board').value;
-  const selectedBoardProgram = document.getElementById('board-programs').value;
-  const selectednonBoardClassification = document.getElementById('academic_classification_nonboard').value;
-  const selectednonBoardProgram = document.getElementById('NonBoardProgram').value;
-
-  // Hide all programFields initially
-  document.getElementById('hsboardFields').style.display = 'none';
-  document.getElementById('tvnFields').style.display = 'none';
-  document.getElementById('alsFields').style.display = 'none';
-
-  if ((selectedBoardClassification === 'grade_12b' || selectedBoardClassification === 'shs_graduateb' || selectedBoardClassification === 'hs_graduateb') && selectedBoardProgram !== '') {
-    document.getElementById('hsboardFields').style.display = 'block';
-  } else if ((selectedBoardClassification === 'transfereeb' || selectedBoardClassification === 'vocational_completersb' || selectedBoardClassification === 'second_degreeb') && selectedBoardProgram !== '') {
-    document.getElementById('tvnFields').style.display = 'block';
-  } else if (selectedBoardClassification === 'als_pept_passerb' && selectedBoardProgram !== '') {
-    document.getElementById('alsFields').style.display = 'block';
-  } else  if ((selectednonBoardClassification === 'grade_12n' || selectednonBoardClassification === 'shs_graduaten' || selectednonBoardClassification === 'hs_graduaten' || selectednonBoardClassification === 'transfereen' || selectednonBoardClassification === 'vocational_completersn' || selectednonBoardClassification === 'second_degreen') && selectednonBoardProgram !== '') {
-    document.getElementById('tvnFields').style.display = 'block';
-  } else if (selectednonBoardClassification === 'als_pept_passern' && selectednonBoardProgram !== '') {
-    document.getElementById('alsFields').style.display = 'block';
-  }
-
-  // Get the selected value from the board program dropdown
- var selectedValueBoard = document.getElementById("board-programs").value;
-
-  // Get the selected value from the non-board program dropdown
- var selectedValueNonBoard = document.getElementById("NonBoardProgram").value;
-
-  // Determine which dropdown is selected and update the input fields accordingly
-  var selectedValue = selectedValueBoard || selectedValueNonBoard;
-
-  // Set the selected value in the first input field
-  document.getElementById("degree_applied").value = selectedValue;
-
-  // Set the selected value in the second input field
-  document.getElementById("slip_degree").value = selectedValue;
-}
-
-function hsBoardSelection() {
-  const englishGrade = parseInt(document.getElementById('englishGrade').value);
-  const mathGrade = parseInt(document.getElementById('mathGrade').value);
-  const scienceGrade = parseInt(document.getElementById('scienceGrade').value);
-  const gwaGrade = parseFloat(document.getElementById('bgwaGrade').value);
-
-  // Check if any grade is lower than 86 or greater than 100
-  if (englishGrade < 86 || mathGrade < 86 || scienceGrade < 86 || gwaGrade < 86 || englishGrade > 100 || mathGrade > 100 || scienceGrade > 100 || gwaGrade > 100) {
-    showCustomAlert("Sorry! Your Grades didn't pass the required Average for Board Program. We advise you not to continue filling the Admission Form, Thank you.");
-  } else if (englishGrade >= 86 && mathGrade >= 86 && scienceGrade >= 86 && gwaGrade >= 86 && englishGrade <= 99 && mathGrade <= 99 && scienceGrade <= 99 && gwaGrade <= 99) {
-    // Grades are valid and within the required range
-    showCustomAlert('Congratulations! Your Grades are eligible for the Board Program. Please proceed with completing the Admission Form.');
-    // Show Board Programs Dropdown
-    document.getElementById('index-btn-wrapper').style.display = 'block';
-  } else {
-    showCustomAlert("Please enter valid grades between 86 and 99.");
-  }
-}
-
-function tvnSelection() {
-  const gwaGrade = parseFloat(document.getElementById('tvgwaGrade').value);
-
-  // Check if GWA is lower than 80 or greater than 100
-  if (gwaGrade < 80 || gwaGrade > 100) {
-    showCustomAlert('Sorry! Your GWA didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
-  } else if (gwaGrade >= 80 && gwaGrade <= 99) {
-    // GWA is valid and within the required range
-    showCustomAlert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
-    // Show Board Programs Dropdown
-    document.getElementById('index-btn-wrapper').style.display = 'block';
-  } else {
-    showCustomAlert('Please enter a valid GWA between 80 and 99.');
-  }
-}
-
-function alsSelection() {
-  const prcGrade = parseFloat(document.getElementById('prcGrade').value);
-
-  // Check if GWA is lower than 80 or greater than 100
-  if (prcGrade < 80 || prcGrade > 100) {
-    showCustomAlert('Sorry! Your PRC didn\'t pass the required Average for the Program. We advise you not to continue filling the Admission Form. Thank you.');
-  } else if (prcGrade >= 80 && prcGrade <= 99) {
-    // GWA is valid and within the required range
-    showCustomAlert('Congratulations! Your GWA is eligible for the Program. Please proceed with completing the Admission Form.');
-    // Show Board Programs Dropdown
-    document.getElementById('index-btn-wrapper').style.display = 'block';
-  } else {
-    showCustomAlert('Please enter a valid PRC between 80 and 99.');
-  }
-}
-
-function updateApplicantName() {
-  // Get values from the input fields
-  var lastName = document.getElementById("last_name").value;
-  var firstName = document.getElementById("first_name").value;
-  var middleName = document.getElementById("middle_name").value;
-
-  // Concatenate the values to form the full name
-  var fullName = lastName + ', ' + firstName + ' ' + middleName;
-
-  // Set the full name in the applicant name input field
-  document.getElementById("applicant_name").value = fullName;
-}
-
-function calculateAge() {
-  // Get the birthdate value from the input field
-  var birthdate = document.getElementById("birthdate").value;
-
-  // Calculate the age based on the birthdate
-  var today = new Date();
-  var birthDate = new Date(birthdate);
-
-  var age = today.getFullYear() - birthDate.getFullYear();
-
-  // Check if the birthday for this year has passed
-  var isBirthdayPassed =
-    today.getMonth() > birthDate.getMonth() ||
-    (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
-
-  // Adjust age if birthday hasn't occurred yet
-  if (!isBirthdayPassed) {
-    age--;
-  }
-
-  // Set the calculated age in the age input field
-  document.getElementById("age").value = age;
-}
-
-
-function validateEmail() {
-  var emailInput = document.getElementById("email");
-  var emailError = document.getElementById("email-error");
-  var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-  // Check if the entered email matches the regular expression
-  if (emailRegex.test(emailInput.value)) {
-    // Check if the email ends with "@gmail.com"
-    if (emailInput.value.toLowerCase().endsWith("@gmail.com")) {
-      emailError.textContent = ""; // Clear error message
-    } else {
-      emailError.textContent = "Please enter a valid email address.";
-    }
-  } else {
-    emailError.textContent = "Please enter a valid email address.";
-  }
-}
-
-function validatePhoneNumber(inputId) {
-  var phoneNumberInput = document.getElementById(inputId);
-  var phoneNumberError = document.getElementById(inputId + "-error");
-  var phoneNumberRegex = /^(09\d{9}|(\+63|0)\d{10})$/;
-
-  // Check if the entered phone number matches the regular expression
-  if (phoneNumberRegex.test(phoneNumberInput.value)) {
-    phoneNumberError.textContent = ""; // Clear error message
-  } else {
-    phoneNumberError.textContent = "Please enter a valid Philippine phone number.";
-  }
-}
-
-document.addEventListener("DOMContentLoaded", function () {
-  // Get the current date
-  var currentDate = new Date();
-
-  // Format the date as "YYYY-MM-DD" (required format for input type="date")
-  var formattedDate = currentDate.toISOString().split('T')[0];
-
-  // Set the formatted date as the value of the input field
-  document.getElementById("application_date").value = formattedDate;
-});
 
 // Handle clicking the image preview to change the image
 document.getElementById('id_picture_preview_container').addEventListener('click', function () {
@@ -440,27 +538,6 @@ document.getElementById('id_picture').addEventListener('change', function (e) {
 });
 
 
-function generateApplicantNumber() {
-  // Get the current date
-  const currentDate = new Date();
-  const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1; // Adding 1 because months are zero-indexed
-
-  // Get the order of the user (you can replace this with your logic to determine the order)
-  const userOrder = 1; // Replace this with your logic to get the user order
-
-  // Format the date and user order to create the applicant number
-  const formattedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}`;
-  const formattedOrder = userOrder.toString().padStart(4, '0');
-  const applicantNumber = `${formattedDate}-${formattedOrder}`;
-
-  // Set the generated applicant number to the input field
-  document.getElementById('applicant_number').value = applicantNumber;
-}
-
-// Call the function when the page loads
-window.onload = generateApplicantNumber;
-
 //Alert Message
 function showCustomAlert(message) {
   var customAlert = document.getElementById("customAlert");
@@ -478,4 +555,83 @@ function showCustomAlert(message) {
 function closeCustomAlert() {
   var customAlert = document.getElementById("customAlert");
   customAlert.style.display = "none";
+}
+
+// Add a class to the fields that need this behavior
+var fieldsToHighlight = document.querySelectorAll('.small-label');
+
+// Add event listeners to those fields
+fieldsToHighlight.forEach(function (field) {
+  field.addEventListener('click', function () {
+    // Check if the field is empty
+    if (field.value.trim() === '') {
+      // Change background color to red
+      field.style.backgroundColor = '#ffdddd';
+
+      // Optionally, reset the background color if the user fills the field later
+      field.addEventListener('input', function () {
+        if (field.value.trim() !== '') {
+          field.style.backgroundColor = '#fff';
+        }
+      });
+    }
+  });
+});
+
+
+function calculateAge() {
+  var birthdateInput = document.getElementById("birthdate");
+  var ageInput = document.getElementById("age");
+
+  if (birthdateInput.value) {
+    var birthdate = new Date(birthdateInput.value);
+    var today = new Date();
+    var age = today.getFullYear() - birthdate.getFullYear();
+
+    // Check if birthday has occurred this year
+    if (today.getMonth() < birthdate.getMonth() || (today.getMonth() === birthdate.getMonth() && today.getDate() < birthdate.getDate())) {
+      age--;
+    }
+
+    ageInput.value = age;
+  
+  }
+}
+
+
+function validatePhoneNumber(inputId) {
+  var phoneInput = document.getElementById(inputId);
+  var phoneError = document.getElementById(inputId + "-error");
+
+  // Regular expression for a valid Philippine mobile number
+  var regex = /^(09|\+639)\d{9}$/;
+
+  if (!regex.test(phoneInput.value)) {
+    phoneError.innerHTML = "Please enter a valid Philippine mobile number.";
+  } else {
+    phoneError.innerHTML = "";
+  }
+}
+function validateLRN(input) {
+  // Remove non-numeric characters
+  let inputValue = input.value.replace(/\D/g, '');
+
+  // Limit the input to 12 digits
+  if (inputValue.length > 12) {
+      inputValue = inputValue.slice(0, 12);
+  }
+
+  // Update the input value
+  input.value = inputValue;
+}
+
+function updateApplicantName() {
+  // Get values from the input fields
+  var lastName = document.getElementById('last_name').value;
+  var firstName = document.getElementById('first_name').value;
+  var middleName = document.getElementById('middle_name').value;
+
+  // Concatenate the values and set them to the "Name of Applicant" field
+  var fullName = lastName + ', ' + firstName + ' ' + middleName;
+  document.getElementById('applicant_name').value = fullName;
 }

@@ -33,7 +33,7 @@ $admissionData = $resultAdmission->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
+
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/student.css" />
     <!-- Boxicons -->
@@ -55,6 +55,12 @@ $admissionData = $resultAdmission->fetch_assoc();
         </a>
 
         <ul class="side-menu top">
+        <li class="">
+                <a href="studentDashboard.php" id="profile-link">
+                <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
             <li class="">
                 <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
