@@ -401,6 +401,7 @@ function getAllStudentFormData() {
             </div>
 
         <?php include('colleges.php');?>
+        <?php include('appointment.php');?>
         </main>
         <!-- MAIN -->
 
@@ -413,7 +414,7 @@ function getAllStudentFormData() {
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture"
                     id="profile-picture">
-                <p class="profile-name"><?php echo $name; ?></p>
+                <p class="profile-name"><?php echo $lname; ?></p>
             </div>
 
             <hr>

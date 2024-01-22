@@ -29,8 +29,14 @@
 
             <li class="">
                 <a href="#" id="data-result-link">
-                    <i class='bx bxs-window-alt'></i>
+                    <i class='bx bxs-book-alt'></i>
                     <span class="text">Colleges</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="#" id="schedule-result-link">
+                    <i class='bx bxs-calendar-alt'></i>
+                    <span class="text">Appointment</span>
                 </a>
             </li>
            

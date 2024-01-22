@@ -1,4 +1,39 @@
 
+    <div id="schedule-result-content">
+        <div class="head-title">
+            <div class="left">
+                <h1>Schedule</h1>
+                <ul class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><i class='bx bx-chevron-right'></i></li>
+                    <li><a class="active" href="#"></a></li>
+                </ul>
+            </div>
+        </div>
+
+        
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger">
+                <?php
+                    $dataComponents = getdate();
+                    if (isset($_GET['month']) && isset($_GET['year'])) {
+                        $month = $_GET['month'];
+                        $year = $_GET['year'];
+                    } else {
+                        $month = $dataComponents['mon'];
+                        $year = $dataComponents['year'];
+                    }
+                    
+                    echo build_calendar($month, $year, $conn);
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+
 <?php
 include ('config.php');
 
@@ -97,26 +132,3 @@ function build_calendar($month, $year, $conn) {
 }
     
 ?>
-
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert aslert-danger">
-                <h1>BSU Admission Appointment</h1>
-
-                <?php
-                    $dataComponents = getdate();
-                    if (isset($_GET['month']) && isset($_GET['year'])) {
-                        $month = $_GET['month'];
-                        $year = $_GET['year'];
-                    } else {
-                        $month = $dataComponents['mon'];
-                        $year = $dataComponents['year'];
-                    }
-                    
-                    echo build_calendar($month, $year, $conn);
-                ?>
-            </div>
-        </div>
-    </div>
-</div>
