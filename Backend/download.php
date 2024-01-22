@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $nationality = $_POST['nationality'];
   $permanent_address = $_POST['permanent_address'];
   $zip_code = $_POST['zip_code'];
-  $phone = $_POST['phone'];
+  $phone_number = $_POST['phone_number'];
   $facebook = $_POST['facebook'];
   $email = $_POST['email'];
   $contact_person_1 = $_POST['contact_person_1'];
@@ -212,8 +212,8 @@ $conn->close();
         <div class="form-container4">
           <!-- Telephone/Mobile No -->
           <div class="form-group">
-            <label class="small-label" for="phone">Telephone/Mobile No.</label>
-            <input name="phone" class="input" id="phone" value="<?php echo $admissionData['phone']; ?>" readonly>
+            <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>" readonly>
           </div>
 
           <!-- Facebook Account Name -->
@@ -323,111 +323,114 @@ $requirements = "";  // Initialize requirements variable
 switch ($admissionData['academic_classification']) {
     case "Senior High School Graduates":
         $requirements = "
-            <ol type='I' class='custom-list'>
+            <ul class='custom-list' type='a'>
                 <h3>Requirements to Submit</h3>
                 <strong>
                     <li>Senior High School Graduate who did not enroll in any college degree program/technical/vocational/degree program in any other school after graduation and will only enroll for the immediately following School Year:</li>
                 </strong>
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy of Grade 12 Report Card. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certification of Enrollment from the last school attended (most recent).</li>
                 </ol>
-            </ol>";
+                <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+            </ul>";
         break;
 
     case "High School (Old Curriculum) Graduates":
         $requirements = "
-            <ol type='I' class='custom-list'>
-            <h3>Requirements to Submit</h3>
+            <ul class='custom-list' type='a'>
+                <h3>Requirements to Submit</h3>
                 <strong>
-                    <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree program in any other school after graduation from high school and will only enroll this S.Y. 2021-2022:</li>
+                    <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree program in any other school after graduation from high school and will only enroll this School Year:</li>
                 </strong>
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy of High School Card/Form 138. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certification of Enrollment from the last school attended (most recent).</li>
                 </ol>
-            </ol>";
+                <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+            </ul>";
         break;
 
     case "Grade 12":
         $requirements = "
-            <ol type='I' class='custom-list'>
-            <h3>Requirements to Submit</h3>
+            <ul class='custom-list' type='a'>
+                <h3>Requirements to Submit</h3>
                 <strong>
                     <li>ALS/PEPT Completer:</li>
                 </strong>
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certification of Enrollment from the last school attended (most recent).</li>
                 </ol>
-            </ol>";
+                <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+            </ul>";
         break;
 
     case "ALS/PEPT Completers":
         $requirements = "
-            <ol type='I' class='custom-list'>
-            <h3>Requirements to Submit</h3>
-            <h3>Requirements to Submit</h3>
+            <ul class='custom-list' type='a'>
+                <h3>Requirements to Submit</h3>
                 <strong>
                     <li>ALS/PEPT Completer:</li>
                 </strong>
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Certification of Enrollment from the last school attended (most recent).</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certification of Enrollment from the last school attended (most recent).</li>
                 </ol>
-            </ol>";
+                <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+            </ul>";
         break;
 
     case "Transferees":
         $requirements = "
-            <ol type='I' class='custom-list'>
-            <h3>Requirements to Submit</h3>
+            <ul class='custom-list' type='a'>
+                <h3>Requirements to Submit</h3>
                 <strong>
-                
                     <li>Transferee:</li>
                 </strong>
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
-                    <li>6. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                    <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                 </ol>
-            </ol>";
+                <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+            </ul>";
         break;
 
     case "Second Degree":
         $requirements = "
-            <ol type='I' class='custom-list'>
-            <h3>Requirements to Submit</h3>
+            <ul class='custom-list' type='a'>
+                <h3>Requirements to Submit</h3>
                 <strong>
-            
                     <li>Second Degree:</li>
                 </strong>
-                
-                <ol class='rac-list'>
-                    <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
-                    <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
-                    <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>4. Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
-                    <li>5. Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school attended</li>
-                    <li>6. Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
-                    <li>7. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
+                <ol class='rac-list' type='a'>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
+                    <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
+                    <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school attended</li>
+                    <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
+                    <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                 </ol>
-            </ol>";
+                  <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
+         
+            </ul>";
         break;
 
     default:
@@ -435,9 +438,41 @@ switch ($admissionData['academic_classification']) {
         break;
 }
 
+
 // Output the requirements
 echo $requirements;
 ?>
+<style>
+   h4 {
+        color: red;
+        margin-top: 10px;
+        text-align: center;
+    }
+    .custom-list {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    h3 {
+        color: #333;
+        text-align: center;
+    }
+
+    .custom-list > strong {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    .rac-list {
+        list-style-type: lower-alpha;
+        margin-top: 0;
+        padding-left: 20px;
+    }
+
+    .rac-list > li {
+        margin-bottom: 10px;
+    }
+</style>
 
 </div>
 

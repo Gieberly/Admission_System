@@ -59,11 +59,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                             <li><a class="active" href="student.html">Home</a></li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-calendar" id="downloadPdf"> <!-- Add an id attribute here -->
-                <i class='bx bxs-download'></i>
-                <span class="text">DOWNLOAD pdf</span>
-            </a>
-    
+                   
                 </div>
                 <!--profile-->
                 <div id="student-profile">
