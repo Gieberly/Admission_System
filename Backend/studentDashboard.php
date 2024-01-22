@@ -9,6 +9,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
     exit();
 }
 
+
 // Fetch data from the database where Nature_of_Degree is 'Board' and Overall_Slots is not empty or zero
 $sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
 $result = $conn->query($sql);

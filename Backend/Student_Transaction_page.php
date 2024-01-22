@@ -9,6 +9,31 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
     exit();
 }
 
+// Retrieve the student's information from the users table
+$userEmail = $_SESSION['user_email'];
+
+// Prepare and execute the SQL query to fetch admission data based on the user's email
+$sql = "SELECT * FROM admission_data WHERE email = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("s", $userEmail);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Retrieve the student's information from the users table
+$studentId = $_SESSION['user_id'];
+$stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
+$stmtUser->bind_param("i", $studentId);
+$stmtUser->execute();
+$resultUser = $stmtUser->get_result();
+$studentData = $resultUser->fetch_assoc();
+
+// Retrieve the admission data based on the user's email
+$email = $studentData['email'];
+$stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
+$stmtAdmission->bind_param("s", $email);
+$stmtAdmission->execute();
+$resultAdmission = $stmtAdmission->get_result();
+$admissionData = $resultAdmission->fetch_assoc();
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {

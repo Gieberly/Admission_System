@@ -237,7 +237,7 @@ $conn->close();
           </div>
           <div class="form-group">
             <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact_person_1_mobile']; ?>" readonly>
+            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>" readonly>
           </div>
           <div class="form-group">
             <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
@@ -324,7 +324,7 @@ switch ($admissionData['academic_classification']) {
     case "Senior High School Graduates":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+                <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>Senior High School Graduate who did not enroll in any college degree program/technical/vocational/degree program in any other school after graduation and will only enroll for the immediately following School Year:</li>
                 </strong>
@@ -342,7 +342,7 @@ switch ($admissionData['academic_classification']) {
     case "High School (Old Curriculum) Graduates":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+            <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>High School Graduate of the Old High School curriculum who did not enroll in any college degree program in any other school after graduation from high school and will only enroll this School Year:</li>
                 </strong>
@@ -360,7 +360,7 @@ switch ($admissionData['academic_classification']) {
     case "Grade 12":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+            <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>ALS/PEPT Completer:</li>
                 </strong>
@@ -378,7 +378,7 @@ switch ($admissionData['academic_classification']) {
     case "ALS/PEPT Completers":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+            <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>ALS/PEPT Completer:</li>
                 </strong>
@@ -396,7 +396,7 @@ switch ($admissionData['academic_classification']) {
     case "Transferees":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+            <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>Transferee:</li>
                 </strong>
@@ -415,7 +415,7 @@ switch ($admissionData['academic_classification']) {
     case "Second Degree":
         $requirements = "
             <ul class='custom-list' type='a'>
-                <h3>Requirements to Submit</h3>
+            <h3>Bring the following documents during your appointment.</h3>
                 <strong>
                     <li>Second Degree:</li>
                 </strong>

@@ -11,6 +11,7 @@ if (!isset($user_id)) {
     header("Location: register.php");
     exit();
 }
+
 // Fetch user data from the database
 $sql = "SELECT * FROM users WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -18,7 +19,6 @@ $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
 
-  
 
 
 // Check if the query was successful
@@ -32,6 +32,22 @@ if ($result && $result->num_rows > 0) {
     exit();
 }
 
+// Check if the user already has data in the admission_data table based on email
+$sqlCheckData = "SELECT COUNT(*) as count FROM admission_data WHERE email = ?";
+$stmtCheckData = $conn->prepare($sqlCheckData);
+$stmtCheckData->bind_param("s", $email);
+$stmtCheckData->execute();
+$resultCheckData = $stmtCheckData->get_result();
+$countData = $resultCheckData->fetch_assoc()['count'];
+
+// Close the statement
+$stmtCheckData->close();
+
+if ($countData > 0) {
+    // User has data, redirect to Student_Transaction_page.php
+    header("Location: Student_Transaction_page.php");
+    exit();
+}
 // Get the current year's last two digits
 $currentYearLastTwoDigits = date('y');
 
@@ -87,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $facebook = $_POST['facebook'];
     $email = $_POST['email'];
     $contact_person_1 = $_POST['contact_person_1'];
-    $contact_person_1_mobile = $_POST['contact_person_1_mobile'];
+    $contact1_phone = $_POST['contact1_phone'];
     $relationship_1 = $_POST['relationship_1'];
     $contact_person_2 = $_POST['contact_person_2'];
     $contact_person_2_mobile = $_POST['contact_person_2_mobile'];
@@ -137,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Prepare SQL statement for inserting data into admission_data table
-    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, contact_person_1_mobile, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters
     $stmt->bind_param(
@@ -157,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $facebook,
         $email,
         $contact_person_1,
-        $contact_person_1_mobile,
+        $contact1_phone,
         $relationship_1,
         $contact_person_2,
         $contact_person_2_mobile,
@@ -178,7 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo "Form submitted successfully!";
         // Redirect the user to student.php or another appropriate page
-        header("Location: ../Backend/setAppointment.php");
+        header("Location: ../Backend/Student_Transaction_page.php");
         exit();
     } else {
         echo "Error submitting form: " . $stmt->error;
@@ -186,8 +202,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Close the statement
     $stmt->close();
-    // Unset the session variable to remove the stored email (optional)
-    unset($_SESSION['registered_email']);
+
 }
 
 
@@ -499,8 +514,8 @@ $conn->close();
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
                         <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required oninput="">
-                        <p id="phone-error" style="color: red;"></p>
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required  oninput="validatePhoneNumber('phone_number')">
+                        <p id="phone_number-error" style="color: red;"></p>
                     </div>
 
                     <!-- Facebook Account Name -->
@@ -525,9 +540,9 @@ $conn->close();
                         <input type="text" name="contact_person_1" class="input" id="contact_person_1" placeholder="Full Name of Contact Person" required>
                     </div>
                     <div class="form-group">
-                        <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-                        <input type="tel" name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" placeholder="Enter mobile number" required oninput="">
-                        <p id="contact_person_1_mobile-error" style="color: red;"></p>
+                        <label class="small-label" for="contact1_phone">Mobile Number</label>
+                        <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')">
+                        <p id="contact1_phone-error" style="color: red;"></p>
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="relationship_1">Relationship w/ Contact Person</label>
@@ -600,7 +615,7 @@ $conn->close();
 
 
                     <div class="form-group">
-                        <label class="small-label" for="degree_applied">Degree</label>
+                        <label class="small-label" for="degree_applied">Program</label>
                         <!-- Display the selected program in this input field -->
                         <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
                     </div>
