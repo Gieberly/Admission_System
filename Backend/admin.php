@@ -283,7 +283,8 @@ function getAllStudentFormData() {
         <tr>
             <td><?php echo $counter++; ?></td>
             <td><?php echo $row['app_number']; ?></td>
-            <td><?php echo $row['name']; ?></td>
+            <td><?php echo $row['fname']; ?></td>
+            <td><?php echo $row['lname']; ?></td>
             <td><?php echo $row['course']; ?></td>
             <td><?php echo $row['email']; ?></td>
             <!-- Add more columns as needed -->
