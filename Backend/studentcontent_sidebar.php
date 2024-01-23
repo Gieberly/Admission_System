@@ -65,7 +65,7 @@ if ($resultAdmission->num_rows > 0) {
                         <ul class="breadcrumb">
                             <li><a href="#">Profile</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="student.html">Home</a></li>
+                            <li><a class="active" href="studentDashboard.php">Home</a></li>
                         </ul>
                     </div>
 

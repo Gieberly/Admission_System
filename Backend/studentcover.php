@@ -141,7 +141,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                 <div class="dropdown" id="help-dropdown">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
-                    <a href="faq.php" onclick="openPopup('faq-popup')">FAQ </a>
+                    <a href="Student_faqs.php" onclick="openPopup('faq-popup')">FAQ </a>
                     <a href="#" onclick="toggleDevonContent()">Connect With us</a>
                     <div id="devon-content" class style="display: none;">
                         <div class="social-icons-container">
