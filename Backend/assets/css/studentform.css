@@ -380,6 +380,11 @@
   flex-direction: row;
   gap: 15px; /* Adjust the gap between form groups */
   }
+  .form-container3 {
+    display: flex;
+    flex-direction: row;
+    gap: 15px; /* Adjust the gap between form groups */
+    }
   
   .form-group {
   flex: 1; /* Make the form groups occupy available space */
@@ -399,6 +404,24 @@
   border: 1px solid #ccc; /* Optional: Border for input fields */
   }
   
+  .form-group2 {
+    flex: 1; /* Make the form groups occupy available space */
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .form-group2 label {
+    margin-bottom: -6px;
+    }
+    
+    .form-group2 input {
+    width: 100%; /* Input fields occupy the available width */
+    margin-bottom: 10px;
+    border-radius: 5px; /* Adding border radius */
+    padding: 8px; /* Optional: Adjust padding for better appearance */
+    border: 1px solid #ccc; /* Optional: Border for input fields */
+    }
+
   p.to-be-filled{
   font-weight: bold;
   font-size: 24px; /* You can adjust the size as needed */
@@ -544,6 +567,10 @@
     grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
     gap: 15px; /* Adjust the gap between form groups */
     }
+    .form-container3 {
+      width: 65%; /* Set the width of the form container to 75% */
+      
+      }
   .form-group {
   display: inline-block;
   margin-right: 15px; /* Adjust this value as needed */
@@ -782,6 +809,15 @@
     width: 100%; /* Set full width for smaller screens */
   }
   .form-group input {
+   width: 100%;
+  }
+  .form-container3 {
+    display: block; /* Change layout to stacked for smaller screens */
+  }
+  .form-group2 {
+    width: 100%; /* Set full width for smaller screens */
+  }
+  .form-group2 input {
    width: 100%;
   }
     /* Media query for screens smaller than 768px */
