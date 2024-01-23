@@ -548,8 +548,8 @@ $conn->close();
                         <label class="small-label" for="relationship_1">Relationship w/ Contact Person</label>
                         <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
                             <option value="" disabled selected>Select Relationship</option>
-                            <option value="parent">Parent</option>
-                            <option value="guardian">Guardian</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Guardian">Guardian</option>
 
                         </select>
                     </div>
@@ -569,8 +569,8 @@ $conn->close();
                         <label class="small-label" for="relationship_2">Relationship w/ Contact Person</label>
                         <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
                             <option value="" disabled selected>Select Relationship</option>
-                            <option value="parent">Parent</option>
-                            <option value="guardian">Guardian</option>
+                            <option value="Parent">Parent</option>
+                            <option value="Guardian">Guardian</option>
 
                         </select>
                     </div>

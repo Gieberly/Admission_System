@@ -73,12 +73,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                     <span class="text">Transaction</span>
                 </a>
             </li>
-            <li class="">
-                <a href="studentannouncement_sidebar.php" id="student-profile-link">
-                    <i class='bx bxs-megaphone'></i>
-                    <span class="text">Announcements</span>
-                </a>
-            </li>
+      
 
            
         </ul>
@@ -120,7 +115,7 @@ $admissionData = $resultAdmission->fetch_assoc();
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"><?php echo $studentData['name']; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $studentData['name'] . ' ' . $studentData['last_name']; ?></p>
             </div>
 
 
@@ -133,17 +128,20 @@ $admissionData = $resultAdmission->fetch_assoc();
                         <input type="checkbox" id="switch-mode" hidden>
                         <label for="switch-mode" class="switch-mode"></label></a>
 
-
-
                 </div>
-                <a href="StudentProfileEdit.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
-
+          
+                <a href="#" id="setting" class="profile-item" > <i class='bx bx-cog'></i> Settings</a>
+          
+                <div class="dropdown" id="setting-content" style="display: none;">
+                <a href="Student_ChangePass.php">Change Password</a>
+             
+            </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
                 <div class="dropdown" id="help-dropdown">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
-                    <a href="student_faq.php" onclick="openPopup('faq-popup')">FAQ </a>
+                    <a href="faq.php" onclick="openPopup('faq-popup')">FAQ </a>
                     <a href="#" onclick="toggleDevonContent()">Connect With us</a>
                     <div id="devon-content" class style="display: none;">
                         <div class="social-icons-container">

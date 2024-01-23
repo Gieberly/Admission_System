@@ -106,13 +106,13 @@ if ($resultAdmission->num_rows > 0) {
                                                 </p>
                                             </div>
                                             <div class="result-style">
-                                                <p class="result-p">
-                                                    <strong>Applicant Number:</strong>
-                                                    <span id="result-ApplicantNumber" class="applicant-number">
-                                                        <?php echo isset($admissionData['degree_applied']) ? $admissionData['degree_applied'] : 'Data not set'; ?>
-                                                    </span>
-                                                </p>
-                                            </div>
+            <p class="result-p">
+                <strong>Program:</strong>
+                <span id="result-Program" class="program-info">
+                    <?php echo isset($admissionData['degree_applied']) ? $admissionData['degree_applied'] : 'Data not set'; ?>
+                </span>
+            </p>
+        </div>
                                              <div class="result-style">
             <p class="result-p">
                 <strong>Status of Result:</strong>

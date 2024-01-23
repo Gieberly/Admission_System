@@ -42,6 +42,7 @@ $resultClassification = $conn->query($sqlClassification);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Process form data
+  $id = $_POST['id']; 
   $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
 
   $applicant_name = $_POST['applicant_name'];
@@ -82,7 +83,7 @@ $conn->close();
 
 <!DOCTYPE html>
 <html lang="en">
-
+ 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -453,6 +454,7 @@ switch ($admissionData['academic_classification']) {
 echo $requirements;
 ?>
 <style>
+
    h4 {
         color: red;
         margin-top: 10px;
