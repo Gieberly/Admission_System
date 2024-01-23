@@ -78,53 +78,57 @@ if ($resultAdmission->num_rows > 0) {
 
 
                                 <div class="StudentResult-Content">
-                                <div id="StudentResult-picture" class="student-picture">
-    <?php if (!empty($admissionData) && isset($admissionData['id_picture'])): ?>
-        <img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
+                                    <div id="StudentResult-picture" class="student-picture">
+                                        <?php if (!empty($admissionData) && isset($admissionData['id_picture'])) : ?>
+                                            <img src="<?php echo $admissionData['id_picture']; ?>" alt="ID Picture">
+                                        <?php else : ?>
+                                            <p></p>
+                                        <?php endif; ?>
+                                    </div>
 
+                                    <div class="result-info">
+                                        <?php if (!empty($admissionData)) : ?>
+                                            <div class="result-style">
+                                                <p class="result-p">
+                                                    <strong>Applicant Name:</strong>
+                                                    <span id="result-ApplicantName" class="applicant-name">
+                                                        <?php echo isset($admissionData['applicant_name']) ? $admissionData['applicant_name'] : 'Data not set'; ?>
+                                                    </span>
+                                                </p>
+                                            </div>
 
-<div class="result-info">
-    <?php if (!empty($admissionData)): ?>
-        <div class="result-style">
+                                            <div class="result-style">
+                                                <p class="result-p">
+                                                    <strong>Applicant Number:</strong>
+                                                    <span id="result-ApplicantNumber" class="applicant-number">
+                                                        <?php echo isset($admissionData['applicant_number']) ? $admissionData['applicant_number'] : 'Data not set'; ?>
+                                                    </span>
+                                                </p>
+                                            </div>
+                                             <div class="result-style">
             <p class="result-p">
-                <strong>Applicant Name:</strong>
-                <span id="result-ApplicantName" class="applicant-name">
-                    <?php echo isset($admissionData['applicant_name']) ? $admissionData['applicant_name'] : 'Data not set'; ?>
-                </span>
+                <strong>Status of Result:</strong>
+                <?php
+                $resultStatus = isset($admissionData['Result']) ? $admissionData['Result'] : 'Pending';
+                echo '<a href="#" id="Pending" class="status-pending">' . $resultStatus . '</a>';
+                ?>
             </p>
         </div>
 
-        <div class="result-style">
-            <p class="result-p">
-                <strong>Applicant Number:</strong>
-                <span id="result-ApplicantNumber" class="applicant-number">
-                    <?php echo isset($admissionData['applicant_number']) ? $admissionData['applicant_number'] : 'Data not set'; ?>
-                </span>
-            </p>
-        </div>
 
-        <div class="result-style">
-            <p class="result-p">
-                <strong>Program:</strong>
-                <span id="result-Program" class="program-info">
-                    <?php echo isset($admissionData['degree_applied']) ? $admissionData['degree_applied'] : 'Data not set'; ?>
-                </span>
-            </p>
-        </div>
+                                        <?php else : ?>
+                                            <p class="apply-program">NO DATA FOUND <br><a href="studentDashboard.php"></a></p>
+                                        <?php endif; ?>
+                                    </div>
 
+
+<style>
     
+.apply-program a:hover {
+    text-decoration: underline;
+}
+</style>
 
-    <?php else: ?>
-        <p>Data not set</p>
-    <?php endif; ?>
-</div>
-
-<div class="result-style">
-  <p class="result-p">
- <strong>Status of Result:</strong>
-<a href="#" id="Pending" class="status-pending">Pending</a>
-</p>
- </div>
 
 
                                 </div>

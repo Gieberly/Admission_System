@@ -7,7 +7,7 @@ include("studentcover.php");
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
     header("Location: loginpage.php");
     exit();
-}
+} 
 
 // Retrieve the student's information from the users table
 $userEmail = $_SESSION['user_email'];
@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtUpdate->bind_param("sss", $appointmentDate, $appointmentTime, $email);
 
     if ($stmtUpdate->execute()) {
-        echo "Appointment updated successfully!";
+        echo "<script>alert('Appointment updated successfully!'); window.location.href = 'Student_Transaction_page.php';</script>";
         // Update the $admissionData array with the new values
         $admissionData['appointment_date'] = $appointmentDate;
         $admissionData['appointment_time'] = $appointmentTime;
@@ -102,122 +102,133 @@ $conn->close();
                         <div class="order">
                         <h1>Available Dates</h1>
     <div class="calendar">
-        <?php
-        include 'config.php';
+ 
+    <?php
+    // Your existing calendar code here
+    include 'config.php';
 
-        // Function to update database slots
-        function updateDatabaseSlots($conn, $month, $day, $time) {
-            // Assuming your table structure has columns 'Date', 'AMSlot', and 'PMSlot'
-            $formattedDate = date("Y-m-d", strtotime("$month $day"));
-            $columnName = ($time == 'AM') ? 'AMSlot' : 'PMSlot';
+    // Function to update database slots
+    function updateDatabaseSlots($conn, $month, $day, $time) {
+        // Assuming your table structure has columns 'Date', 'AMSlot', and 'PMSlot'
+        $formattedDate = date("Y-m-d", strtotime("$month $day"));
+        $columnName = ($time == 'AM') ? 'AMSlot' : 'PMSlot';
 
-            // Update the database record
-            $sql = "UPDATE appointments SET $columnName = $columnName - 1 WHERE Date = '$formattedDate'";
-            $conn->query($sql);
+        // Update the database record
+        $sql = "UPDATE appointments SET $columnName = $columnName - 1 WHERE Date = '$formattedDate'";
+        $conn->query($sql);
+    }
+
+    // Perform query
+    $sql = "SELECT * FROM appointments";
+    $result = $conn->query($sql);
+
+    // Check for errors
+    if (!$result) {
+        die("Error: " . $conn->error);
+    }
+
+    // Organize appointments by month and day
+    $calendarData = array();
+    while ($row = $result->fetch_assoc()) {
+        $date = new DateTime($row['Date']);
+        $month = $date->format('F'); // Full month name
+        $dayOfMonth = $date->format('j');
+
+        $calendarData[$month][$dayOfMonth] = array('AM' => $row['AMSlot'], 'PM' => $row['PMSlot']);
+    }
+
+    // Display the calendar
+    foreach ($calendarData as $month => $days) {
+        echo "<div class='month'>";
+        echo "<h2>$month</h2>";
+        echo "<table class='smalllabel'>";
+        echo "<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>";
+
+        $firstDayOfMonth = date('w', strtotime("1 $month")); // Get the day of the week for the first day of the month
+
+        echo "<tr>";
+
+        // Output empty cells for days before the first day of the month
+        for ($i = 0; $i < $firstDayOfMonth; $i++) {
+            echo "<td></td>";
         }
 
-        // Perform query
-        $sql = "SELECT * FROM appointments";
-        $result = $conn->query($sql);
+        // Output days with slots
+        for ($day = 1; $day <= 31; $day++) {
+            echo "<td";
 
-        // Check for errors
-        if (!$result) {
-            die("Error: " . $conn->error);
-        }
-
-        // Organize appointments by month and day
-        $calendarData = array();
-        while ($row = $result->fetch_assoc()) {
-            $date = new DateTime($row['Date']);
-            $month = $date->format('F'); // Full month name
-            $dayOfMonth = $date->format('j');
-
-            $calendarData[$month][$dayOfMonth] = array('AM' => $row['AMSlot'], 'PM' => $row['PMSlot']);
-        }
-
-        // Display the calendar
-        foreach ($calendarData as $month => $days) {
-            echo "<div class='month'>";
-            echo "<h2>$month</h2>";
-            echo "<table class='smalllabel'>";
-            echo "<tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>";
-
-            $firstDayOfMonth = date('w', strtotime("1 $month")); // Get the day of the week for the first day of the month
-
-            echo "<tr>";
-
-            // Output empty cells for days before the first day of the month
-            for ($i = 0; $i < $firstDayOfMonth; $i++) {
-                echo "<td></td>";
+            // Check if the date is available
+            if (isset($days[$day])) {
+                echo " class='available' onclick='toggleSlots(this)' data-am='" . $days[$day]['AM'] . "' data-pm='" . $days[$day]['PM'] . "'";
+                echo ">";
+                echo "<strong>$day</strong>";
+            } else {
+                echo ">";
+                echo $day;
             }
 
-            // Output days with slots
-            for ($day = 1; $day <= 31; $day++) {
-                echo "<td";
+            echo "</td>";
 
-                // Check if the date is available
-                if (isset($days[$day])) {
-                    echo " class='available' onclick='toggleSlots(this)' data-am='" . $days[$day]['AM'] . "' data-pm='" . $days[$day]['PM'] . "'";
-                    echo ">";
-                    echo "<strong>$day</strong>";
-                } else {
-                    echo ">";
-                    echo $day;
-                }
-
-                echo "</td>";
-
-                if (($firstDayOfMonth + $day) % 7 == 0) {
-                    echo "</tr><tr>";
-                }
+            if (($firstDayOfMonth + $day) % 7 == 0) {
+                echo "</tr><tr>";
             }
-
-            echo "</tr>";
-            echo "</table>";
-
-            // Output slots for each day
-            foreach ($days as $dayOfMonth => $slots) {
-                echo "<div class='slot' id='slots_$month$dayOfMonth'>";
-                echo "<p><strong>Slots Available</strong></p>";
-                echo "<p><strong>$month $dayOfMonth</strong></p>";
-                echo "<p>AM: " . $slots['AM'] . "</p>";
-                echo "<p>PM: " . $slots['PM'] . "</p>";
-                echo "<div class='time-selection'>";
-                echo "<label for='am_radio_$month$dayOfMonth'>AM</label>";
-                echo "<input type='radio' name='time_$month$dayOfMonth' id='am_radio_$month$dayOfMonth' value='AM'>";
-                echo "<label for='pm_radio_$month$dayOfMonth'>PM</label>";
-                echo "<input type='radio' name='time_$month$dayOfMonth' id='pm_radio_$month$dayOfMonth' value='PM'>";
-                echo "</div>";
-                echo "<button class='set-button' onclick='setAppointment(\"$month\", $dayOfMonth)'>Set</button>";
-                echo "</div>";
-            }
-
-            echo "</div>";
         }
 
-        // Close connection
-        $conn->close();
-        ?>
+        echo "</tr>";
+        echo "</table>";
+
+        echo "</div>";
+    }
+
+    // Close connection
+    $conn->close();
+    ?>
+</div>
+
+<div class="appointment-slots">
+    <?php
+    // Output slots for each day
+    foreach ($days as $dayOfMonth => $slots) {
+        echo "<div class='slot' id='slots_$month$dayOfMonth'>";
+        echo "<h3>Select times</h3>";
+        echo "<p><strong>$month $dayOfMonth</strong></p>";
+        echo "<div class='time-options'>";
+        echo "<div class='time-option'>";
+        echo "<input type='radio' name='time_$month$dayOfMonth' id='am_radio_$month$dayOfMonth' value='AM'>";
+        echo "<label for='am_radio_$month$dayOfMonth'>AM</label>";
+        echo "</div>";
+        echo "<div class='time-option'>";
+        echo "<input type='radio' name='time_$month$dayOfMonth' id='pm_radio_$month$dayOfMonth' value='PM'>";
+        echo "<label for='pm_radio_$month$dayOfMonth'>PM</label>";
+        echo "</div>";
+        echo "</div>";
+        echo "<button class='set-appointment-btn' onclick='setAppointment(\"$month\", $dayOfMonth)'>Submit</button>";
+        echo "</div>";
+    }
+    ?>
+</div>
+
+
  
 <!-- Add this form within the <div id="student-profile"> section -->
-<form action="" method="post">
+<form action="" id="formid" style="display: none;" method="post" >
                 <div class="result-style">
                     <p class="result-p">
                         <strong>Appointment Date:</strong>
-                        <input type="date" name="appointment_date" id="appointment-date" value="<?php echo $admissionData['appointment_date']; ?>">
+                        <input type="date" name="appointment_date" id="appointment-date" value="<?php echo $admissionData['appointment_date']; ?>" readonly>
                     </p>
                 </div>
 
                 <div class="result-style">
                     <p class="result-p">
                         <strong>Appointment Time:</strong>
-                        <input type="text" name="appointment_time" id="appointment-time"  value="<?php echo $admissionData['appointment_time']; ?>">
+                        <input type="text" name="appointment_time" id="appointment-time"  value="<?php echo $admissionData['appointment_time']; ?>" readonly>
                     </p>
                 </div>
 
                 <div class="result-style">
                     <p class="result-p">
-                        <button type="submit">Update Appointment</button>
+                        <button type="submit">Submit Appointment</button>
                     </p>
                 </div>
             </form>
@@ -265,16 +276,69 @@ $conn->close();
 
         .slot {
             display: none;
-            margin-top: 10px;
+           
         }
 
-        .time-selection {
-            margin-top: 10px;
-        }
 
-        .set-button {
-            margin-top: 10px;
-        }
+        .calendar {
+  display: flex;
+  justify-content: center;
+  z-index: 1; /* Set a lower z-index value */
+}
+
+
+        .appointment-slots {
+            background-color: #f2f2f2;
+    margin-top: 20px;
+    position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2; /* Set a higher z-index value */
+}
+
+.slot {
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.slot h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.time-options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.time-option {
+    display: flex;
+    align-items: center;
+}
+
+.time-option input {
+    margin-right: 5px;
+}
+
+.set-appointment-btn {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.set-appointment-btn:hover {
+    background-color: #45a049;
+}
+
 
         .form-group {
             margin-top: 20px;
@@ -324,12 +388,18 @@ $conn->close();
             slotsElement.style.display = 'none';
         }
 
+        // Alert the user
         alert("Appointment set for " + month + " " + day + " at " + selectedTime);
+
+        // Submit the form
+        document.getElementById("formid").submit();
+
         // You can perform additional actions here if needed.
     } else {
         alert("Please select a time before setting the appointment.");
     }
 }
+
 
 
 
@@ -346,8 +416,8 @@ $conn->close();
                 };
                 xhr.send("month=" + encodeURIComponent(month) + "&day=" + encodeURIComponent(day) + "&time=" + encodeURIComponent(time));
             }
-            alert('Appointment updated successfully!');
-            window.location.href = '../Backend/Student_Transaction_page.php';
+         
+          
       
         </script>
                                 </div>

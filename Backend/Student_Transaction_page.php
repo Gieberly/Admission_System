@@ -279,14 +279,20 @@ $conn->close();
 
   // Apply styling to the requirements
   echo "<td class='requirements'>" . $requirements . "</td>";
-   $appointmentDate = !empty($row['appointment_date']) ? $row['appointment_date'] : "<span class='not-set'>Not Set</span>";
-    echo "<td>" . $appointmentDate . " </td> ";
+  // Check if the appointment date is set or not
+  $appointmentDate = !empty($row['appointment_date']) ? $row['appointment_date'] : "<span class='not-set'>Not Set</span>";
+  echo "<td>" . $appointmentDate . " </td>";
 
-  echo "<td><a href='download.php?id=" . $row['id'] . "'>DownLoad PDF</a> </td>";
-  echo "</tr>" ;
+  // Display the appropriate action based on appointment status
+  if (empty($row['appointment_date'])) {
+      echo "<td><a href='setAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
+  } else {
+      echo "<td><a href='download.php?id=" . $row['id'] . "'>Download PDF</a></td>";
+  }
+
+  echo "</tr>";
   $count++;
 }
-
 // Your existing code...
 ?>
 
