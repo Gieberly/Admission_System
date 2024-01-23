@@ -72,7 +72,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $nature_of_degree = $_POST['nature_of_degree'];
   $applicant_number = $_POST['applicant_number'];
   $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
-
+  $appointment_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['appointment_date'])));
+  $appointment_time = $_POST['appointment_time'];
   $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
   }
@@ -317,6 +318,11 @@ $conn->close();
         <br>
         <br>
         <br>
+        <div class="form-group">
+<h5>APPOINTMENT DATE:  <?php echo $admissionData['appointment_date']; ?>
+
+<?php echo $admissionData['appointment_time']; ?></h5> 
+
         <?php
 $requirements = "";  // Initialize requirements variable
 
