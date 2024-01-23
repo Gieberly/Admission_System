@@ -369,10 +369,6 @@ $conn->close();
                                     ?>
                                 </select>
                             </div>
-                            <br>
-
-
-
                         </div>
                         <br>
                         <div id="classificationInfo"></div>

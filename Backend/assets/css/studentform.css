@@ -533,15 +533,15 @@
   
   }
   
-  /* Add this CSS for the grid layout with five fields in each row */
+  /* Add this CSS for the grid layout with desired fields in each row */
   .form-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Five equal-width columns */
+  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
   gap: 15px; /* Adjust the gap between form groups */
   }
   .form-container2 {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Five equal-width columns */
+    grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
     gap: 15px; /* Adjust the gap between form groups */
     }
   .form-group {
