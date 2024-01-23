@@ -61,11 +61,15 @@
             padding: 2%; /* Use a percentage for padding */
             font-size: 1em; /* Relative font size */
           }
-          .index-btn-wrapper{
-         
-            width: 5%; /* Adjust the percentage based on your design */
-            max-width: 50px; /* Set a maximum width if needed */
+
+          .index-btn-wrapper {
+            display: flex;
+            justify-content: space-between; /* This will make the buttons spread out horizontally */
+            width: 100%; /* Adjust the width as needed */
             margin: 15px 15px 0 0;
+        }
+        
+        .index-btn {
             background: #04AA6D;
             color: #ffffff;
             border: none;
@@ -73,37 +77,12 @@
             font-size: 17px;
             cursor: pointer;
             transition: 0.3s;
-          }
-  
-          .index-btn{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          
-          .index-btn-wrapper:hover{
+        }
+        
+        .index-btn:hover {
             opacity: 0.8;
-          }
+        }
   
-          .index-btn-wrapper2{
-            display: flex;
-            margin-top: 20px;
-          }
-          
-          .index-btn2{
-            margin: 20px 15px 0 0;
-            background: #04AA6D;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 17px;
-            cursor: pointer;
-            transition: 0.3s;
-          }
-          
-          .index-btn2:hover{
-            opacity: 0.8;
-          }
           
           .progress-bar {
             display: flex;
