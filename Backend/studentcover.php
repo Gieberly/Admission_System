@@ -36,7 +36,8 @@ $admissionData = $resultAdmission->fetch_assoc();
 
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/student.css" />
-    <!-- Boxicons -->
+   
+    <!-- ... (your existing code) -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -171,5 +172,5 @@ $admissionData = $resultAdmission->fetch_assoc();
     <!-- CONTENT -->
     <script src="assets/js/student.js"></script>
 </body>
-
+ 
 </html>

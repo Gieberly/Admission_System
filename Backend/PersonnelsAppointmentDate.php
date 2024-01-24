@@ -36,7 +36,8 @@ if ($result->num_rows > 0) {
             'title' => 'Slots:' . $row['available_slots'],
             'start' => $startDateTime,
             'end' => $startDateTime, // Assuming the event duration is one hour, adjust as needed
-            'color' => '#4CAF50', // Set your desired color here
+            'color' => '#4fbadd', // Set your desired light blue color here
+
         );
     }
 }

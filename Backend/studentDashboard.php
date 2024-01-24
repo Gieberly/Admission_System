@@ -20,7 +20,7 @@ $resultNonBoard = $conn->query($sqlNonBoard);
 
 // Combine the results
 $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard->fetch_all(MYSQLI_ASSOC));
-
+ 
 ?>
 <section id="content">
     <main>

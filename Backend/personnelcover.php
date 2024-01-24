@@ -9,10 +9,10 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     exit();
 }
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT name,last_name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
-$stmt->bind_result($name, $email, $userType, $status);
+$stmt->bind_result($name, $last_name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 
@@ -69,6 +69,12 @@ function getCourses($conn)
                 <a href="PersonnelsAppointmentDate.php" id="master-list-link">
                 <i class='bx bxs-calendar'></i>
                     <span class="text">Appointments</span>
+                </a>
+            </li>
+            <li class="">
+                <a href="PersonnelsReceiving.php" id="master-list-link">
+                <i class='bx bxs-calendar'></i>
+                    <span class="text">Receiving</span>
                 </a>
             </li>
             <li >
@@ -168,7 +174,8 @@ function getCourses($conn)
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $name. ' ' . $last_name; ?>
+</p>
             </div>
 
 

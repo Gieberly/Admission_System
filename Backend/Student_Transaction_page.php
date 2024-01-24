@@ -1,4 +1,3 @@
-
 <?php
 include("config.php");
 include("studentcover.php");
@@ -58,6 +57,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtUpdate->close();
 }
 
+// Automatically set appointment status to "Cancelled" for expired appointments
+$currentDate = date("Y-m-d");
+$stmtCancelExpired = $conn->prepare("UPDATE admission_data SET appointment_status = 'Cancelled' WHERE appointment_date < ? AND appointment_status IS NULL");
+$stmtCancelExpired->bind_param("s", $currentDate);
+$stmtCancelExpired->execute();
+$stmtCancelExpired->close();
+
 // Close the database connection
 $conn->close();
 ?>
@@ -81,10 +87,11 @@ $conn->close();
 </head>
 
 <body>
-<style>
-      .custom-list {
+    <style>
+        .custom-list {
             font-size: 14px;
-            margin-left: 20px; /* Adjust the left margin as needed */
+            margin-left: 20px;
+            /* Adjust the left margin as needed */
         }
 
         .custom-list ol {
@@ -98,14 +105,17 @@ $conn->close();
         }
 
         .requirements {
-            font-size: 12px; /* Adjust the font size for requirements */
+            font-size: 12px;
+            /* Adjust the font size for requirements */
         }
 
         .requirements h3 {
             color: #333;
-        } .not-set {
-        color: red;
-    }
+        }
+
+        .not-set {
+            color: red;
+        }
 
 
         .requirements strong {
@@ -130,43 +140,40 @@ $conn->close();
                 <div id="student-result">
                     <div class="table-data">
                         <div class="order">
-                        <div id="table-container">
-                            <table id="searchableTable">
-                            <thead>
-                                        
-                                        <th>application date</th>
-                                            <th>degree applied</th>
-                                        
-                                         
-                                           
-                                          <!-- New Column -->
-                                            <th>Requirements</th> <!-- New Column -->
+                            <div id="table-container">
+                                <table id="searchableTable">
+                                    <thead>
+                                        <tr>
+                                            <!-- Existing columns -->
+                                            <th>Application Date</th>
+                                            <th>Degree Applied</th>
+                                            <th>Requirements</th>
                                             <th>Appointment Date</th>
-                                            <th>Action</th> <!-- Added Action column -->
-                                          
+                                            <th>Appointment Status</th> <!-- New Column -->
+                                            <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        
+
                                         // Loop through the result set and display data in the table
                                         $count = 1; // Initialize the count
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>";
-                                           // Display the count
-                                           echo "<td>" . $row['application_date'] . "</td>";
-                                           
+                                            // Display the count
+                                            echo "<td>" . $row['application_date'] . "</td>";
+
                                             echo "<td>" . $row['degree_applied'] . "</td>";
-                                          
-                                           
-                                          
-                                        
-                                        
-  // Generate Requirements based on academic_classification
-  $requirements = "";
-  switch ($row['academic_classification']) {
-      case "Senior High School Graduates":
-          $requirements = "
+
+
+
+
+
+                                            // Generate Requirements based on academic_classification
+                                            $requirements = "";
+                                            switch ($row['academic_classification']) {
+                                                case "Senior High School Graduates":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -180,10 +187,10 @@ $conn->close();
                       <li>5. Certification of Enrollment from the last school attended (most recent).</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      case "High School (Old Curriculum) Graduates":
-          $requirements = "
+                                                case "High School (Old Curriculum) Graduates":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -197,10 +204,10 @@ $conn->close();
                       <li>5. Certification of Enrollment from the last school attended (most recent).</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      case "Grade 12":
-          $requirements = "
+                                                case "Grade 12":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -214,10 +221,10 @@ $conn->close();
                       <li>5. Certification of Enrollment from the last school attended (most recent).</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      case "ALS/PEPT Completers":
-          $requirements = "
+                                                case "ALS/PEPT Completers":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -231,10 +238,10 @@ $conn->close();
                       <li>5. Certification of Enrollment from the last school attended (most recent).</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      case "Transferees":
-          $requirements = "
+                                                case "Transferees":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -249,10 +256,10 @@ $conn->close();
                       <li>6. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      case "Second Degree":
-          $requirements = "
+                                                case "Second Degree":
+                                                    $requirements = "
               <ol type='I' class='custom-list'>
                  
                   <strong>
@@ -268,115 +275,122 @@ $conn->close();
                       <li>7. Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                   </ol>
               </ol>";
-          break;
+                                                    break;
 
-      // Add more cases for other academic_classifications
+                                                    // Add more cases for other academic_classifications
 
-      default:
-          // Default case if academic_classification is not handled
-          $requirements = "<li>Requirements not specified for this classification.</li>";
-  }
+                                                default:
+                                                    // Default case if academic_classification is not handled
+                                                    $requirements = "<li>Requirements not specified for this classification.</li>";
+                                            }
 
-  // Apply styling to the requirements
-  echo "<td class='requirements'>" . $requirements . "</td>";
-// Check if the appointment date and time are set or not
-if (!empty($row['appointment_date']) && !empty($row['appointment_time'])) {
-    $appointmentDateTime = date("F d, Y g:i A", strtotime($row['appointment_date'] . ' ' . $row['appointment_time']));
-} elseif (!empty($row['appointment_date'])) {
-    $appointmentDateTime = date("F d, Y", strtotime($row['appointment_date']));
-} else {
-    $appointmentDateTime = "<span class='not-set'>Not Set</span>";
-}
+                                            // Apply styling to the requirements
+                                            echo "<td class='requirements'>" . $requirements . "</td>";
+                                            // Check if the appointment date and time are set or not
+                                            if (!empty($row['appointment_date']) && !empty($row['appointment_time'])) {
+                                                $appointmentDateTime = date("F d, Y g:i A", strtotime($row['appointment_date'] . ' ' . $row['appointment_time']));
+                                            } elseif (!empty($row['appointment_date'])) {
+                                                $appointmentDateTime = date("F d, Y", strtotime($row['appointment_date']));
+                                            } else {
+                                                $appointmentDateTime = "<span class='not-set'>Not Set</span>";
+                                            }
 
-echo "<td>" . $appointmentDateTime . "</td>";
+                                            echo "<td>" . $appointmentDateTime . "</td>";
+                                            echo "<td>" . $row['appointment_status'] . "</td>";
 
 
+                                          
 
-  // Display the appropriate action based on appointment status
-  if (empty($row['appointment_date'])) {
-      echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
-  } else {
-      echo "<td><a href='download.php?id=" . $row['id'] . "'>Download PDF</a></td>";
-  }
+                                            // Check the appointment status and appointment date to display the appropriate action
+                                            if ($row['appointment_status'] === 'Cancelled') {
+                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
+                                            } elseif (empty($row['appointment_date'])) {
+                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
+                                            } else {
+                                                echo "<td><a href='download.php?id=" . $row['id'] . "'>Download PDF</a></td>";
+                                            }
+                                            
+                                            
 
-  echo "</tr>";
-  $count++;
-}
-// Your existing code...
-?>
+                                            echo "</tr>";
+                                            $count++;
+                                        }
+                                        // Your existing code...
+                                        ?>
 
-                                </tbody>
-                            </table>
-                               <?php
-    // Check if there are any rows in the result set
-    if ($result->num_rows === 0) {
-        echo "<p>No transaction records found.</p>";
-    }
-    ?>
-                        </div>
+                                    </tbody>
+                                </table>
+                                <?php
+                                // Check if there are any rows in the result set
+                                if ($result->num_rows === 0) {
+                                    echo "<p>No transaction records found.</p>";
+                                }
+                                ?>
+                            </div>
 
                         </div>
                     </div>
 
-                    </div>
-<style>
-     
-        h1 {
-            text-align: center;
-        }
-
-        .calendar {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .month {
-            flex-basis: 30%;
-        }
-
-        .smalllabel {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-
-        .smalllabel th, .smalllabel td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-        }
-
-        .smalllabel th{
-            background-color: #f2f2f2;
-        }
-
-        .available {
-            background-color: #aaffaa; /* Light green for available dates */
-            cursor: pointer;
-        }
-
-        .slot {
-            display: none;
-            margin-top: 10px;
-        }
-
-        .time-selection {
-            margin-top: 10px;
-        }
-
-        .set-button {
-            margin-top: 10px;
-        }
-
-        .form-group {
-            margin-top: 20px;
-        }
-    </style>
-     
-                                </div>
-                       
                 </div>
+                <style>
+                    h1 {
+                        text-align: center;
+                    }
+
+                    .calendar {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 20px;
+                    }
+
+                    .month {
+                        flex-basis: 30%;
+                    }
+
+                    .smalllabel {
+                        width: 100%;
+                        border-collapse: collapse;
+                        margin-top: 10px;
+                    }
+
+                    .smalllabel th,
+                    .smalllabel td {
+                        border: 1px solid #ddd;
+                        padding: 10px;
+                        text-align: center;
+                    }
+
+                    .smalllabel th {
+                        background-color: #f2f2f2;
+                    }
+
+                    .available {
+                        background-color: #aaffaa;
+                        /* Light green for available dates */
+                        cursor: pointer;
+                    }
+
+                    .slot {
+                        display: none;
+                        margin-top: 10px;
+                    }
+
+                    .time-selection {
+                        margin-top: 10px;
+                    }
+
+                    .set-button {
+                        margin-top: 10px;
+                    }
+
+                    .form-group {
+                        margin-top: 20px;
+                    }
+                </style>
+
+            </div>
+
+            </div>
             </div>
         </main>
     </section>

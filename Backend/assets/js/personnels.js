@@ -286,3 +286,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+function confirmLogout() {
+    // Display a confirmation dialog
+    var confirmLogout = confirm("Are you sure you want to log out?");
+
+    // If the user clicks "OK," redirect to logout.php
+    if (confirmLogout) {
+        window.location.href = "../Backend/logout.php";
+    } else {
+        alert("Logout canceled");
+    }  
+}
