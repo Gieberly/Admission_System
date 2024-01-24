@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied 
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, result, nature_of_degree, degree_applied 
           FROM admission_data 
           WHERE 
             `applicant_name` LIKE '%$search%' OR 
@@ -25,7 +25,7 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `science_grade` LIKE '%$search%' OR 
             `english_grade` LIKE '%$search%' OR 
             `gwa_grade` LIKE '%$search%' OR 
-            `rank` LIKE '%$search%' OR 
+
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%'

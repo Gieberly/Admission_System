@@ -279,13 +279,22 @@ $conn->close();
 
   // Apply styling to the requirements
   echo "<td class='requirements'>" . $requirements . "</td>";
-  // Check if the appointment date is set or not
-  $appointmentDate = !empty($row['appointment_date']) ? $row['appointment_date'] : "<span class='not-set'>Not Set</span>";
-  echo "<td>" . $appointmentDate . " </td>";
+// Check if the appointment date and time are set or not
+if (!empty($row['appointment_date']) && !empty($row['appointment_time'])) {
+    $appointmentDateTime = date("F d, Y g:i A", strtotime($row['appointment_date'] . ' ' . $row['appointment_time']));
+} elseif (!empty($row['appointment_date'])) {
+    $appointmentDateTime = date("F d, Y", strtotime($row['appointment_date']));
+} else {
+    $appointmentDateTime = "<span class='not-set'>Not Set</span>";
+}
+
+echo "<td>" . $appointmentDateTime . "</td>";
+
+
 
   // Display the appropriate action based on appointment status
   if (empty($row['appointment_date'])) {
-      echo "<td><a href='setAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
+      echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
   } else {
       echo "<td><a href='download.php?id=" . $row['id'] . "'>Download PDF</a></td>";
   }

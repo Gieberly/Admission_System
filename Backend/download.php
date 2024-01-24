@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $nature_of_degree = $_POST['nature_of_degree'];
   $applicant_number = $_POST['applicant_number'];
   $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
-  $appointment_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['appointment_date'])));
+  
   $appointment_time = $_POST['appointment_time'];
   $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
@@ -215,7 +215,7 @@ $conn->close();
           <!-- Telephone/Mobile No -->
           <div class="form-group">
             <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>" readonly>
+            <input name="phone_number" class="input" id="phone" value="+63<?php echo $admissionData['phone_number']; ?>" readonly>
           </div>
 
           <!-- Facebook Account Name -->
@@ -239,7 +239,7 @@ $conn->close();
           </div>
           <div class="form-group">
             <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>" readonly>
+            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="+63<?php echo $admissionData['contact1_phone']; ?>" readonly>
           </div>
           <div class="form-group">
             <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
@@ -254,7 +254,7 @@ $conn->close();
           </div>
           <div class="form-group">
             <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>" readonly>
+            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="+63<?php echo $admissionData['contact_person_2_mobile']; ?>" readonly>
           </div>
           <div class="form-group">
             <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
@@ -320,9 +320,8 @@ $conn->close();
         <br>
         <br>
         <div class="form-group">
-<h5>APPOINTMENT DATE:  <?php echo $admissionData['appointment_date']; ?>
+        <h5>APPOINTMENT DATE: <?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></h5>
 
-<?php echo $admissionData['appointment_time']; ?></h5> 
 
         <?php
 $requirements = "";  // Initialize requirements variable

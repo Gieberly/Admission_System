@@ -155,14 +155,13 @@ function getCourses($conn)
     </section>
    
 
-    <!-- Add the profile popup container here -->
-   <!-- Add the profile popup container here -->
-   <div class="profile-popup" id="profile-popup">
+        <!-- Add the profile popup container here -->
+        <div class="profile-popup" id="profile-popup">
         <!-- Popup content -->
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"> <?php echo $name; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
             </div>
 
 
@@ -170,45 +169,26 @@ function getCourses($conn)
             <div class="profile-menu">
                 <a href="#" id="settings" class="profile-item"> <i class='bx bx-sun'></i>Display</a>
 
-                <div class="dropdown" id="settings-dropdown">
-                    <a href="#">Dark Mode
-                        <input type="checkbox" id="switch-mode" hidden>
-                        <label for="switch-mode" class="switch-mode"></label></a>
+                <div class="dropdown" id="settings-dropdown" style="display: none;">
+                    <a href="#"> &nbsp; Dark Mode
+                     &nbsp;  &nbsp; <input type="checkbox" id="switch-mode" hidden>
+                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <label for="switch-mode" class="switch-mode"></label></a>
 
                 </div>
           
                 <a href="#" id="setting" class="profile-item" > <i class='bx bx-cog'></i> Settings</a>
           
                 <div class="dropdown" id="setting-content" style="display: none;">
-                <a href="Student_ChangePass.php">Change Password</a>
+                <a href="EditInfo.php">&nbsp; &nbsp; Change Password</a>
              
             </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-                <div class="dropdown" id="help-dropdown">
+                <div class="dropdown" id="help-dropdown" style="display: none;">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
-                    <a href="Student_faqs.php" onclick="openPopup('faq-popup')">FAQ </a>
-                    <a href="#" onclick="toggleDevonContent()">Connect With us</a>
-                    <div id="devon-content" class style="display: none;">
-                        <div class="social-icons-container">
-                            <!-- Facebook -->
-                            <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
-
-                            <!-- Email -->
-                            <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
-
-                            <!-- Twitter -->
-                            <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
-
-                            <!-- Instagram -->
-                            <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
-
-                            <!-- BSU website -->
-                            <a href="http://www.bsu.edu.ph/" target="_blank" title="BSU_website"><i class='bx bx-world'></i></a>
-                        </div>
-
-                    </div>
+                    <a href="" onclick="openPopup('faq-popup')">&nbsp;&nbsp;&nbsp;Manual </a>
+                
                 </div>
                 <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
             </div>
@@ -216,8 +196,8 @@ function getCourses($conn)
         </div>
     </div>
     <!-- CONTENT -->
-    <script src="assets/js/personnels.js"></script>
+
 </body>
 <!-- #region -->
-
+<script src="assets/js/personnels.js"></script>
 </html>

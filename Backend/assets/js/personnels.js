@@ -182,26 +182,6 @@ showTime();
 //clock
 
 
-document.addEventListener("DOMContentLoaded", function () {
-  
-    const profileButton = document.querySelector("#profile-button");
-    const profilePopup = document.querySelector("#profile-popup");
-
-
-
-    // Toggle the display of the profile popup when the button is clicked
-    profileButton.addEventListener("click", function () {
-        // Toggle the visibility of the profile popup
-        profilePopup.style.display = profilePopup.style.display === "block" ? "none" : "block";
-    });
-
-    // Close the profile popup when the user clicks outside the popup
-    document.addEventListener("click", function (event) {
-        if (!profileButton.contains(event.target) && !profilePopup.contains(event.target)) {
-            profilePopup.style.display = "none";
-        }
-    });
-});
 
 
 
@@ -242,14 +222,67 @@ function updateSelection(answer) {
 };
 
 
-function confirmLogout() {
-    // Display a confirmation dialog
-    var confirmLogout = confirm("Are you sure you want to log out?");
 
-    // If the user clicks "OK," redirect to logout.php
-    if (confirmLogout) {
-        window.location.href = "../Backend/logout.php";
-    } else {
-        alert("Logout canceled");
-    }  
+$(document).ready(function () {
+    $("#settings").click(function () {
+        $("#settings-dropdown").toggle();
+        $("#setting-content").hide();
+        $("#help-dropdown").hide(); // Hide the other dropdown
+        $("#profile-content").toggleClass("soft-transition");
+    }); 
+    
+
+    $("#help").click(function () {
+        $("#help-dropdown").toggle();
+        $("#settings-dropdown").hide();
+        $("#setting-content").hide(); // Hide the other dropdown
+        $("#profile-content").toggleClass("soft-transition");
+    });
+    $("#setting").click(function () {
+        $("#setting-content").toggle();
+        $("#settings-dropdown").hide();
+        $("#help-dropdown").hide(); // Hide the other dropdown
+        $("#profile-content").toggleClass("soft-transition");
+    });
+
+});
+
+function openPopup(popupId) {
+    closeAllPopups();
+    document.getElementById(popupId).style.display = 'block';
+    document.getElementById('overlay').style.display = 'block';
 }
+
+function closePopup(popupId) {
+    document.getElementById(popupId).style.display = 'none';
+    document.getElementById('overlay').style.display = 'none';
+}
+
+function closeAllPopups() {
+    var popups = document.querySelectorAll('.popup');
+    for (var i = 0; i < popups.length; i++) {
+        popups[i].style.display = 'none';
+    }
+    document.getElementById('overlay').style.display = 'none';
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const profileButton = document.querySelector("#profile-button");
+    const profilePopup = document.querySelector("#profile-popup");
+
+
+
+    // Toggle the display of the profile popup when the button is clicked
+    profileButton.addEventListener("click", function () {
+        // Toggle the visibility of the profile popup
+        profilePopup.style.display = profilePopup.style.display === "block" ? "none" : "block";
+    });
+
+    // Close the profile popup when the user clicks outside the popup
+    document.addEventListener("click", function (event) {
+        if (!profileButton.contains(event.target) && !profilePopup.contains(event.target)) {
+            profilePopup.style.display = "none";
+        }
+    });
+});

@@ -123,7 +123,7 @@ $admissionData = $resultAdmission->fetch_assoc();
             <div class="profile-menu">
                 <a href="#" id="settings" class="profile-item"> <i class='bx bx-sun'></i>Display</a>
 
-                <div class="dropdown" id="settings-dropdown">
+                <div class="dropdown" id="settings-dropdown" style="display: none;">
                     <a href="#">Dark Mode
                         <input type="checkbox" id="switch-mode" hidden>
                         <label for="switch-mode" class="switch-mode"></label></a>
@@ -138,7 +138,7 @@ $admissionData = $resultAdmission->fetch_assoc();
             </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-                <div class="dropdown" id="help-dropdown">
+                <div class="dropdown" id="help-dropdown" style="display: none;">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
                     <a href="Student_faqs.php" onclick="openPopup('faq-popup')">FAQ </a>
