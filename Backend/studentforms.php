@@ -26,6 +26,7 @@ if ($result && $result->num_rows > 0) {
     $row = $result->fetch_assoc();
     $last_name = $row['last_name'];
     $name = $row['name'];
+    $mname = $row['mname'];
     $email = $row['email'];
 } else {
 
@@ -194,7 +195,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo "Form submitted successfully!";
         // Redirect the user to student.php or another appropriate page
-        header("Location: ../Backend/Student_Transaction_page.php");
+        header("Location: ../Backend/StudentSetAppointment.php");
         exit();
     } else {
         echo "Error submitting form: " . $stmt->error;
@@ -437,7 +438,7 @@ $conn->close();
 
                     <div class="form-group">
                         <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" required oninput="updateApplicantName()">
+                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required oninput="updateApplicantName()">
                     </div>
 
 
