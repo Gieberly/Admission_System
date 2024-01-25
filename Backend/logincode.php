@@ -28,26 +28,19 @@ if(isset($_POST['login_btn'])){
                 if ($userType == 'Student') {
                     header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
                     exit();
-                } elseif ($userType == 'Faculty') {
-                    if (strtolower($status) == 'verified') {
+                } elseif ($userType == 'faculty') {
+                    
                         header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
                         exit();
-                    } elseif (strtolower($status) == 'pending') {
-                        echo "Please verify your account sent to your email.";
-                    } elseif (strtolower($status) == 'rejected') {
-                        echo "Your registration has been rejected. Please contact the administrator.";
-                    } else {
-                        echo "Your registration is not yet approved. Please wait for admin approval.";
-                    }
-                } elseif ($userType == 'Staff') {
-                    if (strtolower($status) == 'verified') {
+
+                } elseif ($userType == 'staff') {
+                    if (strtolower($status) == 'verified') 
+                    {
                         header("Location: ../Backend/personnel.php");
                         exit();
-                    } elseif (strtolower($status) == 'pending') {
-                        echo "Please verify your account sent to your email.";
-                    } elseif (strtolower($status) == 'rejected') {
-                        echo "Your registration has been rejected. Please contact the administrator.";
-                    } else {
+                    }
+                    else 
+                    {
                         echo "Your registration is not yet approved. Please wait for admin approval.";
                     }
                 } elseif ($userType == 'admin') {

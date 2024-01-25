@@ -4,15 +4,15 @@ include("config.php");
 session_start();
 
 // Check if the user is logged in as a Faculty
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'faculty') {
     header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
     exit();
 }
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT lname, email, userType, status FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT last_name,name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
-$stmt->bind_result($lname, $email, $userType, $status);
+$stmt->bind_result($lname,$name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 

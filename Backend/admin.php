@@ -10,27 +10,27 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
 
 // Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT lname, email, userType,password FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT last_name, email, userType,password FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
-$stmt->bind_result($lname, $email, $userType, $status);
+$stmt->bind_result($lname,$email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, fname, email, status, created_date FROM users WHERE userType = 'staff'";
+    $query = "SELECT id, name, email, status, created_date FROM users WHERE userType = 'staff'";
     $result = $conn->query($query);
     return $result;
 }
 
 // Function to update staff status
-function updateStaffStatus($staffId, $newStatus) {
+function updateStaffStatus($staffId, $newState) {
     global $conn;
-    $query = "UPDATE users SET status = ? WHERE id = ? AND userType = 'staff'";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $newStatus, $staffId);
+    $query = "UPDATE users SET state = ? WHERE id = ? AND userType = 'staff'";
+    $stmt = $conn->prepare($query); 
+    $stmt->bind_param("si", $newState, $staffId);
     return $stmt->execute();
 }
 
@@ -60,42 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
 //Function to get all Departments
 function getAllDept() {
     global $conn;
-    $query = "SELECT college_name, dept_name, course, slots,used_slots,dept_chair FROM department ";
+    $query = "SELECT dept_id, college_name, dept_name, course, slots,used_slots,dept_chair FROM department ";
     $result = $conn->query($query);
     return $result;
 }
-
-// Function to update Departments status
-function updateDeptfStatus($deptId, $newStatus) {
-    global $conn;
-    $query = "UPDATE department SET status = ? WHERE id = ? AND dept_name = 'dept_name'";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("si", $newStatus, $deptId);
-    return $stmt->execute();
-}
-
-// Function to delete Departments
-function deleteDept($deptId) {
-    global $conn;
-    $query = "DELETE FROM department WHERE id = ? AND dept_name = 'dept_name'";
-    $stmt = $conn->prepare($query);
-    $stmt->bind_param("i", $staffId);
-    return $stmt->execute();
-}
-
-// Check if the form for updating Departments is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateStatus'])) {
-    $deptId = $_POST['deptId'];
-    $newStatus = $_POST['newStatus'];
-    updateDeptStatus($staffId, $newStatus);
-}
-
-// Check if the form for deleting Departments member is submitted
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteDept'])) {
-    $staffId = $_POST['deptId'];
-    deleteDept($staffId);
-}
-
 
 
 // Function to get all student form data
@@ -220,84 +188,7 @@ function getAllStudentFormData() {
 
             </div>
 
-            <!--Master List-->
-            <div id="master-list-content">
-                <div class="head-title">
-                    <div class="left">
-                        <h1>Master List</h1>
-                        <ul class="breadcrumb">
-                            <li><a href="#">Master List</a></li>
-                            <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="#top">Home</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <!-- Import & Export link -->
-                <div class="col-md-12 head">
-                    <div class="float-right">
-                        <a href="javascript:void(0);" class="btn btn-success" onclick="formToggle('importFrm');"><i class="plus"></i> Import</a>
-                        <a href="exportData.php" class="btn btn-primary"><i class="exp"></i> Export</a>
-                    </div>
-                </div>
-                <!--master list-->
-                <div id="master-list">
-                    <div class="table-data">
-                        <div class="order">
-                            <div class="head">
-                                <div class="dropdown-nature">
-                                <h3>List of Students</h3>
-                                
-                            </div>
-                            </div>
-                            <div id="table-container">
-                            <table>
-                                <colgroup>
-                                    <col style="width: 5%;">
-                                    <col style="width: 10%;">
-                                    <col style="width: 15%;">
-                                    <col style="width: 10%;">
-                                    <col style="width: 20%;">
-                                    <col style="width: 8%;">
-                                    <col style="width: 8%;">
-                                    <col style="width: 8%;">
-                                    <col style="width: 8%;">
-                                </colgroup>
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Application No.</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Course</th>
-                                        <th>Email</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                <?php
-    // Counter for numbering the students
-    $counter = 1;
-
-    // Loop through the results and populate the table rows
-    while ($row = $studentFormData->fetch_assoc()) {
-    ?>
-        <tr>
-            <td><?php echo $counter++; ?></td>
-            <td><?php echo $row['app_number']; ?></td>
-            <td><?php echo $row['fname']; ?></td>
-            <td><?php echo $row['lname']; ?></td>
-            <td><?php echo $row['course']; ?></td>
-            <td><?php echo $row['email']; ?></td>
-            <!-- Add more columns as needed -->
-        </tr>
-        <?php
-    }
-    ?>                      </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                </div>
-            </div>
+                        <?php include ('masterlist_admin.php')?>
 
           <!-- Personnel List  -->
             <div id="student-result-content">
@@ -356,7 +247,7 @@ function getAllStudentFormData() {
             ?>
             <tr>
                 <td><?php echo $counter++; ?></td>
-                <td><?php echo $row['fname']; ?></td>
+                <td><?php echo $row['name']; ?></td>
                 <td><?php echo $row['email']; ?></td>
                
                 <td><?php echo $row['created_date']; ?></td>
