@@ -10,20 +10,22 @@ $result = $conn->query($sql);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
     $name = $_POST['name'];
+    $mname = $_POST['mname'];
     $last_name = $_POST['last_name'];
     $email = $_POST['email'];
+ 
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     $userType = $_POST['userType'];
     
     // Set status and department based on user type
     if ($userType == 'Student') {
-        $status = 'Approved';
+        $lstatus = 'Approved';
         $department = NULL;
     } elseif ($userType == 'Staff' || $userType == 'Faculty') {
-        $status = 'Pending';
+        $lstatus = 'Pending';
         $department = ($userType == 'Faculty') ? $_POST['description'] : NULL;
     } else {
-        $status = NULL;
+        $lstatus = NULL;
         $department = NULL;
     }
     // Check if the email already exists
@@ -32,10 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($result->num_rows > 0) {
         $error_message = "Email address already exists. Please choose a different email.";
+
     } else {
-        // Email does not exist, proceed with registration
-        $sql = "INSERT INTO users (name, last_name, email, password, userType, status, Department) 
-                VALUES ('$name', '$last_name', '$email', '$password', '$userType', '$status', '$department')";
+        // Email does not exist, proceed with registration 
+        $sql = "INSERT INTO users (name, last_name, mname, email, password, userType, lstatus, Department) 
+                VALUES ('$name', '$last_name', '$mname', '$email', '$password', '$userType', '$lstatus', '$department')";
 
         if ($conn->query($sql) === TRUE) {
             $success_message = "You have successfully Registered!";
@@ -140,6 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <?php endif; ?>
             
                 <input type="text" name="name" placeholder="First Name" autocomplete="name" required>
+                <input type="text" name="mname" placeholder="Middle Name" required>
                 <input type="text" name="last_name" placeholder="Last Name" autocomplete="family-name" required>
                 <input type="email" name="email" placeholder="Email" autocomplete="on">
                 <input type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
@@ -169,7 +173,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 if ($currentNature !== null) {
                                     echo "</optgroup>";
                                 }
-                                echo "<optgroup label=\"$nature\">";
+                                echo "<optgroup label=\"$nature Programs\">";
                                 $currentNature = $nature;
                             }
 

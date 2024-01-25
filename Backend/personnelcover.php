@@ -8,6 +8,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
+
 $userID = $_SESSION['user_id'];
 $stmt = $conn->prepare("SELECT name,last_name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
@@ -65,16 +66,11 @@ function getCourses($conn)
                     <span class="text">Dashboard</span>
                 </a>
             </li>
-            <li class="">
-                <a href="PersonnelsAppointmentDate.php" id="master-list-link">
-                <i class='bx bxs-calendar'></i>
-                    <span class="text">Appointments</span>
-                </a>
-            </li>
+       
             <li class="">
                 <a href="PersonnelsReceiving.php" id="master-list-link">
                 <i class='bx bxs-calendar'></i>
-                    <span class="text">Receiving</span>
+                    <span class="text">Appointment</span>
                 </a>
             </li>
             <li >
@@ -127,6 +123,21 @@ function getCourses($conn)
             if ($current_page === 'masterlist.php') {
             ?>
                 <form action="masterlist.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+
+<?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'PersonnelsReceiving.php') {
+            ?>
+                <form action="PersonnelsReceiving.php" method="GET">
                     <div class="form-input">
                         <input type="search" name="search" placeholder="Search...">
                         <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
@@ -194,7 +205,7 @@ function getCourses($conn)
           
                 <div class="dropdown" id="setting-content" style="display: none;">
                 <a href="EditInfo.php">&nbsp; &nbsp; Change Password</a>
-             
+              
             </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>

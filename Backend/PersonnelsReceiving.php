@@ -80,23 +80,12 @@ $stmt->fetch();
                             <div class="head">
                                 <h3>List of Students</h3>
                                 <div class="headfornaturetosort">
+                                    <div>
+                                        <a href="PersonnelsAppointmentDate.php">
+                                            <i class='bx bxs-calendar calendar-icon'></i> &nbsp;
+                                        </a>
+                                    </div>
 
-
-                                    <label for="rangeInput"></label>
-                                    <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
-                                    <button type="button" id="viewButton">
-                                        <i class='bx bx-filter'></i>
-                                    </button>
-                                    
-                                    <button type='button' id="addStudent" onclick='addStudent()'>
-                                        <i class='bx bx-add-to-queue'></i> Add Student
-                                    </button>
-                                    <button type="button" id="toggleSelection">
-                                        <i class='bx bx-select-multiple'></i> Toggle Selection
-                                    </button>
-                                    <button style="display: none;" type="button" id="deleteSelected">
-                                        <i class='bx bx-trash'></i> Delete Selected
-                                    </button>
 
 
                                 </div>
@@ -113,57 +102,78 @@ $stmt->fetch();
                                             <th>Program</th>
                                             <th>Name</th>
                                             <th>Academic Clasiffication</th>
-                                            <th>Application Date</th> 
-                                            <th>Application Time</th> 
-                                            <th>Status</th>   
+                                            <th>Application Date</th>
+                                            <th>Application Time</th>
+                                            <th>Status</th>
                                             <th>Action</th>
                                             <th style="display: none;" id="selectColumn">Select</th>
                                         </tr>
-                                     
+
                                     </thead>
                                     <tbody>
-                                    <?php
-// Include the configuration file
-include('config.php');
+                                        <?php
+                                        // Include the configuration file
+                                        include('config.php');
 
-// Perform a SELECT query to fetch data
-$sql = "SELECT * FROM admission_data 
-        WHERE (`appointment_date` IS NOT NULL AND `appointment_date` != '0000-00-00') 
-          AND (`appointment_time` IS NOT NULL AND `appointment_time` != '00:00:00')";
+                                        // Perform a SELECT query to fetch data
+                                        $sql = "SELECT * FROM admission_data 
+            WHERE (`appointment_date` IS NOT NULL AND `appointment_date` != '0000-00-00') 
+            AND (`appointment_time` IS NOT NULL AND `appointment_time` != '00:00:00')";
 
-$result = $conn->query($sql);
+                                        $result = $conn->query($sql);
 
-// Check if there are rows in the result set
-if ($result->num_rows > 0) {
-    // Output data of each row
-    while ($row = $result->fetch_assoc()) {
-        // Format date and time
-        $formattedDate = date("M-d-Y", strtotime($row["application_date"]));
-        $formattedTime = date("g:i A", strtotime($row["appointment_time"]));
+                                        // Check if there are rows in the result set
+                                        if ($result->num_rows > 0) {
+                                            // Output data of each row
+                                            $counter = 1; // Initialize the counter
+                                            while ($row = $result->fetch_assoc()) {
+                                                // Format date and time
+                                                $formattedDate = date("M-d-Y", strtotime($row["appointment_date"]));
+                                                $formattedTime = date("g:i A", strtotime($row["appointment_time"]));
 
-        // Output each row as a table row
-        echo "<tr>";
-        echo "<td>" . $row["id"] . "</td>";
-        echo "<td>" . $row["applicant_number"] . "</td>";
-        echo "<td>" . $row["nature_of_degree"] . "</td>";
-        echo "<td>" . $row["degree_applied"] . "</td>";
-        echo "<td>" . $row["applicant_name"] . "</td>";
-        echo "<td>" . $row["academic_classification"] . "</td>";
-        echo "<td>" . $formattedDate . "</td>";
-        echo "<td>" . $formattedTime . "</td>";
-        echo "<td>" . $row["status"] . "</td>";
-        echo "<td><a href='#'>View Details</a></td>";
-        echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-        echo "</tr>";
-    }
-} else {
-    // If there are no rows in the result set
-    echo "<tr><td colspan='11'>No records found</td></tr>";
-}
+                                                // Output each row as a table row with counter
+                                                echo "<tr data-id='{$row['id']}'>";
+                                                echo "<td>{$counter}</td>";
 
-// Close the database connection
-$conn->close();
-?>
+                                                echo "<td>" . $row["applicant_number"] . "</td>";
+                                                echo "<td>" . $row["nature_of_degree"] . "</td>";
+                                                echo "<td>" . $row["degree_applied"] . "</td>";
+                                                echo "<td>" . $row["applicant_name"] . "</td>";
+                                                echo "<td class='editable' data-field='academic_classification'>{$row['academic_classification']}</td>";
+                                                echo "<td>" . $formattedDate . "</td>";
+                                                echo "<td>" . $formattedTime . "</td>";
+
+                                                // Check if in edit mode
+                                                if (isset($_GET['edit']) && $_GET['edit'] == $row['id']) {
+                                                    // Display a dropdown for appointment_status
+                                                    echo "<td class='editable' data-field='appointment_status'>
+                        <select name='appointment_status_edit' id='appointment_status_edit'>
+                            <option value='accepted' " . ($row['appointment_status'] == 'accepted' ? 'selected' : '') . ">Accepted</option>
+                            <option value='declined' " . ($row['appointment_status'] == 'declined' ? 'selected' : '') . ">Declined</option>
+                        </select>
+                      </td>";
+                                                } else {
+                                                    // Display the appointment_status normally
+                                                    echo "<td class='editable' data-field='appointment_status'>{$row['appointment_status']}</td>";
+                                                }
+
+                                                echo "<td>
+                    <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
+                    <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
+                  </td>";
+                                                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+                                                echo "</tr>";
+
+                                                $counter++; // Increment the counter for the next row
+                                            }
+                                        } else {
+                                            // If there are no rows in the result set
+                                            echo "<tr><td colspan='13'>No records found</td></tr>";
+                                        }
+
+                                        // Close the database connection
+                                        $conn->close();
+                                        ?>
 
                                     </tbody>
                                 </table>
@@ -176,6 +186,23 @@ $conn->close();
                                 </div>
 
                                 <style>
+                                    .calendar-icon {
+                                        color: black;
+                                        /* Default color */
+                                        font-size: 16px;
+                                        /* Default size */
+                                        transition: color 0.3s, font-size 0.5s;
+                                        /* Transition for smooth effect */
+                                    }
+
+                                    /* Hover styles */
+                                    .calendar-icon:hover {
+                                        color: green;
+                                        /* Hover color */
+                                        font-size: 20px;
+                                        /* Hover size */
+                                    }
+
                                     /* Custom styles for the toast */
                                     #toast {
                                         position: fixed;
@@ -206,7 +233,8 @@ $conn->close();
                                     }
                                 </style>
 
-<script>
+
+                                <script>
                                     $('#viewButton i').on('click', function() {
                                         var rangeInput = $('#rangeInput').val();
                                         var range = rangeInput.split('-');
@@ -236,96 +264,96 @@ $conn->close();
                                         });
                                     }
 
-function editAdmissionData(id) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${id}']`);
+                                    function editAdmissionData(id) {
+                                        // Get the row element
+                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
+                                        // Get all editable cells in the row
+                                        var editableCells = row.querySelectorAll('.editable');
 
-    // Add corner borders and remove inner borders for each editable cell
-    editableCells.forEach(function(cell, index) {
-        cell.contentEditable = true;
-        cell.classList.add('editing');
+                                        // Add corner borders and remove inner borders for each editable cell
+                                        editableCells.forEach(function(cell, index) {
+                                            cell.contentEditable = true;
+                                            cell.classList.add('editing');
 
-        // Add corner borders
-        cell.style.borderBottom = '2px solid blue';
+                                            // Add corner borders
+                                            cell.style.borderBottom = '2px solid blue';
 
-        // Remove inner borders
-        if (index > 0) {
-            editableCells[index - 1].style.borderRight = 'none';
-            cell.style.borderLeft = 'none';
-        }
-    });
+                                            // Remove inner borders
+                                            if (index > 0) {
+                                                editableCells[index - 1].style.borderRight = 'none';
+                                                cell.style.borderLeft = 'none';
+                                            }
+                                        });
 
-    // Change the "Edit" button to a "Save" button and change its color to green
-    var editButton = row.querySelector('.edit-btn');
-    editButton.innerHTML = '<i class="bx bx-save"></i>';
-    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-    editButton.onclick = function() {
-        saveStudent(id);
+                                        // Change the "Edit" button to a "Save" button and change its color to green
+                                        var editButton = row.querySelector('.edit-btn');
+                                        editButton.innerHTML = '<i class="bx bx-save"></i>';
+                                        editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+                                        editButton.onclick = function() {
+                                            saveStudent(id);
 
-        // Hide the blue bottom border after saving
-        editableCells.forEach(function(cell) {
-            cell.style.borderBottom = 'none';
-        });
-    };
-}
-
-
-function saveStudent(id) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${id}']`);
-
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
-
-    // Create an object to store the updated data
-    var updatedData = {};
-
-    // Loop through each editable cell and store the updated value
-    editableCells.forEach(function(cell) {
-        var fieldName = cell.getAttribute('data-field');
-        var updatedValue = cell.innerText.trim();
-        updatedData[fieldName] = updatedValue;
-    });
-
-    // Send an AJAX request to update the data in the database
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'save_student.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Display a toast notification for successful save
-            var toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(function() {
-                toast.classList.remove('show');
-            }, 3000);
-
-            // Change the "Save" button back to "Edit"
-            var editButton = row.querySelector('.edit-btn');
-           editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
-            editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
-            editButton.onclick = function() {
-                editAdmissionData(id);
-            };
+                                            // Hide the blue bottom border after saving
+                                            editableCells.forEach(function(cell) {
+                                                cell.style.borderBottom = 'none';
+                                            });
+                                        };
+                                    }
 
 
+                                    function saveStudent(id) {
+                                        // Get the row element
+                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-// Hide the blue bottom border after saving and make cells non-editable
-editableCells.forEach(function(cell) {
-    cell.style.borderBottom = 'none';
-    cell.contentEditable = false; // Add this line to make the cell non-editable
-});
+                                        // Get all editable cells in the row
+                                        var editableCells = row.querySelectorAll('.editable');
 
-        }
-    };
-    xhr.send(JSON.stringify({
-        id: id,
-        updatedData: updatedData
-    }));
-}
+                                        // Create an object to store the updated data
+                                        var updatedData = {};
+
+                                        // Loop through each editable cell and store the updated value
+                                        editableCells.forEach(function(cell) {
+                                            var fieldName = cell.getAttribute('data-field');
+                                            var updatedValue = cell.innerText.trim();
+                                            updatedData[fieldName] = updatedValue;
+                                        });
+
+                                        // Send an AJAX request to update the data in the database
+                                        var xhr = new XMLHttpRequest();
+                                        xhr.open('POST', 'save_student.php', true);
+                                        xhr.setRequestHeader('Content-Type', 'application/json');
+                                        xhr.onreadystatechange = function() {
+                                            if (xhr.readyState === 4 && xhr.status === 200) {
+                                                // Display a toast notification for successful save
+                                                var toast = document.getElementById('toast');
+                                                toast.classList.add('show');
+                                                setTimeout(function() {
+                                                    toast.classList.remove('show');
+                                                }, 3000);
+
+                                                // Change the "Save" button back to "Edit"
+                                                var editButton = row.querySelector('.edit-btn');
+                                                editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
+                                                editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
+                                                editButton.onclick = function() {
+                                                    editAdmissionData(id);
+                                                };
+
+
+
+                                                // Hide the blue bottom border after saving and make cells non-editable
+                                                editableCells.forEach(function(cell) {
+                                                    cell.style.borderBottom = 'none';
+                                                    cell.contentEditable = false; // Add this line to make the cell non-editable
+                                                });
+
+                                            }
+                                        };
+                                        xhr.send(JSON.stringify({
+                                            id: id,
+                                            updatedData: updatedData
+                                        }));
+                                    }
 
 
                                     function showSuccessToast() {
@@ -516,27 +544,26 @@ editableCells.forEach(function(cell) {
                                         }
                                     }
 
-                             // Function to toggle the visibility of the Select column and checkboxes
-function toggleSelectionVisibility() {
-    // Toggle the visibility of the Select column in the table header
-    var selectColumn = document.getElementById('selectColumn');
-    selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
+                                    // Function to toggle the visibility of the Select column and checkboxes
+                                    function toggleSelectionVisibility() {
+                                        // Toggle the visibility of the Select column in the table header
+                                        var selectColumn = document.getElementById('selectColumn');
+                                        selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
 
-    // Toggle the visibility of the checkboxes in each row
-    var checkboxes = document.querySelectorAll('.select-checkbox');
-    checkboxes.forEach(function(checkbox) {
-        checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
-    });
+                                        // Toggle the visibility of the checkboxes in each row
+                                        var checkboxes = document.querySelectorAll('.select-checkbox');
+                                        checkboxes.forEach(function(checkbox) {
+                                            checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
+                                        });
 
-    // Toggle the visibility of the "Delete Selected" button
-    var deleteSelectedButton = document.getElementById('deleteSelected');
-    deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
-}
+                                        // Toggle the visibility of the "Delete Selected" button
+                                        var deleteSelectedButton = document.getElementById('deleteSelected');
+                                        deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
+                                    }
 
-// Add an event listener to the "Toggle Selection" button
-document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
-
-        </script>
+                                    // Add an event listener to the "Toggle Selection" button
+                                    document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+                                </script>
 
 
 

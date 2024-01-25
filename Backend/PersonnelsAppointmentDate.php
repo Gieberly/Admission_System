@@ -3,6 +3,21 @@
 include('config.php');
 include('personnelCover.php');
 
+
+// Cleanup: Remove data for past dates in appointmentdate table
+$currentDate = date('Y-m-d');
+$cleanupSql = "DELETE FROM appointmentdate WHERE appointment_date < ?";
+$stmtCleanup = $conn->prepare($cleanupSql);
+$stmtCleanup->bind_param("s", $currentDate);
+$stmtCleanup->execute();
+$stmtCleanup->close();
+
+// Retrieve existing slots from the database for future dates only
+$sql = "SELECT * FROM appointmentdate WHERE appointment_date >= CURDATE()";
+$result = $conn->query($sql);
+
+$events = array();
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve form data
@@ -166,7 +181,7 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
 
-                    <button type="button" onclick="addTimeSlot()">Add Another Time</button>
+                    <button type="button" onclick="addTimeSlot()">Add Time</button>
 
                     <label for="availableSlots">Available Slots:</label>
                     <input type="number" id="availableSlots" name="available_slots" required>

@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, result, nature_of_degree, degree_applied 
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, math_2, math_3, science_grade, science_2,  science_3, english_grade, english_2, english_3, gwa_grade, result, nature_of_degree, degree_applied 
           FROM admission_data 
           WHERE 
             `applicant_name` LIKE '%$search%' OR 
@@ -22,8 +22,14 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `academic_classification` LIKE '%$search%' OR 
             `email` LIKE '%$search%' OR 
             `math_grade` LIKE '%$search%' OR 
-            `science_grade` LIKE '%$search%' OR 
+            `math_2` LIKE '%$search%' OR 
+            `math_3` LIKE '%$search%' OR 
+            `science_grade` LIKE '%$search%' OR
+            `science_2` LIKE '%$search%' OR  
+            `science_3` LIKE '%$search%' OR 
             `english_grade` LIKE '%$search%' OR 
+            `english_2` LIKE '%$search%' OR 
+            `english_3` LIKE '%$search%' OR 
             `gwa_grade` LIKE '%$search%' OR 
 
             `result` LIKE '%$search%' OR 
@@ -107,16 +113,21 @@ $stmt->fetch();
                                     <thead>
                                         <tr>
                                             <th>#</th>
-
+                                            <th>Name</th>
                                             <th>Application No.</th>
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
-                                            <th>Name</th>
+                                            
                                             <th>Academic Clasiffication</th>
-                                            <th>Math</th>
-
-                                            <th>Science</th>
-                                            <th>English</th>
+                                            <th>Math 1</th>
+                                            <th>Math 2</th>
+                                            <th>Math 3</th>
+                                            <th>Science 1</th>
+                                            <th>Science 2</th>
+                                            <th>Science 3</th>
+                                            <th>English 1</th>
+                                            <th>English 2</th>
+                                            <th>English 3</th>
                                             <th>GWA</th>
 
                                            
@@ -156,8 +167,14 @@ $stmt->fetch();
                                                 echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
                                                 echo "<td  <td data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
+                                                echo "<td class='editable' data-field='math_2'>{$row['math_2']}</td>";
+                                                echo "<td class='editable' data-field='math_3'>{$row['math_3']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
+                                                echo "<td class='editable' data-field='science_2'>{$row['science_2']}</td>";
+                                                echo "<td class='editable' data-field='science_3'>{$row['science_3']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
+                                                echo "<td class='editable' data-field='english_2'>{$row['english_2']}</td>";
+                                                echo "<td class='editable' data-field='english_3'>{$row['english_3']}</td>";
                                                 echo "<td class='editable' data-field='gwa_grade'>{$row['gwa_grade']}</td>";
 
                                                 echo "<td>
