@@ -110,8 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $relationship_2 = $_POST['relationship_2'];
     $academic_classification = $_POST['academic_classification'];
     $high_school_name_address = $_POST['high_school_name_address'];
-    $als_pept_name_address = $_POST['als_pept_name_address'];
-    $college_name_address = $_POST['college_name_address'];
     $lrn = $_POST['lrn'];
     $degree_applied = $_POST['degree_applied'];
     $nature_of_degree = $_POST['nature_of_degree'];
@@ -153,11 +151,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Prepare SQL statement for inserting data into admission_data table
-    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, high_school_name_address, als_pept_name_address, college_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
+    civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
+    contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
+    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, 
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters
     $stmt->bind_param(
-        "sssssissssiisssississssssssss",
+        "sssssissssiisssississssssss",
         $id_picture_data,
         $applicant_name,
         $gender,
@@ -180,8 +182,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $relationship_2,
         $academic_classification,
         $high_school_name_address,
-        $als_pept_name_address,
-        $college_name_address,
         $lrn,
         $degree_applied,
         $nature_of_degree,
@@ -581,28 +581,14 @@ $conn->close();
                     </div>
                 </div>
                 <p class="personal_information">Academic Background </p>
-                <div class="form-container">
+                <div class="form-container3">
                     <!-- Academic Background -->
-                    <div class="form-group">
-                        <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior
-                            High School</label>
+                    <div class="form-group2">
+                        <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/College/Division</label>
                         <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required placeholder="Enter Name and Address">
-
-                    </div>
-
-                    <div class="form-group">
-                        <label class="small-label" for="als_pept_name_address" style="white-space: nowrap;">ALS/PEPT was
-                            taken:</label>
-                        <input type="text" name="als_pept_name_address" class="input" id="als_pept_name_address" required placeholder="Enter Name and Address">
-
-                    </div>
-
-                    <div class="form-group">
-
-                        <label class="small-label" for="college_name_address">College/University:</label>
-                        <input type="text" name="college_name_address" class="input" id="college_name_address" required placeholder="Enter Name and Address">
                     </div>
                 </div>
+
                 <div class="form-container">
                     <div class="form-group">
                         <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>

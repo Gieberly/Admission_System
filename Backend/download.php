@@ -66,14 +66,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $relationship_2 = $_POST['relationship_2'];
   $academic_classification = $_POST['academic_classification'];
   $high_school_name_address = $_POST['high_school_name_address'];
-  $als_pept_name_address = $_POST['als_pept_name_address'];
-  $college_name_address = $_POST['college_name_address'];
   $lrn = $_POST['lrn'];
   $degree_applied = $_POST['degree_applied'];
   $nature_of_degree = $_POST['nature_of_degree'];
   $applicant_number = $_POST['applicant_number'];
   $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
-  
   $appointment_time = $_POST['appointment_time'];
   $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
@@ -284,19 +281,11 @@ $conn->close();
         <div class="form-container1">
           <!-- Academic Background -->
           <div class="form-group">
-            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
+            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/College/Division</label>
             <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly>
           </div>
-          <div class="form-group">
-            <label class="small-label" for="college_name_address">College/University:</label>
-            <input name="college_name_address" class="input" id="college_name_address" value="<?php echo $admissionData['college_name_address']; ?>" readonly>
         </div>
-        </div>
-        <div class="form-container5">
-          <div class="form-group">
-            <label class="small-label" for="als_pept_name_address" style="white-space: nowrap;">ALS/PEPT was taken:</label>
-            <input name="als_pept_name_address" class="input" id="als_pept_name_address" value="<?php echo $admissionData['als_pept_name_address']; ?>" readonly>
-          </div>
+      
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
