@@ -57,9 +57,10 @@ include ('config.php');
                 <br>
                 <label for="userType">Select User Type:</label>
                 <select id="userType" name="userType" required>
-                    <option value="admin">Admin</option>
-                    <option value="student">Student</option>
-                    <option value="staff">Staff</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Student">Student</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Faculty">Faculty</option>
                 </select>
                 <button class="btnn" type="submit" name="register_btn">Register</button>
                 <p class="link">Already have an account<br>

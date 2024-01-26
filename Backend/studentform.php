@@ -17,8 +17,8 @@ $result = $stmt->get_result();
 // Check if the query was successful
 if ($result && $result->num_rows > 0) {
   $row = $result->fetch_assoc();
-  $last_name = $row['lname'];
-  $name = $row['lname'];
+  $last_name = $row['last_name'];
+  $name = $row['name'];
   $email = $row['email'];
 } else {
 

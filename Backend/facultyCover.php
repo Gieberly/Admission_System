@@ -4,7 +4,7 @@ include("config.php");
 session_start();
 
 // Check if the user is logged in as a Faculty
-if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'faculty') {
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
     header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
     exit();
 }

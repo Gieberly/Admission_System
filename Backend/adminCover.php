@@ -4,13 +4,13 @@ include("config.php");
 
 // Check if the user is an admin, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
-    header("Location: loginpage.php");
+    header("Location: ../Beckend/loginpage.php");
     exit();
 }
 
 // Fetch staff information from the database based on user ID
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT lname, email, userType, status FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT last_name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
 $stmt->bind_result($lname, $email, $userType, $status);

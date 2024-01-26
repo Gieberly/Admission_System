@@ -3,7 +3,7 @@ session_start();
 include("config.php");
 
 // Check if the user is an admin, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Admin') {
     header("Location: loginpage.php");
     exit();
 }
@@ -20,7 +20,7 @@ $stmt->close();
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, name, email, status, created_date FROM users WHERE userType = 'staff'";
+    $query = "SELECT id, name, email, status, created_date FROM users WHERE userType = 'Staff'";
     $result = $conn->query($query);
     return $result;
 }
@@ -28,7 +28,7 @@ function getAllStaff() {
 // Function to update staff status
 function updateStaffStatus($staffId, $newState) {
     global $conn;
-    $query = "UPDATE users SET state = ? WHERE id = ? AND userType = 'staff'";
+    $query = "UPDATE users SET state = ? WHERE id = ? AND userType = 'Staff'";
     $stmt = $conn->prepare($query); 
     $stmt->bind_param("si", $newState, $staffId);
     return $stmt->execute();
@@ -37,7 +37,7 @@ function updateStaffStatus($staffId, $newState) {
 // Function to delete staff member
 function deleteStaff($staffId) {
     global $conn;
-    $query = "DELETE FROM users WHERE id = ? AND userType = 'staff'";
+    $query = "DELETE FROM users WHERE id = ? AND userType = 'Staff'";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $staffId);
     return $stmt->execute();
