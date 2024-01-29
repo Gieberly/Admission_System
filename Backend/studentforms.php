@@ -239,7 +239,7 @@ $conn->close();
             <div class="brand">
                 <p>Republic of the Philippines</p>
                 <h1 style="font-family: algerian;">BENGUET STATE UNIVERSITY</h1>
-                <p><i>OFFICE OF UNIVERSITY REGISTRAR</i></p>
+                <p><i>OFFICE OF THE UNIVERSITY REGISTRAR</i></p>
                 <p>La Trinidad, Benguet</p>
             </div>
         </div>
@@ -428,17 +428,17 @@ $conn->close();
                     <!-- Last Name Input -->
                     <div class="form-group">
                         <label class="small-label" for="last_name">Last Name</label>
-                        <input type="text" name="last_name" class="input" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" required oninput="updateApplicantName()">
+                        <input type="text" name="last_name" class="input" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" required >
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="first_name">First Name</label>
-                        <input type="text" name="first_name" class="input" id="first_name" placeholder="First Name" value="<?php echo $name; ?>" autocomplete="name" required oninput="updateApplicantName()">
+                        <input type="text" name="first_name" class="input" id="first_name" placeholder="First Name" value="<?php echo $name; ?>" autocomplete="name" required >
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required oninput="updateApplicantName()">
+                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required >
                     </div>
 
 
@@ -623,9 +623,9 @@ $conn->close();
                 <label for="applicant_number" class="applicant_number">Applicant Number:</label>
                 <input type="text" name="applicant_number" id="applicant_number" readonly value="<?php echo $applicantNumber; ?>">
             </div>
-            <div class="form-group" style="display: none;">
+            <div class="form-group" >
                 <label for="applicant_name">Name of Applicant</label>
-                <input type="text" placeholder="Enter Full Name" name="applicant_name" id="applicant_name">
+                <input type="text" placeholder="Enter Full Name"  value="<?php echo $last_name; ?>, <?php echo $name; ?> <?php echo $mname; ?>" name="applicant_name" id="applicant_name">
             </div>
 
             <div class="applicant_number" style="display: none;">
