@@ -112,15 +112,15 @@ $stmt->fetch();
                                     </thead>
                                     <tbody>
                                         <?php
-                                        // Include the configuration file
                                         include('config.php');
 
-                                        // Perform a SELECT query to fetch data
-                                        $sql = "SELECT * FROM admission_data 
-            WHERE (`appointment_date` IS NOT NULL AND `appointment_date` != '0000-00-00') 
-            AND (`appointment_time` IS NOT NULL AND `appointment_time` != '00:00:00')";
+                                        // Get the current date
+                                        $currentDate = date('Y-m-d');
 
+                                        // Query to fetch rows where appointment_date is current
+                                        $sql = "SELECT * FROM admission_data WHERE appointment_date = '$currentDate' ORDER BY appointment_time ASC";
                                         $result = $conn->query($sql);
+
 
                                         // Check if there are rows in the result set
                                         if ($result->num_rows > 0) {
@@ -147,10 +147,7 @@ $stmt->fetch();
                                                 if (isset($_GET['edit']) && $_GET['edit'] == $row['id']) {
                                                     // Display a dropdown for appointment_status
                                                     echo "<td class='editable' data-field='appointment_status'>
-                        <select name='appointment_status_edit' id='appointment_status_edit'>
-                            <option value='accepted' " . ($row['appointment_status'] == 'accepted' ? 'selected' : '') . ">Accepted</option>
-                            <option value='declined' " . ($row['appointment_status'] == 'declined' ? 'selected' : '') . ">Declined</option>
-                        </select>
+
                       </td>";
                                                 } else {
                                                     // Display the appointment_status normally
@@ -160,7 +157,9 @@ $stmt->fetch();
                                                 echo "<td>
                     <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
                     <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
-                  </td>";
+                    <button type='button' onclick='updateStatus({$row['id']}, \"Accepted\")'><i class='bx bxs-check-circle'></i></button>
+                    <button type='button'  onclick='updateStatus({$row['id']}, \"Declined\")'><i class='bx bxs-x-circle'></i></button>
+                    </td>";
                                                 echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
                                                 echo "</tr>";
 
@@ -235,22 +234,26 @@ $stmt->fetch();
 
 
                                 <script>
-                                    $('#viewButton i').on('click', function() {
-                                        var rangeInput = $('#rangeInput').val();
-                                        var range = rangeInput.split('-');
+                                    $(document).ready(function() {
+                                        // Your existing JavaScript code here
 
-                                        // Check if the input is in the correct format
-                                        if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
-                                            var start = parseInt(range[0]);
-                                            var end = parseInt(range[1]);
+                                        $('#viewButton i').on('click', function() {
+                                            var rangeInput = $('#rangeInput').val();
+                                            var range = rangeInput.split('-');
 
-                                            // Update the table rows to display only the specified range
-                                            updateTableRows(start, end);
-                                        } else {
-                                            alert('Invalid range format. Please use the format "start-end".');
-                                        }
-                                    });
+                                            // Check if the input is in the correct format
+                                            if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
+                                                var start = parseInt(range[0]);
+                                                var end = parseInt(range[1]);
 
+                                                // Update the table rows to display only the specified range
+                                                updateTableRows(start, end);
+                                            } else {
+                                                alert('Invalid range format. Please use the format "start-end".');
+                                            }
+                                        });
+                                        document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+                                    })
                                     // Function to update table rows based on the specified range
                                     function updateTableRows(start, end) {
                                         var rows = $('#table-container table tbody tr');
@@ -300,6 +303,49 @@ $stmt->fetch();
                                         };
                                     }
 
+                                    function updateStatus(admissionId, newStatus) {
+                                        // You can use AJAX to send a request to the server to update the status
+                                        // For simplicity, I'll use the fetch API for this example
+
+                                        // Construct the URL for the updateStatus.php file (change it accordingly)
+                                        const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
+
+                                        // Make a fetch request to the server
+                                        fetch(url, {
+                                                method: 'GET',
+                                            })
+                                            .then(response => {
+                                                if (!response.ok) {
+                                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                                }
+                                                return response.json();
+                                            })
+                                            .then(data => {
+                                                // Assuming the server sends back a JSON response
+                                                // You can handle the response accordingly
+                                                if (data.success) {
+                                                    // Update the status in the table cell
+                                                    const statusCell = document.querySelector(`tr[data-id='${admissionId}'] .editable[data-field='appointment_status']`);
+                                                    statusCell.textContent = newStatus;
+
+                                                    // Optionally, update the status in the dropdown if in edit mode
+                                                    const editModeCell = document.querySelector(`tr[data-id='${admissionId}'] .editable[data-field='appointment_status']`);
+                                                    if (editModeCell) {
+                                                        editModeCell.textContent = newStatus;
+                                                    }
+
+                                                    // Optionally, display a success message
+                                                    console.log('Status updated successfully');
+                                                } else {
+                                                    // Optionally, display an error message
+                                                    console.error('Failed to update status');
+                                                }
+                                            })
+                                            .catch(error => {
+                                                // Handle errors during the fetch request
+                                                console.error('Fetch error:', error);
+                                            });
+                                    }
 
                                     function saveStudent(id) {
                                         // Get the row element
@@ -369,94 +415,7 @@ $stmt->fetch();
                                         }, 3000);
                                     }
 
-                                    function addStudent() {
 
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Show the "Add Student" row
-                                        addStudentRow.style.display = 'table-row';
-
-                                        // Clear the content of editable cells in the "Add Student" row
-                                        var editableCells = addStudentRow.querySelectorAll('.editable');
-                                        editableCells.forEach(function(cell) {
-                                            cell.innerText = '';
-                                        });
-
-                                        // Change the button to "Save" and set its onclick function
-                                        var addButton = document.getElementById('addStudent');
-                                        addButton.innerHTML = 'Save';
-                                        addButton.onclick = function() {
-                                            saveNewStudent();
-                                        };
-                                    }
-
-                                    function saveNewStudent() {
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Get all editable cells in the "Add Student" row
-                                        var editableCells = addStudentRow.querySelectorAll('.editable');
-
-                                        // Create an object to store the new course data
-                                        var newStudentData = {};
-
-                                        // Loop through each editable cell and store the new value
-                                        editableCells.forEach(function(cell) {
-                                            var fieldName = cell.getAttribute('data-field');
-                                            var newValue = cell.innerText.trim();
-                                            newStudentData[fieldName] = newValue;
-                                        });
-
-                                        // Send an AJAX request to add the new course to the database
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('POST', 'add_student.php', true);
-                                        xhr.setRequestHeader('Content-Type', 'application/json');
-                                        xhr.onreadystatechange = function() {
-                                            if (xhr.readyState === 4) {
-                                                if (xhr.status === 200) {
-                                                    // Hide the "Add Student" row after saving
-                                                    addStudentRow.style.display = 'none';
-
-                                                    // Change the button back to "Add Student"
-                                                    var addButton = document.getElementById('addStudent');
-                                                    addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Student';
-                                                    addButton.onclick = function() {
-                                                        addStudent();
-                                                    };
-
-                                                    // Show a success toast
-                                                    showSuccessToast();
-
-                                                    // Reload the Student.php page after a delay of 2000 milliseconds (2 seconds)
-                                                    setTimeout(function() {
-                                                        location.reload();
-                                                    }, 2000);
-                                                } else {
-                                                    // Optionally, handle the case where the server request was not successful
-                                                    console.error('Failed to add the new course.');
-                                                }
-                                            }
-                                        };
-                                        xhr.send(JSON.stringify({
-                                            newStudentData: newStudentData
-                                        }));
-                                    }
-
-                                    function cancelAddStudent() {
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Hide the "Add Student" row
-                                        addStudentRow.style.display = 'none';
-
-                                        // Change the button back to "Add Student"
-                                        var addButton = document.getElementById('addStudent');
-                                        addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Student';
-                                        addButton.onclick = function() {
-                                            addStudent();
-                                        };
-                                    }
 
                                     function deleteAdmissionData(id) {
                                         // Confirm with the user before deleting
@@ -491,78 +450,6 @@ $stmt->fetch();
                                     document.getElementById('deleteSelected').addEventListener('click', function() {
                                         deleteSelectedAdmissionData();
                                     });
-
-                                    // Function to delete selected rows
-                                    function deleteSelectedAdmissionData() {
-                                        // Get all checkboxes
-                                        var checkboxes = document.querySelectorAll('.select-checkbox:checked');
-
-                                        // Check if at least one checkbox is selected
-                                        if (checkboxes.length > 0) {
-                                            // Confirm with the user before deleting
-                                            if (confirm("Are you sure you want to delete the selected rows?")) {
-                                                // Create an array to store the selected row IDs
-                                                var selectedRowIds = [];
-
-                                                // Iterate over selected checkboxes and store the corresponding row IDs
-                                                checkboxes.forEach(function(checkbox) {
-                                                    var row = checkbox.closest('tr');
-                                                    var rowId = row.getAttribute('data-id');
-                                                    selectedRowIds.push(rowId);
-                                                });
-
-                                                // Send an AJAX request to delete the selected rows
-                                                var xhr = new XMLHttpRequest();
-                                                xhr.open("POST", "deleteSelectedStudents.php", true);
-                                                xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                                xhr.onreadystatechange = function() {
-                                                    if (xhr.readyState === 4 && xhr.status === 200) {
-                                                        var response = JSON.parse(xhr.responseText);
-                                                        if (response.success) {
-                                                            // Remove the selected rows from the table
-                                                            selectedRowIds.forEach(function(rowId) {
-                                                                var row = document.querySelector(`tr[data-id='${rowId}']`);
-                                                                row.remove();
-                                                            });
-
-                                                            // Show a success toast
-                                                            showSuccessToast();
-                                                        } else {
-                                                            // Handle errors from the server if needed
-                                                            alert('Error deleting selected rows. Please try again.');
-                                                        }
-                                                    }
-                                                };
-
-                                                // Encode the data to be sent in the request
-                                                var data = "selectedRowIds=" + encodeURIComponent(JSON.stringify(selectedRowIds));
-                                                xhr.send(data);
-                                            }
-                                        } else {
-                                            // If no checkboxes are selected, show an alert
-                                            alert('Please select at least one row to delete.');
-                                        }
-                                    }
-
-                                    // Function to toggle the visibility of the Select column and checkboxes
-                                    function toggleSelectionVisibility() {
-                                        // Toggle the visibility of the Select column in the table header
-                                        var selectColumn = document.getElementById('selectColumn');
-                                        selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
-
-                                        // Toggle the visibility of the checkboxes in each row
-                                        var checkboxes = document.querySelectorAll('.select-checkbox');
-                                        checkboxes.forEach(function(checkbox) {
-                                            checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
-                                        });
-
-                                        // Toggle the visibility of the "Delete Selected" button
-                                        var deleteSelectedButton = document.getElementById('deleteSelected');
-                                        deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
-                                    }
-
-                                    // Add an event listener to the "Toggle Selection" button
-                                    document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
                                 </script>
 
 
