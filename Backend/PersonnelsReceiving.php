@@ -99,20 +99,7 @@ $stmt->fetch();
                                     <thead>
                                         <tr>
                                             <th>#</th>
-                                            <select name="academic_classification" class="inputs" id="academic_classification_board" onchange="BoardRequirements()">
-                                    <option value="">Select Academic Classification</option>
-                                    <?php
-                                    // Check if the query was successful
-                                    if ($resultClassification && $resultClassification->num_rows > 0) {
-                                        while ($rowClassification = $resultClassification->fetch_assoc()) {
-                                            $classification = $rowClassification['Classification'];
-                                            echo "<option value=\"$classification\">$classification</option>";
-                                        }
-                                    } else {
-                                        echo "<option value=\"\">No classifications found</option>";
-                                    }
-                                    ?>
-                                </select>
+
                                             <th>Application No.</th>
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
@@ -155,13 +142,23 @@ $stmt->fetch();
                                                 echo "<td>" . $row["nature_of_degree"] . "</td>";
                                                 echo "<td>" . $row["degree_applied"] . "</td>";
                                                 echo "<td>" . $row["applicant_name"] . "</td>";
-                                                echo "<td class='editable' data-field='academic_classification'>{$row['academic_classification']}</td>";
+
+                                                echo "<td class='editable' data-field='academic_classification'>
+        <span class='edit-mode'>{$row['academic_classification']}</span>
+        <select class='select-mode' style='display:none;' id='academicClassificationSelect'>";
+                                                while ($classification = $resultClassification->fetch_assoc()) {
+                                                    $selected = ($row['academic_classification'] == $classification['Classification']) ? "selected" : "";
+                                                    echo "<option value='{$classification['Classification']}' $selected>{$classification['Classification']}</option>";
+                                                }
+                                                echo "</select></td>";
+
+
                                                 echo "<td>" . $formattedDate . "</td>";
                                                 echo "<td>" . $formattedTime . "</td>";
 
-                                             
-                                                    echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
-                                                
+
+                                                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+
 
                                                 echo "<td>
                   
@@ -188,7 +185,7 @@ $stmt->fetch();
                                 <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">
                                         <strong class="mr-auto">Success!</strong>
-                                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                                        
                                     </div>
                                     <div class="toast-body" id="toast-body"></div>
                                 </div>
@@ -277,92 +274,161 @@ $stmt->fetch();
                                     }
 
                                     function editAdmissionData(id) {
-                                        // Get the row element
-                                        var row = document.querySelector(`tr[data-id='${id}']`);
+    // Get the row element
+    var row = document.querySelector(`tr[data-id='${id}']`);
 
-                                        // Get all editable cells in the row
-                                        var editableCells = row.querySelectorAll('.editable');
+    // Hide the "Check Circle" and "X Circle" buttons within the row
+    var checkBtn = row.querySelector('.check-btn');
+    var ekisBtn = row.querySelector('.ekis-btn');
 
-                                        // Add corner borders and remove inner borders for each editable cell
-                                        editableCells.forEach(function(cell, index) {
-                                            cell.contentEditable = true;
-                                            cell.classList.add('editing');
+    if (checkBtn && ekisBtn) {
+        checkBtn.style.display = 'none';
+        ekisBtn.style.display = 'none';
+    }
 
-                                            // Add corner borders
-                                            cell.style.borderBottom = '2px solid blue';
+    // Toggle between edit and display modes
+    var editableCells = row.querySelectorAll('.editable');
+    editableCells.forEach(function(cell) {
+        var spanMode = cell.querySelector('.edit-mode');
+        var selectMode = cell.querySelector('.select-mode');
 
-                                            // Remove inner borders
-                                            if (index > 0) {
-                                                editableCells[index - 1].style.borderRight = 'none';
-                                                cell.style.borderLeft = 'none';
-                                            }
-                                        });
-
-                                        // Change the "Edit" button to a "Save" button and change its color to green
-                                        var editButton = row.querySelector('.edit-btn');
-                                        editButton.innerHTML = '<i class="bx bx-save"></i>';
-                                        editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-                                        editButton.onclick = function() {
-                                            saveStudent(id);
-
-                                            // Hide the blue bottom border after saving
-                                            editableCells.forEach(function(cell) {
-                                                cell.style.borderBottom = 'none';
-                                            });
-                                        };
-                                    }
-
-                                    function updateStatus(admissionId, newStatus) {
-    const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
-
-    // Make a fetch request to the server
-    fetch(url, {
-        method: 'GET',
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        if (spanMode && selectMode) {
+            spanMode.style.display = 'none';
+            selectMode.style.display = 'inline-block';
         }
-        return response.json();
-    })
-    .then(data => {
-        // Assuming the server sends back a JSON response
-        // You can handle the response accordingly
-        if (data.success) {
-            // Update the status in the table cell
-            const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
-            statusCell.textContent = newStatus;
-
-            // Optionally, display a success message
-            console.log('Status updated successfully');
-        } else {
-            // Optionally, display an error message
-            console.error('Failed to update status');
-        }
-    })
-    .catch(error => {
-        // Handle errors during the fetch request
-        console.error('Fetch error:', error);
     });
+
+    // Change the "Edit" button to a "Save" button and change its color to green
+    var editButton = row.querySelector('.edit-btn');
+    editButton.innerHTML = '<i class="bx bx-save"></i>';
+    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+    editButton.onclick = function() {
+        saveStudent(id);
+
+        // Toggle back to display mode after saving
+        editableCells.forEach(function(cell) {
+            var spanMode = cell.querySelector('.edit-mode');
+            var selectMode = cell.querySelector('.select-mode');
+
+            if (spanMode && selectMode) {
+                spanMode.style.display = 'inline-block';
+                selectMode.style.display = 'none';
+            }
+        });
+
+        // Show the "Check Circle" and "X Circle" buttons after saving
+        if (checkBtn && ekisBtn) {
+            checkBtn.style.display = 'inline-block';
+            ekisBtn.style.display = 'inline-block';
+        }
+    };
 }
 
+function updateStatus(admissionId, newStatus) {
+    // Confirm the action with a prompt
+    var confirmation = confirm(`Are you sure you want to set as ${newStatus.toLowerCase()} the student's requirement?`);
+    
+    if (confirmation) {
+        const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
+
+        // Make a fetch request to the server
+        fetch(url, {
+            method: 'GET',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Assuming the server sends back a JSON response
+            // You can handle the response accordingly
+            if (data.success) {
+                // Update the status in the table cell
+                const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
+                statusCell.textContent = newStatus;
+
+                // Optionally, display a success message
+                console.log('Status updated successfully');
+
+                // Show a toast message
+                if (newStatus === "Accepted") {
+                    showCheckCircleToast("Student's requirement accepted successfully!");
+                } else if (newStatus === "Declined") {
+                    showEkisCircleToast("Student's requirement declined successfully!");
+                }
+            } else {
+                // Optionally, display an error message
+                console.error('Failed to update status');
+            }
+        })
+        .catch(error => {
+            // Handle errors during the fetch request
+            console.error('Fetch error:', error);
+        });
+    }
+}
+
+function showCheckCircleToast(message) {
+    // Get the toast element
+    var toast = document.getElementById('toast');
+
+    // Set the background color to green for success
+    toast.style.backgroundColor = '#4CAF50';
+
+    // Set the message in the toast body
+    var toastBody = document.getElementById('toast-body');
+    toastBody.textContent = message;
+
+    // Display the toast
+    toast.classList.add('show');
+
+    // Hide the toast after a certain duration (e.g., 3000 milliseconds)
+    setTimeout(function() {
+        toast.classList.remove('show');
+        // Reset the background color
+        toast.style.backgroundColor = '';
+        // Reset the toast body content
+        toastBody.textContent = '';
+    }, 1500);
+}
+
+function showEkisCircleToast(message) {
+    // Get the toast element
+    var toast = document.getElementById('toast');
+
+    // Set the background color to red for declined
+    toast.style.backgroundColor = '#4CAF50';
+
+    // Set the message in the toast body
+    var toastBody = document.getElementById('toast-body');
+    toastBody.textContent = message;
+
+    // Display the toast
+    toast.classList.add('show');
+
+    // Hide the toast after a certain duration (e.g., 3000 milliseconds)
+    setTimeout(function() {
+        toast.classList.remove('show');
+        // Reset the background color
+        toast.style.backgroundColor = '';
+        // Reset the toast body content
+        toastBody.textContent = '';
+    }, 1500);
+}
 
                                     function saveStudent(id) {
                                         // Get the row element
                                         var row = document.querySelector(`tr[data-id='${id}']`);
 
-                                        // Get all editable cells in the row
-                                        var editableCells = row.querySelectorAll('.editable');
+                                        // Get the selected value from the dropdown
+                                        var selectedValue = row.querySelector('#academicClassificationSelect').value;
 
                                         // Create an object to store the updated data
-                                        var updatedData = {};
-
-                                        // Loop through each editable cell and store the updated value
-                                        editableCells.forEach(function(cell) {
-                                            var fieldName = cell.getAttribute('data-field');
-                                            var updatedValue = cell.innerText.trim();
-                                            updatedData[fieldName] = updatedValue;
-                                        });
+                                        var updatedData = {
+                                            academic_classification: selectedValue
+                                        };
 
                                         // Send an AJAX request to update the data in the database
                                         var xhr = new XMLHttpRequest();
@@ -375,7 +441,11 @@ $stmt->fetch();
                                                 toast.classList.add('show');
                                                 setTimeout(function() {
                                                     toast.classList.remove('show');
-                                                }, 3000);
+                                                    // Reload the page after 1 second
+                                                    setTimeout(function() {
+                                                        location.reload();
+                                                    }, 10);
+                                                }, 1500);
 
                                                 // Change the "Save" button back to "Edit"
                                                 var editButton = row.querySelector('.edit-btn');
@@ -385,14 +455,17 @@ $stmt->fetch();
                                                     editAdmissionData(id);
                                                 };
 
-
-
-                                                // Hide the blue bottom border after saving and make cells non-editable
+                                                // Toggle back to display mode after saving
+                                                var editableCells = row.querySelectorAll('.editable');
                                                 editableCells.forEach(function(cell) {
-                                                    cell.style.borderBottom = 'none';
-                                                    cell.contentEditable = false; // Add this line to make the cell non-editable
-                                                });
+                                                    var spanMode = cell.querySelector('.edit-mode');
+                                                    var selectMode = cell.querySelector('.select-mode');
 
+                                                    if (spanMode && selectMode) {
+                                                        spanMode.style.display = 'inline-block';
+                                                        selectMode.style.display = 'none';
+                                                    }
+                                                });
                                             }
                                         };
                                         xhr.send(JSON.stringify({
@@ -400,6 +473,7 @@ $stmt->fetch();
                                             updatedData: updatedData
                                         }));
                                     }
+
 
 
                                     function showSuccessToast() {
@@ -414,10 +488,6 @@ $stmt->fetch();
                                             toast.classList.remove('show');
                                         }, 3000);
                                     }
-
-
-
-                                   
                                 </script>
 
 
