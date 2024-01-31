@@ -56,22 +56,23 @@ $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    if (!empty($combinedResults)) {
-                                        $count = 1;
-                                        foreach ($combinedResults as $row) {
-                                            echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
-                                            echo "<td>{$count}</td>";
-                                            echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
-                                            echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-                                            echo "<td><button class='apply-button' data-program-id='{$row['ProgramID']}'>Apply</button></td>";
-                                            echo "</tr>";
-                                            $count++;
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='4'>No courses found</td></tr>";
-                                    }
-                                    ?>
+                                <?php
+if (!empty($combinedResults)) {
+    $count = 1;
+    foreach ($combinedResults as $row) {
+        echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
+        echo "<td>{$count}</td>";
+        echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
+        echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
+        echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&description={$row['Description']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
+        echo "</tr>";
+        $count++;
+    }
+} else {
+    echo "<tr><td colspan='4'>No courses found</td></tr>";
+}
+?>
+
                                 </tbody>
                             </table>
                         </div>
