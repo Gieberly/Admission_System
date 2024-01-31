@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "Error uploading ID picture. Please ensure it's a valid image file.";
         exit();
     }
-    
+
 
     // Prepare SQL statement for inserting data into admission_data table
     $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
@@ -203,7 +203,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Close the statement
     $stmt->close();
-
 }
 
 
@@ -295,51 +294,34 @@ $conn->close();
                         <div class="form-container">
                             <div class="form-group">
                                 <label class="small-label" for="categoryDropdown">Nature of Degree</label>
-                                <select class="input" id="categoryDropdown" name="categoryDropdown" onchange="updateSelection()">
-                                    <option value="" disabled selected>Select Nature of Degree</option>
-                                    <option value="Board">Board</option>
-                                    <option value="Non-board">Non-Board</option>
-                                </select>
+                                <?php
+                                if (isset($_GET['degree'])) {
+                                    $degree = $_GET['degree'];
+                                    echo "<input type='text'class='input' id='categoryDropdown' name='nature_of_degree' value='$degree' readonly>";
+                                } else {
+                                    echo "<p>No degree information available.</p>";
+                                }
+                                ?>
                             </div>
 
                             <!-- Board Programs -->
-                            <div id="boardProgramsDropdown" class="programFields">
+                            <div class="form-group">
+                            
                                 <label class="small-label" for="board-programs">Board Programs</label>
-                                <select name="board-programs" id="board-programs" class="input" onchange="updateBoardSelection()">
-                                    <option value="">Select Board Program</option>
-                                    <?php
-                                    if ($result->num_rows > 0) {
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo "<option value='" . $row['ProgramID'] . "'>" . $row['Description'] . "</option>";
-                                        }
-                                    } else {
-                                        echo "<option value='' disabled>No board programs available</option>";
-                                    }
-                                    ?>
-                                </select>
+                                <?php
+                                if (isset($_GET['description'])) {
+                                    $description = $_GET['description'];
+                                    echo "<input type='text' class='input' id='board-programs' name='board_programs' value='$description' readonly>";
+                                } else {
+                                    echo "<p>No program description available.</p>";
+                                }
+                                ?>
                             </div>
 
-                            <!-- Non-Board Programs -->
-                            <div id="nonBoardProgramsDropdown" class="programFields">
-                                <label class="small-label" for="NonBoardProgram">Non-Board Programs</label>
-                                <select name="NonBoardProgram" id="NonBoardProgram" class="input" onchange="updateNonBoardSelection()">
-
-                                    <option value="">Select Non-Board Program</option>
-                                    <?php
-                                    if ($resultNonBoard->num_rows > 0) {
-                                        while ($rowNonBoard = $resultNonBoard->fetch_assoc()) {
-                                            echo "<option value='" . $rowNonBoard['ProgramID'] . "'>" . $rowNonBoard['Description'] . "</option>";
-                                        }
-                                    } else {
-                                        echo "<option value='' disabled>No non-board programs available</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <!-- Input Academic Classification Selection (Board)-->
-                            <div id="boardclassificationFields" class="programFields">
+                           
+                            <div id="boardclassificationFields" >
                                 <label class="small-label" for="academic_classification_board">Academic Classification</label>
-                                <select name="academic_classification" class="input" id="academic_classification_board" onchange="BoardRequirements()">
+                                <select name="academic_classification" class="inputs" id="academic_classification_board" onchange="BoardRequirements()">
                                     <option value="">Select Academic Classification</option>
                                     <?php
                                     // Check if the query was successful
@@ -356,26 +338,13 @@ $conn->close();
                             </div>
 
 
-                            <!-- Input Academic Classification Selection (Non-Board) -->
-                            <div class="programFields" id="nonclassificationFields">
-                                <label class="small-label" for="academic_classification_nonboard">Academic Classification</label>
-                                <select name="academic_classification" class="input" id="academic_classification_nonboard" onchange="NonBoardRequirements()">
-                                    <option value="">Select Academic Classification</option>
-                                    <?php
-                                    // Loop through fetched Non-Board classifications and populate the options
-                                    while ($rowNonBoardClassifications = $resultNonBoardClassifications->fetch_assoc()) {
-                                        $classification = $rowNonBoardClassifications['Classification'];
-                                        echo "<option value=\"$classification\">$classification</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <br>
-                        <div id="classificationInfo"></div>
-                    
+
+                         </div>
+                         <br>
+                         <div id="classificationInfo"></div>
 
 
+ 
                     </div>
 
                     <p class="note-color"><label class="checkbox-container">
@@ -428,17 +397,17 @@ $conn->close();
                     <!-- Last Name Input -->
                     <div class="form-group">
                         <label class="small-label" for="last_name">Last Name</label>
-                        <input type="text" name="last_name" class="input" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" required >
+                        <input type="text" name="last_name" class="input" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" required>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="first_name">First Name</label>
-                        <input type="text" name="first_name" class="input" id="first_name" placeholder="First Name" value="<?php echo $name; ?>" autocomplete="name" required >
+                        <input type="text" name="first_name" class="input" id="first_name" placeholder="First Name" value="<?php echo $name; ?>" autocomplete="name" required>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required >
+                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required>
                     </div>
 
 
@@ -511,7 +480,7 @@ $conn->close();
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
                         <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required  oninput="validatePhoneNumber('phone_number')">
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required oninput="validatePhoneNumber('phone_number')">
                         <p id="phone_number-error" style="color: red;"></p>
                     </div>
 
@@ -600,14 +569,30 @@ $conn->close();
                     <div class="form-group">
                         <label class="small-label" for="degree_applied">Program</label>
                         <!-- Display the selected program in this input field -->
-                        <input type="text" name="degree_applied" class="input" id="degree_applied" readonly required>
+
+
+                        <?php
+                        if (isset($_GET['description'])) {
+                            $description = $_GET['description'];
+                            echo "<input type='text' name='degree_applied' class='input' id='degree_applied'  value='$description' readonly>";
+                        } else {
+                            echo "<p>No program description available.</p>";
+                        }
+                        ?>
                     </div>
 
 
                     <div class="form-group">
                         <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-                        <input type="text" name="nature_of_degree" class="input" id="nature_of_degree" readonly required>
 
+                        <?php
+                        if (isset($_GET['degree'])) {
+                            $degree = $_GET['degree'];
+                            echo "<input type='text' name='nature_of_degree' class='input' id='nature_of_degree' value='$degree' readonly>";
+                        } else {
+                            echo "<p>No degree information available.</p>";
+                        }
+                        ?>
                     </div>
                 </div>
 
@@ -623,9 +608,9 @@ $conn->close();
                 <label for="applicant_number" class="applicant_number">Applicant Number:</label>
                 <input type="text" name="applicant_number" id="applicant_number" readonly value="<?php echo $applicantNumber; ?>">
             </div>
-            <div class="form-group" >
+            <div class="form-group" style="display: none;">
                 <label for="applicant_name">Name of Applicant</label>
-                <input type="text" placeholder="Enter Full Name"  value="<?php echo $last_name; ?>, <?php echo $name; ?> <?php echo $mname; ?>" name="applicant_name" id="applicant_name">
+                <input type="text" placeholder="Enter Full Name" value="<?php echo $last_name; ?>, <?php echo $name; ?> <?php echo $mname; ?>" name="applicant_name" id="applicant_name">
             </div>
 
             <div class="applicant_number" style="display: none;">
@@ -642,11 +627,12 @@ $conn->close();
         <div class="tab" id="tab-3">
             <br>
             <h2></h2>
-            <p class="note-color"> <span class="checkmark"></span>SUBMIT ONLY THE FORM IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED!</p>
-<p>Make sure that you read and understood all the instructions contained in this Application form and that the information supplied are true, complete and accurate. Be aware that any information that have concealed, falsely given and/or withheld is enough basis for the invalidation/cancellation of your application. </p>
+            <div class="page-container">
+            <p class="note-color" style=" text-align: center;"> <span class="checkmark"></span>SUBMIT ONLY THE FORM IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</p>
+            <p>Make sure that you read and understood all the instructions contained in this Application form and that the information supplied are true, complete and accurate. Be aware that any information that have concealed, falsely given and/or withheld is enough basis for the invalidation/cancellation of your application. </p>
+            <p style="color: green; font-weight: bold; text-align: center; font-size: 16px">After Submission, set your appointment and print the admission form during your appointment date with the needed requirements.</p>
+        </div>
 
-                          
-                       
 
 
             <div class="index-btn-wrapper">

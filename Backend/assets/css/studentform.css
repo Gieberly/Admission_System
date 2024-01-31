@@ -585,11 +585,19 @@
   .input {
   width: 100%; /* Input fields occupy the available width */
   padding: 5px;
+ 
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
   }
-
+  .inputs {
+    width: 100%; /* Input fields occupy the available width */
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 37px;
+    }
 #permanent_address {
     width: 50em; /* Input fields occupy the available width */
    height: 38px;;
@@ -699,9 +707,7 @@
   }
   /*Alert Message Style*/
   
-  .programFields {
-    display: none;
-  }
+ 
   
   /* Apply styles to the page container */
   .page-container {
