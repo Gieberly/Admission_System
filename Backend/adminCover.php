@@ -3,7 +3,7 @@
 include("config.php");
 
 // Check if the user is an admin, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Admin') {
     header("Location: ../Beckend/loginpage.php");
     exit();
 }

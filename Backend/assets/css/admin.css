@@ -502,6 +502,7 @@ nav {
 	display: flex;
 	align-items: center;
 	height: 36px;
+	border-radius: 50px 0 0 50px;
 
 }
 #content nav form .form-input input {
@@ -510,7 +511,7 @@ nav {
 	height: 100%;
 	border: none;
 	background: var(--grey);
-	border-radius: 36px 0 0 36px;
+	border-radius: 50px 0 0 50px;
 	outline: none;
 	width: 100%;
 	color: var(--dark);
@@ -528,7 +529,7 @@ nav {
 	font-size: 18px;
 	border: none;
 	outline: none;
-	border-radius: 0 36px 36px 0;
+	border-radius: 0 50px 50px 0;
 	cursor: pointer;
 	/*searchbar*/
 }
@@ -662,14 +663,14 @@ nav {
 }
 
 /* Add this CSS to adjust nature of degree dropdown */
-.dropdown-nature {
+.head {
     display: flex;
 	justify-content: flex-start;
     align-items: center;
     margin-right: 20px; /* Add some margin for spacing */
 }
 
-.dropdown-nature .nature-degree {
+.head .dropdown-nature {
     display: inline-block;
 	float: right;
 }
@@ -717,7 +718,7 @@ nav {
 	display: block;
   }
 
-/* Adjust the margin between the icon and input */
+
 #searchIcon {
     margin-right: -5px; 
 	color:  var(--dark);
@@ -854,43 +855,6 @@ nav {
 #content main .button.edit:hover {
 	background-color: var(--light-blue);
   	color: var(--gray);
-}
-
-#content main .head-title {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	grid-gap: 16px;
-	flex-wrap: wrap;
-}
-
-#content main .head-title .left h1 {
-	font-size: 36px;
-	font-weight: 600;
-	margin-bottom: 10px;
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb {
-	display: flex;
-	align-items: center;
-	grid-gap: 16px;
-}
-#content main .head-title .left .breadcrumb li {
-	color: var(--dark);
-}
-#content main .head-title .left .breadcrumb li a {
-	color: var(--dark-grey);
-	pointer-events: none;
-}
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
-	/*button download*/
-}
-#content main .head-title .left .breadcrumb li a.active {
-	color: var(--blue);
-	pointer-events: unset;
-	/*button download*/
 }
 .btn-download {
 	height: 36px;

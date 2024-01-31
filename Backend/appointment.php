@@ -1,4 +1,6 @@
 
+    
+    
     <div id="schedule-result-content">
         <div class="head-title">
             <div class="left">
