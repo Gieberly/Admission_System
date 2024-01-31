@@ -961,6 +961,37 @@ nav {
 
 	color: var(--dark);
   }
+  .button.check-btn {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+  }
+  
+  .button.check-btn i {
+	font-size: 15px; /* Adjust the size as needed */
+	color: black;
+  }
+  
+  .button.check-btn:hover i {
+	color: green;
+  }
+  .button.ekis-btn {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+  }
+  
+  .button.ekis-btn i {
+	font-size: 15px; /* Adjust the size as needed */
+	color: black; /* Set the default icon color */
+  }
+  
+  .button.ekis-btn:hover i {
+	color: red;
+  }
+  
   #delete-btn {
     border: none;
     background: none;

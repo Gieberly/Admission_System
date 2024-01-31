@@ -10,6 +10,9 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     exit();
 }
 
+// Fetch data from the academicclassification table for the Classification column
+$sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
+$resultClassification = $conn->query($sqlClassification);
 
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -96,7 +99,20 @@ $stmt->fetch();
                                     <thead>
                                         <tr>
                                             <th>#</th>
-
+                                            <select name="academic_classification" class="inputs" id="academic_classification_board" onchange="BoardRequirements()">
+                                    <option value="">Select Academic Classification</option>
+                                    <?php
+                                    // Check if the query was successful
+                                    if ($resultClassification && $resultClassification->num_rows > 0) {
+                                        while ($rowClassification = $resultClassification->fetch_assoc()) {
+                                            $classification = $rowClassification['Classification'];
+                                            echo "<option value=\"$classification\">$classification</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=\"\">No classifications found</option>";
+                                    }
+                                    ?>
+                                </select>
                                             <th>Application No.</th>
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
@@ -143,22 +159,15 @@ $stmt->fetch();
                                                 echo "<td>" . $formattedDate . "</td>";
                                                 echo "<td>" . $formattedTime . "</td>";
 
-                                                // Check if in edit mode
-                                                if (isset($_GET['edit']) && $_GET['edit'] == $row['id']) {
-                                                    // Display a dropdown for appointment_status
-                                                    echo "<td class='editable' data-field='appointment_status'>
-
-                      </td>";
-                                                } else {
-                                                    // Display the appointment_status normally
-                                                    echo "<td class='editable' data-field='appointment_status'>{$row['appointment_status']}</td>";
-                                                }
+                                             
+                                                    echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+                                                
 
                                                 echo "<td>
-                    <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteAdmissionData({$row['id']})'><i class='bx bx-trash'></i></button>
+                  
                     <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
-                    <button type='button' onclick='updateStatus({$row['id']}, \"Accepted\")'><i class='bx bxs-check-circle'></i></button>
-                    <button type='button'  onclick='updateStatus({$row['id']}, \"Declined\")'><i class='bx bxs-x-circle'></i></button>
+                    <button type='button' class='button check-btn'  onclick='updateStatus({$row['id']}, \"Accepted\")'><i class='bx bxs-check-circle'></i></button>
+                    <button type='button'  class='button ekis-btn'  onclick='updateStatus({$row['id']}, \"Declined\")'><i class='bx bxs-x-circle'></i></button>
                     </td>";
                                                 echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
                                                 echo "</tr>";
@@ -304,48 +313,39 @@ $stmt->fetch();
                                     }
 
                                     function updateStatus(admissionId, newStatus) {
-                                        // You can use AJAX to send a request to the server to update the status
-                                        // For simplicity, I'll use the fetch API for this example
+    const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
 
-                                        // Construct the URL for the updateStatus.php file (change it accordingly)
-                                        const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
+    // Make a fetch request to the server
+    fetch(url, {
+        method: 'GET',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Assuming the server sends back a JSON response
+        // You can handle the response accordingly
+        if (data.success) {
+            // Update the status in the table cell
+            const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
+            statusCell.textContent = newStatus;
 
-                                        // Make a fetch request to the server
-                                        fetch(url, {
-                                                method: 'GET',
-                                            })
-                                            .then(response => {
-                                                if (!response.ok) {
-                                                    throw new Error(`HTTP error! Status: ${response.status}`);
-                                                }
-                                                return response.json();
-                                            })
-                                            .then(data => {
-                                                // Assuming the server sends back a JSON response
-                                                // You can handle the response accordingly
-                                                if (data.success) {
-                                                    // Update the status in the table cell
-                                                    const statusCell = document.querySelector(`tr[data-id='${admissionId}'] .editable[data-field='appointment_status']`);
-                                                    statusCell.textContent = newStatus;
+            // Optionally, display a success message
+            console.log('Status updated successfully');
+        } else {
+            // Optionally, display an error message
+            console.error('Failed to update status');
+        }
+    })
+    .catch(error => {
+        // Handle errors during the fetch request
+        console.error('Fetch error:', error);
+    });
+}
 
-                                                    // Optionally, update the status in the dropdown if in edit mode
-                                                    const editModeCell = document.querySelector(`tr[data-id='${admissionId}'] .editable[data-field='appointment_status']`);
-                                                    if (editModeCell) {
-                                                        editModeCell.textContent = newStatus;
-                                                    }
-
-                                                    // Optionally, display a success message
-                                                    console.log('Status updated successfully');
-                                                } else {
-                                                    // Optionally, display an error message
-                                                    console.error('Failed to update status');
-                                                }
-                                            })
-                                            .catch(error => {
-                                                // Handle errors during the fetch request
-                                                console.error('Fetch error:', error);
-                                            });
-                                    }
 
                                     function saveStudent(id) {
                                         // Get the row element
@@ -417,39 +417,7 @@ $stmt->fetch();
 
 
 
-                                    function deleteAdmissionData(id) {
-                                        // Confirm with the user before deleting
-                                        if (confirm("Are you sure you want to delete this course?")) {
-                                            // Send an AJAX request to delete the course
-                                            var xhr = new XMLHttpRequest();
-                                            xhr.open("POST", "deleteStudentPersonnel.php", true);
-                                            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                            xhr.onreadystatechange = function() {
-                                                if (xhr.readyState === 4 && xhr.status === 200) {
-                                                    var response = JSON.parse(xhr.responseText);
-                                                    if (response.success) {
-                                                        // Remove the deleted row from the table
-                                                        var row = document.querySelector(`tr[data-id='${id}']`);
-                                                        row.remove();
-
-                                                        // Show a toast notification for success
-                                                        showSuccessToast();
-                                                    } else {
-                                                        // Handle errors from the server if needed
-                                                        alert('Error deleting the course. Please try again.');
-                                                    }
-                                                }
-                                            };
-
-                                            // Encode the data to be sent in the request
-                                            var data = "id=" + encodeURIComponent(id);
-                                            xhr.send(data);
-                                        }
-                                    }
-                                    // Add an event listener to the "Delete Selected" button
-                                    document.getElementById('deleteSelected').addEventListener('click', function() {
-                                        deleteSelectedAdmissionData();
-                                    });
+                                   
                                 </script>
 
 

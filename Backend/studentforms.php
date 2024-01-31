@@ -67,21 +67,11 @@ if ($resultSemester && $resultSemester->num_rows > 0) {
 $applicantNumber = sprintf("%02d-%d-%05d", $currentYearLastTwoDigits, $semester, $user_id);
 
 
-$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
-$result = $conn->query($sql);
-
-// Fetch data from the database where Nature_of_Degree is 'Non-Board' and Overall_Slots is not empty or zero
-$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
-$resultNonBoard = $conn->query($sqlNonBoard);
-
-
-// Fetch 'Classification' values for 'Non-Board' from the 'NonBoardAcadClass' table
-$sqlNonBoardClassifications = "SELECT Classification FROM NonBoardAcadClass";
-$resultNonBoardClassifications = $conn->query($sqlNonBoardClassifications);
 
 // Fetch data from the academicclassification table for the Classification column
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
 $resultClassification = $conn->query($sqlClassification);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['set_button_clicked'])) {
         // The "Set" button was clicked, do not process the form submission

@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 include("config.php");
@@ -66,11 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $relationship_2 = $_POST['relationship_2'];
   $academic_classification = $_POST['academic_classification'];
   $high_school_name_address = $_POST['high_school_name_address'];
+  $als_pept_name_address = $_POST['als_pept_name_address'];
+  $college_name_address = $_POST['college_name_address'];
   $lrn = $_POST['lrn'];
   $degree_applied = $_POST['degree_applied'];
   $nature_of_degree = $_POST['nature_of_degree'];
   $applicant_number = $_POST['applicant_number'];
   $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
+  
   $appointment_time = $_POST['appointment_time'];
   $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
@@ -281,15 +285,17 @@ $conn->close();
         <div class="form-container1">
           <!-- Academic Background -->
           <div class="form-group">
-            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/College/Division</label>
+            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
             <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly>
           </div>
-        </div>
-      
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
           </div>
+        </div>
+        <div class="form-container5">
+         
+          
         </div>
         <p class="attestation-head">ATTESTATION AND CONSENT</p>
         <p class="attestation-note"><i>I affirm that I have read and understood all the instructions contained in this acknowledgement 
@@ -302,7 +308,7 @@ $conn->close();
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
         </div><br>
-        
+        <br>
 
         <br>
         <br>
