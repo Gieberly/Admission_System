@@ -59,6 +59,12 @@ function getAllStudentFormData() {
     $result = $conn->query($query);
     return $result;
 }
+function getColleges(){
+    global $conn;
+    $sql = "SELECT college_name FROM `college`";
+    $all_colleges = $conn->query($sql);
+    return $all_colleges;
+}
 
 // Display all student form data in the table
  $studentFormData = getAllStudentFormData();

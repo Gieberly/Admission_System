@@ -17,7 +17,13 @@
         <div class="order">
             <div class="head">
                 <h3>List of Personnels</h3>
-               
+                <div class="headfornaturetosort">
+                        <label for="rangeInput"></label>
+                        <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
+                        <button type="button" id="viewButton">
+                            <i class='bx bx-filter'></i>
+                        </button>
+                    </div>
             </div>
             <div id="table-container">
                 <table>

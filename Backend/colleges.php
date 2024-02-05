@@ -20,12 +20,19 @@ include 'config.php';
             <div class="table-data">
                 <div class="order">
                 <div class="head">
+                <div class="headfornaturetosort">
+                        <label for="rangeInput"></label>
+                        <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
+                        <button type="button" id="viewButton">
+                            <i class='bx bx-filter'></i>
+                        </button>
+                    </div>
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
                             <a class="nav-link active" id="dataListViewTab" data-toggle="tab" href="#dataListView">Data List View</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="addTab" data-toggle="tab" href="#add">Add Course</a>
+                            <a class="nav-link" id="addTab" data-toggle="tab" href="#add"><i class='bx bx-add-to-queue'></i>Add Course</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" id="editTab" data-toggle="tab" href="#edit">Edit</a>

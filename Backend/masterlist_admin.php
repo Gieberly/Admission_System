@@ -6,14 +6,9 @@
         <div class="left">
             <h1>Master List</h1>
             <ul class="breadcrumb">
-                <li><a href="#">Master List</a></li>
+                <li><a href="#">Home</a></li>
                 <li><i class='bx bx-chevron-right'></i></li>
-                <li><a class="active" href="#top">List View</a></li>
-            </ul>
-            <ul class="breadcrumb">
-                <li><a href="">Import</a></li>
-                <li><a href="">Grid View</a></li>
-                <li><a href=""><i class='bx bx-add-to-queue'></i>Add Course</a></li>
+                <li><a class="active" href="#master-list-content">Masterlist</a></li>
             </ul>
         </div>
     </div>
@@ -23,19 +18,55 @@
         <div class="table-data">
             <div class="order">
                 <div class="head">
-                    <h3>List of Students</h3>
                     <div class="headfornaturetosort">
-                        <label for="rangeInput"></label>
-                        <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
+                        <input class="form-control mr-2" type="search" placeholder="1-10" aria-label="Search" />
                         <button type="button" id="viewButton">
                             <i class='bx bx-filter'></i>
                         </button>
-                        <button type='button' id="addCourses" onclick='addCourse()'>
-                            <i class='bx bx-add-to-queue'></i> Add Course
-                        </button>
                     </div>
+                    <br>
+                    <!-- Form with search input and college dropdown -->
+                    <form class="d-flex">
+                        <input class="form-control mr-2" type="search" placeholder="Enter student name" aria-label="Search">
+                        <select name="college" class="form-control mr-4">
+                            <option value="">Select College</option>
+                            <?php
+                            // Fetch colleges from the database
+                            $query = "SELECT college_name FROM college";
+                            $result = mysqli_query($conn, $query);
+
+                            // Check if query was successful
+                            if ($result) {
+                                // Loop through results and create options for the dropdown
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='" . $row['college_name'] . "'>" . $row['college_name'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                        <br>
+                        <select name="course" class="form-control mr-4">
+                            <option value="">Select Program</option>
+                            <?php
+                            // Fetch colleges from the database
+                            $query = "SELECT course FROM courses";
+                            $result = mysqli_query($conn, $query);
+
+                            // Check if query was successful
+                            if ($result) {
+                                // Loop through results and create options for the dropdown
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                    echo "<option value='" . $row['course'] . "'>" . $row['course'] . "</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                        <br>
+                        <button class="btn btn-outline-success" type="submit">Submit</button>
+                    </form>
                 </div>
                 <div id="table-container">
+                    <!-- Table for displaying student data -->
                     <table>
                         <!-- table header -->
                         <thead>

@@ -31,7 +31,7 @@ $stmt->close();
             <i class='bx bx-menu'></i>
             <a>Categories</a>
             <form>
-                <div class="form-input" style="display: none;">
+                <div class="form-input" style="display:none">
                     <input type="text" id="searchInput" placeholder="Search...">
                     <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
                 </div>
