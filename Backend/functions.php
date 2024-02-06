@@ -51,14 +51,13 @@ function getAllDept() {
 // Function to get all student form data
 function getAllStudentFormData() {
     global $conn;
-    $query = "SELECT applicant.id, applicant.app_number, applicant.course,
-                     applicant.fname, applicant.lname, applicant.email, applicant.college,
-                     users.created_date
-              FROM applicant 
-              INNER JOIN users ON applicant.email = users.email";
+    $query = "SELECT *FROM applicant 
+              ";
     $result = $conn->query($query);
     return $result;
 }
+
+// Function to get all student form data
 function getColleges(){
     global $conn;
     $sql = "SELECT college_name FROM `college`";

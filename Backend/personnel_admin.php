@@ -4,9 +4,9 @@
                     <div class="left">
                         <h1>Personnels</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Personnels</a></li>
+                            <li><a href="#">Admin</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Home</a></li>
+                            <li><a class="active" href="staff.html">Personnel List</a></li>
                         </ul>
                     </div>
                 </div>
@@ -15,18 +15,8 @@
 <div id="master-listpersonnel">
     <div class="table-data">
         <div class="order">
-            <div class="head">
-                <h3>List of Personnels</h3>
-                <div class="headfornaturetosort">
-                        <label for="rangeInput"></label>
-                        <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
-                        <button type="button" id="viewButton">
-                            <i class='bx bx-filter'></i>
-                        </button>
-                    </div>
-            </div>
             <div id="table-container">
-                <table>
+                <table id="table-personnel">
                     <colgroup>
                         <col style="width: 5%;">
                         <col style="width: 20%;">
@@ -98,9 +88,17 @@
             </div>
         </div>
     </div>
+</div> 
 </div>
-              
+<script> 
+        $(document).ready(function () {
+    $('#table-personnel').DataTable({
+        "paging": true, // Enable pagination
+        "ordering": true, // Enable sorting
+        "order": [], // Initial order (disable sorting by default)
+        "lengthMenu": [10, 25, 50, 70, 100], // Set custom page length options
+        "pageLength": 25 // Default page length
+    });
+});
 
-               
-
-            </div>
+</script> 
