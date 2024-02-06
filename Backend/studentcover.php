@@ -33,10 +33,11 @@ $admissionData = $resultAdmission->fetch_assoc();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
+
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/student.css" />
-    <!-- Boxicons -->
+   
+    <!-- ... (your existing code) -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -55,6 +56,12 @@ $admissionData = $resultAdmission->fetch_assoc();
         </a>
 
         <ul class="side-menu top">
+        <li class="">
+                <a href="studentDashboard.php" id="profile-link">
+                <i class='bx bxs-dashboard'></i>
+                    <span class="text">Dashboard</span>
+                </a>
+            </li>
             <li class="">
                 <a href="studentcontent_sidebar.php" id="profile-link">
                     <i class='bx bxs-group'></i>
@@ -67,12 +74,7 @@ $admissionData = $resultAdmission->fetch_assoc();
                     <span class="text">Transaction</span>
                 </a>
             </li>
-            <li class="">
-                <a href="studentannouncement_sidebar.php" id="student-profile-link">
-                    <i class='bx bxs-megaphone'></i>
-                    <span class="text">Announcements</span>
-                </a>
-            </li>
+      
 
            
         </ul>
@@ -114,7 +116,7 @@ $admissionData = $resultAdmission->fetch_assoc();
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"><?php echo $studentData['name']; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $studentData['name'] . ' ' . $studentData['last_name']; ?></p>
             </div>
 
 
@@ -122,22 +124,25 @@ $admissionData = $resultAdmission->fetch_assoc();
             <div class="profile-menu">
                 <a href="#" id="settings" class="profile-item"> <i class='bx bx-sun'></i>Display</a>
 
-                <div class="dropdown" id="settings-dropdown">
+                <div class="dropdown" id="settings-dropdown" style="display: none;">
                     <a href="#">Dark Mode
                         <input type="checkbox" id="switch-mode" hidden>
                         <label for="switch-mode" class="switch-mode"></label></a>
 
-
-
                 </div>
-                <a href="StudentProfileEdit.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
-
+          
+                <a href="#" id="setting" class="profile-item" > <i class='bx bx-cog'></i> Settings</a>
+          
+                <div class="dropdown" id="setting-content" style="display: none;">
+                <a href="Student_ChangePass.php">Change Password</a>
+             
+            </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-                <div class="dropdown" id="help-dropdown">
+                <div class="dropdown" id="help-dropdown" style="display: none;">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
-                    <a href="student_faq.php" onclick="openPopup('faq-popup')">FAQ </a>
+                    <a href="Student_faqs.php" onclick="openPopup('faq-popup')">FAQ </a>
                     <a href="#" onclick="toggleDevonContent()">Connect With us</a>
                     <div id="devon-content" class style="display: none;">
                         <div class="social-icons-container">
@@ -167,5 +172,5 @@ $admissionData = $resultAdmission->fetch_assoc();
     <!-- CONTENT -->
     <script src="assets/js/student.js"></script>
 </body>
-
+ 
 </html>

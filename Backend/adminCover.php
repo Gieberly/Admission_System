@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
 // Function to get all student form data
 function getAllStudentFormData() {
     global $conn;
-    $query = "SELECT id,applicant_number,degree_applied,nature_of_degree, applicant_name, email, math_grade, science_grade, english_grade, gwa_grade, rank FROM admission_data";
+    $query = "SELECT id,applicant_number,degree_applied,nature_of_degree, applicant_name, email, math_grade, science_grade, english_grade, gwa_grade FROM admission_data";
     $result = $conn->query($query);
     return $result;
 }

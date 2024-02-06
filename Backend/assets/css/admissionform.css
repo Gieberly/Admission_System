@@ -57,12 +57,12 @@ body{
           margin: 10px 0;
           box-sizing: border-box;
           width: 100%;
-          border: 1px solid #aaaaaa;
+          border: none;
           padding: 2%; /* Use a percentage for padding */
           font-size: 1em; /* Relative font size */
         }
         .index-btn-wrapper{
-          display: none;
+          
           width: 5%; /* Adjust the percentage based on your design */
           max-width: 50px; /* Set a maximum width if needed */
           margin: 15px 15px 0 0;
@@ -557,13 +557,8 @@ p.personal_information {
 /* Add this CSS for the grid layout with five fields in each row */
 .form-container {
 display: grid;
-grid-template-columns: repeat(4, 1fr); /* Five equal-width columns */
+grid-template-columns: repeat(5, 1fr); /* Five equal-width columns */
 gap: 15px; /* Adjust the gap between form groups */
-}
-
-.form-group {
-display: inline-block;
-margin-right: 15px; /* Adjust this value as needed */
 }
 
 /* Optional: Adjust the width of the label and input if needed */

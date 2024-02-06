@@ -61,11 +61,15 @@
             padding: 2%; /* Use a percentage for padding */
             font-size: 1em; /* Relative font size */
           }
-          .index-btn-wrapper{
-         
-            width: 5%; /* Adjust the percentage based on your design */
-            max-width: 50px; /* Set a maximum width if needed */
+
+          .index-btn-wrapper {
+            display: flex;
+            justify-content: space-between; /* This will make the buttons spread out horizontally */
+            width: 100%; /* Adjust the width as needed */
             margin: 15px 15px 0 0;
+        }
+        
+        .index-btn {
             background: #04AA6D;
             color: #ffffff;
             border: none;
@@ -73,37 +77,12 @@
             font-size: 17px;
             cursor: pointer;
             transition: 0.3s;
-          }
-  
-          .index-btn{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          }
-          
-          .index-btn-wrapper:hover{
+        }
+        
+        .index-btn:hover {
             opacity: 0.8;
-          }
+        }
   
-          .index-btn-wrapper2{
-            display: flex;
-            margin-top: 20px;
-          }
-          
-          .index-btn2{
-            margin: 20px 15px 0 0;
-            background: #04AA6D;
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 17px;
-            cursor: pointer;
-            transition: 0.3s;
-          }
-          
-          .index-btn2:hover{
-            opacity: 0.8;
-          }
           
           .progress-bar {
             display: flex;
@@ -401,6 +380,11 @@
   flex-direction: row;
   gap: 15px; /* Adjust the gap between form groups */
   }
+  .form-container3 {
+    display: flex;
+    flex-direction: row;
+    gap: 15px; /* Adjust the gap between form groups */
+    }
   
   .form-group {
   flex: 1; /* Make the form groups occupy available space */
@@ -420,6 +404,24 @@
   border: 1px solid #ccc; /* Optional: Border for input fields */
   }
   
+  .form-group2 {
+    flex: 1; /* Make the form groups occupy available space */
+    display: flex;
+    flex-direction: column;
+    }
+    
+    .form-group2 label {
+    margin-bottom: -6px;
+    }
+    
+    .form-group2 input {
+    width: 100%; /* Input fields occupy the available width */
+    margin-bottom: 10px;
+    border-radius: 5px; /* Adding border radius */
+    padding: 8px; /* Optional: Adjust padding for better appearance */
+    border: 1px solid #ccc; /* Optional: Border for input fields */
+    }
+
   p.to-be-filled{
   font-weight: bold;
   font-size: 24px; /* You can adjust the size as needed */
@@ -554,13 +556,21 @@
   
   }
   
-  /* Add this CSS for the grid layout with five fields in each row */
+  /* Add this CSS for the grid layout with desired fields in each row */
   .form-container {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Five equal-width columns */
+  grid-template-columns: repeat(3, 1fr); /* 3 equal-width columns */
   gap: 15px; /* Adjust the gap between form groups */
   }
-  
+  .form-container2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 equal-width columns */
+    gap: 15px; /* Adjust the gap between form groups */
+    }
+    .form-container3 {
+      width: 65%; /* Set the width of the form container to 75% */
+      
+      }
   .form-group {
   display: inline-block;
   margin-right: 15px; /* Adjust this value as needed */
@@ -569,16 +579,42 @@
   /* Optional: Adjust the width of the label and input if needed */
   .small-label {
   width: 150px; /* Adjust the width as needed */
-  font-size: 16px; /* Adjust this value as needed */
+  font-size: 14px; /* Adjust this value as needed */
   }
   
   .input {
   width: 100%; /* Input fields occupy the available width */
   padding: 5px;
+ 
   margin-top: 5px;
   border: 1px solid #ccc;
   border-radius: 3px;
   }
+  .inputs {
+    width: 100%; /* Input fields occupy the available width */
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    height: 37px;
+    }
+#permanent_address {
+    width: 50em; /* Input fields occupy the available width */
+   height: 38px;;
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    }
+
+    #zip_code {
+      width: 150px0; /* Input fields occupy the available width */
+     height: 38px;;
+      padding: 5px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      }
   
   #gradeFieldsContainer {
     display: block; /* Set the default display property to block or inline-block */
@@ -671,9 +707,7 @@
   }
   /*Alert Message Style*/
   
-  .programFields {
-    display: none;
-  }
+ 
   
   /* Apply styles to the page container */
   .page-container {
@@ -783,4 +817,22 @@
   .form-group input {
    width: 100%;
   }
+  .form-container3 {
+    display: block; /* Change layout to stacked for smaller screens */
+  }
+  .form-group2 {
+    width: 100%; /* Set full width for smaller screens */
+  }
+  .form-group2 input {
+   width: 100%;
+  }
+    /* Media query for screens smaller than 768px */
+    .form-container2 {
+      grid-template-columns: 1fr; /* Change to a single column layout */
+    }
+    #permanent_address,
+    #zip_code {
+      width: 100%; /* Adjust width for smaller screens */
+    }
+
   }

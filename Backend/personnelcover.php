@@ -8,11 +8,12 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
     header("Location: loginpage.php");
     exit();
 }
+
 $userID = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT name, email, userType, status FROM users WHERE id = ?");
+$stmt = $conn->prepare("SELECT name,last_name, email, userType, status FROM users WHERE id = ?");
 $stmt->bind_param("i", $userID);
 $stmt->execute();
-$stmt->bind_result($name, $email, $userType, $status);
+$stmt->bind_result($name, $last_name, $email, $userType, $status);
 $stmt->fetch();
 $stmt->close();
 
@@ -65,10 +66,11 @@ function getCourses($conn)
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+       
             <li class="">
-                <a href="StaffSet_AppointmentDate.php" id="master-list-link">
+                <a href="PersonnelsAppointmentList.php" id="master-list-link">
                 <i class='bx bxs-calendar'></i>
-                    <span class="text">Appointments</span>
+                    <span class="text">Appointment</span>
                 </a>
             </li>
             <li >
@@ -129,6 +131,21 @@ function getCourses($conn)
             <?php
             }
             ?>
+
+<?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'PersonnelsReceiving.php') {
+            ?>
+                <form action="PersonnelsReceiving.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
             <?php
             // Check if the current page is masterlist.php
             $current_page = basename($_SERVER['PHP_SELF']);
@@ -162,14 +179,14 @@ function getCourses($conn)
 
     </section>
 
-
     <!-- Add the profile popup container here -->
     <div class="profile-popup" id="profile-popup">
         <!-- Popup content -->
         <div class="popup-content" id="profile-content">
             <div class="profile-header">
                 <img src="assets/images/human icon.png" alt="User Profile Picture" class="profile-picture" id="profile-picture">
-                <p class="profile-name" id="applicant-name"><?php echo $name; ?></p>
+                <p class="profile-name" id="applicant-name"><?php echo $name. ' ' . $last_name; ?>
+</p>
             </div>
 
 
@@ -177,44 +194,28 @@ function getCourses($conn)
             <div class="profile-menu">
                 <a href="#" id="settings" class="profile-item"> <i class='bx bx-sun'></i>Display</a>
 
-                <div class="dropdown" id="settings-dropdown">
-                    <a href="#">Dark Mode
-                        <input type="checkbox" id="switch-mode" hidden>
-                        <label for="switch-mode" class="switch-mode"></label></a>
-
-
+                <div class="dropdown" id="settings-dropdown" style="display: none;">
+                    <a href="#"> &nbsp; Dark Mode
+                     &nbsp;  &nbsp; <input type="checkbox" id="switch-mode" hidden>
+                    &nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <label for="switch-mode" class="switch-mode"></label></a>
 
                 </div>
-                <a href="EditInfo.php" id="settings" class="profile-item"><i class='bx bx-cog'></i> Settings</a>
+          
+                <a href="#" id="setting" class="profile-item" > <i class='bx bx-cog'></i> Settings</a>
+          
+                <div class="dropdown" id="setting-content" style="display: none;">
+                <a href="EditInfo.php">&nbsp; &nbsp; Change Password</a>
+              
+            </div>
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
-                <div class="dropdown" id="help-dropdown">
+                <div class="dropdown" id="help-dropdown" style="display: none;">
                     <!-- Content for Help and Support dropdown -->
                     <!-- Trigger for the FAQ pop-up -->
-                    <a href="faq_page.html" onclick="openPopup('faq-popup')">FAQ</a>
-                    <a href="#" onclick="toggleDevonContent()">Connect With us</a>
-                    <div id="devon-content" class style="display: none;">
-                        <div class="social-icons-container">
-                            <!-- Facebook -->
-                            <a href="https://www.facebook.com/BenguetStateUniversity/" target="_blank" title="Facebook"><i class='bx bxl-facebook'></i></a>
-
-                            <!-- Email -->
-                            <a href="mailto:web.admin@bsu.edu.ph?subject=General%20Inquiry" target="_blank" title="Email"><i class='bx bx-envelope'></i></a>
-
-                            <!-- Twitter -->
-                            <a href="https://twitter.com/benguetstateu" target="_blank" title="Twitter"><i class='bx bxl-twitter'></i></a>
-
-                            <!-- Instagram -->
-                            <a href="https://www.instagram.com/benguetstateuniversityofficial/" target="_blank" title="Instagram"><i class='bx bxl-instagram'></i></a>
-
-                            <!-- YouTube -->
-                            <a href="https://www.youtube.com/channel/UCGPVCY6CmxRi68_3SE6MzCg" target="_blank" title="YouTube"><i class='bx bxl-youtube'></i></a>
-                        </div>
-
-                    </div>
+                    <a href="" onclick="openPopup('faq-popup')">&nbsp;&nbsp;&nbsp;Manual </a>
+                
                 </div>
                 <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
-
             </div>
 
         </div>

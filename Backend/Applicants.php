@@ -14,21 +14,27 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied 
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, math_2, math_3, science_grade, science_2, science_3, english_grade, english_2, english_3, gwa_grade, result, nature_of_degree, degree_applied 
           FROM admission_data 
           WHERE 
-            `applicant_name` LIKE '%$search%' OR 
+            (`applicant_name` LIKE '%$search%' OR 
             `applicant_number` LIKE '%$search%' OR 
             `academic_classification` LIKE '%$search%' OR 
             `email` LIKE '%$search%' OR 
             `math_grade` LIKE '%$search%' OR 
-            `science_grade` LIKE '%$search%' OR 
+            `math_2` LIKE '%$search%' OR 
+            `math_3` LIKE '%$search%' OR 
+            `science_grade` LIKE '%$search%' OR
+            `science_2` LIKE '%$search%' OR  
+            `science_3` LIKE '%$search%' OR 
             `english_grade` LIKE '%$search%' OR 
+            `english_2` LIKE '%$search%' OR 
+            `english_3` LIKE '%$search%' OR 
             `gwa_grade` LIKE '%$search%' OR 
-            `rank` LIKE '%$search%' OR 
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
-            `degree_applied` LIKE '%$search%'
+            `degree_applied` LIKE '%$search%')
+            AND `appointment_status` = 'Accepted'  -- Added condition for accepted status
           ORDER BY nature_of_degree ASC, degree_applied ASC, applicant_name ASC";
 
 $result = $conn->query($query);
@@ -88,9 +94,7 @@ $stmt->fetch();
                                         <i class='bx bx-filter'></i>
                                     </button>
                                     
-                                    <button type='button' id="addStudent" onclick='addStudent()'>
-                                        <i class='bx bx-add-to-queue'></i> Add Student
-                                    </button>
+                                   
                                     <button type="button" id="toggleSelection">
                                         <i class='bx bx-select-multiple'></i> Toggle Selection
                                     </button>
@@ -107,41 +111,28 @@ $stmt->fetch();
                                     <thead>
                                         <tr>
                                             <th>#</th>
-
+                                            <th>Name</th>
                                             <th>Application No.</th>
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
-                                            <th>Name</th>
+                                            
                                             <th>Academic Clasiffication</th>
-                                            <th>Math</th>
-
-                                            <th>Science</th>
-                                            <th>English</th>
+                                            <th>Math 1</th>
+                                            <th>Math 2</th>
+                                            <th>Math 3</th>
+                                            <th>Science 1</th>
+                                            <th>Science 2</th>
+                                            <th>Science 3</th>
+                                            <th>English 1</th>
+                                            <th>English 2</th>
+                                            <th>English 3</th>
                                             <th>GWA</th>
 
                                            
                                             <th>Action</th>
                                             <th style="display: none;" id="selectColumn">Select</th>
                                         </tr>
-                                        <tr id="addStudentRow" style="display: none;">
-                                            <td>#</td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="applicant_number"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="nature_of_degree"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="degree_applied"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="applicant_name"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="academic_classification"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="math_grade"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="science_grade"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="english_grade"></td>
-                                            <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="gwa_grade"></td>
-                                              
-                                            <td>
-                                                <button type='button' class='button cancel-btn' onclick='cancelAddStudent()'>Cancel</button>
-                                                <button type='button' class='button save-btn' onclick='saveNewStudent()'>Save</button>
-
-                                            </td>
-
-                                        </tr>
+                              
                                     </thead>
                                     <tbody>
                                         <?php
@@ -150,14 +141,21 @@ $stmt->fetch();
                                             while ($row = $result->fetch_assoc()) {
                                                 echo "<tr data-id='{$row['id']}'>";
                                                 echo "<td>{$count}</td>";
+                                                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
                                                 echo "<td data-field='applicant_number'>{$row['applicant_number']}</td>";
                                                 echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
                                                 echo "<td  data-field='degree_applied'>{$row['degree_applied']}</td>";
-                                                echo "<td data-field='applicant_name'>{$row['applicant_name']}</td>";
+                                                
                                                 echo "<td  <td data-field='academic_classification'>{$row['academic_classification']}</td>";
                                                 echo "<td class='editable' data-field='math_grade'>{$row['math_grade']}</td>";
+                                                echo "<td class='editable' data-field='math_2'>{$row['math_2']}</td>";
+                                                echo "<td class='editable' data-field='math_3'>{$row['math_3']}</td>";
                                                 echo "<td class='editable' data-field='science_grade'>{$row['science_grade']}</td>";
+                                                echo "<td class='editable' data-field='science_2'>{$row['science_2']}</td>";
+                                                echo "<td class='editable' data-field='science_3'>{$row['science_3']}</td>";
                                                 echo "<td class='editable' data-field='english_grade'>{$row['english_grade']}</td>";
+                                                echo "<td class='editable' data-field='english_2'>{$row['english_2']}</td>";
+                                                echo "<td class='editable' data-field='english_3'>{$row['english_3']}</td>";
                                                 echo "<td class='editable' data-field='gwa_grade'>{$row['gwa_grade']}</td>";
 
                                                 echo "<td>
@@ -351,95 +349,7 @@ editableCells.forEach(function(cell) {
                                         }, 3000);
                                     }
 
-                                    function addStudent() {
-
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Show the "Add Student" row
-                                        addStudentRow.style.display = 'table-row';
-
-                                        // Clear the content of editable cells in the "Add Student" row
-                                        var editableCells = addStudentRow.querySelectorAll('.editable');
-                                        editableCells.forEach(function(cell) {
-                                            cell.innerText = '';
-                                        });
-
-                                        // Change the button to "Save" and set its onclick function
-                                        var addButton = document.getElementById('addStudent');
-                                        addButton.innerHTML = 'Save';
-                                        addButton.onclick = function() {
-                                            saveNewStudent();
-                                        };
-                                    }
-
-                                    function saveNewStudent() {
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Get all editable cells in the "Add Student" row
-                                        var editableCells = addStudentRow.querySelectorAll('.editable');
-
-                                        // Create an object to store the new course data
-                                        var newStudentData = {};
-
-                                        // Loop through each editable cell and store the new value
-                                        editableCells.forEach(function(cell) {
-                                            var fieldName = cell.getAttribute('data-field');
-                                            var newValue = cell.innerText.trim();
-                                            newStudentData[fieldName] = newValue;
-                                        });
-
-                                        // Send an AJAX request to add the new course to the database
-                                        var xhr = new XMLHttpRequest();
-                                        xhr.open('POST', 'add_student.php', true);
-                                        xhr.setRequestHeader('Content-Type', 'application/json');
-                                        xhr.onreadystatechange = function() {
-                                            if (xhr.readyState === 4) {
-                                                if (xhr.status === 200) {
-                                                    // Hide the "Add Student" row after saving
-                                                    addStudentRow.style.display = 'none';
-
-                                                    // Change the button back to "Add Student"
-                                                    var addButton = document.getElementById('addStudent');
-                                                    addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Student';
-                                                    addButton.onclick = function() {
-                                                        addStudent();
-                                                    };
-
-                                                    // Show a success toast
-                                                    showSuccessToast();
-
-                                                    // Reload the Student.php page after a delay of 2000 milliseconds (2 seconds)
-                                                    setTimeout(function() {
-                                                        location.reload();
-                                                    }, 2000);
-                                                } else {
-                                                    // Optionally, handle the case where the server request was not successful
-                                                    console.error('Failed to add the new course.');
-                                                }
-                                            }
-                                        };
-                                        xhr.send(JSON.stringify({
-                                            newStudentData: newStudentData
-                                        }));
-                                    }
-
-                                    function cancelAddStudent() {
-                                        // Get the "Add Student" row
-                                        var addStudentRow = document.getElementById('addStudentRow');
-
-                                        // Hide the "Add Student" row
-                                        addStudentRow.style.display = 'none';
-
-                                        // Change the button back to "Add Student"
-                                        var addButton = document.getElementById('addStudent');
-                                        addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Student';
-                                        addButton.onclick = function() {
-                                            addStudent();
-                                        };
-                                    }
-
+                                
                                     function deleteAdmissionData(id) {
                                         // Confirm with the user before deleting
                                         if (confirm("Are you sure you want to delete this course?")) {
