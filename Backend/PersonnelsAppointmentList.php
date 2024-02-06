@@ -76,9 +76,8 @@ $stmt->fetch();
                     <div class="button-container">
                         <a href="PersonnelsAppointmentDate.php" class="btn-appointment">
                             <i class='bx bxs-calendar calendar-icon'></i>
-                            <span class="text">Set Appointment Dates</span>
+                            <span class="text">Set Dates</span>
                         </a>
-
                         <a href="#" class="btn-download">
                             <i class='bx bxs-cloud-download'></i>
                             <span class="text">Download PDF</span>
@@ -86,7 +85,7 @@ $stmt->fetch();
                     </div>
 
                 </div>
-
+             
                 <!--master list-->
                 <div id="master-list">
                     <div class="table-data">
@@ -260,6 +259,9 @@ $stmt->fetch();
 
 
                                 <script>
+                                
+
+                                    
                                     function filterByDate() {
                                         // Get the selected date from the input field
                                         var selectedDate = document.getElementById('selectedAppointmentDate').value;
@@ -267,27 +269,6 @@ $stmt->fetch();
                                         // Redirect to the same page with the selected date as a parameter
                                         window.location.href = 'PersonnelsAppointmentList.php?selected_date=' + selectedDate;
                                     }
-
-                                    $(document).ready(function() {
-                                        // Your existing JavaScript code here
-
-                                        $('#viewButton i').on('click', function() {
-                                            var rangeInput = $('#rangeInput').val();
-                                            var range = rangeInput.split('-');
-
-                                            // Check if the input is in the correct format
-                                            if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
-                                                var start = parseInt(range[0]);
-                                                var end = parseInt(range[1]);
-
-                                                // Update the table rows to display only the specified range
-                                                updateTableRows(start, end);
-                                            } else {
-                                                alert('Invalid range format. Please use the format "start-end".');
-                                            }
-                                        });
-                                        document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
-                                    })
                                     // Function to update table rows based on the specified range
                                     function updateTableRows(start, end) {
                                         var rows = $('#table-container table tbody tr');
