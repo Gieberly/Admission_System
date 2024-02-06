@@ -62,9 +62,9 @@
                         <!-- Dropdown for updating status -->
                         <select name="newStatus">
                          
-                            <option value="pending">Pending</option>
-                            <option value="approved">Approved</option>
-                            <option value="rejected">Rejected</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Activated">Activate</option>
+                            <option value="Rejected">Rejected</option>
                         </select>
 
                         <button type="submit" name="updateStatus">Update Status</button>

@@ -2,7 +2,7 @@
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
-    $query = "SELECT id, name, email, status, created_date FROM users WHERE userType = 'Staff'";
+    $query = "SELECT id, name, email, status,state, created_date FROM users WHERE userType = 'Staff'";
     $result = $conn->query($query);
     return $result;
 }

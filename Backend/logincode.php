@@ -20,9 +20,8 @@ if(isset($_POST['login_btn'])){
                 $_SESSION['user_id'] = $id;
                 $_SESSION['user_type'] = $userType;
                 // Store additional user information in session
-                $_SESSION['last_name'] = $lname;
                 $_SESSION['user_email'] = $email;
-                $_SESSION['user_department'] = $department; // Assuming $department is available
+                // Assuming $department is available
 
 
                 if ($userType == 'Student') {
@@ -30,26 +29,22 @@ if(isset($_POST['login_btn'])){
                     exit();
                 } elseif ($userType == 'Faculty') {
                     
-                    if(strtolower($status) == 'verified')
+                    if(strtolower($status) == 'verified' & strtolower($state) == 'Activated')
                     {
-                        if(strtolower($state) == 'approved')
-                        {
                             header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
                             exit();
-                        }
-                        elseif(strtolower($state) == 'pending')
-                        {
-                            echo "User is registered. Please wait for admin confirmation";
-                            header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
-                            exit();
-                        }
-                        elseif(strtolower($state) == 'rejected')
-                        {
-                            echo "User not found.Please contact the administrator";
-                            header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
-                            exit();
-                        }
-                        
+                    }
+                    elseif(strtolower($status) == 'verified'& strtolower($state) == 'Pending')
+                    {
+                        echo "User is registered. Please wait for admin confirmation";
+                        header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
+                        exit();
+                    }
+                    elseif(strtolower($status) == 'verified' & strtolower($state) == 'Rejected')
+                    {
+                        echo "User not found.Please contact the administrator";
+                        header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
+                        exit();
                     }
                     else
                     {
@@ -59,26 +54,22 @@ if(isset($_POST['login_btn'])){
                     }
                         
                 } elseif ($userType == 'Staff') {
-                    if (strtolower($status) == 'verified') 
+                    if(strtolower($status) == 'verified' || strtolower($state) == 'Activated')
                     {
-                        if(strtolower($state) == 'approved')
-                        {
-                            header("Location: ../Backend/personnel.php");
+                            header("Location: ../Backend/personnel.php");  // Redirect to faculty.php if approved
                             exit();
-                        }
-                        elseif(strtolower($state) == 'pending')
-                        {
-                            echo "User is registered. Please for Administrator's Approval";
-                            header("Location: ../Backend/loginpage.php"); // Redirect to register.php if the user is not found
-                            exit();
-                        }
-                        elseif(strtolower($state) == 'Rejected')
-                        {
-                            echo "User not found. Please for contact the Administrator";
-                            header("Location: ../Backend/loginpage.php"); // Redirect to register.php if the user is not found
-                            exit();
-                        }
-                        
+                    }
+                    elseif(strtolower($status) == 'verified' || strtolower($state) == 'Pending')
+                    {
+                        echo "User is registered. Please wait for admin confirmation";
+                        header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
+                        exit();
+                    }
+                    elseif(strtolower($status) == 'verified' || strtolower($state) == 'Rejected')
+                    {
+                        echo "User not found.Please contact the administrator";
+                        header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
+                        exit();
                     }
                     else
                     {
@@ -110,5 +101,4 @@ if(isset($_POST['login_btn'])){
 
 }
 $conn->close();
-?>
 ?>
