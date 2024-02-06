@@ -908,9 +908,12 @@ nav {
 #content main .head-title .left .breadcrumb li a.active {
 	color: var(--blue);
 	pointer-events: unset;
-	/*button download*/
+	
 }
-	/*button download*/
+#content main .head-title .button-container {
+    display: flex;
+    grid-gap: 16px;
+}
 
 .btn-download {
 	height: 36px;
@@ -927,7 +930,21 @@ nav {
 .btn-download:hover {
 	background: var(--blue);
 }
-
+.btn-appointment {
+	height: 36px;
+	padding: 0 16px;
+	border-radius: 36px;
+	background: var(--green);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 10px;
+	font-weight: 500;
+}
+.btn-appointment:hover {
+	background: var(--blue);
+}
   
 #viewButton {
     border: none;
@@ -961,6 +978,30 @@ nav {
 
 	color: var(--dark);
   }
+
+  #delete-btn,
+    #edit-btn,
+    #noa-qa-btn,
+    #noa-nqa-btn,
+    #nor-qa-btn,
+    #nor-nqa-btn {
+		
+        border: 1px solid #555;
+        padding: 8px 12px;
+        font: inherit;
+        cursor: pointer;
+        outline: none;
+        text-decoration: none;
+        color: black !important; /* Set the font color to a dark color */
+        border-radius: 4px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+        margin-right: 10px; /* Adjust as needed */
+    }
+
+    .button:hover {
+        background-color: #a52323;
+        color: #fff; /* Change font color on hover */
+    }
   .button.check-btn {
 	background: none;
 	border: none;

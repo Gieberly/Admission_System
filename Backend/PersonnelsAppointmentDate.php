@@ -52,9 +52,10 @@ if ($result->num_rows > 0) {
             'start' => $startDateTime,
             'end' => $startDateTime, // Assuming the event duration is one hour, adjust as needed
             'color' => '#4fbadd', // Set your desired light blue color here
-
+            'date' => $row['appointment_date'], // Add the appointment date
         );
     }
+    
 }
 ?>
 
@@ -163,6 +164,7 @@ if ($result->num_rows > 0) {
 <body>
     <section id="content">
         <main>
+            
             <div id="setslot-backgroud">
 
 
