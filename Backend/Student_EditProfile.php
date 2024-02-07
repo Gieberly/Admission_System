@@ -1,95 +1,48 @@
 <?php
-include("config.php");
 include("studentcover.php");
 
+// Retrieve the admission data based on the user's email
+$email = $studentData['email'];
+$stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
+$stmtAdmission->bind_param("s", $email);
+$stmtAdmission->execute();
+$resultAdmission = $stmtAdmission->get_result();
+$admissionData = $resultAdmission->fetch_assoc();
 
-// Check if the user is a student member, otherwise redirect them
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
-    header("Location: loginpage.php");
-    exit();
+if (isset($_SESSION['success_message'])) {
+  echo "<p class='success-message'>{$_SESSION['success_message']}</p>";
+  unset($_SESSION['success_message']); // remove the message after displaying it
 }
 
-$studentId = $_SESSION['user_id'];
-$stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-$stmt->bind_param("i", $studentId);
-$stmt->execute();
-$result = $stmt->get_result();
-$studentData = $result->fetch_assoc();
-
-$stmt->close();
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Handle form submission for updating user password
-    $oldPassword = $_POST['old_password'];
-    $newPassword = $_POST['new_password'];
-
-    // Check if the entered old password matches the stored hashed password
-    if (password_verify($oldPassword, $studentData['password'])) {
-        // Hash the new password
-        $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
-
-        // Perform the update query
-        $updateStmt = $conn->prepare("UPDATE users SET password = ? WHERE id = ?");
-        $updateStmt->bind_param("si", $hashedPassword, $studentId);
-
-        if ($updateStmt->execute()) {
-            // Update successful
-            header("Location: student.php");
-            exit();
-        } else {
-            // Update failed
-            echo "Error updating password: " . $conn->error;
-        }
-
-        $updateStmt->close();
-    } else {
-        // Old password does not match
-        echo "Old password is incorrect. Please try again.";
-    }
+if (isset($_SESSION['error_message'])) {
+  echo "<p style='color: red;'>{$_SESSION['error_message']}</p>";
+  unset($_SESSION['error_message']); // remove the message after displaying it
 }
-
-$conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Profile</title>
-    <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-    <link rel="stylesheet" href="assets/css/student.css" />
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script src="assets\js\jspdf.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-</head>
-
-<body>
-    <section id="content">
-        <main>
-            <!--Student Profile-->
-            <div id="student-profile-content">
-                <div class="head-title">
-                    <div class="left">
-                        <h1>Profile</h1>
-                        <ul class="breadcrumb">
-                            <li><a href="#">Profile</a></li>
-                            <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="studentDashboard.php">Home</a></li>
-                        </ul>
-                    </div>
-
+<section id="content">
+    <main>
+        <!-- Dashboard -->
+        <div id="dashboard-content">
+            <div class="head-title">
+                <div class="left">
+                    <h1>Profile</h1>
+                    <ul class="breadcrumb">
+                        <li><a href="#">Profiled</a></li>
+                        <li><i class='bx bx-chevron-right'></i></li>
+                        <li><a class="active" href="studentDashboard.php">Home</a></li>
+                    </ul>
                 </div>
-                <!--profile-->
-                <div id="student-profile">
-                    <div class="table-data">
-                        <div class="order">
-                        <h1 style="text-align: center;">My Profile</h1>
+            </div>
 
+            <div id="master-list">
+                <div class="table-data">
+                    <div class="order">
+                   
+                        <div id="table-container">
+                        <h1 style="text-align: center;">My Profile</h1>
+                        <form method="post" action="Student_update.php">
         <p class="personal_information">Personal Information</p>
 
         <div class="form-container1">
@@ -157,7 +110,7 @@ $conn->close();
           <!-- Telephone/Mobile No -->
           <div class="form-group">
             <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-            <input name="phone_number" class="input" id="phone" value="+63<?php echo $admissionData['phone_number']; ?>">
+            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
           </div>
 
           <!-- Facebook Account Name -->
@@ -181,7 +134,7 @@ $conn->close();
           </div>
           <div class="form-group">
             <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="+63<?php echo $admissionData['contact1_phone']; ?>">
+            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
           </div>
           <div class="form-group">
             <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
@@ -196,7 +149,7 @@ $conn->close();
           </div>
           <div class="form-group">
             <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="+63<?php echo $admissionData['contact_person_2_mobile']; ?>">
+            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
           </div>
           <div class="form-group">
             <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
@@ -239,16 +192,39 @@ $conn->close();
 
         <input type="submit" value="Update Profile">
     </form>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
-        </main>
-    </section>
+            </div>
+        </div>
+    </main>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var successMessage = document.querySelector('.success-message');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+            setTimeout(function () {
+                successMessage.style.display = 'none';
+            }, 2000); // 2 seconds
+        }
+    });
+</script>
+
 <style>
 
-
+.success-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 5px;
+        z-index: 1000;
+        display: none;
+    }
 .head-title {
     display: flex;
     justify-content: space-between;
@@ -353,8 +329,4 @@ p.personal_information {
   margin-bottom: 5px;
   color: gray;
   }
-
 </style>
-</body>
-
-</html>

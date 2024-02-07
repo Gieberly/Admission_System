@@ -16,34 +16,18 @@ $stmtUser->bind_param("i", $studentId);
 $stmtUser->execute();
 $resultUser = $stmtUser->get_result();
 $studentData = $resultUser->fetch_assoc();
-
-// Retrieve the admission data based on the user's email
-$email = $studentData['email'];
-$stmtAdmission = $conn->prepare("SELECT * FROM admission_data WHERE email = ?");
-$stmtAdmission->bind_param("s", $email);
-$stmtAdmission->execute();
-$resultAdmission = $stmtAdmission->get_result();
-$admissionData = $resultAdmission->fetch_assoc();
-
-// Display the student's and admission data
 ?>
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets/css/student.css" />
-   
-    <!-- ... (your existing code) -->
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="assets\js\jspdf.min.js"></script>
-    <!-- Include the pdf.js library -->
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 
