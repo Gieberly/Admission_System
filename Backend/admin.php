@@ -53,6 +53,7 @@ $stmt->close();
             <?php include ('personnel_admin.php')?>
             <?php include('colleges.php');?>
             <?php include('appointment.php');?>
+            <?php include('data_admin.php');?>
         </main>
         <!-- MAIN -->
 

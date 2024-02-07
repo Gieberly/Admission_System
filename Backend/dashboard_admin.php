@@ -24,12 +24,12 @@
                             echo '<h3>0</h3>';
                         }
                          ?></h3>
-                            <p>Available Slots</p>
+                            <p>Colleges with Slots</p>
                         </span>
                     </li>
 
                     <li id="admission-box">
-                        <i class='bx bxs-group'></i>
+                        <i class='bx bxs-user-account'></i>
                         <span class="text">
                             <h3><?php $veri_app_query ="SELECT * FROM applicant";
                         $veri_app_query_run = mysqli_query($conn, $veri_app_query);
@@ -40,7 +40,7 @@
                             echo '<h3>0</h3>';
                         }
                          ?></h3>
-                            <p>Students For Admission</p>
+                            <p>Student Applicants</p>
                         </span>
                     </li>
 
@@ -61,9 +61,9 @@
                     </li>
 
                     <li id="readmitted-box">
-                        <i class='bx bxs-user-x'></i>
+                        <i class='bx bxs-group'></i>
                         <span class="text">
-                            <h3><?php $veri_app_query ="SELECT * FROM application WHERE result ='NOR'";
+                            <h3><?php $veri_app_query ="SELECT * FROM users WHERE userType = 'staff'";
                         $veri_app_query_run = mysqli_query($conn, $veri_app_query);
                         if($app_total = mysqli_num_rows($veri_app_query_run)){
 
@@ -72,7 +72,7 @@
                             echo '<h3> No result</h3>';
                         }
                          ?></h3>
-                            <p>Students For Readmission</p>
+                            <p>Personnels</p>
                         </span>
                     </li>
                 </ul>

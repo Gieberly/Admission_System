@@ -1,136 +1,91 @@
-
-    
-    
-    <div id="schedule-result-content">
-        <div class="head-title">
-            <div class="left">
-                <h1>Schedule</h1>
-                <ul class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><i class='bx bx-chevron-right'></i></li>
-                    <li><a class="active" href="#"></a></li>
-                </ul>
+<div id="schedule-result-content">
+    <div class="head-title">
+        <div class="left">
+            <h1>Schedule</h1>
+            <ul class="breadcrumb">
+                <li><a href="#">Admin</a></li>
+                <li><i class='bx bx-chevron-right'></i></li>
+                <li><a class="active" href="#">Appointment Schedule</a></li>
+            </ul>
+        </div>
+    </div>
+    <!--COntents Here-->
+    <div id="scheduled-appointment">
+    <div class="table-data">
+        <div class="order">
+            <div id="table-container">
+                <!-- Table for displaying student data -->
+                <table class="table table-border" id="table-appointment">
+                    <!-- table header -->
+                    <colgroup>
+                        <col style="width: 5%;">
+                        <col style="width: 10%;">
+                        <col style="width: 10%;">
+                        <col style="width: 15%;">
+                        <col style="width: 15%;">
+                        <col style="width: 15%;">  
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Appointment number</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Slots</th>
+                            <th>Actions</th>
+                            
+                        </tr>
+                    </thead>
+                    <!-- table body -->
+                    <tbody id="contents">
+                        <?php
+                        // Counter for numbering the students
+                        $counter = 1;
+                        $getAppointments = getAppointments();
+                        // Loop through the results and populate the table rows
+                        while ($row = $getAppointments->fetch_assoc()) {
+                        ?>
+                            <tr>
+                                <td><?php echo $counter++; ?></td>
+                                <td><?php echo $row['appointment_id']; ?></td>
+                                <td><?php echo $row['appointment_date']; ?></td>
+                                <td><?php echo $row['appointment_time']; ?></td>
+                                <td><?php echo $row['available_slots']; ?></td>
+                                <td>
+                                <form method="post" action="">
+                                <input type="hidden" name="appointment_id" value="<?php echo $row['appointment_id']; ?>">
+                                    <!-- Dropdown for updating status -->                                    
+                                    <select name="newSlots">
+                                    
+                                        <option value="Edit"><i class='bx bx-edit'>Edit</i></option>
+                                        <option value="Delete">Delete</option>
+                                    </select>
+                                    <button type="submit" name="updateSlots">Update Slots</button>
+                                </form>
+                                </td>
+                                <!-- Add more columns as needed -->
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="alert alert-danger">
-                <?php
-                    $dataComponents = getdate();
-                    if (isset($_GET['month']) && isset($_GET['year'])) {
-                        $month = $_GET['month'];
-                        $year = $_GET['year'];
-                    } else {
-                        $month = $dataComponents['mon'];
-                        $year = $dataComponents['year'];
-                    }
-                    
-                    echo build_calendar($month, $year, $conn);
-                ?>
-            </div>
-        </div>
+    </div>
     </div>
 </div>
-    </div>
-
-<?php
-include ('config.php');
-
-function build_calendar($month, $year, $conn) {
-    $fetchYearQuery = "SELECT * FROM appointments WHERE MONTH(DATE) = ? AND YEAR(DATE) = ?";
-    $stmt = $conn->prepare($fetchYearQuery);
-    $stmt->bind_param('ss', $month, $year);
-    $bookings = array();
-    if($stmt->execute()){
-        $result = $stmt->get_result();
-        if($result->num_rows>0){
-            while($row = $result->fetch_assoc()){
-                $bookings[] = $row['DATE'];
-            }
-            
-            $stmt->close();
-        }
-    }
-    
-    
-     $daysOfWeek = array('Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday');
-     $firstDayOfMonth = mktime(0,0,0,$month,1,$year);
-     $numberDays = date('t',$firstDayOfMonth);
-     $dateComponents = getdate($firstDayOfMonth);
-     $monthName = $dateComponents['month'];
-     $dayOfWeek = $dateComponents['wday'];
-
-    $datetoday = date('Y-m-d');
-   
-    $calendar = "<table class='table table-bordered'>";
-    $calendar .= "<center><h2>$monthName $year</h2>";
-    $calendar.= "<a class='btn btn-xs btn-success' href='?month=".date('m', mktime(0, 0, 0, $month-1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month-1, 1, $year))."'>Previous Month</a> ";
-    $calendar.= " <a class='btn btn-xs btn-danger' href='?month=".date('m')."&year=".date('Y')."'>Current Month</a> ";
-    $calendar.= "<a class='btn btn-xs btn-primary' href='?month=".date('m', mktime(0, 0, 0, $month+1, 1, $year))."&year=".date('Y', mktime(0, 0, 0, $month+1, 1, $year))."'>Next Month</a></center><br>";
-    
-   
-      $calendar .= "<tr>";
-     foreach($daysOfWeek as $day) {
-          $calendar .= "<th  class='header'>$day</th>";
-     } 
-
-     $currentDay = 1;
-     $calendar .= "</tr><tr>";
 
 
-     if ($dayOfWeek > 0) { 
-         for($k=0;$k<$dayOfWeek;$k++){
-                $calendar .= "<td  class='empty'></td>"; 
+<script> 
+        $(document).ready(function () {
+    $('#table-appointment').DataTable({
+        "paging": true, // Enable pagination
+        "ordering": true, // Enable sorting
+        "order": [], // Initial order (disable sorting by default)
+        "lengthMenu": [10, 25, 50, 70, 100], // Set custom page length options
+        "pageLength": 25 // Default page length
+    });
+});
 
-         }
-     }
-    
-     $month = str_pad($month, 2, "0", STR_PAD_LEFT);
-  
-     while ($currentDay <= $numberDays) {
-
-          if ($dayOfWeek == 7) {
-
-               $dayOfWeek = 0;
-               $calendar .= "</tr><tr>";
-
-          }
-          
-          $currentDayRel = str_pad($currentDay, 2, "0", STR_PAD_LEFT);
-          $date = "$year-$month-$currentDayRel";
-          
-            $dayname = strtolower(date('l', strtotime($date)));
-            $eventNum = 0;
-            $today = $date==date('Y-m-d')? "today" : "";
-         if($date<date('Y-m-d')){
-             $calendar.="<td><h4>$currentDay</h4> <button class='btn btn-danger btn-xs' disabled>N/A</button>";
-         }elseif(in_array($date, $bookings)){
-             $calendar.="<td class='$today'><h4>$currentDay</h4> <button class='btn btn-danger btn-xs'> <span class='glyphicon glyphicon-lock
-             '></span> Already Booked</button>";
-         }else{
-             $calendar.="<td class='$today'><h4>$currentDay</h4> <a href='book.php?date=".$date."' class='btn btn-success btn-xs'> <span class='glyphicon glyphicon-ok'></span> Book Now</a>";
-         }
-            
-          $calendar .="</td>";
-          $currentDay++;
-          $dayOfWeek++;
-     }
-
-     if ($dayOfWeek != 7) { 
-     
-          $remainingDays = 7 - $dayOfWeek;
-            for($l=0;$l<$remainingDays;$l++){
-                $calendar .= "<td class='empty'></td>"; 
-         }
-     }
-     
-     $calendar .= "</tr>";
-     $calendar .= "</table>";
-     echo $calendar;
-
-}
-    
-?>
+</script> 

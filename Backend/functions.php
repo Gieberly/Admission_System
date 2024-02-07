@@ -16,6 +16,20 @@ function updateStaffStatus($staffId, $newState) {
     return $stmt->execute();
 }
 
+function editAppointmentSlots($appointment_id, $newSlot) {
+    global $conn;
+    $query = "UPDATE appointmentdate SET available_slot = ? WHERE appointment_id = ? AND appointment_date = ?";
+    $stmt = $conn->prepare($query); 
+    $stmt->bind_param("si",$newSlot, $appointment_id);
+    return $stmt->execute();
+}
+function getAppointments()
+{
+    global $conn;
+    $query = "SELECT*FROM appointmentdate";
+    $result = $conn->query($query);
+    return $result;
+}
 // Function to delete staff member
 function deleteStaff($staffId) {
     global $conn;
@@ -38,7 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['deleteStaff'])) {
     deleteStaff($staffId);
 }
 
-
+// Check if the form for editing appointment slots is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateSlots'])) {
+    $appointment_id = $_POST['appointment_id'];
+    editAppointmentSlots($appointment_id);
+}
 //Function to get all Departments
 function getAllDept() {
     global $conn;
@@ -51,8 +69,7 @@ function getAllDept() {
 // Function to get all student form data
 function getAllStudentFormData() {
     global $conn;
-    $query = "SELECT *FROM applicant 
-              ";
+    $query = "SELECT *FROM applicant";
     $result = $conn->query($query);
     return $result;
 }

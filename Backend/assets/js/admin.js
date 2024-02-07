@@ -192,13 +192,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const DataResultContent = document.getElementById('data-result-content');
     const ScheduleResultLink = document.getElementById('schedule-result-link');
     const ScheduleContent = document.getElementById('schedule-result-content');
+    const InfoResultLink = document.getElementById('data-info-link');
+    const InfoResultContent = document.getElementById('data-info-content');
 
     // Initially hide the content divs by default
     dashboardContent.style.display = 'block';
     MasterListContent.style.display = 'none';
     StudentResultContent.style.display = 'none';
     DataResultContent.style.display = 'none';
-    ScheduleContent.style.display = 'none';  // Display 'Data' tab by default
+    ScheduleContent.style.display = 'none';
+    InfoResultContent.style.display = 'none';  // Display 'Data' tab by default
 
     // Add event listeners to the links
     dashboardLink.addEventListener('click', function (event) {
@@ -208,6 +211,7 @@ document.addEventListener('DOMContentLoaded', function () {
         StudentResultContent.style.display = 'none';
         DataResultContent.style.display = 'none';
         ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
     });
 
     MasterListLink.addEventListener('click', function (event) {
@@ -217,6 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
         StudentResultContent.style.display = 'none';
         DataResultContent.style.display = 'none';
         ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
     });
 
     StudentResultLink.addEventListener('click', function (event) {
@@ -226,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function () {
         StudentResultContent.style.display = 'block';
         DataResultContent.style.display = 'none';
         ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
     });
 
     DataResultLink.addEventListener('click', function (event) {
@@ -235,6 +241,7 @@ document.addEventListener('DOMContentLoaded', function () {
         StudentResultContent.style.display = 'none';
         DataResultContent.style.display = 'block';
         ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
     });
     ScheduleResultLink.addEventListener('click', function (event) {
         event.preventDefault();
@@ -243,6 +250,16 @@ document.addEventListener('DOMContentLoaded', function () {
         StudentResultContent.style.display = 'none';
         DataResultContent.style.display = 'none';
         ScheduleContent.style.display = 'block';
+        InfoResultContent.style.display = 'none';
+    });
+    InfoResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'block';
     });
 });
 
