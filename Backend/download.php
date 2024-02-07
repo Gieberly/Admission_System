@@ -114,8 +114,7 @@ $conn->close();
             <h2 style="font-size: 14px">APPLICATION FOR ADMISSION</h2>
             <br>
             <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
-            <br>
-            <p class="personal_information">Personal Information</p>
+            <h3 style="font-size: 14px">Applicant Number: <span style="color: red;"><?php echo $admissionData['applicant_number'];?></span></h3>
         </div>
         <!-- ID Picture upload section -->
         <div id="id_picture_preview_container" >
@@ -123,7 +122,7 @@ $conn->close();
             nametag <i>(Signature over printed name)</i></p>
         </div>
         </div>
-
+        <p class="personal_information">Personal Information</p>
         <div class="form-container1">
           <!-- Full name -->
           <div class="form-group">
@@ -206,7 +205,7 @@ $conn->close();
         </div>
 
         <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-        <div class="form-container4">
+        <div class="form-container7">
           <!-- Contact Person 1 -->
           <div class="form-group">
             <label class="small-label" for="contact_person_1">Contact Person</label>
@@ -221,7 +220,7 @@ $conn->close();
             <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>" readonly>
           </div>
         </div>
-        <div class="form-container4">
+        <div class="form-container7">
           <!-- Contact Person 2 -->
           <div class="form-group">
             <label class="small-label" for="contact_person_2">Contact Person</label>
@@ -248,11 +247,11 @@ $conn->close();
           <div class="form-group">
             <label class="small-label" for="degree_applied">Degree</label>
             <!-- Display the selected program in this input field -->
-            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>" readonly style="font-size: 12px;">
+            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>" readonly>
           </div>
           <div class="form-group">
             <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly style="font-size: 12px;">
+            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly>
           </div>
         </div>
         <p class="personal_information">Academic Background </p>
@@ -260,30 +259,28 @@ $conn->close();
           <!-- Academic Background -->
           <div class="form-group">
             <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
-            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly style="font-size: 12px;">
+            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly>
           </div>
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly style="font-size: 12px;">
+            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
           </div>
         </div>
         <div class="form-container5">
-        </div><br>
+        </div>
         <p class="attestation-head">ATTESTATION AND CONSENT</p>
         <p class="attestation-note"><i>I affirm that I have read and understood all the instructions contained in this acknowledgement 
             slip and that the information supplied are true, complete and accurate. I promise to abide by the rules and regulations 
             of the admission process of Benguet State University. I am aware that any information I have concealed, falsely given 
             and/or withheld is enough basis for the invalidation/cancellation of my application. I have understood the Data Privacy 
             Notice above and freely give my consent to the legitimate use of my personal data by the University thru my signature 
-            which I have affixed herein.</i></p><br><br><br><br>
+            which I have affixed herein.</i></p><br><br><br>
 
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
         </div><br><br>
-        <br>
-        <br>
         <div class="form-group">
-        <h5>APPOINTMENT DATE: <?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></h5>
+        <h5>APPOINTMENT DATE: <span style="color: red;"><?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></span></h5>
 
 
         <?php
@@ -444,7 +441,7 @@ echo $requirements;
     }
 
     .rac-list > li {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
     }
 </style>
 
@@ -461,7 +458,7 @@ echo $requirements;
         var element = document.getElementById("DownloadForm");
         var opt = {
             margin: 0.39,
-            html2canvas: { scale: 10 }, // Adjust the scale factor for better quality
+            html2canvas: { scale:5},
             filename: 'Admission Form.pdf',
             jsPDF: {unit: 'in', format: [8.5, 13], orientation: 'portrait'},
             pagebreak: { before: '#page-containerr', avoid: '.avoid-this' }

@@ -95,7 +95,7 @@
   
   .form-group input {
     font-weight: bold;
-    font-size: 16px; /* Adjust the size according to your preference */
+    font-size: 12px; /* Adjust the size according to your preference */
     width: 100%;
     margin-bottom: 10px;
     padding: 5px;
@@ -120,8 +120,9 @@
   p.attestation-note {
   text-align: justify; /* Justify align the text */
   font-size: 12px; /* Adjust the font size as needed */
-  line-height: 1.5; /* Adjust the line height for readability */
-  }
+  line-height: 1.5;
+  padding-right: 5px;
+}
 
   .student_signature p {
     border-top: 1px solid black;
@@ -253,23 +254,28 @@
   }
   .form-container3 {
     display: grid;
-    grid-template-columns: 3fr 1fr;  /* 75% for address, 25% for zip code */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: 3fr 1fr;
+    gap: 10px;
   }
   .form-container4 {
     display: grid;
-    grid-template-columns: repeat(3, 25% 37.5% 37.5%); /* 27% for the first and second columns, 44% for the third column */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: repeat(3, 25% 37.5% 37.5%); 
+    gap: 10px; 
   }
   .form-container5 {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 10px; /* Adjust the gap between form groups */
+    gap: 10px;
   }
   .form-container6 {
     display: grid;
-    grid-template-columns: 20% 65% 15%;  /* 25% - 50% - 25% */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: 20% 65% 15%;  
+    gap: 10px;
+  }
+  .form-container7 {
+    display: grid;
+    grid-template-columns: repeat(3, 55% 20% 25%); 
+    gap: 10px; 
   }
   .form-group {
   display: inline-block;
