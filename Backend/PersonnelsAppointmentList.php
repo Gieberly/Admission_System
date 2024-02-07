@@ -28,7 +28,6 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `science_grade` LIKE '%$search%' OR 
             `english_grade` LIKE '%$search%' OR 
             `gwa_grade` LIKE '%$search%' OR 
-
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%'
@@ -74,8 +73,19 @@ $stmt->fetch();
                             </li>
                         </ul>
                     </div>
-                </div>
+                    <div class="button-container">
+                        <a href="PersonnelsAppointmentDate.php" class="btn-appointment">
+                            <i class='bx bxs-calendar calendar-icon'></i>
+                            <span class="text">Set Dates</span>
+                        </a>
+                        <a href="#" class="btn-download">
+                            <i class='bx bxs-cloud-download'></i>
+                            <span class="text">Download PDF</span>
+                        </a>
+                    </div>
 
+                </div>
+             
                 <!--master list-->
                 <div id="master-list">
                     <div class="table-data">
@@ -83,13 +93,12 @@ $stmt->fetch();
                             <div class="head">
                                 <h3>List of Students</h3>
                                 <div class="headfornaturetosort">
-                                    <div>
-                                        <a href="PersonnelsAppointmentDate.php">
-                                            <i class='bx bxs-calendar calendar-icon'></i> &nbsp;
-                                        </a>
-                                    </div>
 
-
+                                    <form method="post" action="" id="calendarFilterForm">
+                                        <label for="selectedAppointmentDate"></label>
+                                        <input type="date" id="selectedAppointmentDate" name="selected_appointment_date" required>
+                                        <button type="button" onclick="filterByDate()"><i class='bx bx-filter'></i></button>
+                                    </form>
 
                                 </div>
                             </div>
@@ -120,8 +129,11 @@ $stmt->fetch();
                                         // Get the current date
                                         $currentDate = date('Y-m-d');
 
-                                        // Query to fetch rows where appointment_date is current
-                                        $sql = "SELECT * FROM admission_data WHERE appointment_date = '$currentDate' ORDER BY appointment_time ASC";
+                                        // Get the selected date from the URL parameter
+                                        $selectedDate = isset($_GET['selected_date']) ? $_GET['selected_date'] : date('Y-m-d');
+
+                                        // Query to fetch rows where appointment_date is the selected date
+                                        $sql = "SELECT * FROM admission_data WHERE appointment_date = '$selectedDate' ORDER BY appointment_time ASC";
                                         $result = $conn->query($sql);
 
 
@@ -144,8 +156,8 @@ $stmt->fetch();
                                                 echo "<td>" . $row["applicant_name"] . "</td>";
 
                                                 echo "<td class='editable' data-field='academic_classification'>
-        <span class='edit-mode'>{$row['academic_classification']}</span>
-        <select class='select-mode' style='display:none;' id='academicClassificationSelect'>";
+                                                <span class='edit-mode'>{$row['academic_classification']}</span>
+                                                <select class='select-mode' style='display:none;' id='academicClassificationSelect'>";
                                                 while ($classification = $resultClassification->fetch_assoc()) {
                                                     $selected = ($row['academic_classification'] == $classification['Classification']) ? "selected" : "";
                                                     echo "<option value='{$classification['Classification']}' $selected>{$classification['Classification']}</option>";
@@ -162,10 +174,11 @@ $stmt->fetch();
 
                                                 echo "<td>
                   
-                    <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
-                    <button type='button' class='button check-btn'  onclick='updateStatus({$row['id']}, \"Accepted\")'><i class='bx bxs-check-circle'></i></button>
-                    <button type='button'  class='button ekis-btn'  onclick='updateStatus({$row['id']}, \"Declined\")'><i class='bx bxs-x-circle'></i></button>
-                    </td>";
+                  
+                                                <button type='button'  class='button ekis-btn'  onclick='updateStatus({$row['id']}, \"Declined\")'><i class='bx bxs-x-circle'></i></button>
+                                                <button type='button' class='button check-btn'  onclick='updateStatus({$row['id']}, \"Accepted\")'><i class='bx bxs-check-circle'></i></button>
+                                                <button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>
+                                                </td>";
                                                 echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
                                                 echo "</tr>";
 
@@ -185,30 +198,36 @@ $stmt->fetch();
                                 <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
                                     <div class="toast-header">
                                         <strong class="mr-auto">Success!</strong>
-                                        
+
                                     </div>
                                     <div class="toast-body" id="toast-body"></div>
                                 </div>
 
                                 <style>
-                                    .calendar-icon {
-                                        color: black;
-                                        /* Default color */
-                                        font-size: 16px;
-                                        /* Default size */
-                                        transition: color 0.3s, font-size 0.5s;
-                                        /* Transition for smooth effect */
+                                    #calendarFilterForm button {
+                                        background: none;
+                                        border: none;
+                                        cursor: pointer;
+                                        padding: 0;
+                                        font-size: 0;
+                                        color: #000;
+
                                     }
 
-                                    /* Hover styles */
-                                    .calendar-icon:hover {
-                                        color: green;
-                                        /* Hover color */
-                                        font-size: 20px;
-                                        /* Hover size */
+                                    #calendarFilterForm button i {
+                                        font-size: 18px;
                                     }
 
-                                    /* Custom styles for the toast */
+
+
+
+                                    #calendarFilterForm input[type="date"] {
+                                        padding: 5px;
+                                        border: 1px solid #ccc;
+                                        border-radius: 4px;
+                                        margin-right: 10px;
+                                    }
+
                                     #toast {
                                         position: fixed;
                                         top: 10%;
@@ -240,26 +259,16 @@ $stmt->fetch();
 
 
                                 <script>
-                                    $(document).ready(function() {
-                                        // Your existing JavaScript code here
+                                
 
-                                        $('#viewButton i').on('click', function() {
-                                            var rangeInput = $('#rangeInput').val();
-                                            var range = rangeInput.split('-');
+                                    
+                                    function filterByDate() {
+                                        // Get the selected date from the input field
+                                        var selectedDate = document.getElementById('selectedAppointmentDate').value;
 
-                                            // Check if the input is in the correct format
-                                            if (range.length === 2 && !isNaN(range[0]) && !isNaN(range[1])) {
-                                                var start = parseInt(range[0]);
-                                                var end = parseInt(range[1]);
-
-                                                // Update the table rows to display only the specified range
-                                                updateTableRows(start, end);
-                                            } else {
-                                                alert('Invalid range format. Please use the format "start-end".');
-                                            }
-                                        });
-                                        document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
-                                    })
+                                        // Redirect to the same page with the selected date as a parameter
+                                        window.location.href = 'PersonnelsAppointmentList.php?selected_date=' + selectedDate;
+                                    }
                                     // Function to update table rows based on the specified range
                                     function updateTableRows(start, end) {
                                         var rows = $('#table-container table tbody tr');
@@ -274,149 +283,150 @@ $stmt->fetch();
                                     }
 
                                     function editAdmissionData(id) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${id}']`);
+                                        // Get the row element
+                                        var row = document.querySelector(`tr[data-id='${id}']`);
 
-    // Hide the "Check Circle" and "X Circle" buttons within the row
-    var checkBtn = row.querySelector('.check-btn');
-    var ekisBtn = row.querySelector('.ekis-btn');
+                                        // Hide the "Check Circle" and "X Circle" buttons within the row
+                                        var checkBtn = row.querySelector('.check-btn');
+                                        var ekisBtn = row.querySelector('.ekis-btn');
 
-    if (checkBtn && ekisBtn) {
-        checkBtn.style.display = 'none';
-        ekisBtn.style.display = 'none';
-    }
+                                        if (checkBtn && ekisBtn) {
+                                            checkBtn.style.display = 'none';
+                                            ekisBtn.style.display = 'none';
+                                        }
 
-    // Toggle between edit and display modes
-    var editableCells = row.querySelectorAll('.editable');
-    editableCells.forEach(function(cell) {
-        var spanMode = cell.querySelector('.edit-mode');
-        var selectMode = cell.querySelector('.select-mode');
+                                        // Toggle between edit and display modes
+                                        var editableCells = row.querySelectorAll('.editable');
+                                        editableCells.forEach(function(cell) {
+                                            var spanMode = cell.querySelector('.edit-mode');
+                                            var selectMode = cell.querySelector('.select-mode');
 
-        if (spanMode && selectMode) {
-            spanMode.style.display = 'none';
-            selectMode.style.display = 'inline-block';
-        }
-    });
+                                            if (spanMode && selectMode) {
+                                                spanMode.style.display = 'none';
+                                                selectMode.style.display = 'inline-block';
+                                            }
+                                        });
 
-    // Change the "Edit" button to a "Save" button and change its color to green
-    var editButton = row.querySelector('.edit-btn');
-    editButton.innerHTML = '<i class="bx bx-save"></i>';
-    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-    editButton.onclick = function() {
-        saveStudent(id);
+                                        // Change the "Edit" button to a "Save" button and change its color to green
+                                        var editButton = row.querySelector('.edit-btn');
+                                        editButton.innerHTML = '<i class="bx bx-save"></i>';
+                                        editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+                                        editButton.onclick = function() {
+                                            saveStudent(id);
 
-        // Toggle back to display mode after saving
-        editableCells.forEach(function(cell) {
-            var spanMode = cell.querySelector('.edit-mode');
-            var selectMode = cell.querySelector('.select-mode');
+                                            // Toggle back to display mode after saving
+                                            editableCells.forEach(function(cell) {
+                                                var spanMode = cell.querySelector('.edit-mode');
+                                                var selectMode = cell.querySelector('.select-mode');
 
-            if (spanMode && selectMode) {
-                spanMode.style.display = 'inline-block';
-                selectMode.style.display = 'none';
-            }
-        });
+                                                if (spanMode && selectMode) {
+                                                    spanMode.style.display = 'inline-block';
+                                                    selectMode.style.display = 'none';
+                                                }
+                                            });
 
-        // Show the "Check Circle" and "X Circle" buttons after saving
-        if (checkBtn && ekisBtn) {
-            checkBtn.style.display = 'inline-block';
-            ekisBtn.style.display = 'inline-block';
-        }
-    };
-}
+                                            // Show the "Check Circle" and "X Circle" buttons after saving
+                                            if (checkBtn && ekisBtn) {
+                                                checkBtn.style.display = 'inline-block';
+                                                ekisBtn.style.display = 'inline-block';
+                                            }
+                                        };
+                                    }
 
-function updateStatus(admissionId, newStatus) {
-    // Confirm the action with a prompt
-    var confirmation = confirm(`Are you sure you want to set as ${newStatus.toLowerCase()} the student's requirement?`);
-    
-    if (confirmation) {
-        const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
+                                    function updateStatus(admissionId, newStatus) {
+                                        // Confirm the action with a prompt
+                                        var confirmation = confirm(`Are you sure you want to set as ${newStatus.toLowerCase()} the student's requirement?`);
 
-        // Make a fetch request to the server
-        fetch(url, {
-            method: 'GET',
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            // Assuming the server sends back a JSON response
-            // You can handle the response accordingly
-            if (data.success) {
-                // Update the status in the table cell
-                const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
-                statusCell.textContent = newStatus;
+                                        if (confirmation) {
+                                            const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
 
-                // Optionally, display a success message
-                console.log('Status updated successfully');
+                                            // Make a fetch request to the server
+                                            fetch(url, {
+                                                    method: 'GET',
+                                                })
+                                                .then(response => {
+                                                    if (!response.ok) {
+                                                        throw new Error(`HTTP error! Status: ${response.status}`);
+                                                    }
+                                                    return response.json();
+                                                })
+                                                .then(data => {
+                                                    // Assuming the server sends back a JSON response
+                                                    // You can handle the response accordingly
+                                                    if (data.success) {
+                                                        // Update the status in the table cell
+                                                        const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
+                                                        statusCell.textContent = newStatus;
 
-                // Show a toast message
-                if (newStatus === "Accepted") {
-                    showCheckCircleToast("Student's requirement accepted successfully!");
-                } else if (newStatus === "Declined") {
-                    showEkisCircleToast("Student's requirement declined successfully!");
-                }
-            } else {
-                // Optionally, display an error message
-                console.error('Failed to update status');
-            }
-        })
-        .catch(error => {
-            // Handle errors during the fetch request
-            console.error('Fetch error:', error);
-        });
-    }
-}
+                                                        // Optionally, display a success message
+                                                        console.log('Status updated successfully');
 
-function showCheckCircleToast(message) {
-    // Get the toast element
-    var toast = document.getElementById('toast');
+                                                        // Show a toast message
+                                                        if (newStatus === "Accepted") {
+                                                            showCheckCircleToast("Student's requirement accepted successfully!");
+                                                        } else if (newStatus === "Declined") {
+                                                            showEkisCircleToast("Student's requirement declined successfully!");
+                                                        }
+                                                    } else {
+                                                        // Optionally, display an error message
+                                                        console.error('Failed to update status');
+                                                    }
+                                                })
+                                                .catch(error => {
+                                                    // Handle errors during the fetch request
+                                                    console.error('Fetch error:', error);
+                                                });
+                                        }
+                                    }
 
-    // Set the background color to green for success
-    toast.style.backgroundColor = '#4CAF50';
 
-    // Set the message in the toast body
-    var toastBody = document.getElementById('toast-body');
-    toastBody.textContent = message;
+                                    function showCheckCircleToast(message) {
+                                        // Get the toast element
+                                        var toast = document.getElementById('toast');
 
-    // Display the toast
-    toast.classList.add('show');
+                                        // Set the background color to green for success
+                                        toast.style.backgroundColor = '#4CAF50';
 
-    // Hide the toast after a certain duration (e.g., 3000 milliseconds)
-    setTimeout(function() {
-        toast.classList.remove('show');
-        // Reset the background color
-        toast.style.backgroundColor = '';
-        // Reset the toast body content
-        toastBody.textContent = '';
-    }, 1500);
-}
+                                        // Set the message in the toast body
+                                        var toastBody = document.getElementById('toast-body');
+                                        toastBody.textContent = message;
 
-function showEkisCircleToast(message) {
-    // Get the toast element
-    var toast = document.getElementById('toast');
+                                        // Display the toast
+                                        toast.classList.add('show');
 
-    // Set the background color to red for declined
-    toast.style.backgroundColor = '#4CAF50';
+                                        // Hide the toast after a certain duration (e.g., 3000 milliseconds)
+                                        setTimeout(function() {
+                                            toast.classList.remove('show');
+                                            // Reset the background color
+                                            toast.style.backgroundColor = '';
+                                            // Reset the toast body content
+                                            toastBody.textContent = '';
+                                        }, 1500);
+                                    }
 
-    // Set the message in the toast body
-    var toastBody = document.getElementById('toast-body');
-    toastBody.textContent = message;
+                                    function showEkisCircleToast(message) {
+                                        // Get the toast element
+                                        var toast = document.getElementById('toast');
 
-    // Display the toast
-    toast.classList.add('show');
+                                        // Set the background color to red for declined
+                                        toast.style.backgroundColor = '#4CAF50';
 
-    // Hide the toast after a certain duration (e.g., 3000 milliseconds)
-    setTimeout(function() {
-        toast.classList.remove('show');
-        // Reset the background color
-        toast.style.backgroundColor = '';
-        // Reset the toast body content
-        toastBody.textContent = '';
-    }, 1500);
-}
+                                        // Set the message in the toast body
+                                        var toastBody = document.getElementById('toast-body');
+                                        toastBody.textContent = message;
+
+                                        // Display the toast
+                                        toast.classList.add('show');
+
+                                        // Hide the toast after a certain duration (e.g., 3000 milliseconds)
+                                        setTimeout(function() {
+                                            toast.classList.remove('show');
+                                            // Reset the background color
+                                            toast.style.backgroundColor = '';
+                                            // Reset the toast body content
+                                            toastBody.textContent = '';
+                                        }, 1500);
+                                    }
 
                                     function saveStudent(id) {
                                         // Get the row element
