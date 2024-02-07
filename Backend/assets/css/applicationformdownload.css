@@ -45,42 +45,30 @@
 }
 
   #id_picture_preview_container {
-    width: 150px; /* Set the desired width */
-    height: 150px; /* Set the desired height */
+    width: 192px; /* Set the desired width */
+    height: 192px; /* Set the desired height */
     overflow: hidden; /* Crop the image if it's larger */
     border: 1px solid #ccc; /* Add a border for styling */
     cursor: pointer; /* Add a pointer cursor to indicate it's clickable */
     position: relative;
-    transition: border 0.3s, box-shadow 0.3s, transform 0.3s, opacity 0.3s;
     text-align: center;
-    margin-left: auto; /* Align to the right */
+    margin-right: 2px; /* Align to the right */
     background-color: #ffffff;
-    border-radius: 5px;
   }
-  
-  #id_picture_preview_container:hover {
-    cursor: pointer;
-    transform: scale(0.95); /* Shrink the container a bit on hover */
-    opacity: 0.5; /* Fade the container on hover */
-  }
-  
-  
-  #id_picture_preview_img {
-    width: 100%; /* Make the image fill its container */
-    height: 100%; /* Make the image fill its container */
-    border-radius: 5px;
-   
-  }
+
   #id_picture_preview_container p {
     font-size: 14px;
-    margin: 0;
-    border-radius: 5px;
-    ;
+    margin: 50px 2px;
+    text-align: center;
   }
   
   h2 {
   text-align: center;
   }
+
+  h5 {
+    font-size: 14px;
+    }
   
   .privacy-heading {
   font-size: 12px; /* Adjust the font size as needed */
@@ -111,10 +99,9 @@
   
   .form-group input {
     font-weight: bold;
-    font-size: 16px; /* Adjust the size according to your preference */
+    font-size: 12px; /* Adjust the size according to your preference */
     width: 100%;
     margin-bottom: 10px;
-    border-radius: 5px;
     padding: 5px;
     border: none;
     border-bottom: 1px solid #cccccc;
@@ -136,14 +123,15 @@
   
   p.attestation-note {
   text-align: justify; /* Justify align the text */
-  font-size: 11px; /* Adjust the font size as needed */
-  line-height: 1.5; /* Adjust the line height for readability */
-  }
+  font-size: 12px; /* Adjust the font size as needed */
+  line-height: 1.5;
+  padding-right: 5px;
+}
 
   .student_signature p {
     border-top: 1px solid black;
     padding-right: 5px;
-    width: 25%;
+    width: 35%;
     font-style: italic;
     float: right; /* Float the text to the left */
     clear: left; /* Clear the float to avoid layout issues */
@@ -270,23 +258,28 @@
   }
   .form-container3 {
     display: grid;
-    grid-template-columns: 3fr 1fr;  /* 75% for address, 25% for zip code */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: 3fr 1fr;
+    gap: 10px;
   }
   .form-container4 {
     display: grid;
-    grid-template-columns: repeat(3, 40% 25% 25%); /* 27% for the first and second columns, 44% for the third column */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: repeat(3, 25% 37.5% 37.5%); 
+    gap: 10px; 
   }
   .form-container5 {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 10px; /* Adjust the gap between form groups */
+    gap: 10px;
   }
   .form-container6 {
     display: grid;
-    grid-template-columns: 1fr 2fr 1fr;  /* 25% - 50% - 25% */
-    gap: 10px; /* Adjust the gap between form groups */
+    grid-template-columns: 20% 65% 15%;  
+    gap: 10px;
+  }
+  .form-container7 {
+    display: grid;
+    grid-template-columns: repeat(3, 55% 20% 25%); 
+    gap: 10px; 
   }
   .form-group {
   display: inline-block;
@@ -308,62 +301,29 @@
   /* Apply styles to the page container */
   .page-containerr {
   background-color: #ffffff;
-  padding: 10px 10px;
+  padding: 5px 5px;
   font-family: Arial, sans-serif;
   }
-  /* Apply styles to the page container */
-  .page-container {
-  background-color: #f5f5f5;
-  padding: 20px;
-  border: 1px solid #ccc;
-  margin: 20px;
-  font-family: "Times New Roman", Times, serif;
+
+  .page-containerr .inline-heading {
+    display: flex; /* Add flex display */
+    flex-direction: row; /* Align items vertically */
+    align-items: stretch; /* Center items vertically */
+    justify-content: center; /* Align items horizontally center */ 
+}
+
+  .page-containerr .head-der {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
   }
   
-  /* Style the heading */
-  .page-container h2 {
-  font-size: 12px;
-  color: #333;
-  margin-bottom: 10px;
-  text-align: center;
-  }
-  .page-container p.section-title {
-  font-size: 12px;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  text-align: left;
-  }
-  
-  /* Style the main instructions */
-  .page-container p {
-  font-size: 11px;
-  line-height: 1.4;
-  margin-bottom: 10px;
-  text-align: left;
-  }
-  
-  /* Style the sub-instructions */
-  .page-container ul {
-  list-style-type: disc;
-  margin-left: 5px;
-  }
-  
-  .page-container li {
-  font-size: 12px;
-  margin-bottom: 5px;
-  }
-  
-  /* Apply different styles to specific elements */
-  .page-container ul > li {
-  list-style-type: disc;
-  }
-  
-  /* Add a border to the "NOTE" section */
-  .page-container p:last-child {
-  border-top: 1px solid #ccc;
-  padding-top: 10px;
-  margin-top: 20px;
-  }
+  .page-containerr .applicantandperso {
+    display: flex; /* Add flex display */
+    flex-direction: row; /* Align items vertically */
+    align-items: stretch; /* Center items vertically */
+    justify-content: center; /* Align items horizontally center */ 
+}
 
   /* For smaller devices */
   @media (max-width: 768px) {

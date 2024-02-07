@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include("config.php");
@@ -100,56 +99,32 @@ $conn->close();
 
 <button onclick="downloadPDF()"> Download </button>
 
-    <!-- <a href="#" class="btn-calendar" onclick="downloadPDF()">
-            <i class='bx bxs-cloud-download'></i>
-            <span class="text">Download</span>
-        </a> -->
-
 <body>
       <div class="page-containerr" id="DownloadForm">
+        <div class="inline-heading">
         <!-- LOGO -->
-            <img src="assets/images/BSU Logo1.png" class="logo" alt="logo"width="80" height="80" style="float:left;">
+        <img src="assets/images/BSU Logo1.png" class="logo" alt="logo"width="90" height="90" style="float:left;">
         <!-- Office and Location -->
-        <div style="text-align: center;">
+        <div class="head-der">
             <p>Republic of the Philippines</p>
             <h5 style="font-family: 'Old English Text MT'; color: rgb(22, 62, 4);">Benguet State University</h5>
             <strong>Office of University Registrar</strong><br>
             <p>La Trinidad, Benguet</p>
+            <br><br>
+            <h2 style="font-size: 14px">APPLICATION FOR ADMISSION</h2>
+            <br><br>
+            <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
         </div>
         <!-- ID Picture upload section -->
-        <div style="float: right; margin-left: 10px;">
-    <div id="id_picture_preview_container">
-        <div>
-            <!-- Embedding PHP code for the ID picture -->
-            <?php
-                // Assuming $admissionData is an array containing necessary data
-                echo '<img id="id_picture_preview_img" src="' . $admissionData['id_picture'] . '" alt="ID Picture">';
-            ?>
-        </div>
-        <div id="upload-instructions">
+        <div id="id_picture_preview_container" >
             <p><strong>SUBMIT TWO (2) PIECES 2"x 2" RECENT FORMAL STUDIO TYPE PHOTO</strong> with white background and 
             nametag <i>(Signature over printed name)</i></p>
         </div>
-    </div>
-    <input type="file" name="id_picture" id="id_picture" accept="image/*" style="display: none" required>
-</div>
-<br><br>
-
-        <h2 align="center">APPLICATION FOR ADMISSION</h2>
-        <p class="head_information">PRIVACY NOTICE:</p>
-        <p class="privacy-notice-text">Pursuant to the Data Privacy Act of 2012 and the BSU Data Privacy, Personnel from the 
-            Office of the University Registrar,.Persuant to the data Privacy Act of 2012 and BSU Data Privacy, Personnel from 
-            the office of the University Registrar, concerned Personnel of the different Colleges of BSU La Trinidad, BSU Buguias 
-            Campus and Bokod Campus are commited to keep with utmost confidentiality, all sinsetive personal information collected 
-            from applicants. Personal information are collected, accessed, used and or disclosed on a "need to  know basis" and only 
-            as reasonably required. Confidential information either within or outside the University will not be communicated, except 
-            to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be 
-            used only in accessing, processing, and transmitting such personal information. Read more on BSU Data Privacy Notice: 
-            <a href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students">http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students</a>
-          </p>
-        <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
         <p class="personal_information">Personal Information</p>
-
+          <h3 style="font-size: 14px;">Applicant Number: <span style="color: red;"><?php echo $admissionData['applicant_number'];?></span></h3>
+        </div>
         <div class="form-container1">
           <!-- Full name -->
           <div class="form-group">
@@ -232,7 +207,7 @@ $conn->close();
         </div>
 
         <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-        <div class="form-container4">
+        <div class="form-container7">
           <!-- Contact Person 1 -->
           <div class="form-group">
             <label class="small-label" for="contact_person_1">Contact Person</label>
@@ -247,7 +222,7 @@ $conn->close();
             <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>" readonly>
           </div>
         </div>
-        <div class="form-container4">
+        <div class="form-container7">
           <!-- Contact Person 2 -->
           <div class="form-group">
             <label class="small-label" for="contact_person_2">Contact Person</label>
@@ -282,7 +257,7 @@ $conn->close();
           </div>
         </div>
         <p class="personal_information">Academic Background </p>
-        <div class="form-container1">
+        <div class="form-container5">
           <!-- Academic Background -->
           <div class="form-group">
             <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
@@ -293,29 +268,19 @@ $conn->close();
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
           </div>
         </div>
-        <div class="form-container5">
-         
-          
-        </div>
         <p class="attestation-head">ATTESTATION AND CONSENT</p>
         <p class="attestation-note"><i>I affirm that I have read and understood all the instructions contained in this acknowledgement 
             slip and that the information supplied are true, complete and accurate. I promise to abide by the rules and regulations 
             of the admission process of Benguet State University. I am aware that any information I have concealed, falsely given 
             and/or withheld is enough basis for the invalidation/cancellation of my application. I have understood the Data Privacy 
             Notice above and freely give my consent to the legitimate use of my personal data by the University thru my signature 
-            which I have affixed herein.</i></p><br><br>
+            which I have affixed herein.</i></p><br><br><br>
 
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
-        </div><br>
-        <br>
-
-        <br>
-        <br>
-        <br>
-        <br>
+        </div><br><br>
         <div class="form-group">
-        <h5>APPOINTMENT DATE: <?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></h5>
+        <h5>APPOINTMENT DATE: <span style="color: red;"><?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></span></h5>
 
 
         <?php
@@ -428,13 +393,12 @@ switch ($admissionData['academic_classification']) {
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
                     <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees).<br>Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
                     <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school attended</li>
                     <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
                     <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                 </ol>
                   <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
-         
             </ul>";
         break;
 
@@ -462,6 +426,7 @@ echo $requirements;
     h3 {
         color: #333;
         text-align: center;
+        font-size: 13px;
     }
 
     .custom-list > strong {
@@ -476,7 +441,8 @@ echo $requirements;
     }
 
     .rac-list > li {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        font-size: 13px;
     }
 </style>
 
@@ -493,6 +459,7 @@ echo $requirements;
         var element = document.getElementById("DownloadForm");
         var opt = {
             margin: 0.39,
+            html2canvas: { scale:5},
             filename: 'Admission Form.pdf',
             jsPDF: {unit: 'in', format: [8.5, 13], orientation: 'portrait'},
             pagebreak: { before: '#page-containerr', avoid: '.avoid-this' }
