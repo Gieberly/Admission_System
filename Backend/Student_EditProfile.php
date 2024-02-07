@@ -206,7 +206,7 @@ if (isset($_SESSION['error_message'])) {
             successMessage.style.display = 'block';
             setTimeout(function () {
                 successMessage.style.display = 'none';
-            }, 2000); // 2 seconds
+            }, 4000);
         }
     });
 </script>
