@@ -112,9 +112,8 @@ $conn->close();
             <p>La Trinidad, Benguet</p>
             <br><br>
             <h2 style="font-size: 14px">APPLICATION FOR ADMISSION</h2>
-            <br>
+            <br><br>
             <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
-            <h3 style="font-size: 14px">Applicant Number: <span style="color: red;"><?php echo $admissionData['applicant_number'];?></span></h3>
         </div>
         <!-- ID Picture upload section -->
         <div id="id_picture_preview_container" >
@@ -122,7 +121,10 @@ $conn->close();
             nametag <i>(Signature over printed name)</i></p>
         </div>
         </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
         <p class="personal_information">Personal Information</p>
+          <h3 style="font-size: 14px;">Applicant Number: <span style="color: red;"><?php echo $admissionData['applicant_number'];?></span></h3>
+        </div>
         <div class="form-container1">
           <!-- Full name -->
           <div class="form-group">
@@ -391,13 +393,12 @@ switch ($admissionData['academic_classification']) {
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
                     <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees). Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certified true copy of Copy of Grades or Transcript of Records (Applicable only for Second Degree Transferees).<br>Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
                     <li>Photocopy/scanned copy of Grades or Transcript of Records for graduates Where BSU is the last school attended</li>
                     <li>Certification of Enrollment from the last school attended (most recent) or presently enrolled in.</li>
                     <li>Certification of General Weighted Average (GWA) issued by the Registrar's Office/equivalent Office of your previous School.</li>
                 </ol>
                   <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>
-         
             </ul>";
         break;
 
@@ -425,6 +426,7 @@ echo $requirements;
     h3 {
         color: #333;
         text-align: center;
+        font-size: 13px;
     }
 
     .custom-list > strong {
@@ -440,6 +442,7 @@ echo $requirements;
 
     .rac-list > li {
         margin-bottom: 5px;
+        font-size: 13px;
     }
 </style>
 

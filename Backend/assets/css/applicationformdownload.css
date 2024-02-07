@@ -65,6 +65,10 @@
   h2 {
   text-align: center;
   }
+
+  h5 {
+    font-size: 14px;
+    }
   
   .privacy-heading {
   font-size: 12px; /* Adjust the font size as needed */
@@ -127,7 +131,7 @@
   .student_signature p {
     border-top: 1px solid black;
     padding-right: 5px;
-    width: 25%;
+    width: 35%;
     font-style: italic;
     float: right; /* Float the text to the left */
     clear: left; /* Clear the float to avoid layout issues */
@@ -313,6 +317,13 @@
     text-align: center;
     margin: 0 auto;
   }
+  
+  .page-containerr .applicantandperso {
+    display: flex; /* Add flex display */
+    flex-direction: row; /* Align items vertically */
+    align-items: stretch; /* Center items vertically */
+    justify-content: center; /* Align items horizontally center */ 
+}
 
   /* For smaller devices */
   @media (max-width: 768px) {
