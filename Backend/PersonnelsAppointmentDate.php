@@ -25,18 +25,61 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $times = $_POST['appointment_times']; // It's an array now
     $availableSlots = $_POST['available_slots'];
 
-    // Insert data into the database for each selected time
+    // Check if the time slots already exist in the database
+    $conflictingSlots = array();
     foreach ($times as $time) {
-        $startDateTime = $date . ' ' . $time;
-        $sql = "INSERT INTO appointmentdate (appointment_date, appointment_time, available_slots) VALUES ('$date', '$time', '$availableSlots')";
-        if ($conn->query($sql) !== TRUE) {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-            exit;
+        $sql = "SELECT COUNT(*) as count FROM appointmentdate WHERE appointment_date = '$date' AND appointment_time = '$time'";
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        if ($row['count'] > 0) {
+            // This time slot is already taken
+            $conflictingSlots[] = $time;
+        } else {
+            // Insert data into the database
+            $sql = "INSERT INTO appointmentdate (appointment_date, appointment_time, available_slots) VALUES ('$date', '$time', '$availableSlots')";
+            if ($conn->query($sql) !== TRUE) {
+                echo "Error: " . $sql . "<br>" . $conn->error;
+                exit;
+            }
         }
     }
 
-    echo "Appointment date set successfully!";
+    if (!empty($conflictingSlots)) {
+        // Display a popup message for conflicting slots
+        $conflictingTimes = implode(", ", $conflictingSlots);
+        echo "<script>
+                // Create a message element
+                var messageElement = document.createElement('div');
+                messageElement.textContent = 'The following time slots are already taken: $conflictingTimes. Please choose another time.';
+                messageElement.classList.add('popup-message');
+
+                // Append the message element to the document body
+                document.body.appendChild(messageElement);
+
+                // Remove the message element after 2 seconds
+                setTimeout(function() {
+                    messageElement.remove();
+                }, 2000);
+             </script>";
+    } else {
+        echo "<script>
+                // Display a success message
+                var successMessage = document.createElement('div');
+                successMessage.textContent = 'Appointment date set successfully!';
+                successMessage.classList.add('popup-message', 'success');
+
+                // Append the success message to the document body
+                document.body.appendChild(successMessage);
+
+                // Remove the success message after 2 seconds
+                setTimeout(function() {
+                    successMessage.remove();
+                }, 2000);
+             </script>";
+    }
 }
+
+
 
 // Retrieve existing slots from the database
 $sql = "SELECT * FROM appointmentdate";
@@ -157,6 +200,21 @@ if ($result->num_rows > 0) {
     background-color: #4CAF50; /* Set your desired background color here */
     color: white; /* Set the text color if needed */
 }
+.popup-message {
+        position: fixed;
+        top: 30%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #4CAF50; /* Green color */
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        z-index: 9999;
+    }
+
+    .success {
+        background-color: #4CAF50; /* Green color */
+    }
 
 </style>
 
