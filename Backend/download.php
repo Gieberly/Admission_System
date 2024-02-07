@@ -266,8 +266,6 @@ $conn->close();
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
           </div>
         </div>
-        <div class="form-container5">
-        </div>
         <p class="attestation-head">ATTESTATION AND CONSENT</p>
         <p class="attestation-note"><i>I affirm that I have read and understood all the instructions contained in this acknowledgement 
             slip and that the information supplied are true, complete and accurate. I promise to abide by the rules and regulations 

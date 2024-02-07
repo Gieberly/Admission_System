@@ -135,6 +135,7 @@ $admissionData = $resultAdmission->fetch_assoc();
           
                 <div class="dropdown" id="setting-content" style="display: none;">
                 <a href="Student_ChangePass.php">Change Password</a>
+                <a href="Student_EditProfile.php">Edit Profile</a>
              
             </div>
 
