@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include("config.php");
@@ -100,55 +99,30 @@ $conn->close();
 
 <button onclick="downloadPDF()"> Download </button>
 
-    <!-- <a href="#" class="btn-calendar" onclick="downloadPDF()">
-            <i class='bx bxs-cloud-download'></i>
-            <span class="text">Download</span>
-        </a> -->
-
 <body>
       <div class="page-containerr" id="DownloadForm">
+        <div class="inline-heading">
         <!-- LOGO -->
-            <img src="assets/images/BSU Logo1.png" class="logo" alt="logo"width="80" height="80" style="float:left;">
+        <img src="assets/images/BSU Logo1.png" class="logo" alt="logo"width="90" height="90" style="float:left;">
         <!-- Office and Location -->
-        <div style="text-align: center;">
+        <div class="head-der">
             <p>Republic of the Philippines</p>
             <h5 style="font-family: 'Old English Text MT'; color: rgb(22, 62, 4);">Benguet State University</h5>
             <strong>Office of University Registrar</strong><br>
             <p>La Trinidad, Benguet</p>
+            <br><br>
+            <h2 style="font-size: 14px">APPLICATION FOR ADMISSION</h2>
+            <br>
+            <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
+            <br>
+            <p class="personal_information">Personal Information</p>
         </div>
         <!-- ID Picture upload section -->
-        <div style="float: right; margin-left: 10px;">
-    <div id="id_picture_preview_container">
-        <div>
-            <!-- Embedding PHP code for the ID picture -->
-            <?php
-                // Assuming $admissionData is an array containing necessary data
-                echo '<img id="id_picture_preview_img" src="' . $admissionData['id_picture'] . '" alt="ID Picture">';
-            ?>
-        </div>
-        <div id="upload-instructions">
+        <div id="id_picture_preview_container" >
             <p><strong>SUBMIT TWO (2) PIECES 2"x 2" RECENT FORMAL STUDIO TYPE PHOTO</strong> with white background and 
             nametag <i>(Signature over printed name)</i></p>
         </div>
-    </div>
-    <input type="file" name="id_picture" id="id_picture" accept="image/*" style="display: none" required>
-</div>
-<br><br>
-
-        <h2 align="center">APPLICATION FOR ADMISSION</h2>
-        <p class="head_information">PRIVACY NOTICE:</p>
-        <p class="privacy-notice-text">Pursuant to the Data Privacy Act of 2012 and the BSU Data Privacy, Personnel from the 
-            Office of the University Registrar,.Persuant to the data Privacy Act of 2012 and BSU Data Privacy, Personnel from 
-            the office of the University Registrar, concerned Personnel of the different Colleges of BSU La Trinidad, BSU Buguias 
-            Campus and Bokod Campus are commited to keep with utmost confidentiality, all sinsetive personal information collected 
-            from applicants. Personal information are collected, accessed, used and or disclosed on a "need to  know basis" and only 
-            as reasonably required. Confidential information either within or outside the University will not be communicated, except 
-            to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be 
-            used only in accessing, processing, and transmitting such personal information. Read more on BSU Data Privacy Notice: 
-            <a href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students">http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students</a>
-          </p>
-        <p class="head_information">BACKGROUND INFORMATION OF APPLICANT</p>
-        <p class="personal_information">Personal Information</p>
+        </div>
 
         <div class="form-container1">
           <!-- Full name -->
@@ -274,44 +248,38 @@ $conn->close();
           <div class="form-group">
             <label class="small-label" for="degree_applied">Degree</label>
             <!-- Display the selected program in this input field -->
-            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>" readonly>
+            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>" readonly style="font-size: 12px;">
           </div>
           <div class="form-group">
             <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly>
+            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly style="font-size: 12px;">
           </div>
         </div>
         <p class="personal_information">Academic Background </p>
-        <div class="form-container1">
+        <div class="form-container5">
           <!-- Academic Background -->
           <div class="form-group">
             <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
-            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly>
+            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>" readonly style="font-size: 12px;">
           </div>
           <div class="form-group">
             <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly>
+            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>" readonly style="font-size: 12px;">
           </div>
         </div>
         <div class="form-container5">
-         
-          
-        </div>
+        </div><br>
         <p class="attestation-head">ATTESTATION AND CONSENT</p>
         <p class="attestation-note"><i>I affirm that I have read and understood all the instructions contained in this acknowledgement 
             slip and that the information supplied are true, complete and accurate. I promise to abide by the rules and regulations 
             of the admission process of Benguet State University. I am aware that any information I have concealed, falsely given 
             and/or withheld is enough basis for the invalidation/cancellation of my application. I have understood the Data Privacy 
             Notice above and freely give my consent to the legitimate use of my personal data by the University thru my signature 
-            which I have affixed herein.</i></p><br><br>
+            which I have affixed herein.</i></p><br><br><br><br>
 
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
-        </div><br>
-        <br>
-
-        <br>
-        <br>
+        </div><br><br>
         <br>
         <br>
         <div class="form-group">
@@ -493,6 +461,7 @@ echo $requirements;
         var element = document.getElementById("DownloadForm");
         var opt = {
             margin: 0.39,
+            html2canvas: { scale: 10 }, // Adjust the scale factor for better quality
             filename: 'Admission Form.pdf',
             jsPDF: {unit: 'in', format: [8.5, 13], orientation: 'portrait'},
             pagebreak: { before: '#page-containerr', avoid: '.avoid-this' }

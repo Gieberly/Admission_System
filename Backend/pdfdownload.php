@@ -2,7 +2,7 @@
 <?php
 include('config.php');
 // Include mpdf library file
-require_once __DIR__ . '..Backend/vendor/vendor/autoload.php';
+require_once __DIR__ . '../vendor/autoload.php';
 
 $mpdf = new \Mpdf\Mpdf();
 //error_reporting(0);
