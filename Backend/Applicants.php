@@ -77,9 +77,9 @@ $stmt->fetch();
                             </li>
                         </ul>
                     </div>
-                    <a href="#" class="btn-download">
-                            <i class='bx bxs-cloud-download'></i>
-                            <span class="text">Download PDF</span>
+                    <a href="excel_export_applicants.php" class="btn-download">
+                        <i class='bx bxs-file-export'></i>
+                            <span class="text">Excel Export</span>
                         </a>
                 </div>
 
