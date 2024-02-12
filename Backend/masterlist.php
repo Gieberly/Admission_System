@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, math_2, math_3, science_grade, science_2, science_3, english_grade, english_2, english_3, gwa_grade, result, nature_of_degree, degree_applied 
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, math_2, math_3, science_grade, science_2, science_3, english_grade, english_2, english_3, gwa_grade, test_score, result, nature_of_degree, degree_applied 
           FROM admission_data 
           WHERE 
             (`applicant_name` LIKE '%$search%' OR 
@@ -30,10 +30,11 @@ $query = "SELECT id, applicant_name, applicant_number, academic_classification, 
             `english_2` LIKE '%$search%' OR 
             `english_3` LIKE '%$search%' OR 
             `gwa_grade` LIKE '%$search%' OR 
+            `test_score` LIKE '%$search%' OR 
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%')
-            AND (`result` = 'NOR' OR `result` = 'NOA')
+            AND `result` IS NOT NULL
             ORDER BY applicant_name ASC, nature_of_degree ASC, degree_applied ASC";
 
 $result = $conn->query($query);
@@ -80,8 +81,8 @@ $stmt->fetch();
                     </div>
                     <a href="excel_export_masterlist.php" class="btn-download">
                         <i class='bx bxs-file-export'></i>
-                            <span class="text">Excel Export</span>
-                        </a>
+                        <span class="text">Excel Export</span>
+                    </a>
                 </div>
 
                 <!--master list-->
@@ -121,16 +122,17 @@ $stmt->fetch();
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
                                             <th>Academic Clasiffication</th>
-                                            <th>M 1</th>
-                                            <th>M 2</th>
-                                            <th>M 3</th>
-                                            <th>S 1</th>
-                                            <th>S 2</th>
-                                            <th>S 3</th>
-                                            <th>E 1</th>
-                                            <th>E 2</th>
-                                            <th>E 3</th>
+                                            <th>Math 1</th>
+                                            <th>Math 2</th>
+                                            <th>Math 3</th>
+                                            <th>Math 1</th>
+                                            <th>Science 2</th>
+                                            <th>Science 3</th>
+                                            <th>English 1</th>
+                                            <th>English 2</th>
+                                            <th>English 3</th>
                                             <th>GWA</th>
+                                            <th>Admission Score</th>
                                             <th>Result</th>
 
                                             <th>Action</th>
@@ -161,17 +163,21 @@ $stmt->fetch();
                                                 echo "<td  data-field='english_2'>{$row['english_2']}</td>";
                                                 echo "<td  data-field='english_3'>{$row['english_3']}</td>";
                                                 echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
+                                                echo "<td  data-field='test_score'>{$row['test_score']}</td>";
                                                 echo "<td class='editable' data-field='result'>{$row['result']}</td>";
-                                                
-                                                echo "<td>
-                                               
-                                                <button type='button' id='noa-qa-btn' class='button' onclick='yourFunctionForNoaQa({$row['id']})'>NOA(Q-A)</button> <br>
-                                                <button type='button' id='noa-nqa-btn' class='button' onclick='yourFunctionForNoaNqa({$row['id']})'>NOA(NQ-A)</button> <br>
-                                                <button type='button' id='nor-qa-btn' class='button' onclick='yourFunctionForNorQa({$row['id']})'>NOR(Q-NA)</button> <br>
-                                                <button type='button' id='nor-nqa-btn' class='button' onclick='yourFunctionForNorNqa({$row['id']})'>NOR(NQ-NA)</button> <br>
-                                            </td>";
-                                            
-                                            
+
+                                                echo "<td>";
+                                                echo "<button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>";
+                                                echo "<select class='button dropdown-button' onchange='selectOption(this.value, {$row['id']})'>";
+                                                echo "<option value=''>Choose an option</option>";
+                                                echo "<option value='NOA(Q-A)'>NOA(Q-A)</option>";
+                                                echo "<option value='NOA(NQ-A)'>NOA(NQ-A)</option>";
+                                                echo "<option value='NOR(Q-NA)'>NOR(Q-NA)</option>";
+                                                echo "<option value='NOR(NQ-NA)'>NOR(NQ-NA)</option>";
+                                                echo "</select>";
+                                                echo "</td>";
+
+
                                                 echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
                                                 echo "</tr>";
                                                 $count++;
@@ -192,7 +198,15 @@ $stmt->fetch();
                                     </div>
                                     <div class="toast-body" id="toast-body"></div>
                                 </div>
-
+                                <div class="confirmation-overlay" id="confirmation-overlay">
+                                    <div class="confirmation-box">
+                                        <p id="confirmation-message"></p>
+                                        <div class="confirmation-buttons">
+                                            <button class="Yes" id="confirm-ok">OK</button>
+                                            <button class="cancel" id="confirm-cancel">Cancel</button>
+                                        </div>
+                                    </div>
+                                </div>
                                 <style>
                                     /* Custom styles for the toast */
                                     #toast {
@@ -222,53 +236,133 @@ $stmt->fetch();
                                             transform: translateY(0);
                                         }
                                     }
+
+                                    .confirmation-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Styles for the confirmation dialog box */
+        .confirmation-box {
+            background: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            text-align: center;
+            position: relative;
+            margin: auto; /* Center horizontally */
+            top: 50%; /* Center vertically */
+            transform: translateY(-50%); /* Adjust for top positioning */
+        }
+
+        /* Styles for the confirmation buttons */
+        .confirmation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .confirmation-buttons button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .confirmation-buttons button.ok {
+            background-color: #4CAF50;
+            color: #fff;
+        }
+
+        .confirmation-buttons button.cancel {
+            background-color: #f44336;
+            color: #fff;
+        }
                                 </style>
 
                                 <script>
-                       
+
                                 </script>
 
 
 
-                            </div><!-- Add this script to your HTML file -->
-<script>
-    function updateStatus(id, newStatus) {
-        // Make an AJAX request to update the database
-        $.ajax({
-            type: 'POST',
-            url: 'Personnel_updateResult.php', // Create a separate PHP file for handling the update
-            data: {
-                id: id,
-                newStatus: newStatus
-            },
-            success: function(response) {
-                // Handle the response, for example, show a success message or update the UI
-                console.log(response);
-            },
-            error: function(error) {
-                // Handle errors
-                console.error(error);
-            }
-        });
-    }
+                            </div>
+                            <script>
+                              function selectOption(selectedValue, id) {
+            // Show the confirmation dialog
+            showConfirmationDialog(selectedValue, id);
+        }
 
-    function yourFunctionForNoaQa(id) {
-        // Call the updateStatus function with the appropriate parameters
-        updateStatus(id, 'NOA(Q-A)');
-    }
+        function showConfirmationDialog(selectedValue, id) {
+            // Set the confirmation message with the selected value
+            $('#confirmation-message').text("Are you sure you want to set the status of the student to '" + selectedValue + "'?");
 
-    function yourFunctionForNoaNqa(id) {
-        updateStatus(id, 'NOA(NQ-A)');
-    }
+            // Show the confirmation overlay
+            $('#confirmation-overlay').show();
 
-    function yourFunctionForNorQa(id) {
-        updateStatus(id, 'NOR(Q-NA)');
-    }
+            // Set up event listeners for OK and Cancel buttons
+            $('#confirm-ok').on('click', function () {
+                // If the user clicks 'OK', proceed with the update
+                updateStatus(id, selectedValue);
 
-    function yourFunctionForNorNqa(id) {
-        updateStatus(id, 'NOR(NQ-NA)');
-    }
-</script>
+                // Hide the confirmation overlay
+                $('#confirmation-overlay').hide();
+
+                // Remove event listeners
+                $('#confirm-ok').off('click');
+                $('#confirm-cancel').off('click');
+            });
+
+            $('#confirm-cancel').on('click', function () {
+                // If the user clicks 'Cancel', hide the confirmation overlay
+                $('#confirmation-overlay').hide();
+
+                // Remove event listeners
+                $('#confirm-ok').off('click');
+                $('#confirm-cancel').off('click');
+            });
+        }
+
+                                function updateStatus(id, newStatus) {
+                                    // Make an AJAX request to update the database
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'Personnel_updateResult.php', // Update the URL to your PHP file
+                                        data: {
+                                            id: id,
+                                            newStatus: newStatus
+                                        },
+                                        success: function(response) {
+                                            // Handle the response, for example, show a success message or update the UI
+                                            console.log(response);
+
+                                            // Display a toast message (you can customize this part)
+                                            $('#toast-body').text('Status updated successfully');
+                                            $('#toast').addClass('show');
+                                            setTimeout(function() {
+                                                $('#toast').removeClass('show');
+                                            }, 3000);
+                                        },
+                                        error: function(error) {
+                                            // Handle errors
+                                            console.error(error);
+
+                                            // Display a toast message for errors (you can customize this part)
+                                            $('#toast-body').text('Failed to update status');
+                                            $('#toast').addClass('show');
+                                            setTimeout(function() {
+                                                $('#toast').removeClass('show');
+                                            }, 3000);
+                                        }
+                                    });
+                                }
+                            </script>
 
 
                         </div>

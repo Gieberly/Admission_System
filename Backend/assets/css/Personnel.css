@@ -1507,6 +1507,11 @@ select {
 
 	color: var(--dark);
   }
+  #deleteSelected:hover .bx {
+    transform: scale(1.2); 
+	color: var(--green);
+}
+  
 #viewButton {
     border: none;
     background: none;
