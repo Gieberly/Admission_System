@@ -95,7 +95,7 @@ $conn->close();
                             <input type="password" id="new_password" name="new_password" required>
                             <br>
                             <!-- Add other fields for additional information editing -->
-                            <input type="submit" value="Update Password">
+                            <input type="submit" id="updatePasswordBtn" value="Update Password">
                         </form>
                     </div>
                 </div>
@@ -103,8 +103,15 @@ $conn->close();
         </div>
     </main>
 </section>
-
+<div class="popup" id="confirmationPopup">
+  <div class="popup-content">
+    <p>Are you sure you want to change your password?</p>
+    <button id="confirmBtn">Yes</button>
+    <button id="cancelBtn">Cancel</button>
+  </div>
+</div>
 <style>
+    
     .head-title {
         display: flex;
         justify-content: space-between;

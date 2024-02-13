@@ -202,7 +202,7 @@ if ($result->num_rows > 0) {
 }
 .popup-message {
         position: fixed;
-        top: 900%;
+        top: 30%;
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: #4CAF50; /* Green color */
@@ -215,28 +215,7 @@ if ($result->num_rows > 0) {
     .success {
         background-color: #4CAF50; /* Green color */
     }
-    .edit-delete {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background-color: #f9f9f9;
-        padding: 5px 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        z-index: 1100;
-    }
 
-    .edit-delete a {
-        color: #333;
-        text-decoration: none;
-        margin-right: 10px;
-    }
-
-    .edit-delete a:hover {
-        color: #007bff;
-        text-decoration: underline;
-    }
 </style>
 
 <body>
@@ -267,7 +246,6 @@ if ($result->num_rows > 0) {
 
                     <input type="submit" value="Set Appointment">
                 </form>
-                
             </div>
             <div class="calendar-background">
                 <br>
@@ -295,18 +273,6 @@ $(document).ready(function() {
         eventRender: function(event, element) {
             // Format the time using moment.js
             element.find('.fc-time').html(moment(event.start).format('h:mm a'));
-            // Add a span for edit/delete options initially hidden
-            element.append('<span class="edit-delete" style="display: none;"><a href="#" class="edit-link">Edit</a> | <a href="#" class="delete-link">Delete</a></span>');
-            // Add click event to toggle edit/delete options
-            element.click(function() {
-                var editDelete = $(this).find('.edit-delete');
-                if (editDelete.is(':visible')) {
-                    editDelete.hide(); // Hide if currently visible
-                } else {
-                    $('.edit-delete').hide(); // Hide all edit/delete spans
-                    editDelete.show(); // Show for clicked event
-                }
-            });
         },
         eventAfterAllRender: function(view) {
             // Customize the rendering of day cells with events
@@ -348,49 +314,6 @@ function hasEventsForDate(date) {
                     var timeSlotContainer = document.getElementById('timeSlotsContainer');
                     timeSlotContainer.removeChild(element.parentNode);
                 }
-
-  
-// Handle edit action
-$(document).on('click', '.edit-link', function(e) {
-    e.stopPropagation(); // Prevent click event from bubbling up
-    var eventId = $(this).closest('.fc-event').data('id');
-    editAppointment(eventId);
-});
-
-// Handle delete action
-$(document).on('click', '.delete-link', function(e) {
-    e.stopPropagation(); // Prevent click event from bubbling up
-    var eventId = $(this).closest('.fc-event').data('id');
-    deleteAppointment(eventId);
-});
-
-function editAppointment(eventId) {
-    // Handle edit action
-    // You can implement your logic here, e.g., open a modal with editable fields
-    alert('Edit appointment with ID: ' + eventId);
-}
-
-function deleteAppointment(eventId) {
-    // Handle delete action
-    // You can implement your logic here, e.g., confirm deletion and send AJAX request
-    if (confirm('Are you sure you want to delete this appointment?')) {
-        // Send AJAX request to delete appointment with eventId
-        $.ajax({
-            url: 'delete_appointment.php',
-            type: 'POST',
-            data: { eventId: eventId },
-            success: function(response) {
-                // Handle success response
-                alert('Appointment deleted successfully!');
-                // Reload the calendar or remove the deleted event from the calendar
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                alert('Error deleting appointment: ' + error);
-            }
-        });
-    }
-}
             </script>
         </main>
     </section>

@@ -120,23 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php echo $errorMessage; ?>
             </div>
         <?php endif; ?>
-        <!-- ... (your existing code) -->
-    <style>
-        .has-events {
-            background-color: #4CAF50;
-            /* Set your desired background color here */
-            color: white;
-            /* Set the text color if needed */
-        }
 
-        .alert-message {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        z-index: 1000; /* Adjust the z-index value as needed to ensure it appears in front */
-    }
-    </style>
 
     <section id="content">
         <main>
@@ -161,13 +145,104 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    
 
   
-        <input type="submit" value="Set Appointment">  
+            <input type="submit" value="Set Appointment" onclick="openPopup('Are you sure you want to set your appointment on ' + selectedDate + ' at ' + selectedTime + '?'); return false;">
+
+
 </form>
 
 <div id='calendar'></div>
             </div>
+<!-- Add this div for the pop-up message -->
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()"></span>
+    <p id="popup-message"></p>
+    <button class="confirm" onclick="confirmAppointment()">Confirm</button>
+    <button class="cancel" onclick="cancelAppointment()">Cancel</button>
+  </div>
+</div>
 
-<style>        h2 {
+<style> 
+ #popup {
+    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup-content {
+    background-color: #fefefe;
+    position: absolute; /* Change position to absolute */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border: 1px solid #888;
+    max-width: 80%; /* Adjust maximum width as needed */
+    max-height: 80%; /* Adjust maximum height as needed */
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.confirm {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-right: 10px;
+    cursor: pointer;
+    float: right;
+}
+
+.confirm:hover {
+    background-color: #45a049;
+}
+
+.cancel {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    float: left;
+}
+
+.cancel:hover {
+    background-color: #f44336;
+}
+
+.has-events {
+            background-color: #4CAF50;
+            /* Set your desired background color here */
+            color: white;
+            /* Set the text color if needed */
+        }
+
+        .alert-message {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Adjust the z-index value as needed to ensure it appears in front */
+    }
+h2 {
             text-align: center;
             color: #333;
         }
@@ -333,6 +408,37 @@ function toggleFormVisibility() {
                     var form = document.getElementById('slotForm');
                     form.style.display = form.style.display === 'none' ? 'block' : 'none';
                 }
+
+                function openPopup(message) {
+    document.getElementById('popup-message').innerHTML = message;
+    document.getElementById('popup').style.display = 'block';
+  }
+
+  function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+  }
+
+  function confirmAppointment() {
+    document.getElementById('slotForm').submit();
+    closePopup();
+  }
+
+  function cancelAppointment() {
+    closePopup();
+  }
+function openPopup() {
+    // Get the selected date and time
+    var selectedDate = document.getElementById('selectedDate').value;
+    var selectedTime = document.getElementById('availableTimeSlots').value;
+
+    // Construct the confirmation message
+    var confirmationMessage = "Are you sure you want to set your appointment on " + selectedDate + " at " + selectedTime + "?";
+
+    // Show the confirmation message in the pop-up
+    document.getElementById('popup-message').textContent = confirmationMessage;
+    document.getElementById('popup').style.display = 'block';
+}
+
 
             </script>
 
