@@ -206,7 +206,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     padding: 10px 20px;
     margin-right: 10px;
     cursor: pointer;
-    float: right;
+    float: left;
 }
 
 .confirm:hover {
@@ -221,7 +221,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     padding: 10px 20px;
     margin-left: 10px;
     cursor: pointer;
-    float: left;
+    float: right;
 }
 
 .cancel:hover {

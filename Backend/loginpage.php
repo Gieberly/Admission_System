@@ -13,56 +13,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->num_rows > 0) {
         $stmt->bind_result($id, $hashedPassword, $userType, $lstatus);
         $stmt->fetch();
- 
+
         if (password_verify($password, $hashedPassword)) {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
-            // Store additional user information in session
-       
             $_SESSION['user_email'] = $email;
-         
+            $_SESSION['success_message'] = "Successfully logged in, Redirecting...";
 
-
-    if ($userType == 'Student') {
-        header("Location: ../Backend/studentDashboard.php");; // Redirect to studentform.php
-        exit();
-
+            if ($userType == 'Student') {
+                header("Location: ../Backend/studentDashboard.php");
+                exit();
             } elseif ($userType == 'Faculty') {
                 if (strtolower($lstatus) == 'approved') {
-                    header("Location: ../Backend/facultydashboard.php");  // Redirect to faculty.php if approved
+                    header("Location: ../Backend/facultydashboard.php");
                     exit();
                 } elseif (strtolower($lstatus) == 'Pending') {
-                    echo "Your registration is pending approval.";
+                    $_SESSION['message'] = "Your registration is pending approval.";
+                    header("Location: loginpage.php");
+                    exit();
                 } elseif (strtolower($lstatus) == 'rejected') {
-                    echo "Your registration has been rejected. Please contact the administrator.";
+                    $_SESSION['message'] = "Your registration has been rejected. Please contact the administrator.";
+                    header("Location: loginpage.php");
+                    exit();
                 } else {
-                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                    $_SESSION['message'] = "Your registration is not yet approved. Please wait for admin approval.";
+                    header("Location: loginpage.php");
+                    exit();
                 }
             } elseif ($userType == 'Staff') {
                 if (strtolower($lstatus) == 'approved') {
                     header("Location: ../Backend/personnel.php");
                     exit();
                 } elseif (strtolower($lstatus) == 'Pending') {
-                    echo "Your registration is pending approval.";
+                    $_SESSION['message'] = "Your registration is pending approval.";
+                    header("Location: loginpage.php");
+                    exit();
                 } elseif (strtolower($lstatus) == 'rejected') {
-                    echo "Your registration has been rejected. Please contact the administrator.";
+                    $_SESSION['message'] = "Your registration has been rejected. Please contact the administrator.";
+                    header("Location: loginpage.php");
+                    exit();
                 } else {
-                    echo "Your registration is not yet approved. Please wait for admin approval.";
+                    $_SESSION['message'] = "Your registration is not yet approved. Please wait for admin approval.";
+                    header("Location: loginpage.php");
+                    exit();
                 }
             } elseif ($userType == 'admin') {
                 header("Location: ../backend/admin.php");
                 exit();
-            } else {
-                echo "User not found";
-                header("Location: ../Backend/register.php"); // Redirect to register.php if the user is not found
-                exit();
             }
         } else {
-            echo "Incorrect password";
+            $_SESSION['message'] = "Incorrect password";
+            header("Location: loginpage.php");
+            exit();
         }
     } else {
-        echo "User not found";
-        // Additional error handling or redirection can be added here
+        $_SESSION['message'] = "User not found";
+        header("Location: loginpage.php");
+        exit();
     }
 
     $stmt->close();
@@ -84,36 +91,67 @@ $conn->close();
     <title>Admin and Faculty login</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/login.css">
+    <style>
+        body {
+            background-image: url('assets/images/banner.jpg');
+        }
+
+        .message {
+            display: block;
+            padding: 5px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            background-color: #f2dede;
+            border: 1px solid #ebccd1;
+            color: #a94442;
+            /* Dark red text color */
+            border-radius: 4px;
+            opacity: 0.9;
+            /* Adjust opacity as needed */
+            animation: slideUp 0.5s ease-out;
+            /* Animation settings */
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+                /* Initial position below */
+            }
+
+            to {
+                opacity: 0.9;
+                transform: translateY(0);
+                /* Final position at the top */
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Announcements -->
-    <div class="announcement_popup">
-        <h2>Admission Policy</h2>
-        <p>The Office of the University Registrar (OUR) is a service unit of the University responsible for the repository and official source of the academic records of all University students and student-related data/reports. Coupled with this responsibility is the mandate to maintain and protect the integrity and confidentiality of student records.
-            General Functions of the Office of the University Registrar</p>
-        <button id="close">Close</button>
-    </div>
-    <!-- Announcements -->
     <header>
         <div class="icon">
             <a href="#" class="logo"><img src="assets/images/BSU Logo1.png" alt="BSU Logo"></a>
             <h2 class="scname">Benguet State University</h2>
         </div>
     </header>
-    <style>
-        body {
-            background-image: url('assets/images/banner.jpg');
-        }
-    </style>
+
     <section class="content">
         <div class="side">
             <h1>Welcome to<br><span>Benguet State <br>University </span> <br>Admission</h1>
-          
         </div>
         <div class="form" id="loginForm" style="display: block;">
             <form action="loginpage.php" method="POST">
                 <h2>Login</h2>
+                <?php if (isset($_SESSION['message'])) : ?>
+                    <div class="message"><?php echo $_SESSION['message']; ?></div>
+                    <?php unset($_SESSION['message']); ?>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['success_message'])) : ?>
+                    <div id="successMessage" class="message" style="background-color: #dff0d8; color: #3c763d;"><?php echo $_SESSION['success_message']; ?></div>
+                    <?php unset($_SESSION['success_message']); ?>
+                <?php endif; ?>
+
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" name="password" placeholder="Password" required>
                 <button class="btnn" type="submit">Login</button>
@@ -122,14 +160,16 @@ $conn->close();
                 </p>
             </form>
         </div>
-
-
-
-        </div>
-        </div>
     </section>
-    <footer>
-    </footer>
+    <script>
+        // Hide success message after 3 seconds
+        setTimeout(function() {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>
     <script src="assets\js\login.js"></script>
 </body>
 

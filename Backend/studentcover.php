@@ -19,6 +19,7 @@ $studentData = $resultUser->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,9 +41,9 @@ $studentData = $resultUser->fetch_assoc();
         </a>
 
         <ul class="side-menu top">
-        <li class="">
+            <li class="">
                 <a href="studentDashboard.php" id="profile-link">
-                <i class='bx bxs-dashboard'></i>
+                    <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
@@ -58,9 +59,9 @@ $studentData = $resultUser->fetch_assoc();
                     <span class="text">Transaction</span>
                 </a>
             </li>
-      
 
-           
+
+
         </ul>
     </section>
     <!-- SIDEBAR -->
@@ -114,14 +115,16 @@ $studentData = $resultUser->fetch_assoc();
                         <label for="switch-mode" class="switch-mode"></label></a>
 
                 </div>
-          
-                <a href="#" id="setting" class="profile-item" > <i class='bx bx-cog'></i> Settings</a>
-          
+
+                <a href="#" id="setting" class="profile-item"> <i class='bx bx-cog'></i> Settings</a>
+
                 <div class="dropdown" id="setting-content" style="display: none;">
-                <a href="Student_ChangePass.php">Change Password</a>
-                <a href="Student_EditProfile.php">Edit Profile</a>
-             
-            </div>
+                    <a href="Student_ChangePass.php">Change Password</a>
+                    <a href="Student_EditProfile.php">Edit Profile</a>
+
+                </div>
+                <!-- Add the overlay and modal for the confirmation dialog -->
+               
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
                 <div class="dropdown" id="help-dropdown" style="display: none;">
@@ -149,13 +152,123 @@ $studentData = $resultUser->fetch_assoc();
 
                     </div>
                 </div>
-                <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+                <a href="#" id="logout" class="profile-item" onclick="return confirmLogout();"><i class='bx bx-log-out'></i> Logout</a>
+                <div class="overlay" id="confirmationOverlayLogout" style="display: none;">
+                    <div class="confirmation-modal">
+                        <p>Are you sure you want to log out?</p>
+                        <button id="confirmYesLogout">Confirm</button>
+                        <button id="confirmNoLogout">Cancel</button>
+                    </div>
+                </div>
             </div>
+            <div class="logout-confirmation-message" id="logoutConfirmationMessage">
+    Account logging out...
+</div>
 
+<script>
+  function confirmLogout() {
+    // Show the overlay with the confirmation dialog
+    $("#confirmationOverlayLogout").fadeIn();
+
+    // Handle 'Yes' button click
+    $("#confirmYesLogout").click(function () {
+        // Close the overlay
+        $("#confirmationOverlayLogout").fadeOut();
+
+        // Display the logout confirmation message
+        $("#logoutConfirmationMessage").fadeIn();
+
+        // Hide the message after 2 seconds
+        setTimeout(function () {
+            $("#logoutConfirmationMessage").fadeOut();
+            // Redirect to the logout page after hiding the message
+            window.location.href = "../Backend/logout.php";
+        }, 2000);
+
+        // Prevent further clicks on 'Yes' button
+        $(this).prop('disabled', true);
+    });
+
+    // Handle 'No' button click
+    $("#confirmNoLogout").click(function () {
+        // Close the overlay without logging out
+        $("#confirmationOverlayLogout").fadeOut();
+        return false; // Cancel link click
+    });
+
+    // Prevent the default link click
+    return false;
+}
+
+
+</script>
+<style>
+  /* Styles for the logout confirmation message */
+.logout-confirmation-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: green;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+#confirmationOverlayLogout {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add styles for the confirmation dialog modal */
+.confirmation-modal {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.confirmation-modal p {
+    margin-bottom: 15px;
+}
+
+.confirmation-modal button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the 'Yes' button in green */
+#confirmYesLogout {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+/* Style the 'No' button in red */
+#confirmNoLogout {
+    background-color: #dc3545; /* Red color */
+    color: white;
+}
+
+</style>
         </div>
     </div>
-    <!-- CONTENT -->
+
     <script src="assets/js/student.js"></script>
 </body>
- 
+
 </html>

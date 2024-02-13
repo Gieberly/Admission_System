@@ -132,7 +132,7 @@ $stmt->fetch();
                                             <th>English 2</th>
                                             <th>English 3</th>
                                             <th>GWA</th>
-                                            <th>Admission Score</th>
+                                           c
                                             <th>Result</th>
 
                                             <th>Action</th>

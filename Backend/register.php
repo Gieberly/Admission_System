@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 VALUES ('$name', '$last_name', '$mname', '$email', '$password', '$userType', '$lstatus', '$department')";
 
         if ($conn->query($sql) === TRUE) {
-            $success_message = "You have successfully Registered!";
+            $success_message = "You have successfully Registered, Redirecting to Login Page!";
 
             // Redirect to loginpage.php after 3 seconds
             header("refresh:3;url=loginpage.php");
@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </script>
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
-
+ 
 
 <body>
     <header>
