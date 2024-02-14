@@ -2,6 +2,9 @@
 session_start();
 include("config.php");
 
+// Include the mPDF library
+// require_once __DIR__ . '/vendor/autoload.php';
+
 $studentId = $_SESSION['user_id'];
 $stmtUser = $conn->prepare("SELECT * FROM users WHERE id = ?");
 $stmtUser->bind_param("i", $studentId);
@@ -79,11 +82,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
   }
 $conn->close();
+
+$pdfContent = '';
+
+ob_start(); // Start output buffering
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
- 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -94,7 +100,7 @@ $conn->close();
   <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
   <link rel="stylesheet" href="assets\css\applicationformdownload.css">
   <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-    <!-- Additional styling for the download button -->
+
 </head>
 
 <button onclick="downloadPDF()"> Download </button>
