@@ -42,8 +42,8 @@ function sendemail_verify($lname, $email, $token)
 }
 
 if (isset($_POST['register_btn'])) {
-    $lname = $_POST['lname'];
-    $fname = $_POST['fname'];
+    $lname = $_POST['last_name'];
+    $fname = $_POST['name'];
     $mname = $_POST['mname'];
     $email = $_POST['email'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
@@ -61,7 +61,7 @@ if (mysqli_num_rows($check_email_query_run) > 0) {
     header("Location: register.php");
 } else {
     // Insert User Data
-    $query = "INSERT INTO users (lname,fname,mname, email, password, userType, token) VALUES ('$lname','$fname','$mname', '$email', '$password', '$userType', '$token')";
+    $query = "INSERT INTO users (last_name,name,mname, email, password, userType, token) VALUES ('$lname','$fname','$mname', '$email', '$password', '$userType', '$token')";
     $query_run = mysqli_query($conn, $query);
 
     if ($query_run) {
