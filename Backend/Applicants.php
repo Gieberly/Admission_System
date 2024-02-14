@@ -199,7 +199,7 @@ $stmt->fetch();
                                     <div class="modal-content">
                                         <span class="close"></span>
                                         <p>Are you sure you want to send these applicants to the faculty?</p>
-                                        <button id="confirmSend">Yes</button>
+                                        <button id="confirmSend">Confirm</button>
                                         <button class="cancel">Cancel</button>
                                     </div>
                                 </div>
@@ -208,7 +208,7 @@ $stmt->fetch();
                                     <div class="modal-content">
                                         <span class="close"></span>
                                         <p>Are you sure you want to delete this student?</p>
-                                        <button id="confirmDelete" class="yes">Yes</button>
+                                        <button id="confirmDelete" class="yes">Confirm</button>
                                         <button class="cancel" onclick="closeDeleteConfirmationModal()">Cancel</button>
                                     </div>
                                 </div>
@@ -218,7 +218,7 @@ $stmt->fetch();
                                 <div class="modal-content">
                                     <span class="close"></span>
                                     <p>Are you sure you want to delete the selected rows?</p>
-                                    <button id="confirmDeleteSelected" class="yes">Yes</button>
+                                    <button id="confirmDeleteSelected" class="yes">Confirm</button>
                                     <button class="cancel" onclick="closeDeleteSelectedConfirmationModal()">Cancel</button>
                                 </div>
                             </div>
@@ -324,7 +324,7 @@ $stmt->fetch();
                                 #confirmSend,
                                 .yes,
                                 .cancel {
-                                    padding: 10px 20px;
+                                    padding: 10px 15px;
                                     margin: 5px;
                                     border: none;
                                     border-radius: 5px;
@@ -337,7 +337,7 @@ $stmt->fetch();
                                 #confirmSend,
                                 .yes {
                                     background-color: #4CAF50;
-                                    /* Green color for "Yes" button */
+                                    /* Green color for "Confirm" button */
                                     color: white;
                                 }
 
@@ -522,7 +522,7 @@ $stmt->fetch();
                                     var modal = document.getElementById('deleteConfirmationModal');
                                     modal.style.display = 'block';
 
-                                    // Add a click event listener to the "Yes" button in the modal
+                                    // Add a click event listener to the "Confirm" button in the modal
                                     document.getElementById('confirmDelete').addEventListener('click', function() {
                                         // Send an AJAX request to delete the course
                                         var xhr = new XMLHttpRequest();
@@ -565,7 +565,7 @@ $stmt->fetch();
                                     var modal = document.getElementById('deleteSelectedConfirmationModal');
                                     modal.style.display = 'block';
 
-                                    // Add a click event listener to the "Yes" button in the modal
+                                    // Add a click event listener to the "Confirm" button in the modal
                                     document.getElementById('confirmDeleteSelected').addEventListener('click', function() {
                                         // Call the function to delete the selected admission data
                                         deleteSelectedAdmissionData();
@@ -698,7 +698,7 @@ $stmt->fetch();
                                     }
                                 };
 
-                                // Add an event listener to the "Yes" button in the confirmation modal
+                                // Add an event listener to the "Confirm" button in the confirmation modal
                                 document.getElementById('confirmSend').addEventListener('click', function() {
                                     modal.style.display = 'none'; // Close the modal
                                     sendSelectedStudents(); // Proceed with sending the applicants

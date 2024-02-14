@@ -202,7 +202,7 @@ $stmt->fetch();
                                     <div class="confirmation-box">
                                         <p id="confirmation-message"></p>
                                         <div class="confirmation-buttons">
-                                            <button class="Yes" id="confirm-ok">OK</button>
+                                            <button class="Yes" id="confirm-ok">Comfirm</button>
                                             <button class="cancel" id="confirm-cancel">Cancel</button>
                                         </div>
                                     </div>
