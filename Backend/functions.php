@@ -18,7 +18,7 @@ function updateStaffStatus($staffId, $newState) {
 
 function editAppointmentSlots($appointment_id, $newSlot) {
     global $conn;
-    $query = "UPDATE appointmentdate SET available_slot = ? WHERE appointment_id = ? AND appointment_date = ?";
+    $query = "SELECT appointment_id From appointmentdate";
     $stmt = $conn->prepare($query); 
     $stmt->bind_param("si",$newSlot, $appointment_id);
     return $stmt->execute();
@@ -82,5 +82,9 @@ function getColleges(){
     return $all_colleges;
 }
 
+
 // Display all student form data in the table
  $studentFormData = getAllStudentFormData();
+
+
+ 

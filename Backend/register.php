@@ -48,9 +48,9 @@ include ('config.php');
         <div class="form" id="registrationForm" style="display: block;">
         <form method="POST" id="RegForm" action="validate_user.php">
             <h2>Register</h2>
-                <input type="text" name="fname" placeholder="First Name" required>
+                <input type="text" name="name" placeholder="First Name" required>
                 <input type="text" name="mname" placeholder="Middle Name" required>
-                <input type="text" name="lname" placeholder="Last Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
                 <input type="email" name="email" placeholder="Email" required>
                 <input type="password" id="registerEmail" name="password" placeholder="Password" required>
                 <input type="password" name="confirm_password" placeholder="Confirm Password" required>
