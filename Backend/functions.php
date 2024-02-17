@@ -1,4 +1,5 @@
 <?php
+
 //Function to get all staff members
 function getAllStaff() {
     global $conn;
@@ -75,16 +76,16 @@ function getAllStudentFormData() {
 }
 
 // Function to get all student form data
-function getColleges(){
-    global $conn;
-    $sql = "SELECT college_name FROM `college`";
-    $all_colleges = $conn->query($sql);
-    return $all_colleges;
-}
+// function getColleges(){
+//     global $conn;
+//     $sql = "SELECT * FROM `bsu_admission_db.tables`";
+//     $all_colleges = $conn->query($sql);
+//     return $all_colleges;
+// }
 
 
 // Display all student form data in the table
  $studentFormData = getAllStudentFormData();
-
+// $allColleges = getColleges();
 
  
