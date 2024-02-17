@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 13, 2024 at 01:39 PM
+-- Generation Time: Feb 17, 2024 at 05:21 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -217,7 +217,7 @@ CREATE TABLE `appointmentdate` (
 --
 
 INSERT INTO `appointmentdate` (`appointment_id`, `appointment_date`, `appointment_time`, `available_slots`) VALUES
-(26, '2024-02-20', '11:00:00', 500),
+(26, '2024-02-21', '13:00:00', 502),
 (29, '2024-02-20', '08:00:00', 500),
 (30, '2024-02-21', '09:00:00', 100);
 
@@ -243,6 +243,638 @@ INSERT INTO `appointments` (`ID`, `Date`, `AMSlot`, `PMSlot`) VALUES
 (2, '2024-01-14', 500, 500),
 (3, '2024-01-15', 500, 500),
 (7, '2024-01-16', 33, 33);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ca`
+--
+
+CREATE TABLE `ca` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `ca`
+--
+
+INSERT INTO `ca` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cas`
+--
+
+CREATE TABLE `cas` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cas`
+--
+
+INSERT INTO `cas` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chet`
+--
+
+CREATE TABLE `chet` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chet`
+--
+
+INSERT INTO `chet` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `chk`
+--
+
+CREATE TABLE `chk` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `chk`
+--
+
+INSERT INTO `chk` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cis`
+--
+
+CREATE TABLE `cis` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cis`
+--
+
+INSERT INTO `cis` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cn`
+--
+
+CREATE TABLE `cn` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cn`
+--
+
+INSERT INTO `cn` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cnas`
+--
+
+CREATE TABLE `cnas` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cnas`
+--
+
+INSERT INTO `cnas` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cns`
+--
+
+CREATE TABLE `cns` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cns`
+--
+
+INSERT INTO `cns` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -288,6 +920,85 @@ CREATE TABLE `courses` (
 
 INSERT INTO `courses` (`course_id`, `course`, `college_code`, `major`, `slots`, `used_slots`, `classfication`) VALUES
 (1, 'Bachelor of Science in Information Technology', 'CIS', 'none', '300', 0, 'Non-board');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cte`
+--
+
+CREATE TABLE `cte` (
+  `id` int(11) NOT NULL,
+  `id_picture` longblob NOT NULL,
+  `applicant_name` varchar(50) NOT NULL,
+  `gender` varchar(10) NOT NULL,
+  `birthdate` date NOT NULL,
+  `birthplace` varchar(100) NOT NULL,
+  `age` int(11) NOT NULL,
+  `civil_status` varchar(20) NOT NULL,
+  `citizenship` varchar(50) NOT NULL,
+  `nationality` varchar(50) NOT NULL,
+  `permanent_address` varchar(50) NOT NULL,
+  `zip_code` int(4) NOT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `facebook` varchar(255) NOT NULL,
+  `email` varchar(25) NOT NULL,
+  `contact_person_1` varchar(50) NOT NULL,
+  `contact1_phone` varchar(50) NOT NULL,
+  `relationship_1` varchar(10) NOT NULL,
+  `contact_person_2` varchar(50) DEFAULT NULL,
+  `contact_person_2_mobile` varchar(50) DEFAULT NULL,
+  `relationship_2` varchar(10) DEFAULT NULL,
+  `academic_classification` varchar(50) NOT NULL,
+  `high_school_name_address` varchar(50) NOT NULL,
+  `lrn` varchar(12) NOT NULL,
+  `degree_applied` varchar(100) NOT NULL,
+  `nature_of_degree` varchar(25) NOT NULL,
+  `applicant_number` varchar(20) NOT NULL,
+  `application_date` date NOT NULL,
+  `english_grade` decimal(5,2) DEFAULT NULL,
+  `english_2` varchar(255) DEFAULT NULL,
+  `english_3` varchar(255) DEFAULT NULL,
+  `math_grade` decimal(5,2) DEFAULT NULL,
+  `math_2` varchar(255) DEFAULT NULL,
+  `math_3` varchar(255) DEFAULT NULL,
+  `science_grade` decimal(5,2) DEFAULT NULL,
+  `science_2` varchar(255) DEFAULT NULL,
+  `science_3` varchar(255) DEFAULT NULL,
+  `gwa_grade` decimal(5,2) DEFAULT NULL,
+  `Result` varchar(255) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `appointment_date` date DEFAULT NULL,
+  `appointment_time` time DEFAULT NULL,
+  `appointment_status` enum('Accepted','Declined','Cancelled') DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cte`
+--
+
+INSERT INTO `cte` (`id`, `id_picture`, `applicant_name`, `gender`, `birthdate`, `birthplace`, `age`, `civil_status`, `citizenship`, `nationality`, `permanent_address`, `zip_code`, `phone_number`, `facebook`, `email`, `contact_person_1`, `contact1_phone`, `relationship_1`, `contact_person_2`, `contact_person_2_mobile`, `relationship_2`, `academic_classification`, `high_school_name_address`, `lrn`, `degree_applied`, `nature_of_degree`, `applicant_number`, `application_date`, `english_grade`, `english_2`, `english_3`, `math_grade`, `math_2`, `math_3`, `science_grade`, `science_2`, `science_3`, `gwa_grade`, `Result`, `status`, `appointment_date`, `appointment_time`, `appointment_status`) VALUES
+(32, '', 'Johnson, Emily Grace', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '2323', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, NULL, NULL, NULL),
+(33, '', 'Davis, Andrew Robert', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '123', '0000-00-00', 90.00, NULL, NULL, 88.00, NULL, NULL, 89.00, NULL, NULL, 88.00, 'NOR', NULL, '0000-00-00', NULL, 'Cancelled'),
+(34, '', 'Brown, Olivia Anne', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '346547', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(35, '', 'Miller, Ethan James', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '24356', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(37, '', 'Wilson, Sophia Marie', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '25346', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(38, '', 'Moore, Benjamin Thomas', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '234535', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', NULL, 'Cancelled'),
+(39, '', 'Anderson, Ava Elizabeth', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 88.00, NULL, NULL, 93.00, NULL, NULL, 95.00, NULL, NULL, 94.00, 'NOA(Q-A)', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(40, '', 'Taylor, William Joseph', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '354325', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(41, '', 'Aguilar, Maria Luisa Santos', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '3425436', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(42, '', 'Santos, Juan Miguel Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '235465', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(43, '', 'Reyes, Ana Theresa Fernandez', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Senior High School Graduate', '', '', 'Bachelor of Arts in English Language', 'Non-Board', '547658', '0000-00-00', 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, NULL, NULL, 0.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(44, '', 'Reyes, Juan Dela Cruz', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '436547', '0000-00-00', 97.00, NULL, NULL, 88.00, NULL, NULL, 87.00, NULL, NULL, 91.00, 'NOA', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(45, '', 'Santos, Maria Clara Magtanggol', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'Currently enrolled as Grade 12', '', '', 'Bachelor of Science in Criminology', 'Board', '453', '0000-00-00', 88.00, NULL, NULL, 87.00, NULL, NULL, 87.00, NULL, NULL, 99.00, 'NOR', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(46, '', 'Gonzales, Andres Bonifacio', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '4365467', '0000-00-00', 87.00, NULL, NULL, 99.00, NULL, NULL, 89.00, NULL, NULL, 90.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(47, '', 'Lim, Rosa Maria Espino', '', '0000-00-00', '', 0, '', '', '', '', 0, NULL, '', '', '', '0', '', NULL, NULL, NULL, 'High School Graduate', '', '', 'Bachelor of Science in Criminology', 'Board', '654765', '0000-00-00', 88.00, NULL, NULL, 86.00, NULL, NULL, 89.00, NULL, NULL, 93.00, '', NULL, '0000-00-00', '00:00:00', 'Cancelled'),
+(61, 0x6173736574732f75706c6f6164732f363539663939653465353462635f32783220612e706e67, 'Smith, Aiden gie', 'female', '2000-05-11', 'dgfhgfd', 23, 'single', 'fdgyhrt', 'trut', 'ttrutr', 6765, NULL, 'gfujhyu', 'smith@gmail.com', 'ghjuyu', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'ALS/PEPT Completers', 'bvjngh', '6787698769', 'Bachelor of Science in Civil Engineering', 'Board', '11-01-0133', '2024-01-11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(78, 0x6173736574732f75706c6f6164732f363561653034373638313263645f327832207369676e61747572652e706e67, 'Hello, Hi gfdfd', 'male', '2000-05-11', 'fgf', 23, 'married', 'wr', 'rwgr', 'Simpa', 2604, NULL, 'Bea Caligtan', 'hello@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'ALS/PEPT Completers', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agricultural and Biosystems Engineering', 'Board', '24-2-00144', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(81, 0x6173736574732f75706c6f6164732f363561653437343063326464385f327832207369676e61747572652e706e67, 'Caligtan, Bea rgfg', 'male', '2000-05-11', 'La Trinidad', 23, 'single', 'Filipino', 'Filipino', 'fdgfd', 54654, '9193296969', 'Gieberly Sawac', 'bea@gmail.com', 'Sawac, Gieberly Fagwan', '2147483647', 'parent', 'Sawac, Gieberly Fagwan', '2147483647', 'guardian', 'Second Degree', 'Mankayan National High School', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00145', '2024-01-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-16', '00:00:00', 'Cancelled'),
+(85, 0x6173736574732f75706c6f6164732f363561663166623231383265335f327832207369676e61747572652e706e67, 'Sabiano, Jones Fagwan', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'Simpa Ampucao', 2604, '9193296969', 'Gieberly Sawac', 'jones@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'guardian', 'Senior High School Graduates', 'Simpa Ampucao Itogon Benguet', '324535465768', 'Bachelor of Science in Agriculture', 'Board', '24-2-00146', '2024-01-23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', NULL, NULL, ''),
+(88, 0x6173736574732f75706c6f6164732f363562323139316333393634625f327832207369676e61747572652e706e67, 'Sawac, Sawac, Gieberly Fagwan Sap-ay', 'male', '2000-05-11', 'La Trinindad', 23, 'single', 'Filipino', 'Filipino', 'rdeyhtr6y', 2604, '9193296969', 'Gieberly Sawac', 'jeshen@gmail.com', 'Sawac, Gieberly Fagwan', '9460599686', 'Guardian', 'Sawac, Gieberly Fagwan', '9460599686', 'Parent', 'High School (Old Curriculum) Graduates', 'Simpa Ampucao Itogon Benguet', '123456789123', 'Bachelor of Science in Agriculture', 'Board', '24-2-00020', '2024-01-25', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(90, 0x6173736574732f75706c6f6164732f363562333265636539616436395f32783220612e706e67, 'Comot, Jessa Itsu', 'female', '2000-02-01', 'gregh', 23, 'married', 'wr', 'wrg', 'bnbknmnmnm', 98977, '9786767667', 'bbvhhvb', 'itsu@gmail.com', 'jbhh', '9765675657', 'Guardian', 'bhbh', '9787687565', 'Parent', 'Senior High School Graduates', 'ghhgkhjg', '4654767676', 'Bachelor of Science in Information Technology', 'Non-board', '24-2-00021', '2024-01-26', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-26', '10:00:00', NULL);
 
 -- --------------------------------------------------------
 
@@ -591,7 +1302,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `last_name`, `name`, `mname`, `email`, `password`, `userType`, `status`, `token`, `created_date`, `state`, `department`) VALUES
 (12, 'Puylong', 'Arjie', 'Lutong', 'puylongarjie@gmail.com', '$2y$10$FzuJ5c.C6b4jT23LlCWO1.Dq1uvl/QNNwNrakUmNMCxIjLFoQDQLm', 'Admin', 'verified', '037b20cea94c998bb0d510c0b7dbebf3', '2024-01-25 15:32:05', 'Activated', ''),
-(13, 'Summit', 'Wilkins', 'sumo', 'wilkinssummit15@gmail.com', '$2y$10$dlLEqc6K6e3BkT3j.QG/F.Wy98kNEezOoVAO4RqQCmFPldJ8yw4VW', 'Staff', 'verified', '5158cd682693a7f09254d23d0de487a4', '2024-02-07 09:34:56', 'Pending', '');
+(13, 'Summit', 'Wilkins', 'sumo', 'wilkinssummit15@gmail.com', '$2y$10$dlLEqc6K6e3BkT3j.QG/F.Wy98kNEezOoVAO4RqQCmFPldJ8yw4VW', 'Staff', 'verified', '5158cd682693a7f09254d23d0de487a4', '2024-02-07 09:34:56', 'Pending', ''),
+(15, 'Fish', 'JR', 'Nemo', 'mainbsu1901@gmail.com', '$2y$10$Ynzzhs6LYDIAWQ1iD1ZzG.96eLa7QII8gyHLusHLkvSfkZbG3kqZG', 'Staff', 'verified', '91863e3e030aa668b3149548d8678da2', '2024-02-14 11:19:05', 'Activated', '');
 
 --
 -- Indexes for dumped tables
@@ -617,6 +1329,48 @@ ALTER TABLE `appointmentdate`
   ADD PRIMARY KEY (`appointment_id`);
 
 --
+-- Indexes for table `ca`
+--
+ALTER TABLE `ca`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chet`
+--
+ALTER TABLE `chet`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `chk`
+--
+ALTER TABLE `chk`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cis`
+--
+ALTER TABLE `cis`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cn`
+--
+ALTER TABLE `cn`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cnas`
+--
+ALTER TABLE `cnas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cns`
+--
+ALTER TABLE `cns`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `college`
 --
 ALTER TABLE `college`
@@ -630,6 +1384,12 @@ ALTER TABLE `college`
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`),
   ADD UNIQUE KEY `course` (`course`);
+
+--
+-- Indexes for table `cte`
+--
+ALTER TABLE `cte`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `deleted_accnt`
@@ -685,6 +1445,36 @@ ALTER TABLE `appointmentdate`
   MODIFY `appointment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
+-- AUTO_INCREMENT for table `ca`
+--
+ALTER TABLE `ca`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `chet`
+--
+ALTER TABLE `chet`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `cn`
+--
+ALTER TABLE `cn`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `cnas`
+--
+ALTER TABLE `cnas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
+-- AUTO_INCREMENT for table `cns`
+--
+ALTER TABLE `cns`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+
+--
 -- AUTO_INCREMENT for table `college`
 --
 ALTER TABLE `college`
@@ -695,6 +1485,12 @@ ALTER TABLE `college`
 --
 ALTER TABLE `courses`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `cte`
+--
+ALTER TABLE `cte`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT for table `deleted_accnt`
@@ -724,7 +1520,7 @@ ALTER TABLE `faq`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -16,33 +16,33 @@
         <li class="">
             <a href="#master-list-link" id="master-list-link">
                 <i class='bx bxs-user-pin'></i>
-                <span class="text">Applicants</span>
+                <span class="text">Applicants List</span>
             </a>
         </li>
 
         <li class="">
             <a href="#student-result-link" id="student-result-link">
                 <i class='bx bxs-window-alt'></i>
-                <span class="text">Personnels</span>
+                <span class="text">Manage Personnels</span>
             </a>
         </li>
 
         <li class="">
             <a href="#data-result-link" id="data-result-link">
                 <i class='bx bxs-book-alt'></i>
-                <span class="text">Colleges</span>
+                <span class="text">Manage Colleges</span>
             </a>
         </li>
         <li class="">
             <a href="#schedule-result-link" id="schedule-result-link">
                 <i class='bx bxs-calendar-alt'></i>
-                <span class="text">Appointment</span>
+                <span class="text">Manage Appointment</span>
             </a>
         </li>
         <li class="">
             <a href="#data-info-link" id="data-info-link">
                 <i class='bx bxs-data'></i>
-                <span class="text">Data</span>
+                <span class="text">Manage Database</span>
             </a>
         </li>
 
