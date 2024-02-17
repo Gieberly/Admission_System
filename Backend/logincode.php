@@ -25,7 +25,7 @@ if(isset($_POST['login_btn'])){
 
 
                 if ($userType == 'Student') {
-                    header("Location: ../Backend/studentform.php"); // Redirect to studentform.php
+                    header("Location: ../Backend/studentDashboard.php"); // Redirect to studentform.php
                     exit();
                 } elseif ($userType == 'Faculty') {
                     
