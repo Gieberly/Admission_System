@@ -132,7 +132,7 @@ $stmt->fetch();
                                             <th>English 2</th>
                                             <th>English 3</th>
                                             <th>GWA</th>
-                                           c
+                                            <th>Admission Score</th>
                                             <th>Result</th>
 
                                             <th>Action</th>
@@ -167,9 +167,9 @@ $stmt->fetch();
                                                 echo "<td class='editable' data-field='result'>{$row['result']}</td>";
 
                                                 echo "<td>";
-                                                echo "<button type='button' id='edit-btn' class='button edit-btn' onclick='editAdmissionData({$row['id']})'><i class='bx bx-edit-alt'></i></button>";
-                                                echo "<select class='button dropdown-button' onchange='selectOption(this.value, {$row['id']})'>";
-                                                echo "<option value=''>Choose an option</option>";
+                                                echo "<button type='button' id='edit-btn-{$row['id']}' class='button edit-btn' onclick='showDropdown({$row['id']})'><i class='bx bx-edit-alt'></i></button>";
+                                                echo "<select class='dropdown-button' style='display: none;' id='dropdown-{$row['id']}' onchange='selectOption(this.value, {$row['id']})'>";
+                                                echo "<option value='' class='placeholder'>Choose an option</option>";
                                                 echo "<option value='NOA(Q-A)'>NOA(Q-A)</option>";
                                                 echo "<option value='NOA(NQ-A)'>NOA(NQ-A)</option>";
                                                 echo "<option value='NOR(Q-NA)'>NOR(Q-NA)</option>";
@@ -202,13 +202,28 @@ $stmt->fetch();
                                     <div class="confirmation-box">
                                         <p id="confirmation-message"></p>
                                         <div class="confirmation-buttons">
-                                            <button class="Yes" id="confirm-ok">Comfirm</button>
+                                            <button class="Yes" id="confirm-ok">Confirm</button>
                                             <button class="cancel" id="confirm-cancel">Cancel</button>
                                         </div>
                                     </div>
                                 </div>
                                 <style>
-                                    /* Custom styles for the toast */
+       .edit-btn {
+        background-color:transparent;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    /* Change icon color */
+    .edit-btn i {
+        color: black; /* Set icon color to black */
+    }
+
+    /* Change icon color on hover */
+    .edit-btn:hover i {
+        color: #4CAF50; /* Green color on hover */
+    }
                                     #toast {
                                         position: fixed;
                                         top: 10%;
@@ -236,8 +251,40 @@ $stmt->fetch();
                                             transform: translateY(0);
                                         }
                                     }
+                                    .dropdown-button {
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #fff;
+        color: #333;
+        font-size: 14px;
+        cursor: pointer;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
 
-                                    .confirmation-overlay {
+    /* Styling for the dropdown options */
+    .dropdown-button option {
+        color: black;
+    }
+
+    /* Hover effect for the dropdown */
+    .dropdown-button:hover,
+    .dropdown-button:focus {
+        border-color: #4CAF50; /* Green border on hover */
+    }
+
+    /* Styling for the placeholder option */
+    .dropdown-button .placeholder {
+        color: black;
+    }
+
+    /* Hover effect for dropdown options */
+    .dropdown-button option:hover {
+        background-color: #f2f2f2; /* Light gray background on hover */
+    }
+           .confirmation-overlay {
             display: none;
             position: fixed;
             top: 0;
@@ -263,27 +310,37 @@ $stmt->fetch();
             transform: translateY(-50%); /* Adjust for top positioning */
         }
 
-        /* Styles for the confirmation buttons */
-        .confirmation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+         /* Styles for the confirmation buttons */
+    .confirmation-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
 
-        .confirmation-buttons button {
-            padding: 10px;
-            cursor: pointer;
-        }
+    .confirmation-buttons button {
+        padding: 10px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
 
-        .confirmation-buttons button.ok {
-            background-color: #4CAF50;
-            color: #fff;
-        }
+    /* Green color for the Confirm button */
+    .confirmation-buttons button.Yes {
+        background-color: #4CAF50;
+        color: #fff;
+    }
 
-        .confirmation-buttons button.cancel {
-            background-color: #f44336;
-            color: #fff;
-        }
+    /* Red color for the Cancel button */
+    .confirmation-buttons button.cancel {
+        background-color: #f44336;
+        color: #fff;
+    }
+
+    /* Hover effect for both buttons */
+    .confirmation-buttons button:hover {
+        filter: brightness(1.2);
+    }
                                 </style>
 
                                 <script>
@@ -362,6 +419,12 @@ $stmt->fetch();
                                         }
                                     });
                                 }
+                                function showDropdown(id) {
+        // Hide the edit button
+        document.getElementById('edit-btn-' + id).style.display = 'none';
+        // Show the dropdown
+        document.getElementById('dropdown-' + id).style.display = 'inline-block';
+    }
                             </script>
 
 
