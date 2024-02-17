@@ -87,7 +87,7 @@ $conn->close();
                 <div class="table-data">
                     <div class="order">
                         <h1 style="text-align: center;">CHANGE PASSWORD</h1>
-                        <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                        <form id="updatePasswordForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             <label for="old_password">Old Password:</label>
                             <input type="password" id="old_password" name="old_password" required>
                             <br>
@@ -95,8 +95,18 @@ $conn->close();
                             <input type="password" id="new_password" name="new_password" required>
                             <br>
                             <!-- Add other fields for additional information editing -->
-                            <input type="submit" value="Update Password">
+                            <input type="submit" id="updatePasswordBtn" value="Update Password" onclick="return confirmUpdate();">
+
                         </form>
+                        <!-- Add the overlay and modal for the confirmation dialog -->
+<div class="overlay" id="confirmationOverlay" style="display: none;">
+    <div class="confirmation-modal">
+        <p>Are you sure you want to update your password?</p>
+        <button id="confirmYes">Confirm</button>
+        <button id="confirmNo">Cancel</button>
+    </div>
+</div>
+
                     </div>
                 </div>
             </div>
@@ -105,6 +115,56 @@ $conn->close();
 </section>
 
 <style>
+    /* Add styles for the confirmation dialog overlay */
+/* Add styles for the confirmation dialog overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add styles for the confirmation dialog modal */
+.confirmation-modal {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.confirmation-modal p {
+    margin-bottom: 15px;
+}
+
+.confirmation-modal button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the 'Yes' button in green */
+#confirmYes {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+/* Style the 'No' button in red */
+#confirmNo {
+    background-color: #dc3545; /* Red color */
+    color: white;
+}
+
+
     .head-title {
         display: flex;
         justify-content: space-between;
@@ -158,15 +218,45 @@ $conn->close();
         border-radius: 5px;
         display: none;
     }
+    
 </style>
 
 <script>
-    $(document).ready(function () {
+function confirmUpdate() {
+    // Show the overlay with the confirmation dialog
+    $("#confirmationOverlay").fadeIn();
+
+    // Handle 'Yes' button click
+    $("#confirmYes").click(function () {
+        // Close the overlay
+        $("#confirmationOverlay").fadeOut();
+
+        // Proceed with form submission
+        $("#updatePasswordForm").submit();
+    });
+
+    // Handle 'No' button click
+    $("#confirmNo").click(function () {
+        // Close the overlay without submitting the form
+        $("#confirmationOverlay").fadeOut();
+        return false; // Cancel form submission
+    });
+
+    // Prevent the default form submission
+    return false;
+}
+
+
+$(document).ready(function () {
         // Check if message is not empty
         var message = "<?php echo $message; ?>";
         if (message !== "") {
             // Create and display the popup message
             var popupMessage = $("<div class='popup-message'></div>").text(message);
+            // Check if the message contains certain strings and apply red color
+            if (message.includes("Error updating password") || message.includes("Old password is incorrect")) {
+                popupMessage.css("background-color", "red");
+            }
             $("body").append(popupMessage);
             popupMessage.fadeIn();
             // Hide the popup message after 2 seconds
@@ -177,6 +267,7 @@ $conn->close();
             }, 2000);
         }
     });
+
 </script>
 
 </body>

@@ -40,9 +40,9 @@ if (isset($_SESSION['error_message'])) {
                 <div class="table-data">
                     <div class="order">
                    
-                        <div id="table-container">
-                        <h1 style="text-align: center;">My Profile</h1>
-                        <form method="post" action="Student_update.php">
+         <div id="table-container">
+        <h1 style="text-align: center;">My Profile</h1>
+        <form id="updateProfileForm" method="post" action="Student_update.php">
         <p class="personal_information">Personal Information</p>
 
         <div class="form-container1">
@@ -187,11 +187,16 @@ if (isset($_SESSION['error_message'])) {
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
           </div>
         </div>
-
-        <!-- Add other fields for additional information editing -->
-
-        <input type="submit" value="Update Profile">
+        <input type="submit" value="Update Profile" onclick="return confirmUpdateProfile();">
     </form>
+<!-- Add the overlay and modal for the confirmation dialog -->
+<div class="overlay" id="confirmationOverlayProfile"style="display: none;">
+    <div class="confirmation-modal">
+        <p>Are you sure you want to update your profile?</p>
+        <button id="confirmYes">Confirm</button>
+        <button id="confirmNo">Cancel</button>
+    </div>
+</div>
                         </div>
                     </div>
                 </div>
@@ -200,18 +205,90 @@ if (isset($_SESSION['error_message'])) {
     </main>
 </section>
 <script>
+function confirmUpdateProfile() {
+    // Show the overlay with the confirmation dialog
+    $("#confirmationOverlayProfile").fadeIn();
+
+    // Handle 'Yes' button click
+    $("#confirmYes").click(function () {
+        // Close the overlay
+        $("#confirmationOverlayProfile").fadeOut();
+
+        // Proceed with form submission
+        $("#updateProfileForm").submit();
+    });
+
+    // Handle 'No' button click
+    $("#confirmNo").click(function () {
+        // Close the overlay without submitting the form
+        $("#confirmationOverlayProfile").fadeOut();
+        return false; // Cancel form submission
+    });
+
+    // Prevent the default form submission
+    return false;
+}
+
+
     document.addEventListener('DOMContentLoaded', function () {
         var successMessage = document.querySelector('.success-message');
         if (successMessage) {
             successMessage.style.display = 'block';
             setTimeout(function () {
                 successMessage.style.display = 'none';
-            }, 2000); // 2 seconds
+            }, 4000);
         }
     });
 </script>
 
 <style>
+/* Add styles for the confirmation dialog overlay */
+.overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add styles for the confirmation dialog modal */
+.confirmation-modal {
+    background-color:white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.confirmation-modal p {
+    margin-bottom: 15px;
+}
+
+.confirmation-modal button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the 'Yes' button in green */
+#confirmYes {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+/* Style the 'No' button in red */
+#confirmNo {
+    background-color: #dc3545; /* Red color */
+    color: white;
+}
 
 .success-message {
         position: fixed;

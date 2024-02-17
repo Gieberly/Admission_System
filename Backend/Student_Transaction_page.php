@@ -298,20 +298,15 @@ $conn->close();
                                             echo "<td>" . $appointmentDateTime . "</td>";
                                             echo "<td>" . $row['appointment_status'] . "</td>";
 
-
-                                          
-
                                             // Check the appointment status and appointment date to display the appropriate action
                                             if ($row['appointment_status'] === 'Cancelled') {
                                                 echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
                                             } elseif (empty($row['appointment_date'])) {
                                                 echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
                                             } else {
-                                                echo "<td><a href='download.php?id=" . $row['id'] . "'>Download PDF</a></td>";
+                                                echo "<td><a href='download.php?id=" . $row['id'] . "'>Generate Form</a></td>";
                                             }
                                             
-                                            
-
                                             echo "</tr>";
                                             $count++;
                                         }

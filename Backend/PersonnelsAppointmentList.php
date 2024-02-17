@@ -78,9 +78,9 @@ $stmt->fetch();
                             <i class='bx bxs-calendar calendar-icon'></i>
                             <span class="text">Set Dates</span>
                         </a>
-                        <a href="#" class="btn-download">
-                            <i class='bx bxs-cloud-download'></i>
-                            <span class="text">Download PDF</span>
+                        <a href="excel_export_appointments.php" class="btn-download">
+                        <i class='bx bxs-file-export'></i>
+                            <span class="text">Excel Export</span>
                         </a>
                     </div>
 

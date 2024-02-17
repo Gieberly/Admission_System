@@ -851,9 +851,11 @@ nav {
     }
 }
 
-
-
-
+.search-btn {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
 
 .importform {
 	display: flex;
@@ -947,7 +949,7 @@ nav {
   }
 
   #delete-btn,
-    #edit-btn,
+ 
     #noa-qa-btn,
     #noa-nqa-btn,
     #nor-qa-btn,
@@ -1014,20 +1016,7 @@ nav {
   #delete-btn:hover i {
     color: var(--red);
 }
-#edit-btn {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-#edit-btn .bx {
-	font-size: 15px;
 
-	color: var(--dark);
-  }
-  #edit-btn:hover i {
-    color: var(--blue);
-}
 
 #content main .box-info {
 	display: grid;
@@ -1280,10 +1269,7 @@ nav {
     background: var(--blue);
 }
 
-#content main .table-data .order table tr td .status.rejected {
-    /* Add styles for specific status */
-    background: var(--red);
-}
+
 
 #content main .table-data .order table tr td .status.pending {
     /* Add styles for specific status */
@@ -1376,13 +1362,7 @@ nav {
 		display: block;
 		width: 100%;
 	}
-	#content nav form.show .form-input button {
-		width: 36px;
-		height: 100%;
-		border-radius: 0 36px 36px 0;
-		color: var(--light);
-		background: var(--red);
-	}
+
 
 	#content nav form.show ~ .notification,
 	#content nav form.show ~ .profile {
@@ -1507,6 +1487,11 @@ select {
 
 	color: var(--dark);
   }
+  #deleteSelected:hover .bx {
+    transform: scale(1.2); 
+	color: var(--green);
+}
+  
 #viewButton {
     border: none;
     background: none;
