@@ -1,69 +1,64 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
-    const currentURL = window.location.href;
+const allSideMenu = document.querySelectorAll('#sidebar .side-menu.top li a');
 
-    // Retrieve the sidebar state from local storage
-    const sidebarState = localStorage.getItem('sidebarState');
-    const sidebar = document.getElementById('sidebar');
+allSideMenu.forEach(item=> {
+	const li = item.parentElement;
 
-    // Set the initial state of the sidebar based on local storage
-    if (sidebarState === 'hidden') {
-        sidebar.classList.add('hide');
-    }
-
-    allSideMenu.forEach(item => {
-        const li = item.parentElement;
-
-        // Check if the current URL matches the href attribute of the sidebar item
-        if (currentURL.includes(item.getAttribute('href'))) {
-            li.classList.add('active');
-        }
-
-        item.addEventListener('click', function (event) {
-            event.preventDefault();
-
-            allSideMenu.forEach(i => {
-                i.parentElement.classList.remove('active');
-            });
-
-            li.classList.add('active');
-
-            // Navigate to the clicked link
-            const destinationURL = item.getAttribute('href');
-            setTimeout(() => {
-                window.location.href = destinationURL;
-            }, 300); // Adjust the timeout to match the transition duration
-        });
-    });
-
-    // Check if the current URL includes any of the dropdown links and set "Colleges" as active
-    const dropdownLinks = document.querySelectorAll('#courses-dropdown .dropdown-content li a');
-    dropdownLinks.forEach(link => {
-        if (currentURL.includes(link.getAttribute('href'))) {
-            document.querySelector('').parentElement.classList.add('active');
-        }
-    });
-
+	item.addEventListener('click', function () {
+		allSideMenu.forEach(i=> {
+			i.parentElement.classList.remove('active');
+		})
+		li.classList.add('active');
+	})
 });
+
+
 
 // TOGGLE SIDEBAR
 const menuBar = document.querySelector('#content nav .bx.bx-menu');
 const sidebar = document.getElementById('sidebar');
 
 menuBar.addEventListener('click', function () {
-    // Toggle the 'hide' class on the sidebar
-    sidebar.classList.toggle('hide');
-
-    // Store the state of the sidebar in local storage
-    const sidebarState = sidebar.classList.contains('hide') ? 'hidden' : 'visible';
-    localStorage.setItem('sidebarState', sidebarState);
-});
+	sidebar.classList.toggle('hide');
+})
+  
 
 
 
 //search bar
 
+const searchButton = document.querySelector('#content nav form .form-input button');
+const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
+const searchForm = document.querySelector('#content nav form');
 
+searchButton.addEventListener('click', function (e) {
+	if(window.innerWidth < 576) {
+		e.preventDefault();
+		searchForm.classList.toggle('show');
+		if(searchForm.classList.contains('show')) {
+			searchButtonIcon.classList.replace('bx-search', 'bx-x');
+		} else {
+			searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		}
+	}
+})
+
+
+
+
+if(window.innerWidth < 768) {
+	sidebar.classList.add('hide');
+} else if(window.innerWidth > 576) {
+	searchButtonIcon.classList.replace('bx-x', 'bx-search');
+	searchForm.classList.remove('show');
+}
+
+
+window.addEventListener('resize', function () {
+	if(this.innerWidth > 576) {
+		searchButtonIcon.classList.replace('bx-x', 'bx-search');
+		searchForm.classList.remove('show');
+	}
+})
 
 
 
@@ -179,6 +174,108 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //pressing the box info and dashboard
 
+document.addEventListener('DOMContentLoaded', function () {
+    const AvailableItem = document.getElementById('available-box');
+    const AdmittedItem = document.getElementById('admission-box');
+    const ReadmittedItem = document.getElementById('admitted-box');
+    const NonqualifiedItem = document.getElementById('readmitted-box');
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dashboardLink = document.getElementById('dashboard-link');
+    const dashboardContent = document.getElementById('dashboard-content');
+    const MasterListLink = document.getElementById('master-list-link');
+    const MasterListContent = document.getElementById('master-list-content');
+    const StudentResultLink = document.getElementById('student-result-link');
+    const StudentResultContent = document.getElementById('student-result-content');
+    const DataResultLink = document.getElementById('data-result-link');
+    const DataResultContent = document.getElementById('data-result-content');
+    const ScheduleResultLink = document.getElementById('schedule-result-link');
+    const ScheduleContent = document.getElementById('schedule-result-content');
+    const InfoResultLink = document.getElementById('data-info-link');
+    const InfoResultContent = document.getElementById('data-info-content');
+
+    // Initially hide the content divs by default
+    dashboardContent.style.display = 'block';
+    MasterListContent.style.display = 'none';
+    StudentResultContent.style.display = 'none';
+    DataResultContent.style.display = 'none';
+    ScheduleContent.style.display = 'none';
+    InfoResultContent.style.display = 'none';  // Display 'Data' tab by default
+
+    // Add event listeners to the links
+    dashboardLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'block';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
+    });
+
+    MasterListLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'block';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
+    });
+
+    StudentResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'block';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
+    });
+
+    DataResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'block';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'none';
+    });
+    ScheduleResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'block';
+        InfoResultContent.style.display = 'none';
+    });
+    InfoResultLink.addEventListener('click', function (event) {
+        event.preventDefault();
+        dashboardContent.style.display = 'none';
+        MasterListContent.style.display = 'none';
+        StudentResultContent.style.display = 'none';
+        DataResultContent.style.display = 'none';
+        ScheduleContent.style.display = 'none';
+        InfoResultContent.style.display = 'block';
+    });
+});
+
+$(document).ready(function(){
+    // Initialize the tabs
+    $('#dataTabs a').on('click', function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    });
+
+    // Hide other tab contents when a tab is shown
+    $('#dataTabs a').on('shown.bs.tab', function (e) {
+        var target = $(e.target).attr("href"); // activated tab
+        $('.tab-pane').not(target).removeClass('show active');
+    });
+});
 
 // tab like buttons for Student Result and Forms
   const tabButtons = document.querySelectorAll('.tab-button');

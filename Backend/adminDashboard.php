@@ -3,7 +3,7 @@ session_start();
 include("config.php");
 include("adminCover.php");
 
-if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'admin') {
+if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Admin') {
     header("Location: loginpage.php");
     exit();
 }

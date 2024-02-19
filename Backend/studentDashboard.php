@@ -2,6 +2,7 @@
 
 include("config.php");
 include("studentcover.php");
+include ('redirect.php');
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -20,7 +21,6 @@ $resultNonBoard = $conn->query($sqlNonBoard);
 
 // Combine the results
 $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard->fetch_all(MYSQLI_ASSOC));
- 
 ?>
 <section id="content">
     <main>
@@ -40,6 +40,11 @@ $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard
             <div id="master-list">
                 <div class="table-data">
                     <div class="order">
+                    <form action="redirect.php" method="post">
+                        <label for="college_name">College Name:</label><br>
+                        <input type="text" id="college_nam" name="college_name"><br><br>
+                        <input type="submit" value="Insert Data">
+                    </form
                         <div class="head">
                             <h3>List of Available Programs Offered</h3>
                             <div class="headfornaturetosort">

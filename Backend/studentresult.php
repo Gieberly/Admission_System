@@ -11,7 +11,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 }
 
 // Retrieve student data from the database
-$query = "SELECT id, applicant_name,applicant_number, email, math_grade, science_grade, english_grade, gwa_grade, rank, result, nature_of_degree, degree_applied FROM admission_data";
+$query = "SELECT id, applicant_name,applicant_number, email, math_grade, science_grade, english_grade, gwa_grade, Result, nature_of_degree, degree_applied FROM admission_data";
 $result = $conn->query($query);
 // Fetch user information from the database based on user ID
 $userID = $_SESSION['user_id'];

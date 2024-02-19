@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("personnelcover.php");
+include_once("personnelcover.php");
 
 
 // Check if the user is a student member, otherwise redirect them

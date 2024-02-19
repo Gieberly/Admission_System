@@ -6,7 +6,7 @@ include("facultyCover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Faculty') {
-    header("Location: loginpage.php");
+    header("Location: ../Backend/loginpage.php");
     exit();
 }
 

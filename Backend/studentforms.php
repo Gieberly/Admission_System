@@ -1,7 +1,7 @@
 <?php
 session_start();
 include("config.php");
-
+include ('redirect.php');
 
 
 $user_id = $_SESSION['user_id'];
@@ -72,128 +72,161 @@ $applicantNumber = sprintf("%02d-%d-%05d", $currentYearLastTwoDigits, $semester,
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
 $resultClassification = $conn->query($sqlClassification);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (isset($_POST['set_button_clicked'])) {
-        // The "Set" button was clicked, do not process the form submission
-        echo "Set button clicked. Form not submitted.";
-        exit();
-    }
-    // Process form data
-    $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
-    $applicant_name = $_POST['applicant_name'];
-    $gender = $_POST['gender'];
-    $birthdate = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate'])));
-    $birthplace = $_POST['birthplace'];
-    $age = $_POST['age'];
-    $civil_status = $_POST['civil_status'];
-    $citizenship = $_POST['citizenship'];
-    $nationality = $_POST['nationality'];
-    $permanent_address = $_POST['permanent_address'];
-    $zip_code = $_POST['zip_code'];
-    $phone_number = $_POST['phone_number'];
-    $facebook = $_POST['facebook'];
-    $email = $_POST['email'];
-    $contact_person_1 = $_POST['contact_person_1'];
-    $contact1_phone = $_POST['contact1_phone'];
-    $relationship_1 = $_POST['relationship_1'];
-    $contact_person_2 = $_POST['contact_person_2'];
-    $contact_person_2_mobile = $_POST['contact_person_2_mobile'];
-    $relationship_2 = $_POST['relationship_2'];
-    $academic_classification = $_POST['academic_classification'];
-    $high_school_name_address = $_POST['high_school_name_address'];
-    $lrn = $_POST['lrn'];
-    $degree_applied = $_POST['degree_applied'];
-    $nature_of_degree = $_POST['nature_of_degree'];
-    $applicant_number = $_POST['applicant_number'];
-    $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
+// if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//     // Process form data
+//     // $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
+//     // $applicant_name = $_POST['applicant_name'];
+//     // $gender = $_POST['gender'];
+//     // $birthdate = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate'])));
+//     // $birthplace = $_POST['birthplace'];
+//     // $age = $_POST['age'];
+//     // $civil_status = $_POST['civil_status'];
+//     // $citizenship = $_POST['citizenship'];
+//     // $nationality = $_POST['nationality'];
+//     // $permanent_address = $_POST['permanent_address'];
+//     // $zip_code = $_POST['zip_code'];
+//     // $phone_number = $_POST['phone_number'];
+//     // $facebook = $_POST['facebook'];
+//     // $email = $_POST['email'];
+//     // $contact_person_1 = $_POST['contact_person_1'];
+//     // $contact1_phone = $_POST['contact1_phone'];
+//     // $relationship_1 = $_POST['relationship_1'];
+//     // $contact_person_2 = $_POST['contact_person_2'];
+//     // $contact_person_2_mobile = $_POST['contact_person_2_mobile'];
+//     // $relationship_2 = $_POST['relationship_2'];
+//     // $academic_classification = $_POST['academic_classification'];
+//     // $high_school_name_address = $_POST['high_school_name_address'];
+//     // $lrn = $_POST['lrn'];
+//     // $degree_applied = $_POST['degree_applied'];
+//     // $nature_of_degree = $_POST['nature_of_degree'];
+//     // $applicant_number = $_POST['applicant_number'];
+//     // $application_date = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date'])));
 
-    $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
-    $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
+//     // $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
+//     // $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
 
-    // Check if a file was uploaded
-    if (isset($id_picture) && $id_picture['error'] === UPLOAD_ERR_OK) {
-        // Ensure the file is an image using exif_imagetype
-        $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
-        $detected_type = exif_imagetype($id_picture['tmp_name']);
+//     // Check if a file was uploaded
+//     $tableName = $_POST["college_name"];
+//         // Define the data to be inserted
+//         $data = array(
+//             'id_picture '=> isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null,
+//    ' applicant_name '=> $_POST['applicant_name'],
+//     'gender '=> $_POST['gender'],
+//     'birthdate' => date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate']))),
+//     'birthplace' => $_POST['birthplace'],
+//     'age' => $_POST['age'],
+//     'civil_status' => $_POST['civil_status'],
+//     'citizenship '=> $_POST['citizenship'],
+//     'nationality' =>$_POST['nationality'],
+//    ' permanent_address' => $_POST['permanent_address'],
+//     'zip_code '=> $_POST['zip_code'],
+//     'phone_number' => $_POST['phone_number'],
+//     'facebook' => $_POST['facebook'],
+//     'email' => $_POST['email'],
+//     'contact_person_1' => $_POST['contact_person_1'],
+//     'contact1_phone' => $_POST['contact1_phone'],
+//     'relationship_1' => $_POST['relationship_1'],
+//     'contact_person_2' => $_POST['contact_person_2'],
+//     'contact_person_2_mobile' => $_POST['contact_person_2_mobile'],
+//     'relationship_2' => $_POST['relationship_2'],
+//     'academic_classification' => $_POST['academic_classification'],
+//     'high_school_name_address' => $_POST['high_school_name_address'],
+//     'lrn' => $_POST['lrn'],
+//     'degree_applied' => $_POST['degree_applied'],
+//     'nature_of_degree' => $_POST['nature_of_degree'],
+//     'applicant_number' => $_POST['applicant_number'],
+//     'application_date '=> date('Y-m-d', strtotime(str_replace('/', '-', $_POST['application_date']))),
 
-        if (!in_array($detected_type, $allowed_types)) {
-            echo "Invalid file type. Please upload a valid image.";
-            exit();
-        }
+//     'rank' => isset($_POST['rank']) ? $_POST['rank'] : null,  // Check if 'rank' key exists
+//     'result '=> isset($_POST['result']) ? $_POST['result'] : null // Check if 'result' key exists
 
-        // Move the uploaded file to the 'uploads' folder
-        $upload_folder = 'assets/uploads/';
-        $file_name = uniqid() . '_' . basename($id_picture['name']);
-        $target_path = $upload_folder . $file_name;
+//         );
 
-        if (move_uploaded_file($id_picture['tmp_name'], $target_path)) {
-            echo "File uploaded successfully!";
-        } else {
-            echo "Error moving file to the server.";
-            exit();
-        }
+//         insertDataIntoTable('college_name', $data);
+//     }
+    // if (isset($id_picture) && $id_picture['error'] === UPLOAD_ERR_OK) {
+    //     // Ensure the file is an image using exif_imagetype
+    //     $allowed_types = array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF);
+    //     $detected_type = exif_imagetype($id_picture['tmp_name']);
 
-        // Save file path in the database
-        $id_picture_data = $target_path;
-    } else {
-        echo "Error uploading ID picture. Please ensure it's a valid image file.";
-        exit();
-    }
+    //     if (!in_array($detected_type, $allowed_types)) {
+    //         echo "Invalid file type. Please upload a valid image.";
+    //         exit();
+    //     }
 
+    //     // Move the uploaded file to the 'uploads' folder
+    //     $upload_folder = 'assets/uploads/';
+    //     $file_name = uniqid() . '_' . basename($id_picture['name']);
+    //     $target_path = $upload_folder . $file_name;
 
-    // Prepare SQL statement for inserting data into admission_data table
-    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
-    civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
-    contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
-    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, 
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    //     if (move_uploaded_file($id_picture['tmp_name'], $target_path)) {
+    //         echo "File uploaded successfully!";
+    //     } else {
+    //         echo "Error moving file to the server.";
+    //         exit();
+    //     }
 
-    // Bind parameters
-    $stmt->bind_param(
-        "sssssissssiisssississssssss",
-        $id_picture_data,
-        $applicant_name,
-        $gender,
-        $birthdate,
-        $birthplace,
-        $age,
-        $civil_status,
-        $citizenship,
-        $nationality,
-        $permanent_address,
-        $zip_code,
-        $phone_number,
-        $facebook,
-        $email,
-        $contact_person_1,
-        $contact1_phone,
-        $relationship_1,
-        $contact_person_2,
-        $contact_person_2_mobile,
-        $relationship_2,
-        $academic_classification,
-        $high_school_name_address,
-        $lrn,
-        $degree_applied,
-        $nature_of_degree,
-        $applicant_number,
-        $application_date,
-    );
+    //     // Save file path in the database
+    //     $id_picture_data = $target_path;
+    // } else {
+    //     echo "Error uploading ID picture. Please ensure it's a valid image file.";
+    //     exit();
+    // }
 
 
-    // Execute the SQL statement
-    if ($stmt->execute()) {
-        echo "Form submitted successfully!";
-        // Redirect the user to student.php or another appropriate page
-        header("Location: ../Backend/StudentSetAppointment.php");
-        exit();
-    } else {
-        echo "Error submitting form: " . $stmt->error;
-    }
+//     // Prepare SQL statement for inserting data into admission_data table
+//     $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
+//     civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
+//     contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
+//     high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, 
+//     ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-    // Close the statement
-    $stmt->close();
-}
+//     // Bind parameters
+//     $stmt->bind_param(
+//         "sssssissssiisssississssssss",
+//         $id_picture_data,
+//         $applicant_name,
+//         $gender,
+//         $birthdate,
+//         $birthplace,
+//         $age,
+//         $civil_status,
+//         $citizenship,
+//         $nationality,
+//         $permanent_address,
+//         $zip_code,
+//         $phone_number,
+//         $facebook,
+//         $email,
+//         $contact_person_1,
+//         $contact1_phone,
+//         $relationship_1,
+//         $contact_person_2,
+//         $contact_person_2_mobile,
+//         $relationship_2,
+//         $academic_classification,
+//         $high_school_name_address,
+//         $lrn,
+//         $degree_applied,
+//         $nature_of_degree,
+//         $applicant_number,
+//         $application_date,
+//     );
+
+
+//     // Execute the SQL statement
+//     if ($stmt->execute()) {
+//         echo "Form submitted successfully!";
+//         // Redirect the user to student.php or another appropriate page
+//         header("Location: ../Backend/StudentSetAppointment.php");
+//         exit();
+//     } else {
+//         echo "Error submitting form: " . $stmt->error;
+//     }
+
+//     // Close the statement
+//     $stmt->close();
+// }
 
 
 $conn->close();
@@ -234,7 +267,7 @@ $conn->close();
         </div>
     </header>
 
-    <form id="registrationForm" action="studentforms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
+    <form id="registrationForm" action="redirect_col.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
 
 
         <div class="progress-bar">
@@ -282,6 +315,8 @@ $conn->close();
                     <h2>Program Guide for Requirments in Application</h2>
                     <div class="page-container">
                         <div class="form-container">
+                            <!--example-->
+                                <!--end of example-->
                             <div class="form-group">
                                 <label class="small-label" for="categoryDropdown">Nature of Degree</label>
                                 <?php
@@ -622,12 +657,14 @@ $conn->close();
             <p>Make sure that you read and understood all the instructions contained in this Application form and that the information supplied are true, complete and accurate. Be aware that any information that have concealed, falsely given and/or withheld is enough basis for the invalidation/cancellation of your application. </p>
             <p style="color: green; font-weight: bold; text-align: center; font-size: 16px">After Submission, set your appointment and print the admission form during your appointment date with the needed requirements.</p>
         </div>
-
-
-
+        <div class="form-group">
+                            <label for="college_name">College Name:</label><br>
+                            <input type="text" id="college_name" name="college_name"><br><br>
+        
+                            </div>
             <div class="index-btn-wrapper">
                 <div class="index-btn" onclick="run(3, 2);">Previous</div>
-                <button class="index-btn" type="submit" name="submit" style="background: blue;">Submit</button>
+                <button class="index-btn" type="submit" name="submit" style="background: blue;" value="Insert Data">Submit</button>
             </div>
         </div>
 
