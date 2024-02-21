@@ -1,6 +1,6 @@
 <?php
 session_start();
-include("config.php");
+include("..\config.php");
 
 // Check if the user is logged in, otherwise redirect them
 if (!isset($_SESSION['user_id'])) {
@@ -72,7 +72,7 @@ $conn->close();
 
         <a href="EditInfo.php" class="btn-link">
     <button type="submit">Update Information</button>
-    <a href="<?php echo ($userType === 'staff') ? 'personnel.php' : 'admin.php'; ?>">Return to dashboard</a>
+    <a href="<?php echo ($userType === 'staff') ? 'personnel.php' : '..\admin\admin.php'; ?>">Return to dashboard</a>
 </a>
     </form>
 
