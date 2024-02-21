@@ -143,7 +143,22 @@ function BoardRequirements() {
     switch (classificationDropdown.value) {
       case "Senior High School Graduates":
         classificationInfoContainer.innerHTML = `
-          <ol type="I"  class="custom-list">
+          
+        <div id="trackStrandFields">
+        <label class="small-label" for="track">Track</label>
+        <select name="track" class="inputs" id="track">
+            <option value="">Select Track</option>
+            <!-- Add additional tracks as needed -->
+            <option value="Academic Track">Academic Track</option>
+            <option value="Technical Vocational and Livelihood Track">Technical Vocational and Livelihood Track</option>
+            <option value="Sports Track">Sports Track</option>
+            <option value="Arts and Design Track">Arts and Design Track</option>
+        </select>
+    
+        <label class="small-label" for="strand">Strand</label>
+        <input type="text" name="strand" class="input" id="strand">
+    </div>
+        <ol type="I"  class="custom-list">
           <h3>Requirements to Submit</h3>
             <strong>
               <li>Senior High School Graduates who did not enroll in any college degree
@@ -162,7 +177,10 @@ function BoardRequirements() {
                 present the original copy for comparison purposes.</li>
               <li>Certification of Enrollment from the last school attended (most recent).</li>
             </ol>
-          </ol>`;
+          </ol>
+          `
+          
+          ;
         break;
         case "High School (Old Curriculum) Graduates":
           classificationInfoContainer.innerHTML = `
@@ -190,6 +208,22 @@ function BoardRequirements() {
           break;
           case "Grade 12":
             classificationInfoContainer.innerHTML = `
+           
+          <div id="trackStrandFields">
+          <label class="small-label" for="track">Track</label>
+          <select name="track" class="inputs" id="track">
+              <option value="">Select Track</option>
+              <!-- Add additional tracks as needed -->
+              <option value="Academic Track">Academic Track</option>
+              <option value="Technical Vocational and Livelihood Track">Technical Vocational and Livelihood Track</option>
+              <option value="Sports Track">Sports Track</option>
+              <option value="Arts and Design Track">Arts and Design Track</option>
+          </select>
+      
+          <label class="small-label" for="strand">Strand</label>
+          <input type="text" name="strand" class="input" id="strand">
+      </div>
+           
             <ol type="I"  class="custom-list">
             <h3>Requirements to Submit</h3>
               <strong>

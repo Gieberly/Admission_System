@@ -31,7 +31,7 @@ if ($resultAdmission->num_rows > 0) {
     // ... (your existing HTML code for displaying data)
 } else {
     // Display a message indicating that data is not set
-    echo "Data not set";
+   
 }
 ?>
 
