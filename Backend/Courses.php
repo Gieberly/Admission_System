@@ -11,8 +11,8 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sql = "SELECT * FROM `programs` WHERE 
         `Courses` LIKE '%$search%' OR 
         `Nature_of_Degree` LIKE '%$search%' OR 
-        `Description` LIKE '%$search%' OR 
-        `Overall_Slots` LIKE '%$search%'
+        `Description` LIKE '%$search%'
+       
         ORDER BY `Nature_of_Degree` ASC, `Courses` ASC";
 
 $result = $conn->query($sql);
@@ -61,19 +61,22 @@ $result = $conn->query($sql);
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Courses</th>
-                                       
+                                        <th>College</th>
+                                        <th>Course</th>
                                         <th>Nature of Degree</th>
+                                        <th>No. of Sections</th>
+                                        <th>No. of Students per Sections</th>
                                         <th>Slots</th>
-
                                         <th>Action</th>
                                     </tr>
                                     <tr id="addCourseRow" style="display: none;">
                                         <td>#</td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="College"></td>
                                         <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Courses"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Description"></td>
                                         <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Nature_of_Degree"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Overall_Slots"></td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="No_of_Sections"></td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="No_of_Students_Per_Section"></td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Number_of_Available_Slots"></td>
 
                                         <td>
                                             <button type='button' class='button cancel-btn' onclick='cancelAddCourse()'>Cancel</button>
@@ -90,13 +93,13 @@ $result = $conn->query($sql);
                                         echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
                                         echo "<td>{$count}</td>";
                                       
-                                        echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
+                                        echo "<td class='editable' data-field='College'>{$row['College']}</td>";
+                                        echo "<td class='editable' data-field='Courses'>{$row['Courses']}</td>";
                                         echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-                                        echo "<td class='editable' data-field='Overall_Slots'>{$row['Overall_Slots']}</td>";
-
+                                        echo "<td class='editable' data-field='No_of_Sections'>{$row['No_of_Sections']}</td>";
+                                        echo "<td class='editable' data-field='No_of_Students_Per_Section'>{$row['No_of_Students_Per_Section']}</td>";
+                                        echo "<td class='editable' data-field='Number_of_Available_Slots'>{$row['Number_of_Available_Slots']}</td>";
                                         echo "<td>
-                                        
-
                                         <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteCourse({$row['ProgramID']})'>
                                         <i class='bx bx-trash'></i>
                                         <button type='button' id='edit-btn' class='button edit-btn' onclick='editCourse({$row['ProgramID']})'>
