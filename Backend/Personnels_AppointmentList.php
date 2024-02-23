@@ -249,58 +249,16 @@ input[type="submit"] {
             <label class="small-label" for="applicant_name">Complete Name</label>
             <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
           </div>
-          <!-- Birthplace -->
-          <div class="form-group">
-            <label class="small-label" for="birthplace">Birthplace</label>
-            <input name="birthplace" class="input" id="birthplace" value="<?php echo $admissionData['birthplace']; ?>">
-          </div>
-       
-
           <!-- Sex at Birth -->
           <div class="form-group">
             <label class="small-label" for="gender">Sex at birth</label>
             <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
           </div>
-          <!-- Birthdate -->
-          <div class="form-group">
-            <label class="small-label" for="birthdate">Birthdate</label>
-            <input name="birthdate" class="input" id="birthdate" value="<?php echo $admissionData['birthdate']; ?>">
-          </div>
-        <!-- Age -->
-        <div class="form-group">
-            <label class="small-label" for="age">Age</label>
-            <input name="age" class="input" id="age" value="<?php echo $admissionData['age']; ?>">
-          </div>
-          <!-- civil status -->
-          <div class="form-group">
-            <label class="small-label" for="civil_status">Civil Status</label>
-            <input name="civil_status" class="input" id="civil_status" value="<?php echo $admissionData['civil_status']; ?>">
-          </div>
-          <!-- Citizenship -->
-          <div class="form-group">
-            <label class="small-label" for="citizenship">Citizenship</label>
-            <input name="citizenship" class="input" id="citizenship" value="<?php echo $admissionData['citizenship']; ?>">
-          </div>
-          <!-- Nationality-->
-          <div class="form-group">
-            <label class="small-label" for="nationality">Nationality</label>
-            <input name="nationality" class="input" id="nationality" value="<?php echo $admissionData['nationality']; ?>">
-          </div>
+       
+     
         </div>
 
-        <p class="personal_information">Permanent Home Address</p>
-
-        <div class="form-container3">
-          <div class="form-group">
-            <label class="small-label" for="permanent_address">Address</label>
-            <input name="permanent_address" class="input" id="permanent_address" value="<?php echo $admissionData['permanent_address']; ?>">
-          </div>
-          <!-- zip-code -->
-          <div class="form-group">
-            <label class="small-label" for="zip_code">Zip Code</label>
-            <input name="zip_code" class="input" id="zip_code" value="<?php echo $admissionData['zip_code']; ?>">
-          </div>
-        </div>
+       
 
         <p class="personal_information">Contact Information</p>
         <div class="form-container4">
@@ -310,11 +268,6 @@ input[type="submit"] {
             <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
           </div>
 
-          <!-- Facebook Account Name -->
-          <div class="form-group">
-            <label class="small-label" for="facebook">Facebook Account Name</label>
-            <input name="facebook" class="input" id="facebook" value="<?php echo $admissionData['facebook']; ?>">
-          </div>
           <!--Email Address -->
           <div class="form-group">
             <label class="small-label" for="email">Email Address</label>
