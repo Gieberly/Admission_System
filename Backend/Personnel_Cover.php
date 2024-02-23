@@ -70,8 +70,8 @@ function getCourses($conn)
        
             <li class="">
                 <a href="Personnels_AppointmentList.php" id="master-list-link">
-                <i class='bx bxs-calendar'></i>
-                    <span class="text">Appointment</span>
+                <i class='bx bx-list-check'></i>
+                    <span class="text">Document Checking</span>
                 </a>
             </li>
             <li >

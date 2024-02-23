@@ -62,9 +62,9 @@ $stmt->fetch();
         <main>
             <div class="head-title">
                 <div class="left">
-                    <h1>Appointments</h1>
+                    <h1>Document Checking</h1>
                     <ul class="breadcrumb">
-                        <li><a href="#">Appointments</a></li>
+                        <li><a href="#">Document Checking</a></li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li>
                         <li><a class="active" href="personnel.php">Home</a></li>
@@ -124,7 +124,7 @@ $stmt->fetch();
             echo "<td>" . $row['application_date'] . "</td>";
             echo "<td>" . $row['appointment_time'] . "</td>";
             echo "<td>" . $row['status'] . "</td>";
-            echo "<td><button class='editBtn'>Edit</button></td>";
+          
             echo "</tr>";
         }
         ?>
@@ -136,85 +136,254 @@ $stmt->fetch();
 <div class="todo" style="display: none;">
     <div class="head">
         <h3>Student Data</h3>
+        
+        <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
+
+       <style>
+    .close-form {
+        transition: background-color 0.3s, transform 0.3s;
+        border-radius: 50%;
+    }
+
+    .close-form:hover {
+        background-color: rgba(255, 0, 0, 0.2); /* Red with 80% opacity */
+        
+    }
+    /* Apply styles to the form container */
+.form-container1,
+.form-container2,
+.form-container3,
+.form-container4,
+.form-container5,
+.form-container6,
+.form-container7 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+/* Apply styles to the form groups */
+.form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Apply styles to the labels */
+.small-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+/* Apply styles to the input fields */
+.input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Apply styles to the submit button */
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Style for the personal information headings */
+.personal_information {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Style for the form container */
+#updateProfileForm {
+  max-width: 800px;
+  margin: 0 auto;
+}
+.input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Apply styles to the submit button */
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Responsive styles for smaller screens */
+@media screen and (max-width: 768px) {
+  .form-group {
+    width: 100%;
+  }
+}
+
+</style>
+
+
     </div>
-    <h1 style="text-align: center;">Edit Profile</h1>
-    <form id="updateProfileForm" method="post" action="Student_update.php">
-        <input type="hidden" id="selectedUserId" name="selectedUserId" value="">
-        <label for="id_picture">Photo:</label>
-        <input type="file" id="id_picture" name="id_picture">
-        <!-- Personal Information -->
+        <form id="updateProfileForm" method="post" action="save_student.php">
+        <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;" >
+        <br><br><br><br><br><br>
         <p class="personal_information">Personal Information</p>
-        <label for="applicant_name">Applicant Name:</label>
-        <input type="text" id="applicant_name" name="applicant_name" value="">
-        <label for="gender">Gender:</label>
-        <input type="text" id="gender" name="gender" value="">
-        <!-- Repeat similar input fields for other personal information -->
-        <!-- ... -->
+        
+        <div class="form-container1">
+        
+          <div class="form-group">
+            <label class="small-label" for="applicant_name">Complete Name</label>
+            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
+          </div>
+          <!-- Birthplace -->
+          <div class="form-group">
+            <label class="small-label" for="birthplace">Birthplace</label>
+            <input name="birthplace" class="input" id="birthplace" value="<?php echo $admissionData['birthplace']; ?>">
+          </div>
+       
 
-        <!-- Permanent Home Address -->
+          <!-- Sex at Birth -->
+          <div class="form-group">
+            <label class="small-label" for="gender">Sex at birth</label>
+            <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
+          </div>
+          <!-- Birthdate -->
+          <div class="form-group">
+            <label class="small-label" for="birthdate">Birthdate</label>
+            <input name="birthdate" class="input" id="birthdate" value="<?php echo $admissionData['birthdate']; ?>">
+          </div>
+        <!-- Age -->
+        <div class="form-group">
+            <label class="small-label" for="age">Age</label>
+            <input name="age" class="input" id="age" value="<?php echo $admissionData['age']; ?>">
+          </div>
+          <!-- civil status -->
+          <div class="form-group">
+            <label class="small-label" for="civil_status">Civil Status</label>
+            <input name="civil_status" class="input" id="civil_status" value="<?php echo $admissionData['civil_status']; ?>">
+          </div>
+          <!-- Citizenship -->
+          <div class="form-group">
+            <label class="small-label" for="citizenship">Citizenship</label>
+            <input name="citizenship" class="input" id="citizenship" value="<?php echo $admissionData['citizenship']; ?>">
+          </div>
+          <!-- Nationality-->
+          <div class="form-group">
+            <label class="small-label" for="nationality">Nationality</label>
+            <input name="nationality" class="input" id="nationality" value="<?php echo $admissionData['nationality']; ?>">
+          </div>
+        </div>
+
         <p class="personal_information">Permanent Home Address</p>
-        <label for="permanent_address">Permanent Address:</label>
-        <input type="text" id="permanent_address" name="permanent_address" value="">
-        <label for="zip_code">Zip Code:</label>
-        <input type="text" id="zip_code" name="zip_code" value="">
-        <!-- ... -->
 
-        <!-- Contact Information -->
+        <div class="form-container3">
+          <div class="form-group">
+            <label class="small-label" for="permanent_address">Address</label>
+            <input name="permanent_address" class="input" id="permanent_address" value="<?php echo $admissionData['permanent_address']; ?>">
+          </div>
+          <!-- zip-code -->
+          <div class="form-group">
+            <label class="small-label" for="zip_code">Zip Code</label>
+            <input name="zip_code" class="input" id="zip_code" value="<?php echo $admissionData['zip_code']; ?>">
+          </div>
+        </div>
+
         <p class="personal_information">Contact Information</p>
-        <label for="phone_number">Phone Number:</label>
-        <input type="text" id="phone_number" name="phone_number" value="">
-        <!-- ... -->
+        <div class="form-container4">
+          <!-- Telephone/Mobile No -->
+          <div class="form-group">
+            <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
+          </div>
 
-        <!-- Contact Person(s) in Case of Emergency -->
+          <!-- Facebook Account Name -->
+          <div class="form-group">
+            <label class="small-label" for="facebook">Facebook Account Name</label>
+            <input name="facebook" class="input" id="facebook" value="<?php echo $admissionData['facebook']; ?>">
+          </div>
+          <!--Email Address -->
+          <div class="form-group">
+            <label class="small-label" for="email">Email Address</label>
+            <input name="email" class="input" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+          </div>
+        </div>
+
         <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-        <!-- ... -->
+        <div class="form-container7">
+          <!-- Contact Person 1 -->
+          <div class="form-group">
+            <label class="small-label" for="contact_person_1">Contact Person</label>
+            <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
+            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
+            <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
+          </div>
+        </div>
+        <div class="form-container7">
+          <!-- Contact Person 2 -->
+          <div class="form-group">
+            <label class="small-label" for="contact_person_2">Contact Person</label>
+            <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
+            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
+            <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
+          </div>
+        </div>
 
-        <!-- Academic Classification -->
         <p class="personal_information">Academic Classification</p>
-        <label for="academic_classification">Academic Classification:</label>
-        <input type="text" id="academic_classification" name="academic_classification" value="">
-        <label for="high_school_name_address">High School Name/Address:</label>
-        <input type="text" id="high_school_name_address" name="high_school_name_address" value="">
-        <label for="lrn">Learner's Reference Number:</label>
-        <input type="text" id="lrn" name="lrn" value="">
-        <label for="degree_applied">Degree Applied:</label>
-        <input type="text" id="degree_applied" name="degree_applied" value="">
-        <label for="nature_of_degree">Nature of Degree:</label>
-        <input type="text" id="nature_of_degree" name="nature_of_degree" value="">
-        <!-- ... -->
+        <div class="form-container6">
+          <!-- Academic Classification -->
+          <div class="form-group">
+    <label class="small-label" for="academic_classification">Academic Classification</label>
+    <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
+</div>
 
-        <!-- Academic Background -->
-        <p class="personal_information">Academic Background</p>
-        <label for="english_grade">English Grade:</label>
-        <input type="text" id="english_grade" name="english_grade" value="">
-        <label for="math_grade">Math Grade:</label>
-        <input type="text" id="math_grade" name="math_grade" value="">
-        <label for="science_grade">Science Grade:</label>
-        <input type="text" id="science_grade" name="science_grade" value="">
-        <label for="gwa_grade">GWA Grade:</label>
-        <input type="text" id="gwa_grade" name="gwa_grade" value="">
-        <label for="test_score">Test Score:</label>
-        <input type="text" id="test_score" name="test_score" value="">
-        <!-- ... -->
-
-        <!-- Result and Status -->
-        <p class="personal_information">Result and Status</p>
-        <label for="result">Result:</label>
-        <input type="text" id="result" name="result" value="">
-        <label for="status">Status:</label>
-        <input type="text" id="status" name="status" value="">
-        <!-- ... -->
-
-        <!-- Appointment Information -->
-        <p class="personal_information">Appointment Information</p>
-        <label for="appointment_date">Appointment Date:</label>
-        <input type="text" id="appointment_date" name="appointment_date" value="">
-        <label for="appointment_time">Appointment Time:</label>
-        <input type="text" id="appointment_time" name="appointment_time" value="">
-        <label for="appointment_status">Appointment Status:</label>
-        <input type="text" id="appointment_status" name="appointment_status" value="">
-        <!-- ... -->
-
+          <div class="form-group">
+            <label class="small-label" for="degree_applied">Degree</label>
+            <!-- Display the selected program in this input field -->
+            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
+            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
+          </div>
+        </div>
+        <p class="personal_information">Academic Background </p>
+        <div class="form-container5">
+          <!-- Academic Background -->
+          <div class="form-group">
+            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
+            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
+            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
+          </div>
+        </div>
         <input type="submit" value="Update Profile" onclick="return confirmUpdateProfile();">
     </form>
 </div>
@@ -287,42 +456,68 @@ $stmt->fetch();
 
 
     <script>
-     document.addEventListener("DOMContentLoaded", function () {
-        var editButtons = document.querySelectorAll('.editBtn');
-        var selectedUserIdInput = document.getElementById('selectedUserId');
-        var todoDiv = document.querySelector('.todo');
+ 
+ $(document).ready(function () {
+    // Add a click event listener to all rows with the 'editRow' class
+    $('.editRow').click(function () {
+        // Get the 'data-userid' attribute from the clicked row
+        var userId = $(this).data('userid');
 
-        editButtons.forEach(function (button) {
-            button.addEventListener('click', function () {
-                var userId = this.closest('tr').getAttribute('data-userid');
-                selectedUserIdInput.value = userId;
+        // Send an AJAX request to fetch the user data based on the user ID
+        $.ajax({
+            url: 'Personnel_fetchStudentdata.php', // replace with the actual URL for fetching user data
+            type: 'POST',
+            data: { userId: userId },
+            dataType: 'json',
+            success: function (response) {
+                // Populate the form fields with the fetched data
+                $('#applicantPicture').attr('src', response.id_picture);
+                $('#updateProfileForm input[name="applicant_name"]').val(response.applicant_name);
+                $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
+                $('#updateProfileForm input[name="gender"]').val(response.gender);
+                $('#updateProfileForm input[name="birthdate"]').val(response.birthdate);
+                $('#updateProfileForm input[name="age"]').val(response.age);
+                $('#updateProfileForm input[name="civil_status"]').val(response.civil_status);
+                $('#updateProfileForm input[name="citizenship"]').val(response.citizenship);
+                $('#updateProfileForm input[name="nationality"]').val(response.nationality);
+                $('#updateProfileForm input[name="permanent_address"]').val(response.permanent_address);
+                $('#updateProfileForm input[name="zip_code"]').val(response.zip_code);
+                $('#updateProfileForm input[name="phone_number"]').val(response.phone_number);
+                $('#updateProfileForm input[name="facebook"]').val(response.facebook);
+                $('#updateProfileForm input[name="email"]').val(response.email);
+                $('#updateProfileForm input[name="contact_person_1"]').val(response.contact_person_1);
+                $('#updateProfileForm input[name="contact_person_1_mobile"]').val(response.contact1_phone);
+                $('#updateProfileForm input[name="relationship_1"]').val(response.relationship_1);
+                $('#updateProfileForm input[name="contact_person_2"]').val(response.contact_person_2);
+                $('#updateProfileForm input[name="contact_person_2_mobile"]').val(response.contact_person_2_mobile);
+                $('#updateProfileForm input[name="relationship_2"]').val(response.relationship_2);
+                $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
+                $('#updateProfileForm input[name="Track"]').val(response.Track);
+                $('#updateProfileForm input[name="Strand"]').val(response.Strand);
+                $('#updateProfileForm input[name="high_school_name_address"]').val(response.high_school_name_address);
+                $('#updateProfileForm input[name="lrn"]').val(response.lrn);
+                $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
+                $('#updateProfileForm input[name="nature_of_degree"]').val(response.nature_of_degree);
 
-                // Show the form for editing
-                todoDiv.style.display = 'block';
+                // Add similar lines for other form fields
 
-                // You can add logic to fetch the user data using AJAX and populate the form fields
-                // For simplicity, let's assume you have a JavaScript function named `populateForm`:
-                populateForm(userId);
-            });
+                // Display the form for editing
+                $('.todo').show();
+                
+            },
+            
+            error: function (error) {
+                console.error('Error fetching user data: ', error);
+            }
         });
-        function populateForm(userId) {
-            // Add logic to fetch user data using AJAX and populate the form fields
-            // Example using PHP and AJAX:
-            // var xhr = new XMLHttpRequest();
-            // xhr.onreadystatechange = function () {
-            //     if (xhr.readyState == 4 && xhr.status == 200) {
-            //         var userData = JSON.parse(xhr.responseText);
-            //         // Populate the form fields with userData
-            //         document.getElementById('applicant_name').value = userData.applicant_name;
-            //         document.getElementById('gender').value = userData.gender;
-            //         // ... (populate other fields)
-            //     }
-            // };
-            // xhr.open('GET', 'fetch_user_data.php?userId=' + userId, true);
-            // xhr.send();
-        }
     });
 
+    // Click event handler for the close button
+    $('.close-form').click(function () {
+        // Hide the form
+        $('.todo').hide();
+    });
+});
         function filterByDate() {
             // Get the selected date from the input field
             var selectedDate = document.getElementById('selectedAppointmentDate').value;
