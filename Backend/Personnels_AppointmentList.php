@@ -1,7 +1,7 @@
 <?php
 
 include("config.php");
-include("personnelcover.php");
+include("Personnel_Cover.php");
 
 // Check if the user is a staff member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {

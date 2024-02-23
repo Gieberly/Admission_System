@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } elseif ($userType == 'Staff') {
                 if (strtolower($lstatus) == 'approved') {
-                    header("Location: ../Backend/personnel.php");
+                    header("Location: ../Backend/Personnel_dashboard.php");
                     exit();
                 } elseif (strtolower($lstatus) == 'Pending') {
                     $_SESSION['message'] = "Your registration is pending approval.";

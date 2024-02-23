@@ -62,20 +62,20 @@ function getCourses($conn)
 
         <ul class="side-menu top">
             <li class="">
-                <a href="personnel.php" id="dashboard-link">
+                <a href="Personnel_dashboard.php" id="dashboard-link">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
             </li>
        
             <li class="">
-                <a href="PersonnelsAppointmentList.php" id="master-list-link">
+                <a href="Personnels_AppointmentList.php" id="master-list-link">
                 <i class='bx bxs-calendar'></i>
                     <span class="text">Appointment</span>
                 </a>
             </li>
             <li >
-                <a href="Applicants.php" >
+                <a href="Applicants.php">
                 <i class='bx bxs-user-detail' ></i>
                     <span class="text">Applicants</span>
                   
@@ -216,12 +216,122 @@ function getCourses($conn)
                     <a href="" onclick="openPopup('faq-popup')">&nbsp;&nbsp;&nbsp;Manual </a>
                 
                 </div>
-                <a href="#" id="logout" class="profile-item" onclick="confirmLogout()"><i class='bx bx-log-out'></i> Logout</a>
+                <a href="#" id="logout" class="profile-item" onclick="return confirmLogout();"><i class='bx bx-log-out'></i> Logout</a>
+                <div class="overlay" id="confirmationOverlayLogout" style="display: none;">
+                    <div class="confirmation-modal">
+                        <p>Are you sure you want to log out?</p>
+                        <button id="confirmYesLogout">Confirm</button>
+                        <button id="confirmNoLogout">Cancel</button>
+                    </div>
+                </div>
             </div>
-
+            <div class="logout-confirmation-message" id="logoutConfirmationMessage">
+    Account logging out...
+</div>
         </div>
     </div>
-    <!-- CONTENT -->
+    
+<script>
+  function confirmLogout() {
+    // Show the overlay with the confirmation dialog
+    $("#confirmationOverlayLogout").fadeIn();
+
+    // Handle 'Yes' button click
+    $("#confirmYesLogout").click(function () {
+        // Close the overlay
+        $("#confirmationOverlayLogout").fadeOut();
+
+        // Display the logout confirmation message
+        $("#logoutConfirmationMessage").fadeIn();
+
+        // Hide the message after 2 seconds
+        setTimeout(function () {
+            $("#logoutConfirmationMessage").fadeOut();
+            // Redirect to the logout page after hiding the message
+            window.location.href = "../Backend/logout.php";
+        }, 2000);
+
+        // Prevent further clicks on 'Yes' button
+        $(this).prop('disabled', true);
+    });
+
+    // Handle 'No' button click
+    $("#confirmNoLogout").click(function () {
+        // Close the overlay without logging out
+        $("#confirmationOverlayLogout").fadeOut();
+        return false; // Cancel link click
+    });
+
+    // Prevent the default link click
+    return false;
+}
+
+
+</script>
+   
+<style>
+  /* Styles for the logout confirmation message */
+.logout-confirmation-message {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: green;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+#confirmationOverlayLogout {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add styles for the confirmation dialog modal */
+.confirmation-modal {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 400px; /* Adjust the maximum width as needed */
+}
+
+.confirmation-modal p {
+    margin-bottom: 15px;
+}
+
+.confirmation-modal button {
+    padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the 'Yes' button in green */
+#confirmYesLogout {
+    background-color: #28a745; /* Green color */
+    color: white;
+}
+
+/* Style the 'No' button in red */
+#confirmNoLogout {
+    background-color: #dc3545; /* Red color */
+    color: white;
+}
+
+</style>
     <script src="assets/js/personnels.js"></script>
     
 </body>
