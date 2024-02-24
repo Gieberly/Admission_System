@@ -55,6 +55,7 @@ $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>College</th>
                                         <th>Programs</th>
                                         <th>Nature of Degree</th>
                                         <th>Action</th>

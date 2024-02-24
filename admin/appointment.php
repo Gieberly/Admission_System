@@ -1,6 +1,4 @@
 
-
-
 <div id="schedule-result-content">
     <div class="head-title">
         <div class="left">
@@ -10,11 +8,6 @@
                 <li><i class='bx bx-chevron-right'></i></li>
                 <li><a class="active" href="#">Appointment Schedule</a></li>
             </ul>
-        </div>
-        <div class="btn-group" role="group" aria-label="Basic example">
-            <button type="button" class="btn btn-secondary">Add</button>
-            <button type="button" class="btn btn-secondary">Edit</button>
-            <button type="button" class="btn btn-secondary">Delete</button>
         </div>
     </div>
     <!--COntents Here-->
@@ -33,26 +26,18 @@
     <div class="table-data">
         <div class="order">
             <div id="table-container">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                </ul>
+            <div class="panel-heading">
+                <div class="row">
+                    <div class="col-md-10">
+                        <h3 class="panel-title"></h3>
+                    </div>
+                    <div class="col-md-2" align="right">
+                        <button type="button" name="add" id="addRecord" class="btn btn-success">Add New Record</button>
+                    </div>
+                </div>
             </div>
-            </nav>
                 <!-- Table for displaying student data -->
-                <table cellpadding="0" cellspacing="0" border="0" class="table table-border" id="table-appointment">
+                <table class="table table-bordered " id="appointmentId">
                     <!-- table header -->
                     <thead>
                         <tr>
@@ -63,12 +48,9 @@
                             <th>Time</th>
                             <th>Slots</th>
                             <th>Action</th>
-                            <th></th>
-                            <th></th>
                         </tr>
                     </thead>
-                    <!-- table body -->
-                    <tbody id="contents">
+					<tbody id="contents">
                         <?php
                         // Counter for numbering the students
                         $counter = 1;
@@ -95,104 +77,61 @@
                     </tbody>
                 </table>
             </div>
+            
+            <!--Modal-->
+            <div id="recordModal" class="modal fade">
+    	<div class="modal-dialog">
+    		<form method="post" id="recordForm">
+    			<div class="modal-content">
+    				<div class="modal-header">
+    					<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"><i class="fa fa-plus"></i> Edit Record</h4>
+    				</div>
+    				<div class="modal-body">
+						<div class="form-group"
+							<label for="name" class="control-label">Name</label>
+							<input type="text" class="form-control" id="name" name="name" placeholder="Name" required>			
+						</div>
+						<div class="form-group">
+							<label for="age" class="control-label">Age</label>							
+							<input type="number" class="form-control" id="age" name="age" placeholder="Age">							
+						</div>	   	
+						<div class="form-group">
+							<label for="lastname" class="control-label">Skills</label>							
+							<input type="text" class="form-control"  id="skills" name="skills" placeholder="Skills" required>							
+						</div>	 
+						<div class="form-group">
+							<label for="address" class="control-label">Address</label>							
+							<textarea class="form-control" rows="5" id="address" name="address"></textarea>							
+						</div>
+						<div class="form-group">
+							<label for="lastname" class="control-label">Designation</label>							
+							<input type="text" class="form-control" id="designation" name="designation" placeholder="Designation">			
+						</div>						
+    				</div>
+    				<div class="modal-footer">
+    					<input type="hidden" name="id" id="id" />
+    					<input type="hidden" name="action" id="action" value="" />
+    					<input type="submit" name="save" id="save" class="btn btn-info" value="Save" />
+    					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    				</div>
+    			</div>
+    		</form>
+    	</div>
+    </div>
+
         </div>
     </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.0/js/dataTables.bootstrap5.min.js"></script>
+<script>
+	$(document).ready(function(){
+		var table = $('#appointmentId').DataTable({
 
-<!-- Script -->
-<script> 
-       var editor; // use a global for the submit and return data rendering in the examples
- 
- $(document).ready(function() {
-     editor = new $.fn.dataTable.Editor( {
-         ajax: "../../controllers/staff.php",
-         table: "#example",
-         fields: [ {
-                 label: "First name:",
-                 name: "first_name"
-             }, {
-                 label: "Last name:",
-                 name: "last_name"
-             }, {
-                 label: "Position:",
-                 name: "position"
-             }, {
-                 label: "Office:",
-                 name: "office"
-             }, {
-                 label: "Extension:",
-                 name: "extn"
-             }, {
-                 label: "Start date:",
-                 name: "start_date",
-                 type: "datetime"
-             }, {
-                 label: "Salary:",
-                 name: "salary"
-             }
-         ]
-     } );
-  
-     // Activate an inline edit on click of a table cell
-     $('#example').on( 'click', 'tbody td:not(:first-child)', function (e) {
-         editor.inline( this );
-     } );
-  
-     $('#example').DataTable( {
-         dom: "Bfrtip",
-         ajax: "../../controllers/staff.php",
-         order: [[ 1, 'asc' ]],
-         columns: [
-             {
-                 data: null,
-                 defaultContent: '',
-                 className: 'select-checkbox',
-                 orderable: false
-             },
-             { data: "first_name" },
-             { data: "last_name" },
-             { data: "position" },
-             { data: "office" },
-             { data: "start_date" },
-             { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
-         ],
-         select: {
-             style:    'os',
-             selector: 'td:first-child'
-         },
-         buttons: [
-             { extend: "create", editor: editor },
-             { extend: "edit",   editor: editor },
-             { extend: "remove", editor: editor }
-         ]
-     } );
- } );
-</script> 
-<script type="text/javascript">
-$(document).ready(function(){
+		});
+	});
 
-  // Check/Uncheck ALl
-  $('#checkAll').change(function(){
-    if($(this).is(':checked')){
-      $('input[name="update[]"]').prop('checked',true);
-    }else{
-      $('input[name="update[]"]').each(function(){
-         $(this).prop('checked',false);
-      });
-    }
-  });
-
-  // Checkbox click
-  $('input[name="update[]"]').click(function(){
-    var total_checkboxes = $('input[name="update[]"]').length;
-    var total_checkboxes_checked = $('input[name="update[]"]:checked').length;
-
-    if(total_checkboxes_checked == total_checkboxes){
-       $('#checkAll').prop('checked',true);
-    }else{
-       $('#checkAll').prop('checked',false);
-    }
-  });
-});
 </script>
