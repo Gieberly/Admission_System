@@ -100,6 +100,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact_person_2_mobile = $_POST['contact_person_2_mobile'];
     $relationship_2 = $_POST['relationship_2'];
     $academic_classification = $_POST['academic_classification'];
+    $track = isset($_POST['track']) ? $_POST['track'] : null;
+    $strand = isset($_POST['strand']) ? $_POST['strand'] : null;
     $high_school_name_address = $_POST['high_school_name_address'];
     $lrn = $_POST['lrn'];
     $degree_applied = $_POST['degree_applied'];
@@ -145,12 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
     civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
     contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
-    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, 
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date, track, strand) VALUES (?, ?, 
+    ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
     // Bind parameters
     $stmt->bind_param(
-        "sssssissssiisssississssssss",
+        "sssssissssiisssississssssssss",
         $id_picture_data,
         $applicant_name,
         $gender,
@@ -178,6 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nature_of_degree,
         $applicant_number,
         $application_date,
+        $track,
+        $strand
     );
 
 
@@ -334,7 +338,8 @@ $conn->close();
                          <div id="classificationInfo"></div>
 
 
- 
+
+
                     </div>
 
                     <p class="note-color"><label class="checkbox-container">
@@ -557,8 +562,8 @@ $conn->close();
                 <p class="personal_information">Academic Background </p>
                 <div class="form-container3">
                     <!-- Academic Background -->
-                    <div class="form-group">
-                        <label class="small-label" for="high_school_name_address">Last School Attended</label>
+                    <div class="form-group2">
+                        <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/College/Division</label>
                         <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required placeholder="Enter Name and Address">
                         <div class="note" id="high_school_name_address_note">e.g. Benguet National high School/Wangal, La Trinidad, Benguet</div>
                     </div>

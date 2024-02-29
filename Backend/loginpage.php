@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['user_id'] = $id;
             $_SESSION['user_type'] = $userType;
             $_SESSION['user_email'] = $email;
-            $_SESSION['success_message'] = "Successfully logged in, Redirecting...";
+       
 
             if ($userType == 'Student') {
                 header("Location: ../Backend/studentDashboard.php");
@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
             } elseif ($userType == 'Staff') {
                 if (strtolower($lstatus) == 'approved') {
-                    header("Location: ../Backend/personnel.php");
+                    header("Location: ../Backend/Personnel_dashboard.php");
                     exit();
                 } elseif (strtolower($lstatus) == 'Pending') {
                     $_SESSION['message'] = "Your registration is pending approval.";
@@ -161,15 +161,7 @@ $conn->close();
             </form>
         </div>
     </section>
-    <script>
-        // Hide success message after 3 seconds
-        setTimeout(function() {
-            var successMessage = document.getElementById('successMessage');
-            if (successMessage) {
-                successMessage.style.display = 'none';
-            }
-        }, 3000);
-    </script>
+   
     <script src="assets\js\login.js"></script>
 </body>
 

@@ -1,7 +1,7 @@
 <?php
 // Include the configuration file
 include('config.php');
-include('personnelCover.php');
+include('Personnel_Cover.php');
 
 
 // Cleanup: Remove data for past dates in appointmentdate table

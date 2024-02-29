@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("personnelcover.php");
+include("Personnel_Cover.php");
 function getFAQs($conn) {
     $faqs = array();
  
