@@ -339,7 +339,6 @@ $conn->close();
 
 
 
-
                     </div>
 
                     <p class="note-color"><label class="checkbox-container">
@@ -563,7 +562,7 @@ $conn->close();
                 <div class="form-container3">
                     <!-- Academic Background -->
                     <div class="form-group2">
-                        <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/College/Division</label>
+                        <label class="small-label" for="high_school_name_address">Last School Attended</label>
                         <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required placeholder="Enter Name and Address">
                         <div class="note" id="high_school_name_address_note">e.g. Benguet National high School/Wangal, La Trinidad, Benguet</div>
                     </div>
