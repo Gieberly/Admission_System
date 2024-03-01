@@ -59,10 +59,7 @@ menuBar.addEventListener('click', function () {
     localStorage.setItem('sidebarState', sidebarState);
 });
 
-
-
 //search bar
-
 const searchButton = document.querySelector('#content nav form .form-input button');
 const searchButtonIcon = document.querySelector('#content nav form .form-input button .bx');
 const searchForm = document.querySelector('#content nav form');
@@ -79,9 +76,6 @@ searchButton.addEventListener('click', function (e) {
 	}
 })
 
-
-
-
 if(window.innerWidth < 768) {
 	sidebar.classList.add('hide');
 } else if(window.innerWidth > 576) {
@@ -89,15 +83,12 @@ if(window.innerWidth < 768) {
 	searchForm.classList.remove('show');
 }
 
-
 window.addEventListener('resize', function () {
 	if(this.innerWidth > 576) {
 		searchButtonIcon.classList.replace('bx-x', 'bx-search');
 		searchForm.classList.remove('show');
 	}
 })
-
-
 
 const switchMode = document.getElementById('switch-mode');
 
@@ -109,10 +100,7 @@ switchMode.addEventListener('change', function () {
 	}
 })
 
-
-
 //side bar
-
 document.addEventListener('DOMContentLoaded', function () {
     const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
@@ -135,7 +123,6 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 //side bar
-
 
 //clock
 // Calling showTime function at every second
@@ -181,13 +168,7 @@ function showTime() {
 showTime();
 //clock
 
-
-
-
-
 //pressing the box info and dashboard
-
-
 
 // tab like buttons for Student Result and Forms
   const tabButtons = document.querySelectorAll('.tab-button');

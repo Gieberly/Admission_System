@@ -298,6 +298,7 @@
   border-radius: 5px; /* Adding border radius */
   padding: 8px; /* Optional: Adjust padding for better appearance */
   border: 1px solid #ccc; /* Optional: Border for input fields */
+  font-size: 12px;
   }
   
   .form-group2 {

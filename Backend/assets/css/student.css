@@ -236,12 +236,13 @@ body {
 	margin-right: 25px;
 	/* Adjust the margin-right value as needed */
 	overflow-y: auto;
-	z-index: 2;
+	z-index: 10000;
 	/* Ensure the profile pop-up appears above the message pop-up */
 }
 
 .popup-content {
 	padding: 16px;
+	z-index: 10000;
 }
 
 .profile-header {
