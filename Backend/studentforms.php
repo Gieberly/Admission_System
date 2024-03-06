@@ -301,11 +301,11 @@ $conn->close();
                             
                                 <label class="small-label" for="board-programs">Board Programs</label>
                                 <?php
-                                if (isset($_GET['description'])) {
-                                    $description = $_GET['description'];
-                                    echo "<input type='text' class='input' id='board-programs' name='board_programs' value='$description' readonly>";
+                                if (isset($_GET['Courses'])) {
+                                    $Courses = $_GET['Courses'];
+                                    echo "<input type='text' class='input' id='board-programs' name='board_programs' value='$Courses' readonly>";
                                 } else {
-                                    echo "<p>No program description available.</p>";
+                                    echo "<p>No program Courses available.</p>";
                                 }
                                 ?>
                             </div>
@@ -580,11 +580,11 @@ $conn->close();
 
 
                         <?php
-                        if (isset($_GET['description'])) {
-                            $description = $_GET['description'];
-                            echo "<input type='text' name='degree_applied' class='input' id='degree_applied'  value='$description' readonly>";
+                        if (isset($_GET['Courses'])) {
+                            $Courses = $_GET['Courses'];
+                            echo "<input type='text' name='degree_applied' class='input' id='degree_applied'  value='$Courses' readonly>";
                         } else {
-                            echo "<p>No program description available.</p>";
+                            echo "<p>No program Courses available.</p>";
                         }
                         ?>
                     </div>
