@@ -1,31 +1,24 @@
 <?php
-include('config.php');
+include("config.php");
 
-// Check if the required parameters are set in the URL
-if (isset($_GET['id']) && isset($_GET['status'])) {
-    // Sanitize and get the values from the URL
-    $admissionId = mysqli_real_escape_string($conn, $_GET['id']);
-    $newStatus = mysqli_real_escape_string($conn, $_GET['status']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $id = $_POST['id'];
+    $status = $_POST['status'];
 
-    // Update the status in the database
-    $updateSql = "UPDATE admission_data SET appointment_status = '$newStatus' WHERE id = '$admissionId'";
-    
-    if ($conn->query($updateSql) === TRUE) {
-        // Send a success response
-        $response = array('success' => true);
+    // Update the appointment_status in the database
+    $updateQuery = "UPDATE admission_data SET appointment_status = ? WHERE id = ?";
+    $stmt = $conn->prepare($updateQuery);
+    $stmt->bind_param("si", $status, $id);
+
+    if ($stmt->execute()) {
+        echo "Status updated successfully";
     } else {
-        // Send an error response
-        $response = array('success' => false, 'error' => 'Error updating status: ' . $conn->error);
+        echo "Error updating status";
     }
+
+    $stmt->close();
+    $conn->close();
 } else {
-    // Send an error response if parameters are not set
-    $response = array('success' => false, 'error' => 'Missing parameters');
+    echo "Invalid request";
 }
-
-// Close the database connection
-$conn->close();
-
-// Send the JSON response
-header('Content-Type: application/json');
-echo json_encode($response);
 ?>

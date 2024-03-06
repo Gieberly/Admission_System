@@ -36,7 +36,7 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
                         <ul class="breadcrumb">
                             <li><a href="#">Dashboard</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="personnel.php">Home</a></li>
+                            <li><a class="active" href="Personnel_dashboard.php">Home</a></li>
                         </ul>
                     </div>
                 </div>

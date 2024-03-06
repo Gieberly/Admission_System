@@ -64,7 +64,7 @@ $stmt->fetch();
                         <li><a href="#">Document Checking</a></li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li>
-                        <li><a class="active" href="personnel.php">Home</a></li>
+                        <li><a class="active" href="Personnel_dashboard.php">Home</a></li>
                         </li>
                     </ul>
                 </div>
@@ -155,7 +155,7 @@ $stmt->fetch();
 
 
     </div>
-        <form id="updateProfileForm" method="post" action="save_student.php">
+        <form id="updateProfileForm" method="post" action="">
         <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;" >
         <br><br><br><br><br><br>
        
@@ -253,7 +253,7 @@ $stmt->fetch();
             <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
           </div>
         </div>
-        <input type="submit" value="Update Profile" onclick="return confirmUpdateProfile();">
+        <input type="submit" value="Update Profile" >
     </form>
 </div>
             </div>
@@ -268,6 +268,15 @@ $stmt->fetch();
         </div>
         <div class="toast-body" id="toast-body"></div>
     </div>
+<!-- Add this HTML structure at the end of your body tag -->
+<div class="overlay"></div>
+<div class="modal">
+    <div class="modal-content"></div>
+    <div class="modal-btns">
+        <button class="modal-btn confirm">OK</button>
+        <button class="modal-btn cancel">Cancel</button>
+    </div>
+</div>
 
     <style>
         #calendarFilterForm button {
@@ -415,84 +424,57 @@ input[type="submit"] {
     width: 100%;
   }
 }
-body.modal-open {
-    overflow: hidden;
-}
-
-#confirm-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-}
-
-#confirm-modal {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    border-radius: 5px;
-}
-
-#confirm-message {
-    margin: 0 0 20px;
-}
-
-#confirm-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-#confirm-yes,
-#confirm-no {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-}
-
-#confirm-no {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: red;
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-}
 /* Add this CSS to your existing styles */
+.confirmation-dialog {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
 
-#confirm-yes:hover,
-#confirm-no:hover,
-.edit-btn:hover,
-.save-btn:hover {
-    opacity: 0.5;
-    /* Adjust the opacity value as needed */
-    transition: opacity 0.3s ease-in-out;
-}
+    .confirmation-dialog p {
+        margin-bottom: 15px;
+    }
 
+    .confirmation-buttons {
+        text-align: center;
+    }
+
+    .confirmation-buttons button {
+        margin: 0 10px;
+        padding: 8px 15px;
+        cursor: pointer;
+    }
+
+    .confirmation-dialog-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
 </style>
 
 <!-- Add this HTML structure at the end of your body -->
-<div id="confirm-modal">
-    <p id="confirm-message"></p>
-    <div id="confirm-buttons">
-        <button id="confirm-yes">Yes</button>
-        <button id="confirm-no">Cancel</button>
+<!-- Add this structure at the end of the body -->
+<div class="confirmation-dialog-overlay"></div>
+<div class="confirmation-dialog">
+    <p></p>
+    <div class="confirmation-buttons">
+        <button data-confirmed="true">OK</button>
+        <button data-confirmed="false">Cancel</button>
     </div>
 </div>
-<div id="confirm-overlay"></div>
+
 
     <script>
  
@@ -563,7 +545,7 @@ body.modal-open {
             var selectedDate = document.getElementById('selectedAppointmentDate').value;
 
             // Redirect to the same page with the selected date as a parameter
-            window.location.href = 'PersonnelsAppointmentList.php?selected_date=' + selectedDate;
+            window.location.href = 'Personnel_AppointmentList.php?selected_date=' + selectedDate;
         }
         // Function to update table rows based on the specified range
         function updateTableRows(start, end) {
@@ -577,217 +559,40 @@ body.modal-open {
                 }
             });
         }
+  
+        function updateStatus(id, status) {
+        // Show the confirmation dialog
+        $('.confirmation-dialog').show();
+        $('.confirmation-dialog-overlay').show();
 
+        // Set the message in the dialog
+        $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
 
-        function showConfirmationModal(message, callback) {
-            document.body.classList.add('modal-open');
-            var confirmModal = document.getElementById('confirm-modal');
-    var confirmOverlay = document.getElementById('confirm-overlay');
-    var confirmMessage = document.getElementById('confirm-message');
-
-    confirmMessage.textContent = message;
-
-    confirmModal.style.display = 'block';
-    confirmOverlay.style.display = 'block';
-
-    document.getElementById('confirm-yes').addEventListener('click', function () {
-        confirmModal.style.display = 'none';
-        confirmOverlay.style.display = 'none';
-        document.body.classList.remove('modal-open');
-        callback(true);
-    });
-
-    document.getElementById('confirm-no').addEventListener('click', function () {
-        confirmModal.style.display = 'none';
-        confirmOverlay.style.display = 'none';
-        callback(false);
-    });
-}
-
-function updateStatus(admissionId, newStatus) {
-    showConfirmationModal(`Set the student's requirements as "${newStatus.toLowerCase()}"`, function (confirmed) {
-        if (confirmed) {
-            const url = `Personnel_UpdateStatus.php?id=${admissionId}&status=${newStatus}`;
-
-            fetch(url, {
-                method: 'GET',
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    const statusCell = document.querySelector(`tr[data-userid='${admissionId}'] td[data-field='appointment_status']`);
-                    statusCell.textContent = newStatus;
-
-                    console.log('Status updated successfully');
-
-                    if (newStatus === "Complete") {
-                        showCheckCircleToast("Successfully set as Complete!");
-                    } else if (newStatus === "Rejected") {
-                        showEkisCircleToast("Successfully set as Rejected!");
-                    } else if (newStatus === "Incomplete") {
-                        showIncompleteToast("Successfully set as Incomplete!");
+        // Handle button clicks in the confirmation dialog
+        $('.confirmation-buttons button').click(function() {
+            var userConfirmed = $(this).data('confirmed');
+            if (userConfirmed) {
+                // User confirmed, send the AJAX request to update the status
+                $.ajax({
+                    type: 'POST',
+                    url: 'Personnel_UpdateStatus.php', // Replace with the actual file handling the update
+                    data: { id: id, status: status },
+                    success: function(response) {
+                        // Update the status in the table cell
+                        $('[data-userid="' + id + '"] [data-field="appointment_status"]').text(status);
+                    },
+                    error: function(error) {
+                        console.error('Error updating status:', error);
                     }
-                } else {
-                    console.error('Failed to update status');
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-        }
-    });
-}
+                });
+            }
 
+            // Hide the confirmation dialog and overlay
+            $('.confirmation-dialog').hide();
+            $('.confirmation-dialog-overlay').hide();
+        });
+    }
 
-
-        function showCheckCircleToast(message) {
-            // Get the toast element
-            var toast = document.getElementById('toast');
-
-            // Set the background color to green for success
-            toast.style.backgroundColor = '#4CAF50';
-
-            // Set the message in the toast body
-            var toastBody = document.getElementById('toast-body');
-            toastBody.textContent = message;
-
-            // Display the toast
-            toast.classList.add('show');
-
-            // Hide the toast after a certain duration (e.g., 3000 milliseconds)
-            setTimeout(function() {
-                toast.classList.remove('show');
-                // Reset the background color
-                toast.style.backgroundColor = '';
-                // Reset the toast body content
-                toastBody.textContent = '';
-            }, 3000);
-        }
-
-        function showEkisCircleToast(message) {
-            // Get the toast element
-            var toast = document.getElementById('toast');
-
-            // Set the background color to red for declined
-            toast.style.backgroundColor = '#4CAF50';
-
-            // Set the message in the toast body
-            var toastBody = document.getElementById('toast-body');
-            toastBody.textContent = message;
-
-            // Display the toast
-            toast.classList.add('show');
-
-            // Hide the toast after a certain duration (e.g., 3000 milliseconds)
-            setTimeout(function() {
-                toast.classList.remove('show');
-                // Reset the background color
-                toast.style.backgroundColor = '';
-                // Reset the toast body content
-                toastBody.textContent = '';
-            },3000);
-        }
-        
-function showIncompleteToast(message) {
-    // Get the toast element
-    var toast = document.getElementById('toast');
-
-    // Set the background color to yellow for incomplete
-    toast.style.backgroundColor = '#4CAF50';
-
-    // Set the message in the toast body
-    var toastBody = document.getElementById('toast-body');
-    toastBody.textContent = message;
-
-    // Display the toast
-    toast.classList.add('show');
-
-    // Hide the toast after a certain duration (e.g., 1500 milliseconds)
-    setTimeout(function() {
-        toast.classList.remove('show');
-        // Reset the background color
-        toast.style.backgroundColor = '';
-        // Reset the toast body content
-        toastBody.textContent = '';
-    }, 3000);
-}
-
-
-        function saveStudent(id) {
-            // Get the row element
-            var row = document.querySelector(`tr[data-id='${id}']`);
-
-            // Get the selected value from the dropdown
-            var selectedValue = row.querySelector('#academicClassificationSelect').value;
-
-            // Create an object to store the updated data
-            var updatedData = {
-                academic_classification: selectedValue
-            };
-
-            // Send an AJAX request to update the data in the database
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'save_student.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    // Display a toast notification for successful save
-                    var toast = document.getElementById('toast');
-                    toast.classList.add('show');
-                    setTimeout(function() {
-                        toast.classList.remove('show');
-                        // Reload the page after 1 second
-                        setTimeout(function() {
-                            location.reload();
-                        }, 10);
-                    }, 1500);
-
-                    // Change the "Save" button back to "Edit"
-                    var editButton = row.querySelector('.edit-btn');
-                    editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
-                    editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
-                    editButton.onclick = function() {
-                        editAdmissionData(id);
-                    };
-
-                    // Toggle back to display mode after saving
-                    var editableCells = row.querySelectorAll('.editable');
-                    editableCells.forEach(function(cell) {
-                        var spanMode = cell.querySelector('.edit-mode');
-                        var selectMode = cell.querySelector('.select-mode');
-
-                        if (spanMode && selectMode) {
-                            spanMode.style.display = 'inline-block';
-                            selectMode.style.display = 'none';
-                        }
-                    });
-                }
-            };
-            xhr.send(JSON.stringify({
-                id: id,
-                updatedData: updatedData
-            }));
-        }
-
-
-
-        function showSuccessToast() {
-            // Get the toast element
-            var toast = document.getElementById('toast');
-
-            // Display the toast
-            toast.classList.add('show');
-
-            // Hide the toast after a certain duration (e.g., 3000 milliseconds)
-            setTimeout(function() {
-                toast.classList.remove('show');
-            }, 3000);
-        }
     </script>
 
 
