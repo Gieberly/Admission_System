@@ -245,7 +245,7 @@ $stmt->fetch();
         <div class="form-container5">
           <!-- Academic Background -->
           <div class="form-group">
-            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </label>
+            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)</label>
             <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
           </div>
           <div class="form-group">
@@ -268,15 +268,6 @@ $stmt->fetch();
         </div>
         <div class="toast-body" id="toast-body"></div>
     </div>
-<!-- Add this HTML structure at the end of your body tag -->
-<div class="overlay"></div>
-<div class="modal">
-    <div class="modal-content"></div>
-    <div class="modal-btns">
-        <button class="modal-btn confirm">OK</button>
-        <button class="modal-btn cancel">Cancel</button>
-    </div>
-</div>
 
     <style>
         #calendarFilterForm button {
@@ -286,15 +277,11 @@ $stmt->fetch();
             padding: 0;
             font-size: 0;
             color: #000;
-
         }
 
         #calendarFilterForm button i {
             font-size: 18px;
         }
-
-
-
 
         #calendarFilterForm input[type="date"] {
             padding: 5px;
@@ -337,9 +324,9 @@ $stmt->fetch();
     }
 
     .close-form:hover {
-        background-color: rgba(255, 0, 0, 0.2); /* Red with 80% opacity */
-        
+        background-color: rgba(255, 0, 0, 0.2); /* Red with 80% opacity */ 
     }
+    
     /* Apply styles to the form container */
 .form-container1,
 .form-container2,
@@ -388,6 +375,10 @@ input[type="submit"] {
   cursor: pointer;
 }
 
+input[type="submit"]:hover {
+    background-color: darkcyan;
+}
+
 /* Style for the personal information headings */
 .personal_information {
   font-size: 18px;
@@ -424,6 +415,7 @@ input[type="submit"] {
     width: 100%;
   }
 }
+
 /* Add this CSS to your existing styles */
 .confirmation-dialog {
         display: none;
@@ -450,6 +442,18 @@ input[type="submit"] {
         margin: 0 10px;
         padding: 8px 15px;
         cursor: pointer;
+    }
+
+    .confirmation-buttons button[data-confirmed="true"]:hover {
+    background-color: darkcyan;
+    color: white;
+    border-color: darkcyan;
+    }
+
+    .confirmation-buttons button[data-confirmed="false"]:hover {
+    background-color: #DF5201;
+    color: white;
+    border-color: #DF5201;
     }
 
     .confirmation-dialog-overlay {
