@@ -3,7 +3,7 @@ session_start();
 include("config.php");
 
 // Fetch data from the database and sort by Nature_of_Degree and Description
-$sql = "SELECT * FROM Programs ORDER BY Nature_of_Degree ASC, Description ASC";
+$sql = "SELECT * FROM Programs ORDER BY Nature_of_Degree ASC";
 $result = $conn->query($sql);
 
 

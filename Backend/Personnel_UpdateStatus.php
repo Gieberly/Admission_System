@@ -9,12 +9,13 @@ if (isset($_GET['id']) && isset($_GET['status'])) {
 
     // Update the status in the database
     $updateSql = "UPDATE admission_data SET appointment_status = '$newStatus' WHERE id = '$admissionId'";
+    
     if ($conn->query($updateSql) === TRUE) {
         // Send a success response
         $response = array('success' => true);
     } else {
         // Send an error response
-        $response = array('success' => false, 'error' => $conn->error);
+        $response = array('success' => false, 'error' => 'Error updating status: ' . $conn->error);
     }
 } else {
     // Send an error response if parameters are not set

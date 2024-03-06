@@ -69,9 +69,9 @@ function getCourses($conn)
             </li>
        
             <li class="">
-                <a href="Personnels_AppointmentList.php" id="master-list-link">
+                <a href="Personnel_AppointmentList.php" id="master-list-link">
                 <i class='bx bx-list-check'></i>
-                    <span class="text">Document Checking</span>
+                    <span class="text">Verification</span>
                 </a>
             </li>
             <li >

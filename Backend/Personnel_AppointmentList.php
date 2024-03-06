@@ -21,10 +21,7 @@ $query = "SELECT * FROM admission_data WHERE
             `applicant_number` LIKE '%$search%' OR 
             `academic_classification` LIKE '%$search%' OR 
             `email` LIKE '%$search%' OR 
-            `math_grade` LIKE '%$search%' OR 
-            `science_grade` LIKE '%$search%' OR 
-            `english_grade` LIKE '%$search%' OR 
-            `gwa_grade` LIKE '%$search%' OR 
+          
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%'
@@ -101,6 +98,7 @@ $stmt->fetch();
 <table id="studentTable">
     <thead>
         <tr>
+            <th>#</th>
             <th>Application No.</th>
             <th>Nature of Degree</th>
             <th>Program</th>
@@ -113,21 +111,35 @@ $stmt->fetch();
         </tr>
     </thead>
     <tbody>
-        <?php
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr class='editRow' data-userid='" . $row['id'] . "'>";
-            echo "<td>" . $row['applicant_number'] . "</td>";
-            echo "<td>" . $row['nature_of_degree'] . "</td>";
-            echo "<td>" . $row['degree_applied'] . "</td>";
-            echo "<td>" . $row['applicant_name'] . "</td>";
-            echo "<td>" . $row['academic_classification'] . "</td>";
-            echo "<td>" . $row['application_date'] . "</td>";
-            echo "<td>" . $row['appointment_time'] . "</td>";
-            echo "<td>" . $row['status'] . "</td>";
-          
-            echo "</tr>";
-        }
-        ?>
+    <?php
+    $counter = 1; // Initialize the counter before the loop
+
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr class='editRow' data-userid='" . $row['id'] . "'>";
+        echo "<td>" . $counter . "</td>";
+        echo "<td>" . $row['applicant_number'] . "</td>";
+        echo "<td>" . $row['nature_of_degree'] . "</td>";
+        echo "<td>" . $row['degree_applied'] . "</td>";
+        echo "<td>" . $row['applicant_name'] . "</td>";
+        echo "<td>" . $row['academic_classification'] . "</td>";
+        echo "<td>" . $row['application_date'] . "</td>";
+        echo "<td>" . $row['appointment_time'] . "</td>";
+        echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+        echo "<td>
+            <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
+            <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
+            <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
+           
+        </td>";
+        echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+        echo "</tr>";
+
+        $counter++; // Increment the counter for the next row
+    }
+
+    // Close the database connection
+    $conn->close();
+    ?>
     </tbody>
 </table>
 
@@ -139,7 +151,177 @@ $stmt->fetch();
         
         <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
 
-       <style>
+      
+
+
+    </div>
+        <form id="updateProfileForm" method="post" action="save_student.php">
+        <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;" >
+        <br><br><br><br><br><br>
+       
+        <div class="form-container1">
+        
+          <div class="form-group">
+            <label class="small-label" for="applicant_name">Complete Name</label>
+            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
+          </div>
+          <!-- Sex at Birth -->
+          <div class="form-group">
+            <label class="small-label" for="gender">Sex at birth</label>
+            <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
+          </div>
+       
+     
+        </div>
+
+       
+
+        <p class="personal_information">Contact Information</p>
+        <div class="form-container4">
+          <!-- Telephone/Mobile No -->
+          <div class="form-group">
+            <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
+          </div>
+ 
+          <!--Email Address -->
+          <div class="form-group">
+            <label class="small-label" for="email">Email Address</label>
+            <input name="email" class="input" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+          </div>
+        </div>
+
+        <p class="personal_information">Contact Person(s) in Case of Emergency</p>
+        <div class="form-container7">
+          <!-- Contact Person 1 -->
+          <div class="form-group">
+            <label class="small-label" for="contact_person_1">Contact Person</label>
+            <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
+            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
+            <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
+          </div>
+        </div>
+        <div class="form-container7">
+          <!-- Contact Person 2 -->
+          <div class="form-group">
+            <label class="small-label" for="contact_person_2">Contact Person</label>
+            <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
+            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
+            <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
+          </div>
+        </div>
+
+        <p class="personal_information">Academic Classification</p>
+        <div class="form-container6">
+          <!-- Academic Classification -->
+          <div class="form-group">
+    <label class="small-label" for="academic_classification">Academic Classification</label>
+    <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
+</div>
+
+          <div class="form-group">
+            <label class="small-label" for="degree_applied">Degree</label>
+            <!-- Display the selected program in this input field -->
+            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
+            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
+          </div>
+        </div>
+        <p class="personal_information">Academic Background </p>
+        <div class="form-container5">
+          <!-- Academic Background -->
+          <div class="form-group">
+            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           </label>
+            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
+          </div>
+          <div class="form-group">
+            <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
+            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
+          </div>
+        </div>
+        <input type="submit" value="Update Profile" onclick="return confirmUpdateProfile();">
+    </form>
+</div>
+            </div>
+        </main>
+        <!-- MAIN -->
+    </section>
+
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+           
+
+        </div>
+        <div class="toast-body" id="toast-body"></div>
+    </div>
+
+    <style>
+        #calendarFilterForm button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            font-size: 0;
+            color: #000;
+
+        }
+
+        #calendarFilterForm button i {
+            font-size: 18px;
+        }
+
+
+
+
+        #calendarFilterForm input[type="date"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        #toast {
+            position: fixed;
+            top: 10%;
+            right: 10%;
+            width: 300px;
+            background-color: #4CAF50;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #toast.show {
+            opacity: 1;
+        }
+
+        @keyframes slideInUp {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+      
     .close-form {
         transition: background-color 0.3s, transform 0.3s;
         border-radius: 50%;
@@ -233,186 +415,92 @@ input[type="submit"] {
     width: 100%;
   }
 }
+body.modal-open {
+    overflow: hidden;
+}
+
+#confirm-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+#confirm-modal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-radius: 5px;
+}
+
+#confirm-message {
+    margin: 0 0 20px;
+}
+
+#confirm-buttons {
+    display: flex;
+    justify-content: space-between;
+}
+
+#confirm-yes,
+#confirm-no {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+
+#confirm-no {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: red;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+}
+/* Add this CSS to your existing styles */
+
+#confirm-yes:hover,
+#confirm-no:hover,
+.edit-btn:hover,
+.save-btn:hover {
+    opacity: 0.5;
+    /* Adjust the opacity value as needed */
+    transition: opacity 0.3s ease-in-out;
+}
 
 </style>
 
-
+<!-- Add this HTML structure at the end of your body -->
+<div id="confirm-modal">
+    <p id="confirm-message"></p>
+    <div id="confirm-buttons">
+        <button id="confirm-yes">Yes</button>
+        <button id="confirm-no">Cancel</button>
     </div>
-        <form id="updateProfileForm" method="post" action="save_student.php">
-        <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;" >
-        <br><br><br><br><br><br>
-        <p class="personal_information">Personal Information</p>
-        
-        <div class="form-container1">
-        
-          <div class="form-group">
-            <label class="small-label" for="applicant_name">Complete Name</label>
-            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
-          </div>
-          <!-- Sex at Birth -->
-          <div class="form-group">
-            <label class="small-label" for="gender">Sex at birth</label>
-            <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
-          </div>
-       
-     
-        </div>
-
-       
-
-        <p class="personal_information">Contact Information</p>
-        <div class="form-container4">
-          <!-- Telephone/Mobile No -->
-          <div class="form-group">
-            <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-            <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
-          </div>
-
-          <!--Email Address -->
-          <div class="form-group">
-            <label class="small-label" for="email">Email Address</label>
-            <input name="email" class="input" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
-          </div>
-        </div>
-
-        <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-        <div class="form-container7">
-          <!-- Contact Person 1 -->
-          <div class="form-group">
-            <label class="small-label" for="contact_person_1">Contact Person</label>
-            <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
-            <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
-            <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
-          </div>
-        </div>
-        <div class="form-container7">
-          <!-- Contact Person 2 -->
-          <div class="form-group">
-            <label class="small-label" for="contact_person_2">Contact Person</label>
-            <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-            <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
-            <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
-          </div>
-        </div>
-
-        <p class="personal_information">Academic Classification</p>
-        <div class="form-container6">
-          <!-- Academic Classification -->
-          <div class="form-group">
-    <label class="small-label" for="academic_classification">Academic Classification</label>
-    <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
 </div>
-
-          <div class="form-group">
-            <label class="small-label" for="degree_applied">Degree</label>
-            <!-- Display the selected program in this input field -->
-            <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-            <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
-          </div>
-        </div>
-        <p class="personal_information">Academic Background </p>
-        <div class="form-container5">
-          <!-- Academic Background -->
-          <div class="form-group">
-            <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">High School/Senior High School</label>
-            <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
-          </div>
-          <div class="form-group">
-            <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-            <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
-          </div>
-        </div>
-        <input type="submit" value="Update Profile" onclick="return confirmUpdateProfile();">
-    </form>
-</div>
-            </div>
-        </main>
-        <!-- MAIN -->
-    </section>
-
-    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="toast-header">
-            <strong class="mr-auto">Success!</strong>
-
-        </div>
-        <div class="toast-body" id="toast-body"></div>
-    </div>
-
-    <style>
-        #calendarFilterForm button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            font-size: 0;
-            color: #000;
-
-        }
-
-        #calendarFilterForm button i {
-            font-size: 18px;
-        }
-
-
-
-
-        #calendarFilterForm input[type="date"] {
-            padding: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-
-        #toast {
-            position: fixed;
-            top: 10%;
-            right: 10%;
-            width: 300px;
-            background-color: #4CAF50;
-            color: #fff;
-            border-radius: 5px;
-            padding: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-        }
-
-        #toast.show {
-            opacity: 1;
-        }
-
-        @keyframes slideInUp {
-            from {
-                transform: translateY(100%);
-            }
-
-            to {
-                transform: translateY(0);
-            }
-        }
-    </style>
-
+<div id="confirm-overlay"></div>
 
     <script>
  
  $(document).ready(function () {
     // Add a click event listener to all rows with the 'editRow' class
     $('.editRow').click(function () {
+          // Check if the click was on the buttons
+          if (!$(event.target).is('button') && !$(event.target).is('i')) {
         // Get the 'data-userid' attribute from the clicked row
         var userId = $(this).data('userid');
 
@@ -456,13 +544,12 @@ input[type="submit"] {
 
                 // Display the form for editing
                 $('.todo').show();
-                
-            },
-            
-            error: function (error) {
-                console.error('Error fetching user data: ', error);
-            }
-        });
+                },
+                error: function (error) {
+                    console.error('Error fetching user data: ', error);
+                }
+            });
+        }
     });
 
     // Click event handler for the close button
@@ -491,102 +578,71 @@ input[type="submit"] {
             });
         }
 
-        function editAdmissionData(id) {
-            // Get the row element
-            var row = document.querySelector(`tr[data-id='${id}']`);
 
-            // Hide the "Check Circle" and "X Circle" buttons within the row
-            var checkBtn = row.querySelector('.check-btn');
-            var ekisBtn = row.querySelector('.ekis-btn');
+        function showConfirmationModal(message, callback) {
+            document.body.classList.add('modal-open');
+            var confirmModal = document.getElementById('confirm-modal');
+    var confirmOverlay = document.getElementById('confirm-overlay');
+    var confirmMessage = document.getElementById('confirm-message');
 
-            if (checkBtn && ekisBtn) {
-                checkBtn.style.display = 'none';
-                ekisBtn.style.display = 'none';
-            }
+    confirmMessage.textContent = message;
 
-            // Toggle between edit and display modes
-            var editableCells = row.querySelectorAll('.editable');
-            editableCells.forEach(function(cell) {
-                var spanMode = cell.querySelector('.edit-mode');
-                var selectMode = cell.querySelector('.select-mode');
+    confirmModal.style.display = 'block';
+    confirmOverlay.style.display = 'block';
 
-                if (spanMode && selectMode) {
-                    spanMode.style.display = 'none';
-                    selectMode.style.display = 'inline-block';
+    document.getElementById('confirm-yes').addEventListener('click', function () {
+        confirmModal.style.display = 'none';
+        confirmOverlay.style.display = 'none';
+        document.body.classList.remove('modal-open');
+        callback(true);
+    });
+
+    document.getElementById('confirm-no').addEventListener('click', function () {
+        confirmModal.style.display = 'none';
+        confirmOverlay.style.display = 'none';
+        callback(false);
+    });
+}
+
+function updateStatus(admissionId, newStatus) {
+    showConfirmationModal(`Set the student's requirements as "${newStatus.toLowerCase()}"`, function (confirmed) {
+        if (confirmed) {
+            const url = `Personnel_UpdateStatus.php?id=${admissionId}&status=${newStatus}`;
+
+            fetch(url, {
+                method: 'GET',
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
                 }
-            });
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    const statusCell = document.querySelector(`tr[data-userid='${admissionId}'] td[data-field='appointment_status']`);
+                    statusCell.textContent = newStatus;
 
-            // Change the "Edit" button to a "Save" button and change its color to green
-            var editButton = row.querySelector('.edit-btn');
-            editButton.innerHTML = '<i class="bx bx-save"></i>';
-            editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-            editButton.onclick = function() {
-                saveStudent(id);
+                    console.log('Status updated successfully');
 
-                // Toggle back to display mode after saving
-                editableCells.forEach(function(cell) {
-                    var spanMode = cell.querySelector('.edit-mode');
-                    var selectMode = cell.querySelector('.select-mode');
-
-                    if (spanMode && selectMode) {
-                        spanMode.style.display = 'inline-block';
-                        selectMode.style.display = 'none';
+                    if (newStatus === "Complete") {
+                        showCheckCircleToast("Successfully set as Complete!");
+                    } else if (newStatus === "Rejected") {
+                        showEkisCircleToast("Successfully set as Rejected!");
+                    } else if (newStatus === "Incomplete") {
+                        showIncompleteToast("Successfully set as Incomplete!");
                     }
-                });
-
-                // Show the "Check Circle" and "X Circle" buttons after saving
-                if (checkBtn && ekisBtn) {
-                    checkBtn.style.display = 'inline-block';
-                    ekisBtn.style.display = 'inline-block';
+                } else {
+                    console.error('Failed to update status');
                 }
-            };
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+            });
         }
+    });
+}
 
-        function updateStatus(admissionId, newStatus) {
-            // Confirm the action with a prompt
-            var confirmation = confirm(`Are you sure you want to set as ${newStatus.toLowerCase()} the student's requirement?`);
-
-            if (confirmation) {
-                const url = `updateStatus.php?id=${admissionId}&status=${newStatus}`;
-
-                // Make a fetch request to the server
-                fetch(url, {
-                        method: 'GET',
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! Status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Assuming the server sends back a JSON response
-                        // You can handle the response accordingly
-                        if (data.success) {
-                            // Update the status in the table cell
-                            const statusCell = document.querySelector(`tr[data-id='${admissionId}'] td[data-field='appointment_status']`);
-                            statusCell.textContent = newStatus;
-
-                            // Optionally, display a success message
-                            console.log('Status updated successfully');
-
-                            // Show a toast message
-                            if (newStatus === "Accepted") {
-                                showCheckCircleToast("Student's requirement accepted successfully!");
-                            } else if (newStatus === "Declined") {
-                                showEkisCircleToast("Student's requirement declined successfully!");
-                            }
-                        } else {
-                            // Optionally, display an error message
-                            console.error('Failed to update status');
-                        }
-                    })
-                    .catch(error => {
-                        // Handle errors during the fetch request
-                        console.error('Fetch error:', error);
-                    });
-            }
-        }
 
 
         function showCheckCircleToast(message) {
@@ -610,7 +666,7 @@ input[type="submit"] {
                 toast.style.backgroundColor = '';
                 // Reset the toast body content
                 toastBody.textContent = '';
-            }, 1500);
+            }, 3000);
         }
 
         function showEkisCircleToast(message) {
@@ -634,8 +690,33 @@ input[type="submit"] {
                 toast.style.backgroundColor = '';
                 // Reset the toast body content
                 toastBody.textContent = '';
-            }, 1500);
+            },3000);
         }
+        
+function showIncompleteToast(message) {
+    // Get the toast element
+    var toast = document.getElementById('toast');
+
+    // Set the background color to yellow for incomplete
+    toast.style.backgroundColor = '#4CAF50';
+
+    // Set the message in the toast body
+    var toastBody = document.getElementById('toast-body');
+    toastBody.textContent = message;
+
+    // Display the toast
+    toast.classList.add('show');
+
+    // Hide the toast after a certain duration (e.g., 1500 milliseconds)
+    setTimeout(function() {
+        toast.classList.remove('show');
+        // Reset the background color
+        toast.style.backgroundColor = '';
+        // Reset the toast body content
+        toastBody.textContent = '';
+    }, 3000);
+}
+
 
         function saveStudent(id) {
             // Get the row element
