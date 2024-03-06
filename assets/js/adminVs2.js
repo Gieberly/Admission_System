@@ -171,7 +171,35 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
+//side-bar-navigation
+document.addEventListener('DOMContentLoaded', function () {
+    const navLinks = document.querySelectorAll('#sidebar .side-menu.top li a');
 
+    // Function to check if a link matches the current page URL
+    function isCurrentPage(link) {
+        return link.href === window.location.href;
+    }
+
+    // Set the active link when the page loads
+    navLinks.forEach(link => {
+        if (isCurrentPage(link)) {
+            link.parentElement.classList.add('active');
+        }
+    });
+
+    // Update the active link when a link is clicked
+    navLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+            // Remove the 'active' class from all links
+            navLinks.forEach(navLink => {
+                navLink.parentElement.classList.remove('active');
+            });
+
+            // Add the 'active' class to the clicked link
+            link.parentElement.classList.add('active');
+        });
+    });
+});
 //pressing the box info and dashboard
 
 document.addEventListener('DOMContentLoaded', function () {
