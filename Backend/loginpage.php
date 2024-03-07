@@ -92,9 +92,14 @@ $conn->close();
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/login.css">
     <style>
-        body {
-            background-image: url('assets/images/banner.jpg');
-        }
+    
+    body {
+        background-image: url('assets/images/banner.jpg');
+        background-attachment: fixed;
+        background-size: cover;
+        background-position: center;
+    }
+
 
         .message {
             display: block;
