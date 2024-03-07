@@ -20,7 +20,10 @@ $resultNonBoard = $conn->query($sqlNonBoard);
 
 // Combine the results
 $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard->fetch_all(MYSQLI_ASSOC));
- 
+
+// Track displayed colleges to avoid repetition
+$displayedColleges = array();
+
 ?>
 <section id="content">
     <main>
@@ -49,30 +52,38 @@ $combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard
                             <table id="searchableTable">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Programs</th>
+                                
+                                        <th>Program</th>
                                         <th>Nature of Degree</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php
-if (!empty($combinedResults)) {
-    $count = 1;
-    foreach ($combinedResults as $row) {
-        echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
-        echo "<td>{$count}</td>";
-        echo "<td class='editable' data-field='Courses'>{$row['Courses']}</td>";
-        echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-        echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&Courses={$row['Courses']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
-        echo "</tr>";
-        $count++;
-    }
-} else {
-    echo "<tr><td colspan='4'>No courses found</td></tr>";
-}
-?>
-
+                                    if (!empty($combinedResults)) {
+                                        $count = 1;
+                                        foreach ($combinedResults as $row) {
+                                            $college = $row['College'];
+                                            // Check if the college has already been displayed
+                                            if (!in_array($college, $displayedColleges)) {
+                                                echo "<tr class='college-row'><td colspan='5'><strong>{$college}</strong></td></tr>";
+                                                // Add the college to the displayed array
+                                                $displayedColleges[] = $college;
+                                            }
+                                           
+                                            
+                                            echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
+                                           
+                                            echo "<td class='editable' data-field='Courses'>{$count}. &nbsp; {$row['Courses']}</td>";
+                                            echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
+                                            echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&Courses={$row['Courses']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
+                                            echo "</tr>";
+                                            $count++;
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='5'>No courses found</td></tr>";
+                                    }
+                                    ?>
                                 </tbody>
                             </table>
                         </div>
@@ -140,6 +151,27 @@ if (!empty($combinedResults)) {
 <script>
     // Add a JavaScript function to handle the Apply button click event
     document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.apply-button').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var programId = this.getAttribute('data-program-id');
+                // Redirect to studentform.php with the Program ID as a parameter
+                window.location.href = 'studentforms.php?program_id=' + programId;
+            });
+        });
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        // Add event listener to college rows
+        document.querySelectorAll('.college-row').forEach(function (collegeRow) {
+            collegeRow.addEventListener('click', function () {
+                // Toggle visibility of programs belonging to the clicked college
+                var programs = this.nextElementSibling.getElementsByClassName('list-row');
+                for (var i = 0; i < programs.length; i++) {
+                    programs[i].style.display = (programs[i].style.display === 'none' || programs[i].style.display === '') ? 'table-row' : 'none';
+                }
+            });
+        });
+
+        // Add event listener to Apply buttons
         document.querySelectorAll('.apply-button').forEach(function (button) {
             button.addEventListener('click', function () {
                 var programId = this.getAttribute('data-program-id');
