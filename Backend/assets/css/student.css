@@ -583,7 +583,9 @@ nav {
 	/* Add space between text and icon */
 }
 
-
+#content {
+	position: relative;
+}
 
 /* MAIN */
 #content main {
@@ -594,6 +596,17 @@ nav {
 	overflow-y: auto;
 }
 
+#table-container {
+	max-height: 420px;
+	overflow-y: auto;
+}
+
+#searchableTable thead {
+	position: sticky;
+	top: 0;
+	background-color: #F9F9F9; /* Set the desired background color for the header */
+	z-index: 2; /* Ensure the header is above the scrolling tbody */
+}
 
 #content main .head-title {
 	display: flex;
