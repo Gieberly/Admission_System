@@ -236,7 +236,7 @@ $conn->close();
         </div>
     </header>
 
-    <form id="registrationForm" action="studentforms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
+    <form id="registrationForm" action="Student_Forms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
 
 
         <div class="progress-bar">
@@ -284,6 +284,28 @@ $conn->close();
                     <h2>Program Guide for Requirments in Application</h2>
                     <div class="page-container">
                         <div class="form-container">
+                            <div class="form-group">
+                                <label class="small-label" for="categoryDropdown">Nature of Degree</label>
+                                <?php
+                                if (isset($_GET['degree'])) {
+                                    $degree = $_GET['degree'];
+                                    echo "<input type='text'class='input' id='categoryDropdown' name='nature_of_degree' value='$degree' readonly>";
+                                } else {
+                                    echo "<p>No degree information available.</p>";
+                                }
+                                ?>
+                            </div>
+                            <div class="form-group">
+                                <label class="small-label" for="categoryDropdown">Nature of Degree</label>
+                                <?php
+                                if (isset($_GET['College'])) {
+                                    $degree = $_GET['College'];
+                                    echo "<input type='text'class='input' id='categoryDropdown' name='nature_of_degree' value='$College' readonly>";
+                                } else {
+                                    echo "<p>No college information available.</p>";
+                                }
+                                ?>
+                            </div>
                             <div class="form-group">
                                 <label class="small-label" for="categoryDropdown">Nature of Degree</label>
                                 <?php

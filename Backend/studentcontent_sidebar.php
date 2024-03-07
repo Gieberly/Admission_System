@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -65,7 +65,7 @@ if ($resultAdmission->num_rows > 0) {
                         <ul class="breadcrumb">
                             <li><a href="#">Profile</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="studentDashboard.php">Home</a></li>
+                            <li><a class="active" href="Student_Dashboard.php">Home</a></li>
                         </ul>
                     </div>
 
@@ -125,7 +125,7 @@ if ($resultAdmission->num_rows > 0) {
 
 
                                         <?php else : ?>
-                                            <p class="apply-program">NO DATA FOUND <br><a href="studentDashboard.php"></a></p>
+                                            <p class="apply-program">NO DATA FOUND <br><a href="Student_Dashboard.php"></a></p>
                                         <?php endif; ?>
                                     </div>
 

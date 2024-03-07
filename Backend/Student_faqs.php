@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 
 ?>
@@ -15,7 +15,7 @@ include("studentcover.php");
                     <ul class="breadcrumb">
                         <li><a href="#">FAQ</a></li>
                         <li><i class='bx bx-chevron-right'></i></li>
-                        <li><a class="active" href="studentDashboard.php">Home</a></li>
+                        <li><a class="active" href="Student_Dashboard.php">Home</a></li>
                     </ul>
                 </div>
             </div>
