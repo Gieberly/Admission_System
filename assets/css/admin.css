@@ -1052,8 +1052,6 @@ nav {
 	width: 0px;
 	max-width: 0px;
 	overflow: hidden;
-	word-wrap: break-word;
-	white-space: pre-line;
 	text-overflow: ellipsis;
   }
  

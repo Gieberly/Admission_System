@@ -44,9 +44,9 @@ include("../includes/functions.php");
                                         <div class="col-md-10">
                                             <h3 class="panel-title"></h3>
                                         </div>
-                                        <!--<div class="col-md-2" align="right">
+                                        <div class="col-md-2" align="right">
 					                        <button type="button" name="add" id="addRecord" class="btn btn-success"><i class='bx bx-calendar-plus'></i>Add New Record</button>
-				                        </div>-->
+				                        </div>
                                     </div>
                                 </div>
                                 <!-- Table for displaying student data -->
@@ -70,18 +70,17 @@ include("../includes/functions.php");
                                         // Loop through the results and populate the table rows
                                         while ($row = $getAppointments->fetch_assoc()) {
                                         ?>
-                                            <tr>
-                                                <td><?php echo $counter++; ?></td>
-                                                <td ><?php echo $row['appointment_date']; ?></td>
-                                                <td ><?php echo $row['appointment_time']; ?></td>
-                                                <td><?php echo $row['available_slots']; ?></td>
-                                                <td> 
-                                                    <a href="edit_form.php" type="button" class="btn btn-success btn-sm">Edit</a>
-                                                    <a href="delete-appointment.php" type="button" class="btn btn-danger btn-sm mx-2">Delete</a>
-                                                </td>
-
-                                                <!-- Add more columns as needed -->
-                                            </tr>
+                                          <tr>
+                                            <td><?php echo $counter++; ?></td>
+                                            <td><?php echo $row['appointment_date']; ?></td>
+                                            <td><?php echo $row['appointment_time']; ?></td>
+                                            <td><?php echo $row['available_slots']; ?></td>
+                                            <td> 
+                                                <a href="update_data_form.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-primary" role="button">Edit<i class='bx bx-edit'></i></a>
+                                                <a href="delete_data.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger" role="button">Delete<i class='bx bxs-trash'></i></a>
+                                            </td>
+                                        </tr>
+  
                                         <?php
                                         }
                                         ?>                        
@@ -101,11 +100,9 @@ include("../includes/functions.php");
 <?php include ('script.php')?>
 <!--Data Tables-->
 <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/2.0.1/js/dataTables.bootstrap4.min.js"></script>
 
 <script>
     $(document).ready(function(){
-
         $('#appointmentId').DataTable({
             "pagingType":"full_numbers",
             "lengthMenu":[
@@ -117,13 +114,6 @@ include("../includes/functions.php");
                 searchPlaceholder:'Search records',
             }
         });
-        $('#addRecord').click(function(){
-		$('#recordModal').modal('show');
-		$('#recordForm')[0].reset();
-		$('.modal-title').html("<i class='fa fa-plus'></i> Add Record");
-		$('#action').val('addRecord');
-		$('#save').val('Add');
-	});	
     });
 </script>
 

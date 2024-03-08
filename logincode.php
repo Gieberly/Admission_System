@@ -78,7 +78,7 @@ if(isset($_POST['login_btn'])){
                         exit();
                     }
                 } elseif ($userType == 'Admin') {
-                    header("Location: admin/admin.php");
+                    header("Location: admin/dashboard_admin.php");
                     exit();
                 } else {
                     echo "User not found";
