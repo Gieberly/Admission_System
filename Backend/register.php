@@ -80,11 +80,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <style>
         body {
-        background-image: url('assets/images/banner.jpg');
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-    }
+
+            background-image: url('assets/images/banner.jpg');
+        }
 
         .error-message {
             color: #721c24;
