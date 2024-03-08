@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Set Student Appointment</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
     <!-- Include FullCalendar and jQuery -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

@@ -1,7 +1,7 @@
 
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {

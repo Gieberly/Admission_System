@@ -1001,6 +1001,41 @@ nav {
   .button.ekis-btn:hover i {
 	color: red;
   }
+  .button.ekis-btn::after {
+    content: attr(data-tooltip); /* Display the word as a tooltip */
+    position: absolute;
+    bottom: -100%; /* Position it below the button */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%);
+    background-color: #333; /* Tooltip background color */
+    color: white; /* Tooltip text color */
+    padding: 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.3s;
+	z-index: 2;
+}
+
+.button.ekis-btn::after {
+    opacity: 0; /* Make the tooltip visible on hover */
+}
+
+  .button.inc-btn {
+	background: none;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+  }
+  
+  .button.inc-btn i {
+	font-size: 15px; /* Adjust the size as needed */
+	color: black; /* Set the default icon color */
+  }
+  
+  .button.inc-btn:hover i {
+	color: orange;
+  }
   
   #delete-btn {
     border: none;
@@ -1208,8 +1243,7 @@ nav {
     font-size: 10px;
     white-space: normal;
     border-bottom: 1px solid var(--dark);
-    position: -webkit-sticky;
-    position: sticky;
+   
     top: 0;
     z-index: 2;
     background-color: var(--light);

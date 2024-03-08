@@ -1,6 +1,3 @@
-
-
-
 // Default tab
 $(".tab").css("display", "none");
 $("#tab-1").css("display", "block");
@@ -352,3 +349,136 @@ function validateLRN(input) {
   // Update the input value
   input.value = inputValue;
 }
+
+
+document.addEventListener("DOMContentLoaded", function() {
+  var lastNameInput = document.getElementById("last_name");
+  var firstNameInput = document.getElementById("first_name");
+  var middleNameInput = document.getElementById("middle_name");
+  var birthPlaceInput = document.getElementById("birthplace");
+  var CitizenshipInput = document.getElementById("citizenship");
+  var NationalityInput = document.getElementById("nationality");
+  var AddressInput = document.getElementById("permanent_address");
+  var zipCodeInput = document.getElementById("zip_code");
+  var TeleInput = document.getElementById("phone_number");
+  var FacebookInput = document.getElementById("facebook");
+  var conName1Input = document.getElementById("contact_person_1");
+  var conNum1Input = document.getElementById("contact1_phone");
+  var conName2Input = document.getElementById("contact_person_2");
+  var conNum2Input = document.getElementById("contact_person_2_mobile");
+  var lastSchoolInput = document.getElementById("high_school_name_address");
+  var lrnInput = document.getElementById("lrn");
+
+  var lastNameNote = document.getElementById("last_name_note");
+  var firstNameNote = document.getElementById("first_name_note");
+  var middleNameNote = document.getElementById("middle_name_note");
+  var birthPlaceNote = document.getElementById("birthPlace_note");
+  var CitizenshipNote = document.getElementById("citizenship_note");
+  var NationalityNote = document.getElementById("nationality_note");
+  var AddressNote = document.getElementById("permanent_address_note");
+  var zipCodeNote = document.getElementById("zip_code_note");
+  var TeleNote = document.getElementById("phone_number_note");
+  var FacebookNote = document.getElementById("facebook_note");
+  var conName1Note = document.getElementById("contact_person_1_note");
+  var conNum1Note = document.getElementById("contact1_phone_note");
+  var conName2Note = document.getElementById("contact_person_2_note");
+  var conNum2Note = document.getElementById("contact_person_2_mobile_note");
+  var lastSchoolNote = document.getElementById("high_school_name_address_note");
+  var lrnNote = document.getElementById("lrn_note");
+
+  lastNameInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(lastNameNote);
+  });
+  
+  firstNameInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(firstNameNote);
+  });
+  
+  middleNameInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(middleNameNote);
+  });
+
+  birthPlaceInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(birthPlaceNote);
+  });
+
+  CitizenshipInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(CitizenshipNote);
+  });
+
+  NationalityInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(NationalityNote);
+  });
+
+  AddressInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(AddressNote);
+  });
+
+  zipCodeInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(zipCodeNote);
+  });
+
+  TeleInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(TeleNote);
+  });
+
+  FacebookInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(FacebookNote);
+  });
+
+  conName1Input.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(conName1Note);
+  });
+
+  conNum1Input.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(conNum1Note);
+  });
+
+  conName2Input.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(conName2Note);
+  });
+
+  conNum2Input.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(conNum2Note);
+  });
+
+  lastSchoolInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(lastSchoolNote);
+  });
+
+  lrnInput.addEventListener("focus", function() {
+    hideAllPlaceholderExamples();
+    displayPlaceholderExample(lrnNote);
+  });
+
+  function displayPlaceholderExample(placeholder) {
+    placeholder.style.display = "block";
+  }
+
+  function hidePlaceholderExample(placeholder) {
+    placeholder.style.display = "none";
+  }
+
+  function hideAllPlaceholderExamples() {
+    var allPlaceholderExamples = document.querySelectorAll(".note");
+    allPlaceholderExamples.forEach(function(placeholder) {
+      hidePlaceholderExample(placeholder);
+    });
+  }
+});
+

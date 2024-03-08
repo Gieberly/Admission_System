@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 include("config.php");
@@ -11,8 +10,8 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $sql = "SELECT * FROM `programs` WHERE 
         `Courses` LIKE '%$search%' OR 
         `Nature_of_Degree` LIKE '%$search%' OR 
-        `Description` LIKE '%$search%' OR 
-        `Overall_Slots` LIKE '%$search%'
+        `College` LIKE '%$search%'
+       
         ORDER BY `Nature_of_Degree` ASC, `Courses` ASC";
 
 $result = $conn->query($sql);
@@ -32,14 +31,14 @@ $result = $conn->query($sql);
                 </div>
             </div>
 
-                            <div id="master-list">
+            <div id="master-list">
                 <div class="table-data">
                     <div class="order">
                         <div class="head">
                             <h3>List of Courses</h3>
 
                             <div class="headfornaturetosort">
-                                
+
 
                                 <label for="rangeInput"></label>
                                 <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
@@ -61,19 +60,29 @@ $result = $conn->query($sql);
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Courses</th>
-                                       
+                                        <th>College</th>
+                                        <th>Course</th>
                                         <th>Nature of Degree</th>
+                                        <th>No. of Sections</th>
+                                        <th>No. of Students per Sections</th>
                                         <th>Slots</th>
-
                                         <th>Action</th>
                                     </tr>
                                     <tr id="addCourseRow" style="display: none;">
                                         <td>#</td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="College"></td>
                                         <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Courses"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Description"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Nature_of_Degree"></td>
-                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Overall_Slots"></td>
+                                        <td>
+                                            <select name="nature_of_degree">
+                                                <option value="Board">Board</option>
+                                                <option value="Non-Board">Non-Board</option>
+                                            </select>
+
+                                        </td>
+
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="No_of_Sections"></td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="No_of_Students_Per_Section"></td>
+                                        <td style="border-bottom: 2px solid blue;" contenteditable="true" class="editable" data-field="Number_of_Available_Slots"></td>
 
                                         <td>
                                             <button type='button' class='button cancel-btn' onclick='cancelAddCourse()'>Cancel</button>
@@ -82,21 +91,21 @@ $result = $conn->query($sql);
                                         </td>
                                     </tr>
                                 </thead>
-                                <tbody> 
-                                <?php
-                                if ($result->num_rows > 0) {
-                                    $count = 1;
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
-                                        echo "<td>{$count}</td>";
-                                      
-                                        echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
-                                        echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-                                        echo "<td class='editable' data-field='Overall_Slots'>{$row['Overall_Slots']}</td>";
+                                <tbody>
+                                    <?php
+                                    if ($result->num_rows > 0) {
+                                        $count = 1;
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
+                                            echo "<td>{$count}</td>";
 
-                                        echo "<td>
-                                        
-
+                                            echo "<td class='editable' data-field='College'>{$row['College']}</td>";
+                                            echo "<td class='editable' data-field='Courses'>{$row['Courses']}</td>";
+                                            echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
+                                            echo "<td class='editable' data-field='No_of_Sections'>{$row['No_of_Sections']}</td>";
+                                            echo "<td class='editable' data-field='No_of_Students_Per_Section'>{$row['No_of_Students_Per_Section']}</td>";
+                                            echo "<td class='editable' data-field='Number_of_Available_Slots'>{$row['Number_of_Available_Slots']}</td>";
+                                            echo "<td>
                                         <button type='button' id='delete-btn' class='button delete-btn' onclick='deleteCourse({$row['ProgramID']})'>
                                         <i class='bx bx-trash'></i>
                                         <button type='button' id='edit-btn' class='button edit-btn' onclick='editCourse({$row['ProgramID']})'>
@@ -106,19 +115,19 @@ $result = $conn->query($sql);
                                              
                                     
                                                </td>";
-                                        echo "</tr>";
-                                        $count++;
+                                            echo "</tr>";
+                                            $count++;
+                                        }
+                                    } else {
+                                        echo "<tr><td colspan='6'>No courses found</td></tr>";
                                     }
-                                } else {
-                                    echo "<tr><td colspan='6'>No courses found</td></tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </main>
 </section>
 
@@ -158,12 +167,8 @@ $result = $conn->query($sql);
             transform: translateY(0);
         }
     }
-
 </style>
 <script>
-
-
-
     $('#viewButton i').on('click', function() {
         var rangeInput = $('#rangeInput').val();
         var range = rangeInput.split('-');
@@ -192,94 +197,95 @@ $result = $conn->query($sql);
             }
         });
     }
+
     function editCourse(programID) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${programID}']`);
+        // Get the row element
+        var row = document.querySelector(`tr[data-id='${programID}']`);
 
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
+        // Get all editable cells in the row
+        var editableCells = row.querySelectorAll('.editable');
 
-    // Add corner borders and remove inner borders for each editable cell
-    editableCells.forEach(function(cell, index) {
-        cell.contentEditable = true;
-        cell.classList.add('editing');
+        // Add corner borders and remove inner borders for each editable cell
+        editableCells.forEach(function(cell, index) {
+            cell.contentEditable = true;
+            cell.classList.add('editing');
 
-        // Add corner borders
-        cell.style.borderBottom = '2px solid blue';
+            // Add corner borders
+            cell.style.borderBottom = '2px solid blue';
 
-        // Remove inner borders
-        if (index > 0) {
-            editableCells[index - 1].style.borderRight = 'none';
-            cell.style.borderLeft = 'none';
-        }
-    });
-
-    // Change the content of the "Edit" button to a "Save" icon
-    var editButton = row.querySelector('.edit-btn');
-    editButton.innerHTML = '<i class="bx bx-save"></i>';
-    editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
-    editButton.onclick = function() {
-        saveCourse(programID);
-
-        // Hide the blue bottom border after saving
-        editableCells.forEach(function(cell) {
-            cell.style.borderBottom = 'none';
+            // Remove inner borders
+            if (index > 0) {
+                editableCells[index - 1].style.borderRight = 'none';
+                cell.style.borderLeft = 'none';
+            }
         });
-    };
-}
 
+        // Change the content of the "Edit" button to a "Save" icon
+        var editButton = row.querySelector('.edit-btn');
+        editButton.innerHTML = '<i class="bx bx-save"></i>';
+        editButton.classList.add('save-btn', 'transition-class'); // Add transition-class for the animation
+        editButton.onclick = function() {
+            saveCourse(programID);
 
-function saveCourse(programID) {
-    // Get the row element
-    var row = document.querySelector(`tr[data-id='${programID}']`);
-
-    // Get all editable cells in the row
-    var editableCells = row.querySelectorAll('.editable');
-
-    // Create an object to store the updated data
-    var updatedData = {};
-
-    // Loop through each editable cell and store the updated value
-    editableCells.forEach(function(cell) {
-        var fieldName = cell.getAttribute('data-field');
-        var updatedValue = cell.innerText.trim();
-        updatedData[fieldName] = updatedValue;
-    });
-
-    // Send an AJAX request to update the data in the database
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', 'save_course.php', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            // Display a toast notification for successful save
-            var toast = document.getElementById('toast');
-            toast.classList.add('show');
-            setTimeout(function() {
-                toast.classList.remove('show');
-            }, 3000);
-
-            // Change the "Save" button back to "Edit" with the "Edit" icon
-            var editButton = row.querySelector('.edit-btn');
-            editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
-            editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
-            editButton.onclick = function() {
-                editCourse(programID);
-            };
-
-            // Loop through each editable cell to make them non-editable
+            // Hide the blue bottom border after saving
             editableCells.forEach(function(cell) {
-                cell.contentEditable = false;
-                cell.classList.remove('editing');
                 cell.style.borderBottom = 'none';
             });
-        }
-    };
-    xhr.send(JSON.stringify({
-        programID: programID,
-        updatedData: updatedData
-    }));
-}
+        };
+    }
+
+
+    function saveCourse(programID) {
+        // Get the row element
+        var row = document.querySelector(`tr[data-id='${programID}']`);
+
+        // Get all editable cells in the row
+        var editableCells = row.querySelectorAll('.editable');
+
+        // Create an object to store the updated data
+        var updatedData = {};
+
+        // Loop through each editable cell and store the updated value
+        editableCells.forEach(function(cell) {
+            var fieldName = cell.getAttribute('data-field');
+            var updatedValue = cell.innerText.trim();
+            updatedData[fieldName] = updatedValue;
+        });
+
+        // Send an AJAX request to update the data in the database
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'save_course.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Display a toast notification for successful save
+                var toast = document.getElementById('toast');
+                toast.classList.add('show');
+                setTimeout(function() {
+                    toast.classList.remove('show');
+                }, 3000);
+
+                // Change the "Save" button back to "Edit" with the "Edit" icon
+                var editButton = row.querySelector('.edit-btn');
+                editButton.innerHTML = '<i class="bx bx-edit-alt"></i>';
+                editButton.classList.remove('save-btn', 'transition-class'); // Remove the class to remove the green styling and animation
+                editButton.onclick = function() {
+                    editCourse(programID);
+                };
+
+                // Loop through each editable cell to make them non-editable
+                editableCells.forEach(function(cell) {
+                    cell.contentEditable = false;
+                    cell.classList.remove('editing');
+                    cell.style.borderBottom = 'none';
+                });
+            }
+        };
+        xhr.send(JSON.stringify({
+            programID: programID,
+            updatedData: updatedData
+        }));
+    }
 
 
 
@@ -297,31 +303,32 @@ function saveCourse(programID) {
             toast.classList.remove('show');
         }, 3000);
     }
+
     function addCourse() {
-    // Get the "Add Course" row
-    var addCourseRow = document.getElementById('addCourseRow');
+        // Get the "Add Course" row
+        var addCourseRow = document.getElementById('addCourseRow');
 
-    // Toggle the visibility of the "Add Course" row
-    addCourseRow.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
+        // Toggle the visibility of the "Add Course" row
+        addCourseRow.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
 
-    // Toggle the visibility of the list rows
-    var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
-    listRows.forEach(function(row) {
-        row.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
-    });
+        // Toggle the visibility of the list rows
+        var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
+        listRows.forEach(function(row) {
+            row.style.display = addCourseRow.style.display === 'none' ? 'table-row' : 'none';
+        });
 
-    // Change the button text based on visibility
-    var addButton = document.getElementById('addCourses');
-    addButton.innerHTML = addCourseRow.style.display === 'none' ?
-        '<i class=\'bx bx-add-to-queue\'></i> Add Course' :
-        '<i class=\'bx bx-arrow-back\'></i> Hide Add Course';
+        // Change the button text based on visibility
+        var addButton = document.getElementById('addCourses');
+        addButton.innerHTML = addCourseRow.style.display === 'none' ?
+            '<i class=\'bx bx-add-to-queue\'></i> Add Course' :
+            '<i class=\'bx bx-arrow-back\'></i> Hide Add Course';
 
-    // If the "Add Course" row is visible, focus on the first editable cell
-    if (addCourseRow.style.display !== 'none') {
-        var editableCell = addCourseRow.querySelector('.editable');
-        editableCell.focus();
+        // If the "Add Course" row is visible, focus on the first editable cell
+        if (addCourseRow.style.display !== 'none') {
+            var editableCell = addCourseRow.querySelector('.editable');
+            editableCell.focus();
+        }
     }
-}
 
 
 
@@ -380,22 +387,22 @@ function saveCourse(programID) {
 
 
     function cancelAddCourse() {
-    // Get the "Add Course" row
-    var addCourseRow = document.getElementById('addCourseRow');
+        // Get the "Add Course" row
+        var addCourseRow = document.getElementById('addCourseRow');
 
-    // Hide the "Add Course" row
-    addCourseRow.style.display = 'none';
+        // Hide the "Add Course" row
+        addCourseRow.style.display = 'none';
 
-    // Show the list rows
-    var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
-    listRows.forEach(function(row) {
-        row.style.display = 'table-row';
-    });
+        // Show the list rows
+        var listRows = document.querySelectorAll('#table-container table tbody tr.list-row');
+        listRows.forEach(function(row) {
+            row.style.display = 'table-row';
+        });
 
-    // Change the button text back to "Add Course"
-    var addButton = document.getElementById('addCourses');
-    addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Course';
-}
+        // Change the button text back to "Add Course"
+        var addButton = document.getElementById('addCourses');
+        addButton.innerHTML = '<i class=\'bx bx-add-to-queue\'></i> Add Course';
+    }
 
 
     function deleteCourse(programID) {

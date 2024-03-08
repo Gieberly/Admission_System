@@ -42,7 +42,7 @@ $studentData = $resultUser->fetch_assoc();
 
         <ul class="side-menu top">
             <li class="">
-                <a href="studentDashboard.php" id="profile-link">
+                <a href="Student_Dashboard.php" id="profile-link">
                     <i class='bx bxs-dashboard'></i>
                     <span class="text">Dashboard</span>
                 </a>
