@@ -78,6 +78,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $conn->close();
 ?>
 
+<!-- Your HTML login form here -->
+
+<!-- Rest of your HTML code -->
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,6 +99,8 @@ $conn->close();
         background-size: cover;
         background-position: center;
     }
+
+
         .message {
             display: block;
             padding: 5px;
@@ -115,6 +121,7 @@ $conn->close();
             from {
                 opacity: 0;
                 transform: translateY(20px);
+                /* Initial position below */
             }
 
             to {
@@ -136,7 +143,7 @@ $conn->close();
 
     <section class="content">
         <div class="side">
-            <h1 class="text_content">Welcome to<br><span>Benguet State <br>University </span> <br>Admission</h1>
+            <h1>Welcome to<br><span>Benguet State <br>University </span> <br>Admission</h1>
         </div>
         <div class="form" id="loginForm" style="display: block;">
             <form action="loginpage.php" method="POST">
@@ -154,10 +161,12 @@ $conn->close();
                 <input type="password" name="password" placeholder="Password" required>
                 <button class="btnn" type="submit">Login</button>
                 <p class="link">Don't have an account<br>
-                    <a href="register.php" id="signupLink">Sign up </a> here</p>
+                    <a href="register.php" id="signupLink">Sign up </a> here
+                </p>
             </form>
         </div>
     </section>
+   
     <script src="assets\js\login.js"></script>
 </body>
 

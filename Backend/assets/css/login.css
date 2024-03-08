@@ -1,8 +1,12 @@
-   body {
+
+    body {
         margin: 0;
         padding: 0;
         font-family: 'Arial', sans-serif;
-        color: #fff;
+      
+         background-size: cover;
+        background-position: center;
+        color: #fff; /* Set text color to white or a suitable contrast */
     }
     body::before {
         content: "";
@@ -11,8 +15,8 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: -1;
+        background: rgba(0, 0, 0, 0.5); /* Adjust the transparency as needed */
+        z-index: -1; /* Place the overlay behind the content */
     }
 /*Anonuncement Popup*/
     .announcement_popup {
@@ -30,14 +34,14 @@
         display: block;
         width: 100%;
         height: 0.5px;
-        background-color: #ccc;
-        margin-bottom: 10px;
+        background-color: #ccc; /* Change the color to your preference */
+        margin-bottom: 10px; /* Adjust the margin as needed */
     }
     .announcement_popup h2 {
 	    text-align: center;
 	    color: #ffffff;
         font-size: 12px;
-        font-weight: bold;
+        font-weight: bold; /* Add this line to make the font bold */
     }
     .announcement_popup p {
 	    text-align: left;
@@ -84,15 +88,18 @@
         margin-right: 10px; /* Add some spacing between the logo and the university name */
     }
 
+
 .scname {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.5rem; /* Adjust the font size as needed */
 }
 
 .content {
     padding: 50px;
     text-align: center;
 }
+
+/* Example style for the form */
 
 .content .par{
     padding-left: 20px;
@@ -102,36 +109,19 @@
     line-height: 30px;
 }
 
-.content h1 {
+.content h1{
     font-family: 'Times New Roman';
-    font-size: 5vw; /* Set font size based on 5% of the viewport width */
+    font-size: 50px;
     color: #ffffff;
-    padding-left: 2vw; /* Set padding based on 2% of the viewport width */
-    margin-top: 2vh; /* Set margin-top based on 2% of the viewport height */
+    padding-left: 20px;
+    margin-top: 9%;
     letter-spacing: 2px;
 }
 
-/* Additional media query for larger screens if needed */
-@media (min-width: 768px) {
-    .content h1 {
-        font-size: 40px; /* Set a fixed font size for larger screens if necessary */
-        padding-left: 20px;
-        margin-top: 9%;
-    }
-}
-
-
-.content span {
+.content span{
     color: #23f810;
-    font-size: 5vw; /* Adjust the value as needed */
+    font-size: 65px
 }
-
-@media only screen and (max-width: 768px) {
-    .content span {
-        font-size: 4vw; /* Adjust the value for smaller screens */
-    }
-}
-
 .side {
   float: left;
   text-align: left;
@@ -155,16 +145,6 @@
     margin-bottom: 20px;
 }
 
-.loginhead {
-    font-size: 2rem; /* Default font size */
-
-    /* Media query for smaller screens */
-    @media screen and (max-width: 768px) {
-        font-size: 1.6rem; /* 80% of the default font size for smaller screens */
-    }
-    /* Add more media queries for different screen sizes if needed */
-}
-
 h2 {
     text-align: center;
 }
@@ -176,6 +156,8 @@ input {
     box-sizing: border-box;
     border-radius: 5px;
 }
+
+
 
 .btnn {
     background-color: #15ff00;
