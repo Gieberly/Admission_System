@@ -474,7 +474,7 @@ input[type="submit"] {
 <div class="confirmation-dialog">
     <p></p>
     <div class="confirmation-buttons">
-        <button data-confirmed="true">Yes</button>
+        <button data-confirmed="true">OK</button>
         <button data-confirmed="false">Cancel</button>
     </div>
 </div>

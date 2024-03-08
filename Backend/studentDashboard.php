@@ -11,11 +11,11 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
 
 
 // Fetch data from the database where Nature_of_Degree is 'Board' and Overall_Slots is not empty or zero
-$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
+$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
 $result = $conn->query($sql);
 
 // Fetch data from the database where Nature_of_Degree is 'Non-Board' and Overall_Slots is not empty or zero
-$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
+$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
 $resultNonBoard = $conn->query($sqlNonBoard);
 
 // Combine the results
@@ -62,9 +62,9 @@ if (!empty($combinedResults)) {
     foreach ($combinedResults as $row) {
         echo "<tr data-id='{$row['ProgramID']}' class='list-row'>";
         echo "<td>{$count}</td>";
-        echo "<td class='editable' data-field='Courses'>{$row['Courses']}</td>";
+        echo "<td class='editable' data-field='Description'>{$row['Description']}</td>";
         echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-        echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&Courses={$row['Courses']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
+        echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&description={$row['Description']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
         echo "</tr>";
         $count++;
     }
