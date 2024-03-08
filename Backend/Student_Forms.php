@@ -295,18 +295,7 @@ $conn->close();
                                 }
                                 ?>
                             </div>
-                            <div class="form-group">
-                                <label class="small-label" for="categoryDropdown">Nature of Degree</label>
-                                <?php
-                                if (isset($_GET['College'])) {
-                                    $degree = $_GET['College'];
-                                    echo "<input type='text'class='input' id='categoryDropdown' name='nature_of_degree' value='$College' readonly>";
-                                } else {
-                                    echo "<p>No college information available.</p>";
-                                }
-                                ?>
-                            </div>
-                            <div class="form-group">
+                              <div class="form-group">
                                 <label class="small-label" for="categoryDropdown">Nature of Degree</label>
                                 <?php
                                 if (isset($_GET['degree'])) {
