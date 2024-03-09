@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -161,7 +161,8 @@ $conn->close();
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>";
                                             // Display the count
-                                            echo "<td>" . $row['application_date'] . "</td>";
+                                            echo "<td>" . date('F j, Y', strtotime($row['application_date'])) . "</td>";
+
 
                                             echo "<td>" . $row['degree_applied'] . "</td>";
 
@@ -300,9 +301,9 @@ $conn->close();
 
                                             // Check the appointment status and appointment date to display the appropriate action
                                             if ($row['appointment_status'] === 'Cancelled') {
-                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
+                                                echo "<td><a href='Student_Appointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
                                             } elseif (empty($row['appointment_date'])) {
-                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
+                                                echo "<td><a href='Student_Appointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
                                             } else {
                                                 echo "<td><a href='download.php?id=" . $row['id'] . "'>Generate Form</a></td>";
                                             }

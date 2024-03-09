@@ -48,7 +48,7 @@ $studentData = $resultUser->fetch_assoc();
                 </a>
             </li>
             <li class="">
-                <a href="studentcontent_sidebar.php" id="profile-link">
+                <a href="Student_Profile.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
                 </a>

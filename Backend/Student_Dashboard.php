@@ -1,7 +1,7 @@
 <?php
 
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php"); 
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -76,7 +76,7 @@ $displayedColleges = array();
                                            
                                             echo "<td class='editable' data-field='Courses'>{$count}. &nbsp; {$row['Courses']}</td>";
                                             echo "<td class='editable' data-field='Nature_of_Degree'>{$row['Nature_of_Degree']}</td>";
-                                            echo "<td><a href='studentforms.php?programID={$row['ProgramID']}&Courses={$row['Courses']}&degree={$row['Nature_of_Degree']}' class='apply-button'>Apply</a></td>";
+                                            echo "<td><a href='Student_Forms.php?programID={$row['ProgramID']}&Courses={$row['Courses']}&degree={$row['Nature_of_Degree']}&college={$row['College']}' class='apply-button'>Apply</a></td>";
                                             echo "</tr>";
                                             $count++;
                                         }
@@ -149,34 +149,26 @@ $displayedColleges = array();
     }
 </style>
 <script>
-    // Add a JavaScript function to handle the Apply button click event
+
+
     document.addEventListener('DOMContentLoaded', function () {
-        document.querySelectorAll('.apply-button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var programId = this.getAttribute('data-program-id');
-                // Redirect to studentform.php with the Program ID as a parameter
-                window.location.href = 'studentforms.php?program_id=' + programId;
-            });
-        });
+// Add event listener to Apply buttons
+document.querySelectorAll('.apply-button').forEach(function (button) {
+    button.addEventListener('click', function () {
+        var programId = this.getAttribute('data-id'); // Fix: Use 'data-id' instead of 'data-program-id'
+        var college = this.getAttribute('data-college'); // Get the college attribute
+        // Redirect to Student_Forms.php with the necessary parameters
+        window.location.href = `Student_Forms.php?programID=${programId}&college=${college}`;
     });
-    document.addEventListener('DOMContentLoaded', function () {
-        // Add event listener to college rows
-        document.querySelectorAll('.college-row').forEach(function (collegeRow) {
-            collegeRow.addEventListener('click', function () {
-                // Toggle visibility of programs belonging to the clicked college
-                var programs = this.nextElementSibling.getElementsByClassName('list-row');
-                for (var i = 0; i < programs.length; i++) {
-                    programs[i].style.display = (programs[i].style.display === 'none' || programs[i].style.display === '') ? 'table-row' : 'none';
-                }
-            });
-        });
+});
+
 
         // Add event listener to Apply buttons
         document.querySelectorAll('.apply-button').forEach(function (button) {
             button.addEventListener('click', function () {
                 var programId = this.getAttribute('data-program-id');
                 // Redirect to studentform.php with the Program ID as a parameter
-                window.location.href = 'studentforms.php?program_id=' + programId;
+                window.location.href = 'Student_Forms.php?program_id=' + programId;
             });
         });
     });

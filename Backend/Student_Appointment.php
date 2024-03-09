@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("Student_Cover.php");
 
 // Check if the user is a student member, otherwise redirect them
 if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmtUpdate->execute()) {
         // Successful update
-        $successMessage = "Appointment successfully set!";
+        $successMessage = "Appointment successfully set!";  
         // Update available slots in the appointmentdate table
         $stmtUpdateSlots = $conn->prepare("UPDATE appointmentdate SET available_slots = available_slots - 1 WHERE appointment_date = ? AND appointment_time = ?");
         $stmtUpdateSlots->bind_param("ss", $selectedDate, $selectedTime);
@@ -89,7 +89,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmtUpdate->close();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -163,6 +162,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <style> 
+.alert-success {
+    background-color: #4CAF50; /* Green background color */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px; /* Border radius */
+    margin-bottom: 10px; /* Add margin bottom for spacing */
+}
+
+
  #popup {
     display: none;
     position: fixed;
@@ -186,6 +194,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     max-height: 80%; /* Adjust maximum height as needed */
     overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
     border-radius: 10px;
+    text-align: center;
 }
 
 .close {
@@ -206,7 +215,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     padding: 10px 20px;
     margin-right: 10px;
     cursor: pointer;
-    float: left;
+   
+    margin: 10px;
 }
 
 .confirm:hover {
@@ -221,11 +231,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     padding: 10px 20px;
     margin-left: 10px;
     cursor: pointer;
-    float: right;
+    margin: 10px;
 }
 
 .cancel:hover {
-    background-color: #f44336;
+    background-color: #d32f2f;
 }
 
 .has-events {
@@ -426,13 +436,27 @@ function toggleFormVisibility() {
   function cancelAppointment() {
     closePopup();
   }
-function openPopup() {
+  function openPopup() {
     // Get the selected date and time
     var selectedDate = document.getElementById('selectedDate').value;
     var selectedTime = document.getElementById('availableTimeSlots').value;
 
+    // Parse the selected date to get month name
+    var parsedDate = new Date(selectedDate);
+    var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    var monthName = monthNames[parsedDate.getMonth()];
+
+    // Parse the selected time to 12-hour format with AM/PM
+    var timeComponents = selectedTime.split(':');
+    var hours = parseInt(timeComponents[0]);
+    var minutes = parseInt(timeComponents[1]);
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // Handle midnight (00:00) as 12 AM
+    var formattedTime = hours + ':' + (minutes < 10 ? '0' : '') + minutes + ' ' + ampm;
+
     // Construct the confirmation message
-    var confirmationMessage = "Are you sure you want to set your appointment on " + selectedDate + " at " + selectedTime + "?";
+    var confirmationMessage = "Are you sure you want to set your appointment on " + monthName + " " + parsedDate.getDate() + ", " + parsedDate.getFullYear() + " at " + formattedTime + "?";
 
     // Show the confirmation message in the pop-up
     document.getElementById('popup-message').textContent = confirmationMessage;
