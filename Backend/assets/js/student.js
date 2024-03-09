@@ -73,6 +73,17 @@ function applyDarkMode() {
     }
 }
 
+function applyDarkMode() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark');
+        document.getElementById('switch-mode').checked = true;
+    } else {
+        document.body.classList.remove('dark');
+        document.getElementById('switch-mode').checked = false;
+    }
+}
+
 // Add event listener to the switch
 const switchMode = document.getElementById('switch-mode');
 switchMode.addEventListener('change', function () {
@@ -87,7 +98,6 @@ switchMode.addEventListener('change', function () {
 
 // Apply dark mode when the page loads
 applyDarkMode();
-
 
 //side bar
 document.addEventListener('DOMContentLoaded', function () {
