@@ -24,16 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("UPDATE admission_data SET applicant_name=?, gender=?, phone_number=?, email=?, contact_person_1=?, contact1_phone=?, relationship_1=?, contact_person_2=?, contact_person_2_mobile=?, relationship_2=?, academic_classification=?, college=?, degree_applied=?, nature_of_degree=?, high_school_name_address=?, lrn=? WHERE id=?");
     $stmt->bind_param("sssssssssssssssii", $applicant_name, $gender, $phone_number, $email, $contact_person_1, $contact_person_1_mobile, $relationship_1, $contact_person_2, $contact_person_2_mobile, $relationship_2, $academic_classification, $college, $degree_applied, $nature_of_degree, $high_school_name_address, $lrn, $id);
 
-   
-if ($stmt->execute()) {
-  // Set a session variable for success message
-  session_start();
-  $_SESSION['update_success'] = true;
+    if ($stmt->execute()) {
+      // Set a session variable for success message
+      session_start();
+      $_SESSION['update_success'] = true;
 
-  $response = array('success' => true);
-  echo json_encode($response);
-} else {
-  $response = array('success' => false, 'message' => 'Error updating data');
-  echo json_encode($response);
-}
+      header("Location: Personnel_Verification.php");
+      exit();
+  }
 }

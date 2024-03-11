@@ -189,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt->execute()) {
         echo "Form submitted successfully!";
         // Redirect the user to student.php or another appropriate page
-        header("Location: ../Backend/StudentSetAppointment.php");
+        header("Location: ../Backend/Student_Appointment.php");
         exit();
     } else {
         echo "Error submitting form: " . $stmt->error;

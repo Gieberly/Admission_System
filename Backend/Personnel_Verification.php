@@ -57,6 +57,17 @@ $stmt->close();
 
 <body>
   <section id="content">
+  <?php
+
+    // Check if the success message session variable is set
+    if (isset($_SESSION['update_success']) && $_SESSION['update_success']) {
+        // Display success message with animation
+        echo '<div class="success-message" id="successMessage">Data successfully updated!</div>';
+
+        // Unset the session variable to avoid displaying the message again on page refresh
+        unset($_SESSION['update_success']);
+    }
+    ?>
 
     <main>
 
@@ -114,37 +125,36 @@ $stmt->close();
               </tr>
             </thead>
             <tbody>
-<?php
-$counter = 1; // Initialize the counter before the loop
+              <?php
+              $counter = 1; // Initialize the counter before the loop
 
-while ($row = $result->fetch_assoc()) {
-    echo "<tr class='editRow' data-id='" . $row['id'] . "'>";
-    echo "<td>" . $counter . "</td>";
-    echo "<td>" . $row['applicant_number'] . "</td>";
-    echo "<td>" . $row['nature_of_degree'] . "</td>";
-    echo "<td>" . $row['degree_applied'] . "</td>";
-    echo "<td class='applicant-name'>" . $row['applicant_name'] . "</td>"; // Add a class to the applicant_name column
-    echo "<td>" . $row['academic_classification'] . "</td>";
-    echo "<td>" . $row['application_date'] . "</td>";
-    echo "<td>" . $row['appointment_time'] . "</td>";
-    echo "<td data-field='appointment_status'>{$row['appointment_status']}</td>";
-    echo "<td>
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+                echo "<td>" . $counter . "</td>";
+                echo "<td>" . $row['applicant_number'] . "</td>";
+                echo "<td>" . $row['nature_of_degree'] . "</td>";
+                echo "<td>" . $row['degree_applied'] . "</td>";
+                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['academic_classification'] . "</td>";
+                echo "<td>" . $row['application_date'] . "</td>";
+                echo "<td>" . $row['appointment_time'] . "</td>";
+                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+                echo "<td>
         <div class='button-container'>
         <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
         <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
         <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
         </div>
         </td>";
-    echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-    echo "</tr>";
+                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+                echo "</tr>";
 
-    $counter++; // Increment the counter for the next row
-}
+                $counter++; // Increment the counter for the next row
+              }
 
-// Close the database connection
-$conn->close();
-?>
-
+              // Close the database connection
+              $conn->close();
+              ?>
             </tbody>
           </table>
 
@@ -159,8 +169,8 @@ $conn->close();
 
 
 
-          </div>
-          <form id="updateProfileForm" method="post" action="">
+          </div> 
+          <form id="updateProfileForm" method="post" action="Personnel_DataUpdate.php">
             <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
             <br><br><br><br><br><br>
 
@@ -262,7 +272,7 @@ $conn->close();
               </div>
             </div>
             <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-            <input type="button" id="submitFormButton" value="Submit">
+            <input type="submit" name="submit">
           </form>
         </div>
       </div>
@@ -279,24 +289,19 @@ $conn->close();
   </div>
 
   <style>
-    .success-message {
-      position: fixed;
-      top: 50%;
-      /* Adjust the vertical position as needed */
-      left: 50%;
-      /* Center the message horizontally */
-      transform: translate(-50%, -50%);
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-      animation: popUp 0.5s ease-in-out;
-      display: none;
+     .success-message {
+        position: fixed;
+        top: 10%;
+        right: 10%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border-radius: 4px;
+        animation: slideInRight 0.5s ease-in-out;
+        display: none;
     }
 
-    /* Rest of your existing styles */
-
-
+ 
     @keyframes slideInUp {
       from {
         transform: translateY(100%);
@@ -306,7 +311,6 @@ $conn->close();
         transform: translateY(0);
       }
     }
-
     .button.ekis-btn {
       position: relative;
       background: none;
@@ -506,22 +510,37 @@ $conn->close();
       margin-bottom: 5px;
     }
 
+    /* Apply styles to the input fields */
+    .input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    /* Apply styles to the submit button */
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: darkcyan;
+    }
+
+    /* Style for the personal information headings */
     .personal_information {
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
-    }  #submitFormButton {
-      background-color: #4CAF50; /* Green color */
-      color: white; /* Text color */
-      padding: 10px 20px; /* Padding for better appearance */
-      border: none; /* Remove border */
-      border-radius: 5px; /* Border radius for rounded corners */
-      cursor: pointer; /* Add pointer cursor on hover */
     }
 
-    #submitFormButton:hover {
-      background-color: #45a049; /* Darker green color on hover */
-    }
+    /* Style for the form container */
     #updateProfileForm {
       max-width: 800px;
       margin: 0 auto;
@@ -544,7 +563,13 @@ $conn->close();
       border-radius: 4px;
       cursor: pointer;
     }
-
+   .success-message {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
     /* Responsive styles for smaller screens */
     @media screen and (max-width: 768px) {
       .form-group {
@@ -613,6 +638,7 @@ $conn->close();
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
+ 
   </style>
 
   <div class="confirmation-dialog-overlay"></div>
@@ -626,42 +652,22 @@ $conn->close();
 
 
   <script>
-    $(document).ready(function() {
-      $('#submitFormButton').click(function() {
-        var formData = $('#updateProfileForm').serialize(); // Serialize form data
+function filterByDate() {
+    var selectedDate = document.getElementById('selectedAppointmentDate').value;
+    var tableRows = $('.editRow');
 
-        $.ajax({
-          type: 'POST',
-          url: 'Personnel_DataUpdate.php',
-          data: formData,
-          dataType: 'json',
-          success: function(response) {
-            if (response.success) {
-              showToast('Data successfully updated!', 'success');
-            } else {
-              showToast('Error updating data: ' + response.message, 'error');
-            }
-          },
-
-          error: function(error) {
-            console.error('Error submitting form:', error);
-          }
-        });
-      });
-      function showToast(message, type) {
-    var toastContainer = $('#toast-body');
-    toastContainer.text(message);
-
-    var toast = new bootstrap.Toast(toastContainer.parent()[0], {
-        autohide: true,
-        delay: 3000, // Adjust the delay as needed
+    tableRows.each(function(index, row) {
+        var rowDate = $(row).data('date');
+        if (selectedDate === '' || rowDate === selectedDate) {
+            $(row).show();
+        } else {
+            $(row).hide();
+        }
     });
-
-    toastContainer.parent().removeClass().addClass('toast').addClass('bg-' + type).addClass('text-white');
-    toast.show();
 }
-
-
+    $(document).ready(function() {
+     
+      
       $('.editRow').click(function() {
         // Check if the click was on the buttons
         if (!$(event.target).is('button') && !$(event.target).is('i')) {
@@ -731,7 +737,7 @@ $conn->close();
       var selectedDate = document.getElementById('selectedAppointmentDate').value;
 
       // Redirect to the same page with the selected date as a parameter
-      window.location.href = 'Personnel_AppointmentList.php?selected_date=' + selectedDate;
+      window.location.href = 'Personnel_Verification.php?selected_date=' + selectedDate;
     }
     // Function to update table rows based on the specified range
     function updateTableRows(start, end) {
@@ -745,59 +751,67 @@ $conn->close();
         }
       });
     }
-
     function updateStatus(id, status) {
-      // Show the confirmation dialog
-      $('.confirmation-dialog').show();
-      $('.confirmation-dialog-overlay').show();
+    // Show the confirmation dialog
+    $('.confirmation-dialog').show();
+    $('.confirmation-dialog-overlay').show();
 
-      // Set the message in the dialog
-      $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
+    // Set the message in the dialog
+    $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
 
-      // Handle button clicks in the confirmation dialog
-      $('.confirmation-buttons button').click(function() {
+    // Handle button clicks in the confirmation dialog
+    $('.confirmation-buttons button').click(function () {
         var userConfirmed = $(this).data('confirmed');
         if (userConfirmed) {
-          // User confirmed, send the AJAX request to update the status
-          $.ajax({
-            type: 'POST',
-            url: 'Personnel_UpdateStatus.php',
-            data: {
-              id: id,
-              status: status
-            },
-            dataType: 'json', // Expect JSON response
-            success: function(response) {
-              if (response.success) {
-                // Update the status in the table cell
-                $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
-                showToast(response.message, 'success');
-              } else {
-                showToast(response.message, 'error');
-              }
-            },
-            error: function(error) {
-              console.error('Error updating status:', error);
-            }
-          });
+            // User confirmed, send the AJAX request to update the status
+            $.ajax({
+                type: 'POST',
+                url: 'Personnel_UpdateStatus.php',
+                data: { id: id, status: status },
+                dataType: 'json', // Expect JSON response
+                success: function (response) {
+                    if (response.success) {
+                        // Update the status in the table cell
+                        $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
+                        showToast(response.message, 'success');
+                    } else {
+                        showToast(response.message, 'error');
+                    }
+                },
+                error: function (error) {
+                    console.error('Error updating status:', error);
+                }
+            });
         }
 
         // Hide the confirmation dialog and overlay
         $('.confirmation-dialog').hide();
         $('.confirmation-dialog-overlay').hide();
-      });
-    }
+    });
+}
 
-    function showToast(message, type) {
-      // Display a toast message
-      $('#toast-body').text(message);
-      $('#toast').removeClass().addClass('toast').addClass(type).addClass('show');
+function showToast(message, type) {
+    // Display a toast message
+    $('#toast-body').text(message);
+    $('#toast').removeClass().addClass('toast').addClass(type).addClass('show');
 
-      // Hide the toast after a few seconds
-      setTimeout(function() {
+    // Hide the toast after a few seconds
+    setTimeout(function () {
         $('#toast').removeClass('show');
-      }, 3000);
-    }
+    }, 3000);
+}
+document.addEventListener('DOMContentLoaded', function () {
+            var successMessage = document.getElementById('successMessage');
+
+            if (successMessage) {
+                successMessage.style.display = 'block';
+
+                setTimeout(function () {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            }
+        });
+
   </script>
 
 
