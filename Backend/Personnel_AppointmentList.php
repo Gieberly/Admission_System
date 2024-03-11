@@ -1,4 +1,5 @@
 <?php
+
 include("config.php");
 include("Personnel_Cover.php");
 
@@ -12,7 +13,6 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
 $resultClassification = $conn->query($sqlClassification);
 
-
 // Retrieve admission data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
@@ -21,6 +21,7 @@ $query = "SELECT * FROM admission_data WHERE
             `applicant_number` LIKE '%$search%' OR 
             `academic_classification` LIKE '%$search%' OR 
             `email` LIKE '%$search%' OR 
+          
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%'
@@ -36,30 +37,20 @@ $stmt->execute();
 $stmt->bind_result($name, $email, $userType, $status);
 $stmt->fetch();
 
-// Close statement
-$stmt->close();
 ?>
 
 
 
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BSU OUR Admission Unit Personnel</title>
-  <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-  <link rel="stylesheet" href="assets/css//personnel.css" />
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <title>BSU OUR Admission Unit Personnel</title>
+
 </head>
 
 <body>
   <section id="content">
 
     <main>
-
       <div class="head-title">
         <div class="left">
           <h1>Document Checking</h1>
@@ -114,37 +105,35 @@ $stmt->close();
               </tr>
             </thead>
             <tbody>
-<?php
-$counter = 1; // Initialize the counter before the loop
+              <?php
+              $counter = 1; // Initialize the counter before the loop
 
-while ($row = $result->fetch_assoc()) {
-    echo "<tr class='editRow' data-id='" . $row['id'] . "'>";
-    echo "<td>" . $counter . "</td>";
-    echo "<td>" . $row['applicant_number'] . "</td>";
-    echo "<td>" . $row['nature_of_degree'] . "</td>";
-    echo "<td>" . $row['degree_applied'] . "</td>";
-    echo "<td class='applicant-name'>" . $row['applicant_name'] . "</td>"; // Add a class to the applicant_name column
-    echo "<td>" . $row['academic_classification'] . "</td>";
-    echo "<td>" . $row['application_date'] . "</td>";
-    echo "<td>" . $row['appointment_time'] . "</td>";
-    echo "<td data-field='appointment_status'>{$row['appointment_status']}</td>";
-    echo "<td>
-        <div class='button-container'>
-        <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
-        <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
-        <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
-        </div>
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr class='editRow' data-userid='" . $row['id'] . "'>";
+                echo "<td>" . $counter . "</td>";
+                echo "<td>" . $row['applicant_number'] . "</td>";
+                echo "<td>" . $row['nature_of_degree'] . "</td>";
+                echo "<td>" . $row['degree_applied'] . "</td>";
+                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['academic_classification'] . "</td>";
+                echo "<td>" . $row['application_date'] . "</td>";
+                echo "<td>" . $row['appointment_time'] . "</td>";
+                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+                echo "<td>
+            <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
+            <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
+            <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
+           
         </td>";
-    echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-    echo "</tr>";
+                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+                echo "</tr>";
 
-    $counter++; // Increment the counter for the next row
-}
+                $counter++; // Increment the counter for the next row
+              }
 
-// Close the database connection
-$conn->close();
-?>
-
+              // Close the database connection
+              $conn->close();
+              ?>
             </tbody>
           </table>
 
@@ -165,7 +154,6 @@ $conn->close();
             <br><br><br><br><br><br>
 
             <div class="form-container1">
-
               <div class="form-group">
                 <label class="small-label" for="applicant_name">Complete Name</label>
                 <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
@@ -186,13 +174,13 @@ $conn->close();
               <!-- Telephone/Mobile No -->
               <div class="form-group">
                 <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-                <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
+                <input name="phone_number" class="input" id="phone" value="<?php echo $admissionData['phone_number']; ?>">
               </div>
 
               <!--Email Address -->
               <div class="form-group">
                 <label class="small-label" for="email">Email Address</label>
-                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+                <input name="email" class="input" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
               </div>
             </div>
 
@@ -235,9 +223,11 @@ $conn->close();
                 <label class="small-label" for="academic_classification">Academic Classification</label>
                 <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
               </div>
+
               <div class="form-group">
                 <label class="small-label" for="college">College</label>
-                <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
+                <!-- Display the selected program in this input field -->
+                <input name="college" class="input" id="degree_applied" value="<?php echo $admissionData['college']; ?>">
               </div>
               <div class="form-group">
                 <label class="small-label" for="degree_applied">Degree</label>
@@ -261,8 +251,7 @@ $conn->close();
                 <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
               </div>
             </div>
-            <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-            <input type="button" id="submitFormButton" value="Submit">
+            <input type="submit" value="Update Profile">
           </form>
         </div>
       </div>
@@ -279,145 +268,6 @@ $conn->close();
   </div>
 
   <style>
-    .success-message {
-      position: fixed;
-      top: 50%;
-      /* Adjust the vertical position as needed */
-      left: 50%;
-      /* Center the message horizontally */
-      transform: translate(-50%, -50%);
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-      animation: popUp 0.5s ease-in-out;
-      display: none;
-    }
-
-    /* Rest of your existing styles */
-
-
-    @keyframes slideInUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    .button.ekis-btn {
-      position: relative;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    .button.ekis-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-
-    }
-
-    .button.ekis-btn:hover i {
-      color: red;
-    }
-
-    .button.ekis-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-
-
-    .button.inc-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .button.inc-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-
-    }
-
-    .button.inc-btn:hover i {
-      color: orange;
-    }
-
-    .button.inc-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-
-    .button.check-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .button.check-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-    }
-
-    .button.check-btn:hover i {
-      color: green;
-
-    }
-
-    .button.check-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
-    }
-
     #calendarFilterForm button {
       background: none;
       border: none;
@@ -506,22 +356,37 @@ $conn->close();
       margin-bottom: 5px;
     }
 
+    /* Apply styles to the input fields */
+    .input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    /* Apply styles to the submit button */
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: darkcyan;
+    }
+
+    /* Style for the personal information headings */
     .personal_information {
       font-size: 18px;
       font-weight: bold;
       margin-bottom: 10px;
-    }  #submitFormButton {
-      background-color: #4CAF50; /* Green color */
-      color: white; /* Text color */
-      padding: 10px 20px; /* Padding for better appearance */
-      border: none; /* Remove border */
-      border-radius: 5px; /* Border radius for rounded corners */
-      cursor: pointer; /* Add pointer cursor on hover */
     }
 
-    #submitFormButton:hover {
-      background-color: #45a049; /* Darker green color on hover */
-    }
+    /* Style for the form container */
     #updateProfileForm {
       max-width: 800px;
       margin: 0 auto;
@@ -564,7 +429,6 @@ $conn->close();
       border: 1px solid #ccc;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       z-index: 1000;
-      border-radius: 5px;
     }
 
     .confirmation-dialog p {
@@ -573,34 +437,24 @@ $conn->close();
 
     .confirmation-buttons {
       text-align: center;
-      outline: none;
+    }
+
+    .confirmation-buttons button {
       margin: 0 10px;
+      padding: 8px 15px;
+      cursor: pointer;
     }
 
-
-
-    .confirmation-buttons button[data-confirmed="true"] {
-      background-color: green;
-      color: white;
-      transition: background-color 0.3s ease;
-    }
-
-    /* Hover effect for Confirm button */
     .confirmation-buttons button[data-confirmed="true"]:hover {
-      background-color: #4caf50;
-    }
-
-
-    /* Styling for Cancel button */
-    .confirmation-buttons button[data-confirmed="false"] {
-      background-color: red;
+      background-color: darkcyan;
       color: white;
-      transition: background-color 0.3s ease;
+      border-color: darkcyan;
     }
 
-    /* Hover effect for Cancel button */
     .confirmation-buttons button[data-confirmed="false"]:hover {
-      background-color: #e57373;
+      background-color: #DF5201;
+      color: white;
+      border-color: #DF5201;
     }
 
     .confirmation-dialog-overlay {
@@ -615,58 +469,15 @@ $conn->close();
     }
   </style>
 
-  <div class="confirmation-dialog-overlay"></div>
-  <div class="confirmation-dialog">
-    <p></p>
-    <div class="confirmation-buttons">
-      <button data-confirmed="true">Confirm</button>
-      <button data-confirmed="false">Cancel</button>
-    </div>
-  </div>
-
 
   <script>
     $(document).ready(function() {
-      $('#submitFormButton').click(function() {
-        var formData = $('#updateProfileForm').serialize(); // Serialize form data
-
-        $.ajax({
-          type: 'POST',
-          url: 'Personnel_DataUpdate.php',
-          data: formData,
-          dataType: 'json',
-          success: function(response) {
-            if (response.success) {
-              showToast('Data successfully updated!', 'success');
-            } else {
-              showToast('Error updating data: ' + response.message, 'error');
-            }
-          },
-
-          error: function(error) {
-            console.error('Error submitting form:', error);
-          }
-        });
-      });
-      function showToast(message, type) {
-    var toastContainer = $('#toast-body');
-    toastContainer.text(message);
-
-    var toast = new bootstrap.Toast(toastContainer.parent()[0], {
-        autohide: true,
-        delay: 3000, // Adjust the delay as needed
-    });
-
-    toastContainer.parent().removeClass().addClass('toast').addClass('bg-' + type).addClass('text-white');
-    toast.show();
-}
-
-
+      // Add a click event listener to all rows with the 'editRow' class
       $('.editRow').click(function() {
         // Check if the click was on the buttons
         if (!$(event.target).is('button') && !$(event.target).is('i')) {
           // Get the 'data-userid' attribute from the clicked row
-          var userId = $(this).data('id');
+          var userId = $(this).data('userid');
 
           // Send an AJAX request to fetch the user data based on the user ID
           $.ajax({
@@ -678,7 +489,6 @@ $conn->close();
             dataType: 'json',
             success: function(response) {
               // Populate the form fields with the fetched data
-
               $('#applicantPicture').attr('src', response.id_picture);
               $('#updateProfileForm input[name="applicant_name"]').val(response.applicant_name);
               $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
@@ -701,7 +511,7 @@ $conn->close();
               $('#updateProfileForm input[name="relationship_2"]').val(response.relationship_2);
               $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
               $('#updateProfileForm input[name="college"]').val(response.college);
-              $('#updateProfileForm input[name="id"]').val(response.id);
+              $('#updateProfileForm input[name="Strand"]').val(response.Strand);
               $('#updateProfileForm input[name="high_school_name_address"]').val(response.high_school_name_address);
               $('#updateProfileForm input[name="lrn"]').val(response.lrn);
               $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
@@ -747,57 +557,38 @@ $conn->close();
     }
 
     function updateStatus(id, status) {
-      // Show the confirmation dialog
-      $('.confirmation-dialog').show();
-      $('.confirmation-dialog-overlay').show();
+        // Show the confirmation dialog
+        $('.confirmation-dialog').show();
+        $('.confirmation-dialog-overlay').show();
 
-      // Set the message in the dialog
-      $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
+        // Set the message in the dialog
+        $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
 
-      // Handle button clicks in the confirmation dialog
-      $('.confirmation-buttons button').click(function() {
-        var userConfirmed = $(this).data('confirmed');
-        if (userConfirmed) {
-          // User confirmed, send the AJAX request to update the status
-          $.ajax({
-            type: 'POST',
-            url: 'Personnel_UpdateStatus.php',
-            data: {
-              id: id,
-              status: status
-            },
-            dataType: 'json', // Expect JSON response
-            success: function(response) {
-              if (response.success) {
-                // Update the status in the table cell
-                $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
-                showToast(response.message, 'success');
-              } else {
-                showToast(response.message, 'error');
-              }
-            },
-            error: function(error) {
-              console.error('Error updating status:', error);
+        // Handle button clicks in the confirmation dialog
+        $('.confirmation-buttons button').click(function() {
+            var userConfirmed = $(this).data('confirmed');
+            if (userConfirmed) {
+                // User confirmed, send the AJAX request to update the status
+                $.ajax({
+                    type: 'POST',
+                    url: 'Personnel_UpdateStatus.php', // Replace with the actual file handling the update
+                    data: { id: id, status: status },
+                    success: function(response) {
+                        // Update the status in the table cell
+                        $('[data-userid="' + id + '"] [data-field="appointment_status"]').text(status);
+                    },
+                    error: function(error) {
+                        console.error('Error updating status:', error);
+                    }
+                });
             }
-          });
-        }
 
-        // Hide the confirmation dialog and overlay
-        $('.confirmation-dialog').hide();
-        $('.confirmation-dialog-overlay').hide();
-      });
+            // Hide the confirmation dialog and overlay
+            $('.confirmation-dialog').hide();
+            $('.confirmation-dialog-overlay').hide();
+        });
     }
 
-    function showToast(message, type) {
-      // Display a toast message
-      $('#toast-body').text(message);
-      $('#toast').removeClass().addClass('toast').addClass(type).addClass('show');
-
-      // Hide the toast after a few seconds
-      setTimeout(function() {
-        $('#toast').removeClass('show');
-      }, 3000);
-    }
   </script>
 
 
