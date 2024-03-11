@@ -76,8 +76,8 @@ include("../includes/functions.php");
                                             <td><?php echo $row['appointment_time']; ?></td>
                                             <td><?php echo $row['available_slots']; ?></td>
                                             <td> 
-                                                <a href="update_data_form.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-primary" role="button">Edit<i class='bx bx-edit'></i></a>
-                                                <a href="delete_data.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger" role="button">Delete<i class='bx bxs-trash'></i></a>
+                                                <a href="update_data_form.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-primary">Edit<i class='bx bx-edit'></i></a>
+                                                <a href="delete_data.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger">Delete<i class='bx bxs-trash'></i></a>
                                             </td>
                                         </tr>
   
