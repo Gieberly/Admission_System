@@ -48,7 +48,7 @@ $studentData = $resultUser->fetch_assoc();
                 </a>
             </li>
             <li class="">
-                <a href="studentcontent_sidebar.php" id="profile-link">
+                <a href="Student_Profile.php" id="profile-link">
                     <i class='bx bxs-group'></i>
                     <span class="text">Profile</span>
                 </a>
@@ -245,25 +245,35 @@ $studentData = $resultUser->fetch_assoc();
 }
 
 .confirmation-modal button {
-    padding: 10px 15px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
+        padding: 10px 15px;
+        margin: 0 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease; /* Add transition effect */
+    }
 
-/* Style the 'Yes' button in green */
-#confirmYesLogout {
-    background-color: #28a745; /* Green color */
-    color: white;
-}
+    /* Style the 'Yes' button in green */
+    #confirmYesLogout {
+        background-color: #28a745; /* Green color */
+        color: white;
+    }
 
-/* Style the 'No' button in red */
-#confirmNoLogout {
-    background-color: #dc3545; /* Red color */
-    color: white;
-}
+    /* Style the 'Yes' button hover */
+    #confirmYesLogout:hover {
+        background-color: #218838; /* Darker shade of green */
+    }
 
+    /* Style the 'No' button in red */
+    #confirmNoLogout {
+        background-color: #dc3545; /* Red color */
+        color: white;
+    }
+
+    /* Style the 'No' button hover */
+    #confirmNoLogout:hover {
+        background-color: #c82333; /* Darker shade of red */
+    }
 </style>
         </div>
     </div>

@@ -10,14 +10,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $conn->prepare($updateQuery);
     $stmt->bind_param("si", $status, $id);
 
+    $response = array(); // Create an array to store the response
+
     if ($stmt->execute()) {
-        echo "Status updated successfully";
+        $response['success'] = true;
+        $response['message'] = "Status updated successfully";
     } else {
-        echo "Error updating status";
+        $response['success'] = false;
+        $response['message'] = "Error updating status";
     }
 
     $stmt->close();
     $conn->close();
+
+    // Send the response as JSON
+    header('Content-Type: application/json');
+    echo json_encode($response);
 } else {
     echo "Invalid request";
 }
