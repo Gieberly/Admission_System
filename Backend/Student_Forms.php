@@ -111,6 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $rank = isset($_POST['rank']) ? $_POST['rank'] : null;  // Check if 'rank' key exists
     $result = isset($_POST['result']) ? $_POST['result'] : null;  // Check if 'result' key exists
+    $college = $_POST['college'];
 
     // Check if a file was uploaded
     if (isset($id_picture) && $id_picture['error'] === UPLOAD_ERR_OK) {
@@ -147,12 +148,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
     civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
     contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
-    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date) VALUES (?, ?, 
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date, college) VALUES (?, ?, 
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
 
     // Bind parameters
     $stmt->bind_param(
-        "sssssissssiisssississssssss",
+        "sssssissssiisssississsssssss",
         $id_picture_data,
         $applicant_name,
         $gender,
@@ -180,6 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $nature_of_degree,
         $applicant_number,
         $application_date,
+        $college,
     );
 
 
@@ -236,7 +238,7 @@ $conn->close();
         </div>
     </header>
 
-    <form id="registrationForm" action="studentforms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
+    <form id="registrationForm" action="Student_Forms.php" method="POST" onsubmit="return checkEmail()" enctype="multipart/form-data">
 
 
         <div class="progress-bar">
@@ -298,7 +300,7 @@ $conn->close();
 
                             <!-- Board Programs -->
                             <div class="form-group">
-                            
+
                                 <label class="small-label" for="board-programs">Board Programs</label>
                                 <?php
                                 if (isset($_GET['Courses'])) {
@@ -310,8 +312,9 @@ $conn->close();
                                 ?>
                             </div>
 
-                           
-                            <div id="boardclassificationFields" >
+
+
+                            <div id="boardclassificationFields">
                                 <label class="small-label" for="academic_classification_board">Academic Classification</label>
                                 <select name="academic_classification" class="inputs" id="academic_classification_board" onchange="BoardRequirements()">
                                     <option value="">Select Academic Classification</option>
@@ -331,9 +334,9 @@ $conn->close();
 
 
 
-                         </div>
-                         <br>
-                         <div id="classificationInfo"></div>
+                        </div>
+                        <br>
+                        <div id="classificationInfo"></div>
 
 
 
@@ -464,10 +467,11 @@ $conn->close();
                         <label class="small-label" for="permanent_address">Address</label>
                         <input type="text" class="input" name="permanent_address" id="permanent_address" placeholder="House # & Street, Barangay/Subdivision, Municipality(town)/City, Province, Country/State" required>
                         <div class="note" id="permanent_address_note">e.g. 01-A, Balili, La Trinidad, Benguet, Philippines</div>
-                    </div></div>
+                    </div>
+                </div>
 
-                    <!-- zip-code -->
-                    <div class="form-container">
+                <!-- zip-code -->
+                <div class="form-container">
                     <div class="form-group">
                         <label class="small-label" for="zip_code">Zip Code</label>
                         <input type="number" name="zip_code" class="input" id="zip_code" placeholder="Zip Code" required>
@@ -620,6 +624,21 @@ $conn->close();
                 <label for="applicant_name">Name of Applicant</label>
                 <input type="text" placeholder="Enter Full Name" value="<?php echo $last_name; ?>, <?php echo $name; ?> <?php echo $mname; ?>" name="applicant_name" id="applicant_name">
             </div>
+            <div class="form-group" style="display: none;">
+               
+                <div class="form-group">
+                    <label class="small-label" for="college">Selected College</label>
+                    <?php
+                    if (isset($_GET['college'])) {
+                        $college = $_GET['college'];
+                        echo "<input type='text' class='input' id='selectedCollege' name='college' value='$college' readonly>";
+                    } else {
+                        echo "<p>No college information available.</p>";
+                    }
+                    ?>
+                </div>
+
+            </div>
 
             <div class="applicant_number" style="display: none;">
                 <label for="application_date"><strong>DATE OF APPLICATION:</strong></label>
@@ -636,10 +655,10 @@ $conn->close();
             <br>
             <h2></h2>
             <div class="page-container">
-            <p class="note-color" style=" text-align: center;"> <span class="checkmark"></span>SUBMIT ONLY THE FORM IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</p>
-            <p>Make sure that you read and understood all the instructions contained in this Application form and that the information supplied are true, complete and accurate. Be aware that any information that have concealed, falsely given and/or withheld is enough basis for the invalidation/cancellation of your application. </p>
-            <p style="color: green; font-weight: bold; text-align: center; font-size: 16px">After Submission, set your appointment and print the admission form during your appointment date with the needed requirements.</p>
-        </div>
+                <p class="note-color" style=" text-align: center;"> <span class="checkmark"></span>SUBMIT ONLY THE FORM IF ALL REQUIREMENTS ARE COMPLETE, INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</p>
+                <p>Make sure that you read and understood all the instructions contained in this Application form and that the information supplied are true, complete and accurate. Be aware that any information that have concealed, falsely given and/or withheld is enough basis for the invalidation/cancellation of your application. </p>
+                <p style="color: green; font-weight: bold; text-align: center; font-size: 16px">After Submission, set your appointment and print the admission form during your appointment date with the needed requirements.</p>
+            </div>
 
 
 

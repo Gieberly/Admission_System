@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
        
 
             if ($userType == 'Student') {
-                header("Location: ../Backend/studentDashboard.php");
+                header("Location: ../Backend/Student_Dashboard.php");
                 exit();
             } elseif ($userType == 'Faculty') {
                 if (strtolower($lstatus) == 'approved') {

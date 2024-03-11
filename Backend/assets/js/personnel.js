@@ -90,15 +90,31 @@ window.addEventListener('resize', function () {
 	}
 })
 
-const switchMode = document.getElementById('switch-mode');
+function applyDarkMode() {
+    const isDarkMode = localStorage.getItem('darkMode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark');
+        document.getElementById('switch-mode').checked = true;
+    } else {
+        document.body.classList.remove('dark');
+        document.getElementById('switch-mode').checked = false;
+    }
+}
 
+// Add event listener to the switch
+const switchMode = document.getElementById('switch-mode');
 switchMode.addEventListener('change', function () {
-	if(this.checked) {
-		document.body.classList.add('dark');
-	} else {
-		document.body.classList.remove('dark');
-	}
-})
+    if (this.checked) {
+        document.body.classList.add('dark');
+        localStorage.setItem('darkMode', 'true'); // Save dark mode preference
+    } else {
+        document.body.classList.remove('dark');
+        localStorage.setItem('darkMode', 'false'); // Save light mode preference
+    }
+});
+
+// Apply dark mode when the page loads
+applyDarkMode();
 
 //side bar
 document.addEventListener('DOMContentLoaded', function () {
