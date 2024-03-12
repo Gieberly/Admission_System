@@ -1709,3 +1709,60 @@ label[for="rangeInput"] {
 	width: 16px;
 	/* Adjust the height for the desired spacing */
 }
+
+
+.tab {
+  display: none;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #4caf50;
+  
+  border-bottom-left-radius: 15px;
+  
+  border-top-right-radius: 15px;
+}
+
+
+  
+.tab-label {
+	cursor: pointer;
+	display: inline-block;
+	padding: 15px 20px;
+	background-color: #bababa;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover effect for labels */
+  .tab-label:hover {
+	background-color: #ddd;
+  }
+  
+  /* Show tab content when the radio button is checked */
+  .tab:checked + .tab-label {
+	background-color: #4caf50;
+	color: #fff;
+	border-color: #000101;
+	border-top:  #4caf50;
+  }
+  
+  .tab:checked ~ .tab-content {
+	display: none;
+  }
+  
+  #tab1:checked ~ #content1,
+  #tab2:checked ~ #content2 {
+	display: block;
+  }
+  /* Add this style to target the top border */
+.tab:checked + .tab-label + .tab-content {
+	border-top: 1px solid #4caf50;
+  }

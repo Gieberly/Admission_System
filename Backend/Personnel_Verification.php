@@ -12,18 +12,20 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
 $resultClassification = $conn->query($sqlClassification);
 
-
-// Retrieve admission data from the database
+// Retrieve admission data from the database with date filter
 $search = isset($_GET['search']) ? $_GET['search'] : '';
+$filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
 
 $query = "SELECT * FROM admission_data WHERE 
-            `applicant_name` LIKE '%$search%' OR 
-            `applicant_number` LIKE '%$search%' OR 
-            `academic_classification` LIKE '%$search%' OR 
-            `email` LIKE '%$search%' OR 
-            `result` LIKE '%$search%' OR 
-            `nature_of_degree` LIKE '%$search%' OR 
-            `degree_applied` LIKE '%$search%'
+            (`applicant_name` LIKE '%$search%' OR 
+             `applicant_number` LIKE '%$search%' OR 
+             `academic_classification` LIKE '%$search%' OR 
+             `email` LIKE '%$search%' OR 
+             `result` LIKE '%$search%' OR 
+             `nature_of_degree` LIKE '%$search%' OR 
+             `degree_applied` LIKE '%$search%')
+            AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
+            AND `appointment_date` IS NOT NULL
           ORDER BY nature_of_degree ASC, degree_applied ASC, applicant_name ASC";
 
 $result = $conn->query($query);
@@ -45,27 +47,22 @@ $stmt->close();
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BSU OUR Admission Unit Personnel</title>
-  <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
-  <link rel="stylesheet" href="assets/css//personnel.css" />
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  <title>BSU OUR Admission Unit Personnel</title>
+
 </head>
 
 <body>
   <section id="content">
-  <?php
+    <?php
 
     // Check if the success message session variable is set
     if (isset($_SESSION['update_success']) && $_SESSION['update_success']) {
-        // Display success message with animation
-        echo '<div class="success-message" id="successMessage">Data successfully updated!</div>';
+      // Display success message with animation
+      echo '<div class="success-message" id="successMessage">Data successfully updated!</div>';
 
-        // Unset the session variable to avoid displaying the message again on page refresh
-        unset($_SESSION['update_success']);
+      // Unset the session variable to avoid displaying the message again on page refresh
+      unset($_SESSION['update_success']);
     }
     ?>
 
@@ -98,16 +95,16 @@ $stmt->close();
         <div class="order">
           <div class="head">
             <h3>List of Students</h3>
+            <!-- Add this input field for date filtering -->
             <div class="headfornaturetosort">
-
-              <form method="post" action="" id="calendarFilterForm">
-                <label for="selectedAppointmentDate"></label>
-                <input type="date" id="selectedAppointmentDate" name="selected_appointment_date" required>
-                <button type="button" onclick="filterByDate()"><i class='bx bx-filter'></i></button>
+              <form method="GET" action="" id="calendarFilterForm">
+                <label for="appointment_date"></label>
+                <input type="date" name="appointment_date" id="appointment_date">
+                <button type="submit"><i class='bx bx-filter'></i></button>
               </form>
-
             </div>
           </div>
+
 
           <table id="studentTable">
             <thead>
@@ -118,7 +115,7 @@ $stmt->close();
                 <th>Program</th>
                 <th>Name</th>
                 <th>Academic Classification</th>
-                <th>Application Date</th>
+                <th>Appointment Date</th>
                 <th>Application Time</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -136,8 +133,12 @@ $stmt->close();
                 echo "<td>" . $row['degree_applied'] . "</td>";
                 echo "<td>" . $row['applicant_name'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
-                echo "<td>" . $row['application_date'] . "</td>";
-                echo "<td>" . $row['appointment_time'] . "</td>";
+                $appointmentDate = $row['appointment_date'];
+                echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
+                $appointmentTime = $row['appointment_time'];
+                echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
+
+
                 echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
                 echo "<td>
         <div class='button-container'>
@@ -161,16 +162,16 @@ $stmt->close();
         </div>
 
         <div class="todo" style="display: none;">
-          <div class="head">
-            <h3>Student Data</h3>
+       
+  <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+  <label class="tab-label" for="tab1">Student Data</label>
 
-            <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
+  <input type="radio" id="tab2" name="tabGroup1" class="tab">
+  <label class="tab-label" for="tab2">Student Requirements</label>
 
-
-
-
-          </div> 
-          <form id="updateProfileForm" method="post" action="Personnel_DataUpdate.php">
+  <div class="tab-content" id="content1">
+   
+    <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
             <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
             <br><br><br><br><br><br>
 
@@ -274,6 +275,22 @@ $stmt->close();
             <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
             <input type="submit" name="submit">
           </form>
+    <!-- Add your student data fields here -->
+  </div>
+
+  <div class="tab-content" id="content2">
+    <!-- Content for Student Requirements Tab -->
+    <h2>Student Requirements</h2>
+    <p>Academic classification: <?php echo $row['academic_classification']; ?></p>
+</div>
+
+
+      
+    </div>
+</div>
+
+
+
         </div>
       </div>
     </main>
@@ -289,19 +306,19 @@ $stmt->close();
   </div>
 
   <style>
-     .success-message {
-        position: fixed;
-        top: 10%;
-        right: 10%;
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px;
-        border-radius: 4px;
-        animation: slideInRight 0.5s ease-in-out;
-        display: none;
+    .success-message {
+      position: fixed;
+      top: 10%;
+      right: 10%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      animation: slideInRight 0.5s ease-in-out;
+      display: none;
     }
 
- 
+
     @keyframes slideInUp {
       from {
         transform: translateY(100%);
@@ -311,6 +328,7 @@ $stmt->close();
         transform: translateY(0);
       }
     }
+
     .button.ekis-btn {
       position: relative;
       background: none;
@@ -563,13 +581,15 @@ $stmt->close();
       border-radius: 4px;
       cursor: pointer;
     }
-   .success-message {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px;
-        border-radius: 4px;
-        margin-bottom: 10px;
+
+    .success-message {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
     }
+
     /* Responsive styles for smaller screens */
     @media screen and (max-width: 768px) {
       .form-group {
@@ -638,7 +658,6 @@ $stmt->close();
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
     }
- 
   </style>
 
   <div class="confirmation-dialog-overlay"></div>
@@ -652,22 +671,9 @@ $stmt->close();
 
 
   <script>
-function filterByDate() {
-    var selectedDate = document.getElementById('selectedAppointmentDate').value;
-    var tableRows = $('.editRow');
-
-    tableRows.each(function(index, row) {
-        var rowDate = $(row).data('date');
-        if (selectedDate === '' || rowDate === selectedDate) {
-            $(row).show();
-        } else {
-            $(row).hide();
-        }
-    });
-}
     $(document).ready(function() {
-     
-      
+
+
       $('.editRow').click(function() {
         // Check if the click was on the buttons
         if (!$(event.target).is('button') && !$(event.target).is('i')) {
@@ -732,86 +738,69 @@ function filterByDate() {
       });
     });
 
-    function filterByDate() {
-      // Get the selected date from the input field
-      var selectedDate = document.getElementById('selectedAppointmentDate').value;
-
-      // Redirect to the same page with the selected date as a parameter
-      window.location.href = 'Personnel_Verification.php?selected_date=' + selectedDate;
-    }
-    // Function to update table rows based on the specified range
-    function updateTableRows(start, end) {
-      var rows = $('#table-container table tbody tr');
-
-      rows.each(function(index, row) {
-        if (index + 1 >= start && index + 1 <= end) {
-          $(row).show();
-        } else {
-          $(row).hide();
-        }
-      });
-    }
     function updateStatus(id, status) {
-    // Show the confirmation dialog
-    $('.confirmation-dialog').show();
-    $('.confirmation-dialog-overlay').show();
+      // Show the confirmation dialog
+      $('.confirmation-dialog').show();
+      $('.confirmation-dialog-overlay').show();
 
-    // Set the message in the dialog
-    $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
+      // Set the message in the dialog
+      $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
 
-    // Handle button clicks in the confirmation dialog
-    $('.confirmation-buttons button').click(function () {
+      // Handle button clicks in the confirmation dialog
+      $('.confirmation-buttons button').click(function() {
         var userConfirmed = $(this).data('confirmed');
         if (userConfirmed) {
-            // User confirmed, send the AJAX request to update the status
-            $.ajax({
-                type: 'POST',
-                url: 'Personnel_UpdateStatus.php',
-                data: { id: id, status: status },
-                dataType: 'json', // Expect JSON response
-                success: function (response) {
-                    if (response.success) {
-                        // Update the status in the table cell
-                        $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
-                        showToast(response.message, 'success');
-                    } else {
-                        showToast(response.message, 'error');
-                    }
-                },
-                error: function (error) {
-                    console.error('Error updating status:', error);
-                }
-            });
+          // User confirmed, send the AJAX request to update the status
+          $.ajax({
+            type: 'POST',
+            url: 'Personnel_UpdateStatus.php',
+            data: {
+              id: id,
+              status: status
+            },
+            dataType: 'json', // Expect JSON response
+            success: function(response) {
+              if (response.success) {
+                // Update the status in the table cell
+                $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
+                showToast(response.message, 'success');
+              } else {
+                showToast(response.message, 'error');
+              }
+            },
+            error: function(error) {
+              console.error('Error updating status:', error);
+            }
+          });
         }
 
         // Hide the confirmation dialog and overlay
         $('.confirmation-dialog').hide();
         $('.confirmation-dialog-overlay').hide();
-    });
-}
+      });
+    }
 
-function showToast(message, type) {
-    // Display a toast message
-    $('#toast-body').text(message);
-    $('#toast').removeClass().addClass('toast').addClass(type).addClass('show');
+    function showToast(message, type) {
+      // Display a toast message
+      $('#toast-body').text(message);
+      $('#toast').removeClass().addClass('toast').addClass(type).addClass('show');
 
-    // Hide the toast after a few seconds
-    setTimeout(function () {
+      // Hide the toast after a few seconds
+      setTimeout(function() {
         $('#toast').removeClass('show');
-    }, 3000);
-}
-document.addEventListener('DOMContentLoaded', function () {
-            var successMessage = document.getElementById('successMessage');
+      }, 3000);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      var successMessage = document.getElementById('successMessage');
 
-            if (successMessage) {
-                successMessage.style.display = 'block';
+      if (successMessage) {
+        successMessage.style.display = 'block';
 
-                setTimeout(function () {
-                    successMessage.style.display = 'none';
-                }, 3000);
-            }
-        });
-
+        setTimeout(function() {
+          successMessage.style.display = 'none';
+        }, 3000);
+      }
+    });
   </script>
 
 
