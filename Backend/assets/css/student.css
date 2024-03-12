@@ -985,7 +985,6 @@ nav {
 	/* Center horizontally */
 	align-items: center;
 	/* Center vertically */
-
 }
 
 .profile-result {
@@ -1037,6 +1036,14 @@ nav {
 
 }
 
+.apply-program {
+    text-align: center;
+}
+
+.apply-program a:hover {
+    text-decoration: underline;
+}
+
 .StudentResult-Content {
 	display: flex;
 	align-items: center;
@@ -1044,19 +1051,21 @@ nav {
 	/* Add border to the result info div */
 	padding: 5px;
 	border-radius: 5px;
+	width: 900px;
+    height: 250px;
 }
 
 .student-picture {
-	width: 30%;
 	/* Adjust the width as needed */
 	margin-right: 20px;
+	margin-left: 20px;
 	/* Add some space between the picture and the information */
 }
 
 .student-picture img {
-	max-width: 100%;
-	height: auto;
+	height: 192px;
 	display: block;
+	width: 192px;
 }
 
 .result-info {

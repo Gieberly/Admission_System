@@ -65,7 +65,7 @@ if ($resultAdmission->num_rows > 0) {
                         <ul class="breadcrumb">
                             <li><a href="#">Profile</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="studentDashboard.php">Home</a></li>
+                            <li><a class="active" href="Student_Dashboard.php">Home</a></li>
                         </ul>
                     </div>
 
@@ -75,8 +75,6 @@ if ($resultAdmission->num_rows > 0) {
                     <div class="table-data">
                         <div class="order">
                             <div class="order-profile">
-
-
                                 <div class="StudentResult-Content">
                                     <div id="StudentResult-picture" class="student-picture">
                                         <?php if (!empty($admissionData) && isset($admissionData['id_picture'])) : ?>
@@ -125,18 +123,9 @@ if ($resultAdmission->num_rows > 0) {
 
 
                                         <?php else : ?>
-                                            <p class="apply-program">NO DATA FOUND <br><a href="studentDashboard.php"></a></p>
+                                            <a class="apply-program" href="Student_Dashboard.php">CHOOSE PROGRAM</a>
                                         <?php endif; ?>
                                     </div>
-
-
-<style>
-    
-.apply-program a:hover {
-    text-decoration: underline;
-}
-</style>
-
 
 
                                 </div>
