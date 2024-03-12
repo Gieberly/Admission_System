@@ -27,17 +27,12 @@ $currentMonth = date('m');
 // Generate the applicant number in the format 00-00-000
 $applicantNumber = sprintf("%02d-%02d-%04d", $currentDay, $currentMonth, $studentId);
 
-$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
+$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
 $result = $conn->query($sql);
 
-// Fetch data from the database where Nature_of_Degree is 'Non-Board' and Overall_Slots is not empty or zero
-$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Overall_Slots IS NOT NULL AND Overall_Slots <> 0";
+// Fetch data from the database where Nature_of_Degree is 'Non-Board' and Number_of_Available_Slots is not empty or zero
+$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
 $resultNonBoard = $conn->query($sqlNonBoard);
-
-
-// Fetch 'Classification' values for 'Non-Board' from the 'NonBoardAcadClass' table
-$sqlNonBoardClassifications = "SELECT Classification FROM NonBoardAcadClass";
-$resultNonBoardClassifications = $conn->query($sqlNonBoardClassifications);
 
 // Fetch data from the academicclassification table for the Classification column
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
