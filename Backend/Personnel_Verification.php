@@ -195,7 +195,7 @@ $stmt->close();
                 <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
               </div>
               <!-- ID -->
-                <img id="applicantPicture" alt="Applicant Picture" style="width: 120px; height: 120px; border-radius: 2%; float: right; margin-top: 13px">
+                <img id="applicantPicture" alt="Applicant Picture">
               </div>
               <br>
             <p class="personal_information">Contact Person(s) in Case of Emergency</p>
@@ -206,7 +206,7 @@ $stmt->close();
                 <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
+                <label class="small-label" for="contact_person_1_mobile">Mobile No.</label>
                 <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
               </div>
               <div class="form-group">
@@ -222,7 +222,7 @@ $stmt->close();
                 <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
+                <label class="small-label" for="contact_person_2_mobile">Mobile No.</label>
                 <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
               </div>
               <div class="form-group">
@@ -240,20 +240,20 @@ $stmt->close();
               <!-- College -->
               <label class="small-label" for="college">College</label>
                 <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
+                <br>
+              <!-- Degree -->
+              <label class="small-label" for="degree_applied">Degree</label>
+                <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
 
               <div class="form-group">
+                <!-- Academic Classification -->
+                <label class="small-label" for="academic_classification">Classification</label>
+                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
+                <br>
                 <!-- Nature -->
                 <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
                 <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
-              </div>
-            </div>
-
-            <div class="form-container4">
-            <div class="form-group">
-                <!-- Degree -->
-                <label class="small-label" for="degree_applied">Degree</label>
-                <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
             </div>
 
@@ -544,7 +544,7 @@ $stmt->close();
     /* Apply styles to the labels */
     .small-label {
       display: block;
-      font-size: 12px;
+      font-size: .9vw;
       margin-bottom: 5px;
     }
 
@@ -555,16 +555,18 @@ $stmt->close();
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      font-size:.8vw;
     }
 
     /* Apply styles to the submit button */
     input[type="submit"] {
       background-color: #4CAF50;
       color: white;
-      padding: 10px 20px;
+      padding: 2% 4%;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 1vw;
     }
 
     input[type="submit"]:hover {
@@ -573,7 +575,7 @@ $stmt->close();
 
     /* Style for the personal information headings */
     .personal_information {
-      font-size: 14px;
+      font-size: 1vw;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -593,7 +595,7 @@ $stmt->close();
     }
 
     /* Responsive styles for smaller screens */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 881px) {
       .form-group {
         width: 100%;
       }
@@ -659,6 +661,15 @@ $stmt->close();
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
+    }
+
+    #applicantPicture {
+      width: 100%; /* Adjust width as a percentage of the container */
+      max-width: 192px;
+      min-width: 20px;
+      height: auto;
+      border-radius: 2%;
+      float: right;
     }
   </style>
 
