@@ -122,40 +122,58 @@ $stmt->close();
               </tr>
             </thead>
             <tbody>
-              <?php
-              $counter = 1; // Initialize the counter before the loop
+            <?php
+$counter = 1; // Initialize the counter before the loop
 
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
-                echo "<td>" . $counter . "</td>";
-                echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['nature_of_degree'] . "</td>";
-                echo "<td>" . $row['degree_applied'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
-                echo "<td>" . $row['academic_classification'] . "</td>";
-                $appointmentDate = $row['appointment_date'];
-                echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
-                $appointmentTime = $row['appointment_time'];
-                echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
+while ($row = $result->fetch_assoc()) {
+    echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+    echo "<td>" . $counter . "</td>";
+    echo "<td>" . $row['applicant_number'] . "</td>";
+    echo "<td>" . $row['nature_of_degree'] . "</td>";
+    echo "<td>" . $row['degree_applied'] . "</td>";
+    echo "<td>" . $row['applicant_name'] . "</td>";
+    echo "<td>" . $row['academic_classification'] . "</td>";
 
+    // Fetching requirements based on academic_classification
+    $classification = $row['academic_classification'];
+    $requirements_query = "SELECT * FROM academicclassification WHERE Classification = '$classification'";
+    $requirements_result = $conn->query($requirements_query);
 
-                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
-                echo "<td>
-        <div class='button-container'>
-        <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
-        <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
-        <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
-        </div>
-        </td>";
-                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-                echo "</tr>";
+    if ($requirements_result && $requirements_row = $requirements_result->fetch_assoc()) {
+        for ($i = 1; $i <= 7; $i++) {
+            $requirement_key = "Requirement$i";
+            echo "<td>" . $requirements_row[$requirement_key] . "</td>";
+        }
+    } else {
+        // Handle the case where no matching classification is found
+        for ($i = 1; $i <= 7; $i++) {
+            echo "<td>Requirement not available</td>";
+        }
+    }
 
-                $counter++; // Increment the counter for the next row
-              }
+    $appointmentDate = $row['appointment_date'];
+    echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
+    $appointmentTime = $row['appointment_time'];
+    echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
 
-              // Close the database connection
-              $conn->close();
-              ?>
+    echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+    echo "<td>
+    <div class='button-container'>
+    <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
+    <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
+    <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
+    </div>
+    </td>";
+    echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+    echo "</tr>";
+
+    $counter++; // Increment the counter for the next row
+}
+
+// Close the database connection
+$conn->close();
+?>
+
             </tbody>
           </table>
 
