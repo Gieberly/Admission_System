@@ -172,43 +172,34 @@ $stmt->close();
   <div class="tab-content" id="content1">
    
     <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-            <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
-            <br><br><br><br><br><br>
-
+            
             <div class="form-container1">
-
+            
               <div class="form-group">
+                <!-- Complete Name -->
                 <label class="small-label" for="applicant_name">Complete Name</label>
                 <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
-              </div>
-              <!-- Sex at Birth -->
-              <div class="form-group">
-                <label class="small-label" for="gender">Sex at birth</label>
-                <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
-              </div>
-
-
-            </div>
-
-
-
-            <p class="personal_information">Contact Information</p>
-            <div class="form-container4">
-              <!-- Telephone/Mobile No -->
-              <div class="form-group">
-                <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-                <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
-              </div>
-
-              <!--Email Address -->
-              <div class="form-group">
+                <br>
+                <!--Email Address -->
                 <label class="small-label" for="email">Email Address</label>
                 <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
               </div>
-            </div>
 
+              <div class="form-group">
+                <!-- Sex at Birth -->
+                <label class="small-label" for="gender">Sex at birth</label>
+                <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
+                <br>
+                <!-- Telephone/Mobile No -->
+                <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+                <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
+              </div>
+              <!-- ID -->
+                <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
+              </div>
+              <br>
             <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-            <div class="form-container7">
+            <div class="form-container2">
               <!-- Contact Person 1 -->
               <div class="form-group">
                 <label class="small-label" for="contact_person_1">Contact Person</label>
@@ -223,7 +214,8 @@ $stmt->close();
                 <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
               </div>
             </div>
-            <div class="form-container7">
+
+            <div class="form-container2">
               <!-- Contact Person 2 -->
               <div class="form-group">
                 <label class="small-label" for="contact_person_2">Contact Person</label>
@@ -239,29 +231,35 @@ $stmt->close();
               </div>
             </div>
 
+              <br>
             <p class="personal_information">Academic Classification</p>
-            <div class="form-container6">
-              <!-- Academic Classification -->
+
+            <div class="form-container3">
+              
               <div class="form-group">
-                <label class="small-label" for="academic_classification">Academic Classification</label>
-                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
-              </div>
-              <div class="form-group">
-                <label class="small-label" for="college">College</label>
+              <!-- College -->
+              <label class="small-label" for="college">College</label>
                 <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
-              </div>
-              <div class="form-group">
+                <br>
+                <!-- Degree -->
                 <label class="small-label" for="degree_applied">Degree</label>
-                <!-- Display the selected program in this input field -->
                 <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
+
               <div class="form-group">
+                <!-- Academic Classification -->
+                <label class="small-label" for="academic_classification">Academic Classification</label>
+                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
+                <br>
+                <!-- Nature -->
                 <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
                 <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
               </div>
             </div>
+
+            <br>
             <p class="personal_information">Academic Background </p>
-            <div class="form-container5">
+            <div class="form-container3">
               <!-- Academic Background -->
               <div class="form-group">
                 <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)</label>
@@ -272,6 +270,8 @@ $stmt->close();
                 <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
               </div>
             </div>
+
+            <br>
             <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
             <input type="submit" name="submit">
           </form>
@@ -499,21 +499,23 @@ $stmt->close();
     }
 
     /* Apply styles to the form container */
-    .form-container1,
-    .form-container2,
-    .form-container3,
-    .form-container4,
-    .form-container5,
-    .form-container6,
-    .form-container7 {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      transform: translateY(20px);
-      transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    .form-container1 {
+      display: grid;
+      grid-template-columns: 50% 25% 25%;
+      gap: 10px;
     }
 
+    .form-container2 {
+      display: grid;
+      grid-template-columns: 45% 20% 30%;
+      gap: 10px;
+    }
+
+    .form-container3 {
+      display: grid;
+      grid-template-columns: 65% 30%;
+      gap: 10px;
+    }
     /* Apply styles to the form groups */
     .form-group {
       margin-bottom: 15px;
