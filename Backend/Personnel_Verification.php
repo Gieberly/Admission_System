@@ -191,11 +191,11 @@ $stmt->close();
                 <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
                 <br>
                 <!-- Telephone/Mobile No -->
-                <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+                <label class="small-label" for="phone_number">Mobile No.</label>
                 <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
               </div>
               <!-- ID -->
-                <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
+                <img id="applicantPicture" alt="Applicant Picture" style="width: 120px; height: 120px; border-radius: 2%; float: right; margin-top: 13px">
               </div>
               <br>
             <p class="personal_information">Contact Person(s) in Case of Emergency</p>
@@ -210,7 +210,7 @@ $stmt->close();
                 <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
+                <label class="small-label" for="relationship_1">Relationship</label>
                 <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
               </div>
             </div>
@@ -226,7 +226,7 @@ $stmt->close();
                 <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
+                <label class="small-label" for="relationship_2">Relationship</label>
                 <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
               </div>
             </div>
@@ -240,20 +240,20 @@ $stmt->close();
               <!-- College -->
               <label class="small-label" for="college">College</label>
                 <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
-                <br>
-                <!-- Degree -->
-                <label class="small-label" for="degree_applied">Degree</label>
-                <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
 
               <div class="form-group">
-                <!-- Academic Classification -->
-                <label class="small-label" for="academic_classification">Academic Classification</label>
-                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
-                <br>
                 <!-- Nature -->
                 <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
                 <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
+              </div>
+            </div>
+
+            <div class="form-container4">
+            <div class="form-group">
+                <!-- Degree -->
+                <label class="small-label" for="degree_applied">Degree</label>
+                <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
             </div>
 
@@ -262,11 +262,11 @@ $stmt->close();
             <div class="form-container3">
               <!-- Academic Background -->
               <div class="form-group">
-                <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)</label>
+                <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED</label>
                 <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
+                <label class="small-label" for="lrn" style="white-space: nowrap;">LRN</label>
                 <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
               </div>
             </div>
@@ -513,19 +513,25 @@ $stmt->close();
     /* Apply styles to the form container */
     .form-container1 {
       display: grid;
-      grid-template-columns: 50% 25% 25%;
-      gap: 10px;
+      grid-template-columns: 50% 23% 23%;
+      gap: 2%;
     }
 
     .form-container2 {
       display: grid;
-      grid-template-columns: 45% 20% 30%;
-      gap: 10px;
+      grid-template-columns: 44% 19% 33%;
+      gap: 2%;
     }
 
     .form-container3 {
       display: grid;
-      grid-template-columns: 65% 30%;
+      grid-template-columns: 65% 33%;
+      gap: 2%;
+    }
+
+    .form-container4 {
+      display: grid;
+      grid-template-columns: 100%;
       gap: 10px;
     }
     /* Apply styles to the form groups */
@@ -538,7 +544,7 @@ $stmt->close();
     /* Apply styles to the labels */
     .small-label {
       display: block;
-      font-size: 14px;
+      font-size: 12px;
       margin-bottom: 5px;
     }
 
@@ -567,7 +573,7 @@ $stmt->close();
 
     /* Style for the personal information headings */
     .personal_information {
-      font-size: 18px;
+      font-size: 14px;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -576,24 +582,6 @@ $stmt->close();
     #updateProfileForm {
       max-width: 800px;
       margin: 0 auto;
-    }
-
-    .input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    /* Apply styles to the submit button */
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
     }
 
     .success-message {
