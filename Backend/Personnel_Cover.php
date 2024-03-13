@@ -117,7 +117,20 @@ function getCourses($conn)
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'Personnel_Verification.php') {
+            ?>
+                <form action="Personnel_Verification.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="bx bx-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
             <?php
             // Check if the current page is masterlist.php
             $current_page = basename($_SERVER['PHP_SELF']);
