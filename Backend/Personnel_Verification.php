@@ -280,40 +280,10 @@ while ($row = $result->fetch_assoc()) {
   </div>
 
   <div class="tab-content" id="content2">
-    <!-- Content for Student Requirements Tab -->
-    <h2>Student Requirements</h2>
+  
+
      
-    <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-          
-    <?php
-function renderRequirements($classification, $conn)
-{
-    $requirements_query = "SELECT * FROM academicclassification WHERE Classification = '$classification'";
-    $requirements_result = $conn->query($requirements_query);
 
-    if ($requirements_result && $requirements_row = $requirements_result->fetch_assoc()) {
-        for ($i = 1; $i <= 7; $i++) {
-            $requirement_key = "Requirement$i";
-            echo "<td>" . $requirements_row[$requirement_key] . "</td>";
-        }
-    } else {
-        // Handle the case where no matching classification is found
-        for ($i = 1; $i <= 7; $i++) {
-            echo "<td>Requirement not available</td>";
-        }
-    }
-}
-?>
-
-              <div class="form-group">
-                
-                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
-              </div>
-            
-            <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-            <input type="submit" name="submit">
-            
-          </form>
 </div>
 
 
@@ -771,6 +741,7 @@ function renderRequirements($classification, $conn)
         $('.todo').hide();
       });
     });
+
     function updateContent(rowId) {
     // Make an Ajax request to fetch requirements based on the clicked row
     var xhttp = new XMLHttpRequest();
@@ -792,6 +763,8 @@ function renderRequirements($classification, $conn)
       updateContent(rowId);
     });
   }
+
+
     function updateStatus(id, status) {
       // Show the confirmation dialog
       $('.confirmation-dialog').show();

@@ -13,12 +13,28 @@ if (isset($_GET['rowId'])) {
 
         // Call the function to render requirements
         renderRequirements($classification, $conn);
+
+        // Fetch additional data for the form
+        $admissionDataQuery = "SELECT * FROM admission_data WHERE id = $rowId";
+        $admissionDataResult = $conn->query($admissionDataQuery);
+
+        if ($admissionDataResult && $admissionData = $admissionDataResult->fetch_assoc()) {
+?>
+            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
+              
+
+                <button type="submit">Update Profile</button>
+            </form>
+<?php
+        } else {
+            // Handle the case where no matching row is found for admission data
+            echo "<p>No admission data found for the selected row.</p>";
+        }
     } else {
-        // Handle the case where no matching row is found
+        // Handle the case where no matching row is found for academic classification
         echo "<p>No data found for the selected row.</p>";
     }
 }
-
 function renderRequirements($classification, $conn)
 {
     $requirements_query = "SELECT * FROM academicclassification WHERE Classification = '$classification'";
@@ -33,11 +49,17 @@ function renderRequirements($classification, $conn)
 
         for ($i = 1; $i <= 7; $i++) {
             $requirement_key = "Requirement$i";
-            echo "<div class='requirement'>$requirement_key: " . $requirements_row[$requirement_key] . "</div>";
+            
+            // Check if the requirement has data before creating a checkbox
+            if (!empty($requirements_row[$requirement_key])) {
+                echo "<div class='requirement'>";
+                echo "<input type='checkbox' name='requirements[]' value='$i' id='requirement_$i'>";
+                echo "<label for='requirement_$i'>" . $requirements_row[$requirement_key] . "</label>";
+                echo "</div>";
+            }
         }
     } else {
         // Handle the case where no matching classification is found
         echo "<p>Requirements not available for the selected academic classification.</p>";
     }
 }
-?>
