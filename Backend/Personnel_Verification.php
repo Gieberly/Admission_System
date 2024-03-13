@@ -281,7 +281,19 @@ $stmt->close();
   <div class="tab-content" id="content2">
     <!-- Content for Student Requirements Tab -->
     <h2>Student Requirements</h2>
-    <p>Academic classification: <?php echo $row['academic_classification']; ?></p>
+     
+    <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
+          
+           
+              <div class="form-group">
+                
+                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
+              </div>
+            
+            <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
+            <input type="submit" name="submit">
+            
+          </form>
 </div>
 
 
