@@ -134,22 +134,8 @@ while ($row = $result->fetch_assoc()) {
     echo "<td>" . $row['applicant_name'] . "</td>";
     echo "<td>" . $row['academic_classification'] . "</td>";
 
-    // Fetching requirements based on academic_classification
-    $classification = $row['academic_classification'];
-    $requirements_query = "SELECT * FROM academicclassification WHERE Classification = '$classification'";
-    $requirements_result = $conn->query($requirements_query);
-
-    if ($requirements_result && $requirements_row = $requirements_result->fetch_assoc()) {
-        for ($i = 1; $i <= 7; $i++) {
-            $requirement_key = "Requirement$i";
-            echo "<td>" . $requirements_row[$requirement_key] . "</td>";
-        }
-    } else {
-        // Handle the case where no matching classification is found
-        for ($i = 1; $i <= 7; $i++) {
-            echo "<td>Requirement not available</td>";
-        }
-    }
+    // Output an empty <td> for the requirements column
+    echo "<td></td>";
 
     $appointmentDate = $row['appointment_date'];
     echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
@@ -169,9 +155,6 @@ while ($row = $result->fetch_assoc()) {
 
     $counter++; // Increment the counter for the next row
 }
-
-// Close the database connection
-$conn->close();
 ?>
 
             </tbody>
@@ -302,7 +285,26 @@ $conn->close();
      
     <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
           
-           
+    <?php
+function renderRequirements($classification, $conn)
+{
+    $requirements_query = "SELECT * FROM academicclassification WHERE Classification = '$classification'";
+    $requirements_result = $conn->query($requirements_query);
+
+    if ($requirements_result && $requirements_row = $requirements_result->fetch_assoc()) {
+        for ($i = 1; $i <= 7; $i++) {
+            $requirement_key = "Requirement$i";
+            echo "<td>" . $requirements_row[$requirement_key] . "</td>";
+        }
+    } else {
+        // Handle the case where no matching classification is found
+        for ($i = 1; $i <= 7; $i++) {
+            echo "<td>Requirement not available</td>";
+        }
+    }
+}
+?>
+
               <div class="form-group">
                 
                 <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
@@ -769,7 +771,27 @@ $conn->close();
         $('.todo').hide();
       });
     });
+    function updateContent(rowId) {
+    // Make an Ajax request to fetch requirements based on the clicked row
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // Update the content2 div with the fetched requirements
+        document.getElementById("content2").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "Personnel_fetchrequirements.php?rowId=" + rowId, true);
+    xhttp.send();
+  }
 
+  // Attach click event listener to table rows
+  var rows = document.getElementsByClassName("editRow");
+  for (var i = 0; i < rows.length; i++) {
+    rows[i].addEventListener("click", function() {
+      var rowId = this.getAttribute("data-id");
+      updateContent(rowId);
+    });
+  }
     function updateStatus(id, status) {
       // Show the confirmation dialog
       $('.confirmation-dialog').show();
@@ -833,6 +855,21 @@ $conn->close();
         }, 3000);
       }
     });
+    document.addEventListener("DOMContentLoaded", function() {
+    // Add click event listener to each row
+    var rows = document.querySelectorAll('.editRow');
+    rows.forEach(function(row) {
+        row.addEventListener('click', function() {
+            // Remove 'selected' class from all rows
+            rows.forEach(function(r) {
+                r.classList.remove('selected');
+            });
+
+            // Add 'selected' class to the clicked row
+            this.classList.add('selected');
+        });
+    });
+});
   </script>
 
 

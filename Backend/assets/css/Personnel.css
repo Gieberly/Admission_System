@@ -1368,9 +1368,8 @@ button[type="submit"]:hover {
 }
 
 #content main .table-data .order table tbody tr.selected {
-	background-color: lightgray; /* Change this to the desired highlight color */
-  }
-  
+    background-color: lightgray; /* Change this to the desired highlight color */
+}
 
 
 
