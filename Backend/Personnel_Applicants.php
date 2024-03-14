@@ -157,138 +157,144 @@ $stmt->close();
           <div class="tab-content" id="content1">
 
             <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-              <div class="form-container2">
-               
+           
+            <p class="personal_information"> Grade 11 Average</p>
+            <div class="form-container2">
+              
                 <div class="form-group">
                   <!-- Gr11_A1 -->
-                  <label class="small-label" for="Gr11_A1">Gr.11 Average 1st SEM</label>
+                  <label class="small-label" for="Gr11_A1">1st SEM</label>
                   <input name="Gr11_A1" class="input" id="Gr11_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A1']; ?>">
                   <!-- Gr11_A2 -->
                 </div>
                 <div class="form-group">
-
-                  <label class="small-label" for="Gr11_A2">Gr. 11 Average 2nd SEM</label>
+                  <label class="small-label" for="Gr11_A2">2nd SEM</label>
                   <input name="Gr11_A2" class="input" autocomplete="off" id="Gr11_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A2']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Gr11_A3 -->
-                  <label class="small-label" for="Gr11_A3">Gr. 11 Average 3rd SEM</label>
+                  <label class="small-label" for="Gr11_A3">3rd SEM</label>
                   <input name="Gr11_A3" class="input" autocomplete="off" id="Gr11_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A3']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- Gr11_GWA -->
-                  <label class="small-label" for="Gr11_GWA">Gr. 11 GWA</label>
+                  <label class="small-label" for="Gr11_GWA">GWA</label>
                   <input name="Gr11_GWA" class="input" autocomplete="off" id="Gr11_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_GWA']; ?>" readonly>
                 </div>
                
               </div>
+              <p class="personal_information">Average</p>
               <div class="form-container2">
               <div class="form-group"> <!-- GWA_OTAS -->
                   <label class="small-label" for="GWA_OTAS">Average</label>
                   <input name="GWA_OTAS" class="input" autocomplete="off" id="GWA_OTAS" placeholder="Enter Grade" value="<?php echo $admissionData['GWA_OTAS']; ?>" readonly>
                 </div>
               </div>
+              <p class="personal_information">Grade 12 Average</p>
                 <div class="form-container2">
-                <!-- Repeat the same structure for the next set of fields -->
                 <div class="form-group">
                   <!-- Gr12_A1 -->
-                  <label class="small-label" for="Gr12_A1">Gr. 12 Average 1st SEM</label>
+                  <label class="small-label" for="Gr12_A1">1st SEM</label>
                   <input name="Gr12_A1" class="input" id="Gr12_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A1']; ?>">
 
                 </div>
                 <div class="form-group"> <!-- Gr12_A2 -->
-                  <label class="small-label" for="Gr12_A2">Gr. 12 Average2nd SEM</label>
+                  <label class="small-label" for="Gr12_A2">2nd SEM</label>
                   <input name="Gr12_A2" class="input" autocomplete="off" id="Gr12_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A2']; ?>" readonly>
 
                 </div>
                 <div class="form-group"> <!-- Gr12_A3 -->
-                  <label class="small-label" for="Gr12_A3">Gr. 12 Average 3rd SEM</label>
+                  <label class="small-label" for="Gr12_A3">3rd SEM</label>
                   <input name="Gr12_A3" class="input" autocomplete="off" id="Gr12_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A3']; ?>" readonly>
 
                 </div>
                 <div class="form-group"> <!-- Gr12_GWA -->
-                  <label class="small-label" for="Gr12_GWA">Gr. 12 GWA</label>
+                  <label class="small-label" for="Gr12_GWA">GWA</label>
                   <input name="Gr12_GWA" class="input" autocomplete="off" id="Gr12_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_GWA']; ?>" readonly>
                 </div>
                 </div>
+              <p class="personal_information">English</p>
                 <div class="form-container2">
-                <!-- Repeat the same structure for the next set of fields -->
                 <div class="form-group">
                   <!-- English_Oral_Communication_Grade -->
-                  <label class="small-label" for="English_Oral_Communication_Grade">English Oral Communication Grade</label>
+                  <label class="small-label" for="English_Oral_Communication_Grade">English 1</label>
                   <input name="English_Oral_Communication_Grade" class="input" autocomplete="off" id="English_Oral_Communication_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Oral_Communication_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- English_Reading_Writing_Grade -->
-                  <label class="small-label" for="English_Reading_Writing_Grade">English Reading Writing Grade</label>
+                  <label class="small-label" for="English_Reading_Writing_Grade">English 2</label>
                   <input name="English_Reading_Writing_Grade" class="input" autocomplete="off" id="English_Reading_Writing_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Reading_Writing_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- English_Academic_Grade -->
-                  <label class="small-label" for="English_Academic_Grade">English Academic Grade</label>
+                  <label class="small-label" for="English_Academic_Grade">English 3</label>
                   <input name="English_Academic_Grade" class="input" autocomplete="off" id="English_Academic_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Academic_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- English_Other_Courses_Grade -->
-                  <label class="small-label" for="English_Other_Courses_Grade">English Other Courses Grade</label>
+                  <label class="small-label" for="English_Other_Courses_Grade">English 4</label>
                   <input name="English_Other_Courses_Grade" class="input" autocomplete="off" id="English_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Other_Courses_Grade']; ?>" readonly>
                 </div>
                 </div>
-                <div class="form-container2">
-                <!-- Repeat the same structure for the next set of fields -->
-                <div class="form-group">
+              <p class="personal_information">Science</p>
 
+                <div class="form-container3">
+                <div class="form-group">
                   <!-- Science_Earth_Science_Grade -->
-                  <label class="small-label" for="Science_Earth_Science_Grade">Science Earth Science Grade</label>
+                  <label class="small-label" for="Science_Earth_Science_Grade">Science 1</label>
                   <input name="Science_Earth_Science_Grade" class="input" autocomplete="off" id="Science_Earth_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_Science_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- Science_Earth_and_Life_Science_Grade -->
-                  <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Science Earth and Life Science Grade</label>
+                  <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Science 2</label>
                   <input name="Science_Earth_and_Life_Science_Grade" class="input" autocomplete="off" id="Science_Earth_and_Life_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_and_Life_Science_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- Science_Physical_Science_Grade -->
-                  <label class="small-label" for="Science_Physical_Science_Grade">Science Physical Science Grade</label>
+                  <label class="small-label" for="Science_Physical_Science_Grade">Science 3</label>
                   <input name="Science_Physical_Science_Grade" class="input" autocomplete="off" id="Science_Physical_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Physical_Science_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group"> <!-- Science_Disaster_Readiness_Grade -->
-                  <label class="small-label" for="Science_Disaster_Readiness_Grade">Science Disaster Readiness Grade</label>
+                  <label class="small-label" for="Science_Disaster_Readiness_Grade">Science 4</label>
                   <input name="Science_Disaster_Readiness_Grade" class="input" autocomplete="off" id="Science_Disaster_Readiness_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Disaster_Readiness_Grade']; ?>" readonly>
                 </div>
 
                 <!-- Repeat the same structure for the next set of fields -->
                 <div class="form-group">
                   <!-- Science_Other_Courses_Grade -->
-                  <label class="small-label" for="Science_Other_Courses_Grade">Science Other Courses Grade</label>
+                  <label class="small-label" for="Science_Other_Courses_Grade">Science 5</label>
                   <input name="Science_Other_Courses_Grade" class="input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>" readonly>
                 </div>
                 </div>
+              <p class="personal_information">Math</p>
+
                 <div class="form-container2">
                 <div class="form-group">
                   <!-- Math_General_Mathematics_Grade -->
-                  <label class="small-label" for="Math_General_Mathematics_Grade">Math General Mathematics Grade</label>
+                  <label class="small-label" for="Math_General_Mathematics_Grade">Math 1</label>
                   <input name="Math_General_Mathematics_Grade" class="input" autocomplete="off" id="Math_General_Mathematics_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_General_Mathematics_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Math_Statistics_and_Probability_Grade -->
-                  <label class="small-label" for="Math_Statistics_and_Probability_Grade">Math Statistics and Probability Grade</label>
+                  <label class="small-label" for="Math_Statistics_and_Probability_Grade">Math 2</label>
                   <input name="Math_Statistics_and_Probability_Grade" class="input" autocomplete="off" id="Math_Statistics_and_Probability_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Statistics_and_Probability_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Math_Other_Courses_Grade -->
-                  <label class="small-label" for="Math_Other_Courses_Grade">Math Other Courses Grade</label>
+                  <label class="small-label" for="Math_Other_Courses_Grade">Math 3</label>
                   <input name="Math_Other_Courses_Grade" class="input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>" readonly>
                 </div>
                 </div>
+              <p class="personal_information">High School (Old Curriculum) Graduates</p>
+                
                 <div class="form-container2">
                 <div class="form-group">
                   <!-- Old_HS_English_Grade -->
-                  <label class="small-label" for="Old_HS_English_Grade">Old HS English Grade</label>
+                  <label class="small-label" for="Old_HS_English_Grade">English</label>
                   <input name="Old_HS_English_Grade" class="input" autocomplete="off" id="Old_HS_English_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_English_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Old_HS_Math_Grade -->
-                  <label class="small-label" for="Old_HS_Math_Grade">Old HS Math Grade</label>
+                  <label class="small-label" for="Old_HS_Math_Grade">Math</label>
                   <input name="Old_HS_Math_Grade" class="input" autocomplete="off" id="Old_HS_Math_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Math_Grade']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Old_HS_Science_Grade -->
-                  <label class="small-label" for="Old_HS_Science_Grade">Old HS Science Grade</label>
+                  <label class="small-label" for="Old_HS_Science_Grade">Science</label>
                   <input name="Old_HS_Science_Grade" class="input" autocomplete="off" id="Old_HS_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Science_Grade']; ?>" readonly>
                 </div>
                 </div>
@@ -304,7 +310,7 @@ $stmt->close();
 
                 <div class="form-group">
                   <!-- Qualification_Nature_Degree -->
-                  <label class="small-label" for="Qualification_Nature_Degree">Qualification Nature Degree</label>
+                  <label class="small-label" for="Qualification_Nature_Degree">Nature</label>
                   <input name="Qualification_Nature_Degree" class="input" autocomplete="off" id="Qualification_Nature_Degree" value="<?php echo $admissionData['Qualification_Nature_Degree']; ?>" readonly>
                 </div>
 
@@ -564,7 +570,7 @@ $stmt->close();
 
     .form-container3 {
       display: grid;
-      grid-template-columns: 65% 33%;
+      grid-template-columns: 18% 18% 18% 18% 18%;
       gap: 2%;
     }
 
