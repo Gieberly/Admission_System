@@ -1,5 +1,5 @@
 <?php
-include("studentcover.php");
+include("student_cover.php");
 
 // Retrieve the admission data based on the user's email
 $email = $studentData['email'];
@@ -41,7 +41,7 @@ if (isset($_SESSION['error_message'])) {
                     <div class="order">
                    
          <div id="table-container">
-        <h1 style="text-align: center;">My Profile</h1>
+        <h1 style="text-align: center; font-size: 1.5vw;">My Profile</h1>
         <form id="updateProfileForm" method="post" action="Student_update.php">
         <p class="personal_information">Personal Information</p>
 
@@ -307,8 +307,8 @@ function confirmUpdateProfile() {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
 
+}
 
 #student-profile {
     /* background-color: #fff; */
@@ -327,7 +327,7 @@ input {
     padding: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
-    font-size: 12px;
+    font-size: .8vw;
 }
 
 input[type="submit"] {
@@ -350,49 +350,49 @@ a:hover {
 p.personal_information {
     margin-top: 5px;
     margin-bottom: 5px;
-    font-size: 12px;
+    font-size: .8vw;
     font-weight: bold;
     font-style: italic;
 }
 .form-container {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 2%;
   }
   .form-container1 {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+    gap: 2%;
   }
   .form-container2 {
     display: grid;
-    grid-template-columns: 15% 17% 7% 17% 19% 19%;
-    gap: 10px;
+    grid-template-columns: 15% 16% 7% 16% 18% 18%;
+    gap: 2%;
   }
   .form-container3 {
     display: grid;
     grid-template-columns: 3fr 1fr;
-    gap: 10px;
+    gap: 2%;
   }
   .form-container4 {
     display: grid;
-    grid-template-columns: repeat(3, 25% 37.5% 37.5%); 
-    gap: 10px; 
+    grid-template-columns: repeat(3, 25% 35.5% 35.5%); 
+    gap: 2%; 
   }
   .form-container5 {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 10px;
+    gap: 2%;
   }
   .form-container6 {
     display: grid;
-    grid-template-columns: 20% 65% 15%;  
-    gap: 10px;
+    grid-template-columns: 19% 63% 14%;  
+    gap: 2%;
   }
   .form-container7 {
     display: grid;
-    grid-template-columns: repeat(3, 55% 20% 25%); 
-    gap: 10px; 
+    grid-template-columns: repeat(3, 53% 19% 24%); 
+    gap: 2%; 
   }
   .form-group {
   display: inline-block;
@@ -402,8 +402,18 @@ p.personal_information {
   /* Optional: Adjust the width of the label and input if needed */
   .small-label {
   /* width: 150px; Adjust the width as needed */
-  font-size: 12px; /* Adjust this value as needed */
+  font-size: .8vw; /* Adjust this value as needed */
   margin-bottom: 5px;
   color: gray;
   }
+
+  .table-data {
+    max-height: 75vh; /* Set a maximum height for the profile form container */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
+
+/* #dashboard-content {
+    position: fixed;
+    overflow-y: auto;
+} */
 </style>

@@ -67,7 +67,6 @@ $stmt->close();
     ?>
 
     <main>
-
       <div class="head-title">
         <div class="left">
           <h1>Document Checking</h1>
@@ -619,6 +618,9 @@ while ($row = $result->fetch_assoc()) {
       text-align: center;
       outline: none;
       margin: 0 10px;
+      padding: 20px;
+      border-radius: 5px;
+      max-width: 400px;
     }
 
 
@@ -627,6 +629,11 @@ while ($row = $result->fetch_assoc()) {
       background-color: green;
       color: white;
       transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     }
 
     /* Hover effect for Confirm button */
@@ -640,6 +647,11 @@ while ($row = $result->fetch_assoc()) {
       background-color: red;
       color: white;
       transition: background-color 0.3s ease;
+      padding: 10px 15px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
     }
 
     /* Hover effect for Cancel button */

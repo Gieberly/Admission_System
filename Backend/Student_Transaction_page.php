@@ -89,7 +89,7 @@ $conn->close();
 <body>
     <style>
         .custom-list {
-            font-size: 14px;
+            font-size: .9vw;
             margin-left: 20px;
             /* Adjust the left margin as needed */
         }
@@ -105,7 +105,7 @@ $conn->close();
         }
 
         .requirements {
-            font-size: 12px;
+            font-size: .8vw;
             /* Adjust the font size for requirements */
         }
 
