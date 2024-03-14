@@ -860,6 +860,7 @@ nav {
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	position: sticky;
 }
 
 #content main .head-title .left h1 {

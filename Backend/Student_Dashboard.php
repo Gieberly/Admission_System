@@ -48,7 +48,7 @@ $displayedColleges = array();
                             <div class="headfornaturetosort">
                             </div>
                         </div>
-                        <div id="table-container">
+                        <div id="table-container1">
                             <table id="searchableTable">
                                 <thead>
                                     <tr>
@@ -133,7 +133,7 @@ $displayedColleges = array();
         background-color: #4CAF50;
         color: white;
         border: none;
-        padding: 10px 15px;
+        padding: 5px 10px;
         text-align: center;
         text-decoration: none;
         display: inline-block;

@@ -120,17 +120,13 @@ if ($resultAdmission->num_rows > 0) {
                 ?>
             </p>
         </div>
-
-
-                                        <?php else : ?>
-                                            <a class="apply-program" href="Student_Dashboard.php">CHOOSE PROGRAM</a>
-                                        <?php endif; ?>
-                                    </div>
+            <?php else : ?>
+                <a class="apply-program" href="Student_Dashboard.php">CHOOSE PROGRAM</a>
+            <?php endif; ?>
+        </div>
 
 
                                 </div>
-
-
 
                             </div>
                         </div>

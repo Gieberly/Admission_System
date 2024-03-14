@@ -67,7 +67,6 @@ $stmt->close();
     ?>
 
     <main>
-
       <div class="head-title">
         <div class="left">
           <h1>Document Checking</h1>

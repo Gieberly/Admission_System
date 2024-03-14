@@ -1,6 +1,6 @@
 <?php
 include("config.php");
-include("studentcover.php");
+include("student_cover.php");
 
 
 ?>
