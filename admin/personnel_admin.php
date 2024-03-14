@@ -31,18 +31,7 @@ include("../includes/functions.php");
                     <div class="table-data">
                         <div class="order">
                             <div id="table-container">
-                                <table id="table-personnel">
-                                    <colgroup>
-                                        <col style="width: 5%;">
-                                        <col style="width: 20%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 30%;">
-                                        <col style="width: 15%;">
-                                        <col style="width: 15%;">
-                                        
-                                    
-                                    </colgroup>
+                                <table id="personnel">
                                     <thead>
                                         <tr>
                                             <th>#</th>
@@ -105,18 +94,22 @@ include("../includes/functions.php");
                     </div>
                 </div> 
             </div>
-        <script> 
-                $(document).ready(function () {
-            $('#table-personnel').DataTable({
-                "paging": true, // Enable pagination
-                "ordering": true, // Enable sorting
-                "order": [], // Initial order (disable sorting by default)
-                "lengthMenu": [10, 25, 50, 70, 100], // Set custom page length options
-                "pageLength": 25 // Default page length
-            });
+            <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
+        <script>
+    $(document).ready(function(){
+        $('#personnel').DataTable({
+            "pagingType":"full_numbers",
+            "lengthMenu":[
+                [10,25,50,-1],
+                [10,25,50,"All"]
+            ],
+            language:{
+                search: "_INPUT_",
+                searchPlaceholder:'Search records',
+            }
         });
-
-        </script> 
+    });
+</script>
     </main>
         <!-- MAIN -->
 

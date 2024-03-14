@@ -31,18 +31,7 @@ include("../includes/functions.php");
                 <div class="order">
                     <div id="table-container">
                         <!-- Table for displaying student data -->
-                        <table class="table table-border" id="table">
-                        <colgroup>
-                                <col style="width: 5%;">
-                                <col style="width: 10%;">
-                                <col style="width: 10%;">
-                                <col style="width: 15%;">
-                                <col style="width: 15%;">
-                                <col style="width: 10%;">
-                                <col style="width: 10%;">  
-                                <col style="width: 10%;">  
-                                <col style="width: 15%;">    
-                            </colgroup>
+                        <table class="table table-border" id="masterlist">
                             <!-- table header -->
                             <thead>
                                 <tr>
@@ -101,19 +90,23 @@ include("../includes/functions.php");
 
             </div>
         </div>
-
-<script> 
-        $(document).ready(function () {
-    $('#table').DataTable({
-        "paging": true, // Enable pagination
-        "ordering": true, // Enable sorting
-        "order": [], // Initial order (disable sorting by default)
-        "lengthMenu": [10, 25, 50, 70, 100], // Set custom page length options
-        "pageLength": 25 // Default page length
+        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
+        <script>
+    $(document).ready(function(){
+        $('#masterlist').DataTable({
+            "pagingType":"full_numbers",
+            "lengthMenu":[
+                [10,25,50,-1],
+                [10,25,50,"All"]
+            ],
+            language:{
+                search: "_INPUT_",
+                searchPlaceholder:'Search records',
+            }
+        });
     });
-});
+</script>
 
-</script> 
 </main>
         <!-- MAIN -->
 

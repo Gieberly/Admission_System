@@ -54,15 +54,6 @@ include("../includes/functions.php");
                                 <div class="tab-pane fade show active" id="dataListView">
                                     <div id="table-container">
                                     <table>
-                                        <colgroup>
-                                            <col style="width: 5%;">
-                                            <col style="width: 25%;">
-                                            <col style="width: 25%;">
-                                            <col style="width: 15%;">
-                                            <col style="width: 5%;">
-                                            <col style="width: 5%;">
-                                            <col style="width: 25%;">
-                                        </colgroup>
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -99,38 +90,7 @@ include("../includes/functions.php");
                                     </table>
                                     </div> 
                                     </div>
-                                    <div class="tab-pane fade" id="add">
-                                        <!-- Content for Add tab -->
-                                        <div id="table-container">
-                                        <div class= "form-row">
-                                            <form>    
-                                                <div class= "row">
-                                                    <div class="form-group col-md-12">
-                                                        <label for="course_name">Course Name</label>
-                                                        <input type="email" class="form-control" id="course_name" placeholder="Bachelor of Science...">
-                                                    </div>
-                                                    <div class="form-group col-md-12">
-                                                    <label for="inputState">College Name</label>
-                                                    <select id="inputState" class="form-control">
-                                                        <option selected>Choose...</option>
-                                                        <option>...</option>
-                                                    </select>
-                                                    </div>
-                                                </div>                                    
-                                                
 
-                                                <div class="form-group">
-                                                    <label for="dept_name">Department Name</label>
-                                                    <input type="email" class="form-control" id="dept_name" placeholder="Department of ...">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="dept_head">Department Head</label>
-                                                    <input type="email" class="form-control" id="dept_head" placeholder="Dept Name">
-                                                </div>
-                                                </div>                                        
-                                            </form>
-                                            </div>
-                                    </div>
                                     <div class="tab-pane fade" id="edit">
                                         <!-- Content for Edit tab -->
                                         <!-- Edit form or other content for the Edit tab -->

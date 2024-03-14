@@ -1,5 +1,6 @@
 <?php
 include("..\config.php");
+
 ?>
 <!-- Add the profile popup container here -->
 <div class="profile-popup" id="profile-popup">

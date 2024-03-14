@@ -77,7 +77,7 @@ if(isset($_POST['login_btn'])){
                         header("Location: Backend/register.php"); // Redirect to register.php if the user is not found
                         exit();
                     }
-                } elseif ($userType == 'Admin') {
+                } elseif ($userType == 'Admin' || $userType == 'admin') {
                     header("Location: admin/dashboard_admin.php");
                     exit();
                 } else {
