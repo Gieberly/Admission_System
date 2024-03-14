@@ -134,8 +134,7 @@ while ($row = $result->fetch_assoc()) {
     echo "<td>" . $row['applicant_name'] . "</td>";
     echo "<td>" . $row['academic_classification'] . "</td>";
 
-    // Output an empty <td> for the requirements column
-    echo "<td></td>";
+
 
     $appointmentDate = $row['appointment_date'];
     echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
@@ -183,7 +182,7 @@ while ($row = $result->fetch_assoc()) {
                 <br>
                 <!--Email Address -->
                 <label class="small-label" for="email">Email Address</label>
-                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>">
               </div>
 
               <div class="form-group">
@@ -276,15 +275,10 @@ while ($row = $result->fetch_assoc()) {
             <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
             <input type="submit" name="submit">
           </form>
-    <!-- Add your student data fields here -->
+ 
   </div>
 
-  <div class="tab-content" id="content2">
-  
-
-     
-
-</div>
+  <div class="tab-content" id="content2"></div>
 
 
       
@@ -308,6 +302,17 @@ while ($row = $result->fetch_assoc()) {
   </div>
 
   <style>
+    .field-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.field-group > * {
+    flex-basis: calc(25% - 10px); /* Adjust the width as needed */
+    margin-bottom: 10px; /* Adjust the vertical spacing as needed */
+}
+
     .success-message {
       position: fixed;
       top: 10%;
@@ -703,8 +708,8 @@ while ($row = $result->fetch_assoc()) {
               $('#updateProfileForm input[name="civil_status"]').val(response.civil_status);
               $('#updateProfileForm input[name="citizenship"]').val(response.citizenship);
               $('#updateProfileForm input[name="nationality"]').val(response.nationality);
-              $('#updateProfileForm input[name="permanent_address"]').val(response.permanent_address);
-              $('#updateProfileForm input[name="zip_code"]').val(response.zip_code);
+              $('#updateProfileForm input[name="Requirements_Remarks"]').val(response.Requirements_Remarks);
+              $('#updateProfileForm input[name="Requirements"]').val(response.Requirements);
               $('#updateProfileForm input[name="phone_number"]').val(response.phone_number);
               $('#updateProfileForm input[name="facebook"]').val(response.facebook);
               $('#updateProfileForm input[name="email"]').val(response.email);

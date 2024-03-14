@@ -19,11 +19,31 @@ if (isset($_GET['rowId'])) {
         $admissionDataResult = $conn->query($admissionDataQuery);
 
         if ($admissionDataResult && $admissionData = $admissionDataResult->fetch_assoc()) {
+            // Start with an empty string to store selected requirements
+            $selectedRequirements = '';
+
+            // Inside the for loop of renderRequirements function, concatenate selected requirements
+            for ($i = 1; $i <= 7; $i++) {
+                $requirement_key = "Requirement$i";
+                
+                // Check if the requirement checkbox is checked
+                if (isset($_POST['requirements']) && in_array($i, $_POST['requirements'])) {
+                    // Concatenate selected requirements
+                    $selectedRequirements .= $requirements_row[$requirement_key] . "\n";
+                }
+            }
 ?>
             <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-              
-
-                <button type="submit">Update Profile</button>
+                <div class="form-group">
+                    <!-- Academic Classification -->
+                    <label class="small-label" for="Requirements">Requirements</label>
+                    <textarea name="Requirements" placeholder="Enter incomplete requirements..." class="input" id="Requirements"><?php echo htmlspecialchars($selectedRequirements); ?></textarea>
+                    <br>
+                    <!-- Nature -->
+                    <label class="small-label" for="Requirements_Remarks" style="white-space: nowrap;">Remarks</label>
+                    <textarea name="Requirements_Remarks" placeholder="Enter remarks..." class="input" id="Requirements_Remarks"><?php echo $admissionData['Requirements_Remarks']; ?></textarea>
+                </div>
+                <button type="submit">Submit</button>
             </form>
 <?php
         } else {
@@ -42,11 +62,12 @@ function renderRequirements($classification, $conn)
 
     if ($requirements_result && $requirements_row = $requirements_result->fetch_assoc()) {
         echo "<h2>Student Requirements</h2>";
+       
 
         echo "<div class='form-group'>";
         echo "<input name='academic_classification' class='input' id='academic_classification' value='$classification' disabled>";
         echo "</div>";
-
+        echo "<p>Check the Missing Requirements:</p>";
         for ($i = 1; $i <= 7; $i++) {
             $requirement_key = "Requirement$i";
             
@@ -63,3 +84,4 @@ function renderRequirements($classification, $conn)
         echo "<p>Requirements not available for the selected academic classification.</p>";
     }
 }
+?>

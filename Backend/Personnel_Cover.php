@@ -75,7 +75,7 @@ function getCourses($conn)
                 </a>
             </li>
             <li >
-                <a href="Applicants.php">
+                <a href="Personnel_Applicants.php">
                 <i class='bx bxs-user-detail' ></i>
                     <span class="text">Applicants</span>
                   
@@ -97,12 +97,7 @@ function getCourses($conn)
                 </a>
             </li>
 
-            <li class="">
-                <a href="faq.php" id="announcements-link">
-                    <i class='bx bxs-book-content'></i>
-                    <span class="text">Events</span>
-                </a>
-            </li>
+
 
 
 
@@ -163,9 +158,9 @@ function getCourses($conn)
             <?php
             // Check if the current page is masterlist.php
             $current_page = basename($_SERVER['PHP_SELF']);
-            if ($current_page === 'Applicants.php') {
+            if ($current_page === 'Personnel_Applicants.php') {
             ?>
-                <form action="Applicants.php" method="GET">
+                <form action="Personnel_Applicants.php" method="GET">
                     <div class="form-input">
                         <input type="search" name="search" placeholder="Search...">
                         <button type="submit" class="search-btn"><i id="searchIcon" class="fas fa-search" onclick="changeIcon()"></i></button>

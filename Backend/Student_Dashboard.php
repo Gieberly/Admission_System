@@ -9,22 +9,36 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Student') {
     exit();
 }
 
+// Define search term
+$search = isset($_GET['search']) ? $_GET['search'] : '';
 
-// Fetch data from the database where Nature_of_Degree is 'Board' and Overall_Slots is not empty or zero
-$sql = "SELECT * FROM programs WHERE Nature_of_Degree = 'Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
+// If a college is clicked, get the college ID
+$selectedCollege = isset($_GET['college']) ? $_GET['college'] : '';
+
+// Fetch data from the database where Overall_Slots is not empty or zero
+$sql = "SELECT * FROM programs WHERE Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
+
+// If a college is selected, filter programs by the selected college
+if (!empty($selectedCollege)) {
+    $sql .= " AND College = '$selectedCollege'";
+}
+
+// If search term is provided, append search criteria
+if (!empty($search)) {
+    $sql .= " AND (College LIKE '%$search%' OR Courses LIKE '%$search%' OR Nature_of_Degree LIKE '%$search%')";
+}
+
 $result = $conn->query($sql);
 
-// Fetch data from the database where Nature_of_Degree is 'Non-Board' and Overall_Slots is not empty or zero
-$sqlNonBoard = "SELECT * FROM programs WHERE Nature_of_Degree = 'Non-Board' AND Number_of_Available_Slots IS NOT NULL AND Number_of_Available_Slots <> 0";
-$resultNonBoard = $conn->query($sqlNonBoard);
-
-// Combine the results
-$combinedResults = array_merge($result->fetch_all(MYSQLI_ASSOC), $resultNonBoard->fetch_all(MYSQLI_ASSOC));
+// Fetch data from the database
+$combinedResults = $result->fetch_all(MYSQLI_ASSOC);
 
 // Track displayed colleges to avoid repetition
 $displayedColleges = array();
 
 ?>
+
+
 <section id="content">
     <main>
         <!-- Dashboard -->
@@ -162,13 +176,5 @@ document.querySelectorAll('.apply-button').forEach(function (button) {
 });
 
 
-        // Add event listener to Apply buttons
-        document.querySelectorAll('.apply-button').forEach(function (button) {
-            button.addEventListener('click', function () {
-                var programId = this.getAttribute('data-program-id');
-                // Redirect to studentform.php with the Program ID as a parameter
-                window.location.href = 'Student_Forms.php?program_id=' + programId;
-            });
-        });
     });
 </script>
