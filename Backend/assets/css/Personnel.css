@@ -1363,7 +1363,9 @@ button[type="submit"]:hover {
 	transition-duration: 0.4s;
 }
 
-
+#content main .table-data .order table tbody tr.selected {
+    background-color: lightgray; /* Change this to the desired highlight color */
+}
 
 
 

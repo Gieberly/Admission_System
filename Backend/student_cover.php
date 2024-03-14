@@ -37,7 +37,7 @@ $studentData = $resultUser->fetch_assoc();
     <section id="sidebar">
         <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
-            <span class="text">Student</span>
+            <span class="text">Student</span> 
         </a>
 
         <ul class="side-menu top">
@@ -71,7 +71,20 @@ $studentData = $resultUser->fetch_assoc();
         <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
-
+            <?php
+            // Check if the current page is masterlist.php
+            $current_page = basename($_SERVER['PHP_SELF']);
+            if ($current_page === 'Student_Dashboard.php') {
+            ?>
+                <form action="Student_Dashboard.php" method="GET">
+                    <div class="form-input">
+                        <input type="search" name="search" placeholder="Search...">
+                        <button type="submit" class="search-btn"><i id="searchIcon" class="fas fa-search" onclick="changeIcon()"></i></button>
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
             <form id="search-form">
                 <div class="form-input" style="display: none;">
                     <input type="text" id="searchInput" placeholder="Search...">

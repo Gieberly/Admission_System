@@ -121,40 +121,40 @@ $stmt->close();
               </tr>
             </thead>
             <tbody>
-              <?php
-              $counter = 1; // Initialize the counter before the loop
+            <?php
+$counter = 1; // Initialize the counter before the loop
 
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
-                echo "<td>" . $counter . "</td>";
-                echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['nature_of_degree'] . "</td>";
-                echo "<td>" . $row['degree_applied'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
-                echo "<td>" . $row['academic_classification'] . "</td>";
-                $appointmentDate = $row['appointment_date'];
-                echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
-                $appointmentTime = $row['appointment_time'];
-                echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
+while ($row = $result->fetch_assoc()) {
+    echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+    echo "<td>" . $counter . "</td>";
+    echo "<td>" . $row['applicant_number'] . "</td>";
+    echo "<td>" . $row['nature_of_degree'] . "</td>";
+    echo "<td>" . $row['degree_applied'] . "</td>";
+    echo "<td>" . $row['applicant_name'] . "</td>";
+    echo "<td>" . $row['academic_classification'] . "</td>";
 
 
-                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
-                echo "<td>
-        <div class='button-container'>
-        <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
-        <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
-        <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
-        </div>
-        </td>";
-                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-                echo "</tr>";
 
-                $counter++; // Increment the counter for the next row
-              }
+    $appointmentDate = $row['appointment_date'];
+    echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
+    $appointmentTime = $row['appointment_time'];
+    echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
 
-              // Close the database connection
-              $conn->close();
-              ?>
+    echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+    echo "<td>
+    <div class='button-container'>
+    <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
+    <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
+    <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
+    </div>
+    </td>";
+    echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+    echo "</tr>";
+
+    $counter++; // Increment the counter for the next row
+}
+?>
+
             </tbody>
           </table>
 
@@ -181,7 +181,7 @@ $stmt->close();
                 <br>
                 <!--Email Address -->
                 <label class="small-label" for="email">Email Address</label>
-                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>">
               </div>
 
               <div class="form-group">
@@ -274,26 +274,10 @@ $stmt->close();
             <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
             <input type="submit" name="submit">
           </form>
-    <!-- Add your student data fields here -->
+ 
   </div>
 
-  <div class="tab-content" id="content2">
-    <!-- Content for Student Requirements Tab -->
-    <h2>Student Requirements</h2>
-     
-    <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-          
-           
-              <div class="form-group">
-                
-                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
-              </div>
-            
-            <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-            <input type="submit" name="submit">
-            
-          </form>
-</div>
+  <div class="tab-content" id="content2"></div>
 
 
       
@@ -317,6 +301,17 @@ $stmt->close();
   </div>
 
   <style>
+    .field-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.field-group > * {
+    flex-basis: calc(25% - 10px); /* Adjust the width as needed */
+    margin-bottom: 10px; /* Adjust the vertical spacing as needed */
+}
+
     .success-message {
       position: fixed;
       top: 10%;
@@ -712,8 +707,8 @@ $stmt->close();
               $('#updateProfileForm input[name="civil_status"]').val(response.civil_status);
               $('#updateProfileForm input[name="citizenship"]').val(response.citizenship);
               $('#updateProfileForm input[name="nationality"]').val(response.nationality);
-              $('#updateProfileForm input[name="permanent_address"]').val(response.permanent_address);
-              $('#updateProfileForm input[name="zip_code"]').val(response.zip_code);
+              $('#updateProfileForm input[name="Requirements_Remarks"]').val(response.Requirements_Remarks);
+              $('#updateProfileForm input[name="Requirements"]').val(response.Requirements);
               $('#updateProfileForm input[name="phone_number"]').val(response.phone_number);
               $('#updateProfileForm input[name="facebook"]').val(response.facebook);
               $('#updateProfileForm input[name="email"]').val(response.email);
@@ -749,6 +744,29 @@ $stmt->close();
         $('.todo').hide();
       });
     });
+
+    function updateContent(rowId) {
+    // Make an Ajax request to fetch requirements based on the clicked row
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+        // Update the content2 div with the fetched requirements
+        document.getElementById("content2").innerHTML = this.responseText;
+      }
+    };
+    xhttp.open("GET", "Personnel_fetchrequirements.php?rowId=" + rowId, true);
+    xhttp.send();
+  }
+
+  // Attach click event listener to table rows
+  var rows = document.getElementsByClassName("editRow");
+  for (var i = 0; i < rows.length; i++) {
+    rows[i].addEventListener("click", function() {
+      var rowId = this.getAttribute("data-id");
+      updateContent(rowId);
+    });
+  }
+
 
     function updateStatus(id, status) {
       // Show the confirmation dialog
@@ -813,6 +831,21 @@ $stmt->close();
         }, 3000);
       }
     });
+    document.addEventListener("DOMContentLoaded", function() {
+    // Add click event listener to each row
+    var rows = document.querySelectorAll('.editRow');
+    rows.forEach(function(row) {
+        row.addEventListener('click', function() {
+            // Remove 'selected' class from all rows
+            rows.forEach(function(r) {
+                r.classList.remove('selected');
+            });
+
+            // Add 'selected' class to the clicked row
+            this.classList.add('selected');
+        });
+    });
+});
   </script>
 
 
