@@ -192,11 +192,11 @@ while ($row = $result->fetch_assoc()) {
                 <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
                 <br>
                 <!-- Telephone/Mobile No -->
-                <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
+                <label class="small-label" for="phone_number">Mobile No.</label>
                 <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
               </div>
               <!-- ID -->
-                <img id="applicantPicture" alt="Applicant Picture" style="width: 150px; height: 150px; border-radius: 2%; float: right;">
+                <img id="applicantPicture" alt="Applicant Picture">
               </div>
               <br>
             <p class="personal_information">Contact Person(s) in Case of Emergency</p>
@@ -207,11 +207,11 @@ while ($row = $result->fetch_assoc()) {
                 <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="contact_person_1_mobile">Mobile Number</label>
+                <label class="small-label" for="contact_person_1_mobile">Mobile No.</label>
                 <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="relationship_1">Relationship with Contact Person</label>
+                <label class="small-label" for="relationship_1">Relationship</label>
                 <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
               </div>
             </div>
@@ -223,11 +223,11 @@ while ($row = $result->fetch_assoc()) {
                 <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
+                <label class="small-label" for="contact_person_2_mobile">Mobile No.</label>
                 <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="relationship_2">Relationship with Contact Person</label>
+                <label class="small-label" for="relationship_2">Relationship</label>
                 <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
               </div>
             </div>
@@ -242,14 +242,14 @@ while ($row = $result->fetch_assoc()) {
               <label class="small-label" for="college">College</label>
                 <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
                 <br>
-                <!-- Degree -->
-                <label class="small-label" for="degree_applied">Degree</label>
+              <!-- Degree -->
+              <label class="small-label" for="degree_applied">Degree</label>
                 <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
               </div>
 
               <div class="form-group">
                 <!-- Academic Classification -->
-                <label class="small-label" for="academic_classification">Academic Classification</label>
+                <label class="small-label" for="academic_classification">Classification</label>
                 <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
                 <br>
                 <!-- Nature -->
@@ -263,11 +263,11 @@ while ($row = $result->fetch_assoc()) {
             <div class="form-container3">
               <!-- Academic Background -->
               <div class="form-group">
-                <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED (School Name and Address)</label>
+                <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED</label>
                 <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
               </div>
               <div class="form-group">
-                <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
+                <label class="small-label" for="lrn" style="white-space: nowrap;">LRN</label>
                 <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
               </div>
             </div>
@@ -503,19 +503,25 @@ while ($row = $result->fetch_assoc()) {
     /* Apply styles to the form container */
     .form-container1 {
       display: grid;
-      grid-template-columns: 50% 25% 25%;
-      gap: 10px;
+      grid-template-columns: 50% 23% 23%;
+      gap: 2%;
     }
 
     .form-container2 {
       display: grid;
-      grid-template-columns: 45% 20% 30%;
-      gap: 10px;
+      grid-template-columns: 44% 19% 33%;
+      gap: 2%;
     }
 
     .form-container3 {
       display: grid;
-      grid-template-columns: 65% 30%;
+      grid-template-columns: 65% 33%;
+      gap: 2%;
+    }
+
+    .form-container4 {
+      display: grid;
+      grid-template-columns: 100%;
       gap: 10px;
     }
     /* Apply styles to the form groups */
@@ -528,7 +534,7 @@ while ($row = $result->fetch_assoc()) {
     /* Apply styles to the labels */
     .small-label {
       display: block;
-      font-size: 14px;
+      font-size: .9vw;
       margin-bottom: 5px;
     }
 
@@ -539,16 +545,18 @@ while ($row = $result->fetch_assoc()) {
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      font-size:.8vw;
     }
 
     /* Apply styles to the submit button */
     input[type="submit"] {
       background-color: #4CAF50;
       color: white;
-      padding: 10px 20px;
+      padding: 2% 4%;
       border: none;
       border-radius: 4px;
       cursor: pointer;
+      font-size: 1vw;
     }
 
     input[type="submit"]:hover {
@@ -557,7 +565,7 @@ while ($row = $result->fetch_assoc()) {
 
     /* Style for the personal information headings */
     .personal_information {
-      font-size: 18px;
+      font-size: 1vw;
       font-weight: bold;
       margin-bottom: 10px;
     }
@@ -566,24 +574,6 @@ while ($row = $result->fetch_assoc()) {
     #updateProfileForm {
       max-width: 800px;
       margin: 0 auto;
-    }
-
-    .input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    /* Apply styles to the submit button */
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
     }
 
     .success-message {
@@ -595,7 +585,7 @@ while ($row = $result->fetch_assoc()) {
     }
 
     /* Responsive styles for smaller screens */
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 881px) {
       .form-group {
         width: 100%;
       }
@@ -661,6 +651,15 @@ while ($row = $result->fetch_assoc()) {
       height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
       z-index: 999;
+    }
+
+    #applicantPicture {
+      width: 100%; /* Adjust width as a percentage of the container */
+      max-width: 192px;
+      min-width: 20px;
+      height: auto;
+      border-radius: 2%;
+      float: right;
     }
   </style>
 

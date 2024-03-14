@@ -863,7 +863,7 @@ nav {
 }
 
 #content main .head-title .left h1 {
-	font-size: 36px;
+	font-size: 2.5vw;
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
@@ -882,6 +882,7 @@ nav {
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
 	pointer-events: none;
+	font-size: 1.2vw;
 }
 
 #content main .head-title .left .breadcrumb li a.active {
@@ -896,16 +897,18 @@ nav {
 
 .btn-download,
 .btn-appointment {
-	height: 36px;
-	padding: 0 16px;
+	height: 5vh;
+	width: 10vw;
+	padding: 0 5%;
 	border-radius: 36px;
 	background: var(--green);
 	color: var(--light);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	grid-gap: 10px;
+	grid-gap: 3%;
 	font-weight: 500;
+	font-size: 1vw;
 }
 
 .btn-download:hover,
@@ -918,12 +921,6 @@ nav {
 	#content main .head-title .button-container {
 		flex-direction: column;
 		align-items: stretch;
-	}
-
-	.btn-download,
-	.btn-appointment {
-		width: 100%;
-		margin-bottom: 10px;
 	}
 }
 
@@ -1026,7 +1023,6 @@ button[type="submit"]:hover {
 
 #toggleSelection .bx {
 	font-size: 15px;
-
 	color: var(--dark);
 }
 
@@ -1252,7 +1248,7 @@ button[type="submit"]:hover {
 
 #content main .table-data .head h3 {
 	/* Add styles for the table header heading */
-	font-size: 18px;
+	font-size: 1.5vw;
 	float: left;
 	margin-right: auto;
 }
@@ -1280,8 +1276,7 @@ button[type="submit"]:hover {
 	border: none;
 	text-align: left;
 	padding: 6px;
-	font-size: 12px;
-	font-size: 10px;
+	font-size: .8vw;
 	white-space: normal;
 	border-bottom: 1px solid var(--dark);
 
@@ -1293,8 +1288,8 @@ button[type="submit"]:hover {
 #content main .table-data .order table td {
 	/* Add any styles for table data cells */
 	border: none;
-	padding: 6px;
-	font-size: 10px;
+	padding: .5%;
+	font-size: .8vw;
 	font-family: 'Arial', sans-serif;
 }
 
@@ -1460,15 +1455,6 @@ button[type="submit"]:hover {
 	#content main .table-data > div {
         padding: 10px; /* Reduce padding for smaller screens */
         overflow-x: auto; /* Add horizontal scroll for smaller screens */
-    }
-
-    #content main .table-data .head {
-        margin-bottom: 20px; /* Reduce margin for smaller screens */
-    }
-
-    #content main .table-data .order table th,
-    #content main .table-data .order table td {
-        font-size: 12px; /* Adjust font size for smaller screens */
     }
 }
 
@@ -1721,25 +1707,21 @@ label[for="rangeInput"] {
   display: none;
   padding: 20px;
   border: 1px solid #4caf50;
-  
   border-bottom-left-radius: 15px;
-  
   border-top-right-radius: 15px;
 }
 
-
-  
 .tab-label {
 	cursor: pointer;
+	font-size: 1vw;
 	display: inline-block;
-	padding: 15px 20px;
+	padding: 5px 10px;
 	background-color: #bababa;
 	color: #000000;
 	font-weight: bold;
 	text-align: center;
-	
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
 	transition: background-color 0.3s ease, color 0.3s ease;
   }
   

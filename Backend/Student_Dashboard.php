@@ -52,7 +52,6 @@ $displayedColleges = array();
                             <table id="searchableTable">
                                 <thead>
                                     <tr>
-                                
                                         <th>Program</th>
                                         <th>Nature of Degree</th>
                                         <th>Action</th>
@@ -138,7 +137,7 @@ $displayedColleges = array();
         text-align: center;
         text-decoration: none;
         display: inline-block;
-        font-size: 14px;
+        font-size: 1vw;
         cursor: pointer;
         border-radius: 5px;
         transition: background-color 0.3s;
