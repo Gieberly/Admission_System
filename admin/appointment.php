@@ -17,9 +17,9 @@ include("../includes/functions.php");
                     <div class="left">
                         <h1>Schedule</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Admin</a></li>
+                            <li><a href="#" style="text-decoration:none">Admin</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="#">Appointment Schedule</a></li>
+                            <li><a class="active" href="#" style="text-decoration:none">Appointment Schedule</a></li>
                         </ul>
                     </div>
                 </div>
@@ -76,8 +76,8 @@ include("../includes/functions.php");
                                             <td><?php echo $row['appointment_time']; ?></td>
                                             <td><?php echo $row['available_slots']; ?></td>
                                             <td> 
-                                                <a href="update_data_form.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-primary">Edit<i class='bx bx-edit'></i></a>
-                                                <a href="delete_data.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger">Delete<i class='bx bxs-trash'></i></a>
+                                                <a href="update_data_form.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-primary" style="text-decoration:none">Edit<i class='bx bx-edit'></i></a>
+                                                <a href="delete_data.php?id=<?php echo $row['appointment_id']; ?>" class="btn btn-danger" style="text-decoration:none">Delete<i class='bx bxs-trash'></i></a>
                                             </td>
                                         </tr>
   

@@ -7,11 +7,13 @@
 }
 
 a {
-	text-decoration: none;
+	text-decoration: none !important;
+	color: inherit;
 }
 
 li {
 	list-style: none;
+	text-decoration: none !important;
 }
 
 :root {
@@ -104,6 +106,8 @@ margin:15px;
 margin-inline-end: 23px;
 display: flex;
 justify-content: center;
+text-decoration: none !important;
+color: inherit;
 }
 #sidebar .brand .bx {
 	min-width: 60px;
@@ -122,11 +126,13 @@ justify-content: center;
 	margin-left: 6px;
 	border-radius: 48px 0 0 48px;
 	padding: 4px;
+	text-decoration: none !important;
 }
 #sidebar .side-menu li.active {
 	background: var(--grey);
 	position: relative;
 	justify-content: space-between;
+	text-decoration: none !important;
 
 }
 #sidebar .side-menu li.active::before {
@@ -139,6 +145,7 @@ justify-content: center;
 	right: 0;
 	box-shadow: 20px 20px 0 var(--grey);
 	z-index: -1;
+	text-decoration: none !important;
 }
 #sidebar .side-menu li.active::after {
 	content: '';
@@ -150,6 +157,7 @@ justify-content: center;
 	right: 0;
 	box-shadow: 20px -20px 0 var(--grey);
 	z-index: -1;
+	text-decoration: none !important;
 }
 #sidebar .side-menu li a {
 	width: 100%;
@@ -162,6 +170,7 @@ justify-content: center;
 	color: var(--dark);
 	white-space: nowrap;
 	overflow-x: hidden;
+	text-decoration: none !important;
 }
 #sidebar .side-menu.top li.active a {
 	color: var(--green);
@@ -172,7 +181,8 @@ justify-content: center;
 }
 
 #sidebar .side-menu.top li a:hover {
-	color: var(--blue);
+	color: inherit;
+	text-decoration: none !important;
 }
 #sidebar .side-menu li a .bx {
 	min-width: calc(60px  - ((4px + 6px) * 2));
@@ -248,6 +258,7 @@ justify-content: center;
     opacity: 1;
     visibility: visible;
     bottom: 120%; /* Adjust the distance from the text */
+	text-decoration: none !important;
 }
 
 /* SIDEBAR */
@@ -327,7 +338,8 @@ hr {
 
 .profile-item:hover {
 	
-        color: var(--blue); /* Change font color on hover */
+        color: inherit; /* Change font color on hover */
+		text-decoration: none !important;
 }
 .profile-item.clicked {
         color: var(--green); /* Change font color when clicked */
@@ -366,6 +378,7 @@ hr {
 	background-color:rgba(128, 128, 128, 0.248);
     border-radius: 15px; 
 	padding-left: 10px;
+	text-decoration: none !important;
 }
 .profile-menu i {
 	margin-right: 8px;
@@ -448,6 +461,7 @@ hr {
 /* Style the dropdown toggle */
 .dropdown-toggle:hover .dropdown-content {
     display: block;
+	text-decoration: none !important;
 }
 
 /* NAVBAR */
@@ -492,6 +506,7 @@ nav {
 }
 #content nav .nav-link:hover {
 	color: var(--blue);
+	text-decoration: none !important;
 }
 #content nav form {
 	max-width: 400px;
@@ -583,6 +598,7 @@ nav {
 .notification:hover .circle,
 .message:hover .circle {
     background-color: var(--gray);
+	text-decoration: none !important;
 }
 
 .notification .num {
@@ -626,7 +642,8 @@ nav {
 }
 #content nav .prof:hover .profile-menu {
 	opacity: 1;
-	pointer-events: auto; 
+	pointer-events: auto;
+	text-decoration: none !important; 
 }
 /*switch*/
 #content nav .switch-mode {
@@ -700,6 +717,7 @@ nav {
 .tab-button:hover {
 	background-color: var(--light-green);
 	color:var(--gray);
+	text-decoration: none !important;
   }
   
 .tab-button.active {
@@ -795,6 +813,7 @@ nav {
   
   button[type="submit"]:hover {
 	background-color: var(--gray);
+	text-decoration: none !important;
   }
  
  #content main .button {
@@ -820,6 +839,7 @@ nav {
 #content main .button.save:hover {
 	background-color: var(--light-yellow);
   	color: var(--gray);
+	text-decoration: none !important;
 }
 
 #content main .button.send {
@@ -830,11 +850,13 @@ nav {
 #content main .button.send:hover {
 	background-color: var(--light-orange);
   	color:var(--gray);
+	text-decoration: none !important;
 }
 
 #content main .button.import:hover {
 	background-color: var(--light-yellow);
   	color: var(--gray);
+	text-decoration: none !important;
 }
 
 #content main .button.export {
@@ -845,6 +867,7 @@ nav {
 #content main .button.export:hover {
 	background-color: var(--light-blue);
   	color: var(--gray);
+	text-decoration: none !important;
 }
 
 #content main .button.edit {
@@ -855,6 +878,7 @@ nav {
 #content main .button.edit:hover {
 	background-color: var(--light-blue);
   	color: var(--gray);
+	text-decoration: none !important;
 }
 .btn-download {
 	height: 36px;
@@ -870,6 +894,7 @@ nav {
 }
 .btn-download:hover {
 	background: var(--blue);
+	text-decoration: none !important;
 }
 #content main .box-info {
 	display: grid;
@@ -901,6 +926,7 @@ nav {
 #content main .box-info li:nth-child(1) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
+	text-decoration: none !important;
 }
 #content main .box-info li:nth-child(2) .bx {
 	background: var(--light-green);
@@ -909,6 +935,7 @@ nav {
 #content main .box-info li:nth-child(2) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
+	text-decoration: none !important;
 }
 #content main .box-info li:nth-child(3) .bx {
 	background: var(--light-blue);
@@ -917,6 +944,7 @@ nav {
 #content main .box-info li:nth-child(3) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
+	text-decoration: none !important;
 }
 #content main .box-info li:nth-child(4) .bx {
 	background: var(--light-red);
@@ -925,6 +953,7 @@ nav {
 #content main .box-info li:nth-child(4) .bx:hover {
 	background: var(--dark-green);
 	opacity: .3;
+	text-decoration: none !important;
 }
 #content main .box-info li:nth-child(5) .bx {
 	background: var(--light-orange);
@@ -933,6 +962,7 @@ nav {
 #content main .box-info li:nth-child(5) .bx:hover {
 	background: var(--dark-green);
 	opacity: .3;
+	text-decoration: none !important;
 }
 #content main .box-info li .text h3 {
 	font-size: 20px;
@@ -1091,6 +1121,7 @@ nav {
 #content main .table-data .order table tr td .button.edit:hover {
 	background-color: var(--lighter-grey);
   	color: var(--gray);
+	  text-decoration: none !important;
 }
 #content main .table-data .order table tr td .button.delete {
 	background-color: var(--red); 
@@ -1099,6 +1130,7 @@ nav {
 #content main .table-data .order table tr td .button.delete:hover {
 	background-color: var(--lighter-grey);
   	color:var(--gray);
+	  text-decoration: none !important;
 }
 #content main .table-data .todo {
 	flex-grow: 1;
@@ -1277,5 +1309,6 @@ cursor: pointer;
 
 button:hover {
 background-color: #45a049;
+text-decoration: none !important;
 }
 

@@ -19,9 +19,9 @@ include("../includes/functions.php");
                     <div class="left">
                         <h1>Personnels</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Admin</a></li>
+                            <li><a href="#" style="text-decoration:none">Admin</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="staff.html">Personnel List</a></li>
+                            <li><a class="active" href="staff.html" style="text-decoration:none">Personnel List</a></li>
                         </ul>
                     </div>
                 </div>

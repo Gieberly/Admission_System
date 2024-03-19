@@ -18,9 +18,9 @@ include("../includes/functions.php");
                     <div class="left">
                         <h1>Colleges</h1>
                         <ul class="breadcrumb">
-                            <li><a href="#">Home</a></li>
+                            <li><a href="#" style="text-decoration:none">Home</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
-                            <li><a class="active" href="#">Colleges</a></li>
+                            <li><a class="active" href="#" style="text-decoration:none">Colleges</a></li>
                         </ul>
                     </div>
                 </div>
@@ -39,13 +39,13 @@ include("../includes/functions.php");
                             </div>
                             <ul class="nav nav-tabs">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="dataListViewTab" data-toggle="tab" href="#dataListView">Data List View</a>
+                                    <a class="nav-link active" id="dataListViewTab" data-toggle="tab" href="#dataListView" style="text-decoration:none">Data List View</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="addTab" data-toggle="tab" href="#add"><i class='bx bx-add-to-queue'></i>Add Course</a>
+                                    <a class="nav-link" id="addTab" data-toggle="tab" href="#add" style="text-decoration:none"><i class='bx bx-add-to-queue'></i>Add Course</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="editTab" data-toggle="tab" href="#edit">Edit</a>
+                                    <a class="nav-link" id="editTab" data-toggle="tab" href="#edit" style="text-decoration:none">Edit</a>
                                 </li>
                             </ul>
                         </div>

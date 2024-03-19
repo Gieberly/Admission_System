@@ -5,7 +5,6 @@ include("../includes/functions.php");
 ?>
 
 <?php include ('../template/header_admin.php')?>
-
 <body>
 <?php include ('sidebar-admin.php')?>
     <!-- CONTENT -->
@@ -18,12 +17,26 @@ include("../includes/functions.php");
                     <div class="head-title">
                         <div class="left">
                             <h1>Dashboard</h1>
-                            <ul class="breadcrumb">
-                                <li><a href="#">Dashboard</a></li>
+                            <ul class="breadcrumb" style="background-color:inherit">
+                                <li><a href="#" style="text-decoration:none;">Dashboard</a></li>
                                 <li><i class='bx bx-chevron-right'></i></li>
-                                <li><a class="active" href="#top">Home</a></li>
-                            </ul>
+                                <li><a class="active" href="#top" style="text-decoration:none">Home</a></li>
+                            </ul>                            
                         </div>
+                        <!--dropdown-->
+                        <div class="dropdown">
+                            <a class="btn btn-success dropdown-toggle" style="border-radius: 20px;" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                                Admission Period
+                            </a>
+                            <div class="dropdown-menu" style="border-radius: 10px;">
+                                <a class="dropdown-item active" href="#">Action</a>
+                                <a class="dropdown-item" href="#">Another action</a>
+                                <a class="dropdown-item" href="#">Something else here</a>
+                            </div>
+                            <div class="btn-group mr-2" role="group">
+                                <button type="button" class="btn btn-primary" style="border-radius: 20px;"><i class='bx bx-user-plus'></i> New admission</button>
+                            </div>
+                        </div>                        
                     </div>
 
                     <ul class="box-info">
