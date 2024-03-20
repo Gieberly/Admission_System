@@ -8,10 +8,6 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
   exit();
 }
 
-// Fetch data from the academicclassification table for the Classification column
-$sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
-$resultClassification = $conn->query($sqlClassification);
-
 // Retrieve admission data from the database with date filter
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
@@ -181,7 +177,7 @@ while ($row = $result->fetch_assoc()) {
                 <br>
                 <!--Email Address -->
                 <label class="small-label" for="email">Email Address</label>
-                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>">
+                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
               </div>
 
               <div class="form-group">
