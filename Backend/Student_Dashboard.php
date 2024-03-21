@@ -37,8 +37,6 @@ $combinedResults = $result->fetch_all(MYSQLI_ASSOC);
 $displayedColleges = array();
 
 ?>
-
-
 <section id="content">
     <main>
         <!-- Dashboard -->

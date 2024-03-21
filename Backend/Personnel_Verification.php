@@ -75,10 +75,7 @@ $stmt->close();
           </ul>
         </div>
         <div class="button-container">
-          <a href="Personnels_AppointmentDate.php" class="btn-appointment">
-            <i class='bx bxs-calendar calendar-icon'></i>
-            <span class="text">Set Dates</span>
-          </a>
+
           <a href="excel_export_appointments.php" class="btn-download">
             <i class='bx bxs-file-export'></i>
             <span class="text">Excel Export</span>
@@ -140,7 +137,7 @@ while ($row = $result->fetch_assoc()) {
     echo "<td>
     <div class='button-container'>
     <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
-    <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></i></button>
+    <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></button>
     <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
     </div>
     </td>";
@@ -330,7 +327,17 @@ while ($row = $result->fetch_assoc()) {
         transform: translateY(0);
       }
     }
-
+    .button-container {
+  display: flex;
+  justify-content: center; /* Align buttons horizontally */
+ 
+}
+@media screen and (max-width: 600px) {
+  .button-container {
+    flex-direction: column; /* Stack buttons vertically on smaller screens */
+    align-items: center;
+  }
+}
     .button.ekis-btn {
       position: relative;
       background: none;
@@ -339,8 +346,9 @@ while ($row = $result->fetch_assoc()) {
       cursor: pointer;
     }
 
+
     .button.ekis-btn i {
-      font-size: 15px;
+      font-size: 13px;
       pointer-events: auto;
       color: black;
 
@@ -378,7 +386,7 @@ while ($row = $result->fetch_assoc()) {
     }
 
     .button.inc-btn i {
-      font-size: 15px;
+      font-size: 13px;
       pointer-events: auto;
       color: black;
 
@@ -415,7 +423,7 @@ while ($row = $result->fetch_assoc()) {
     }
 
     .button.check-btn i {
-      font-size: 15px;
+      font-size: 13px;
       pointer-events: auto;
       color: black;
     }
@@ -582,6 +590,7 @@ while ($row = $result->fetch_assoc()) {
       padding: 10px;
       border-radius: 4px;
       margin-bottom: 10px;
+      z-index: 9;
     }
 
     /* Responsive styles for smaller screens */
@@ -674,6 +683,7 @@ while ($row = $result->fetch_assoc()) {
       border-radius: 2%;
       float: right;
     }
+    
   </style>
 
   <div class="confirmation-dialog-overlay"></div>
