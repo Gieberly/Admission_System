@@ -503,8 +503,7 @@ $stmt->close();
                   </div>
                 </div>
               </div>
-
-
+ 
               <div class="HS-Graduate" style="display: none;">
                 <h2> School (Old Curriculum) Graduates </h2>
 
