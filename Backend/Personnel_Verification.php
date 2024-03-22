@@ -103,9 +103,9 @@ $stmt->close();
               <tr>
                 <th>#</th>
                 <th>Application No.</th>
+                <th>Name</th>
                 <th>Nature of Degree</th>
                 <th>Program</th>
-                <th>Name</th>
                 <th>Academic Classification</th>
                 <th>Appointment Date</th>
                 <th>Application Time</th>
@@ -121,9 +121,9 @@ while ($row = $result->fetch_assoc()) {
     echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
     echo "<td>" . $counter . "</td>";
     echo "<td>" . $row['applicant_number'] . "</td>";
+    echo "<td>" . $row['applicant_name'] . "</td>";
     echo "<td>" . $row['nature_of_degree'] . "</td>";
     echo "<td>" . $row['degree_applied'] . "</td>";
-    echo "<td>" . $row['applicant_name'] . "</td>";
     echo "<td>" . $row['academic_classification'] . "</td>";
 
 
@@ -154,9 +154,10 @@ while ($row = $result->fetch_assoc()) {
         </div>
 
         <div class="todo" style="display: none;">
+        <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
        
   <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
-  <label class="tab-label" for="tab1">Student Data</label>
+  <label class="tab-label" for="tab1">Student Grades</label>
 
   <input type="radio" id="tab2" name="tabGroup1" class="tab">
   <label class="tab-label" for="tab2">Student Requirements</label>

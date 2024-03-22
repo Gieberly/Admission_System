@@ -318,9 +318,10 @@ $stmt->close();
               <tr>
                 <th>#</th>
                 <th>Application No.</th>
+                <th>Name</th>
                 <th>Nature of Degree</th>
                 <th>Program</th>
-                <th>Name</th>
+               
                 <th>Academic Classification</th>
 
               </tr>
@@ -333,9 +334,9 @@ $stmt->close();
                 echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
                 echo "<td>" . $counter . "</td>";
                 echo "<td>" . $row['applicant_number'] . "</td>";
+                echo "<td>" . $row['applicant_name'] . "</td>";
                 echo "<td>" . $row['nature_of_degree'] . "</td>";
                 echo "<td>" . $row['degree_applied'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
 
 
@@ -353,10 +354,10 @@ $stmt->close();
         </div>
 
         <div class="todo" style="display: none;">
+        <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
 
           <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
           <label class="tab-label" for="tab1">Student Data</label>
-
           <input type="radio" id="tab2" name="tabGroup1" class="tab">
           <label class="tab-label" for="tab2">Student Remarks</label>
 
@@ -547,13 +548,14 @@ $stmt->close();
           </div>
 
           <div class="tab-content" id="content2">
-            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_UpdateApplicants.php">
+          <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_SubmitForm.php">
+
               <div class="form-container5">
 
                 <div class="form-group">
                   <!-- College -->
                   <label class="small-label" for="college">College</label>
-                  <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
+                  <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>" readonly>
                 </div>
                 <div class="form-group">
                   <!-- Degree -->
@@ -564,19 +566,12 @@ $stmt->close();
                 <div class="form-group">
                   <!-- Nature -->
                   <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature</label>
-                  <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
+                  <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly>
                 </div>
               </div>
               <div class="form-container5">
-                <div class="form-group">
-                  <!-- Qualification Nature Degree -->
-                  <label class="small-label" for="qualification_nature_degree" style="white-space: nowrap;">Qualification Nature Degree</label>
-                  <select name="qualification_nature_degree" class="input" id="qualification_nature_degree">
-                    <option value="Board Program" <?php if ($admissionData['qualification_nature_degree'] == 'Board Program') echo 'selected'; ?>>Board Program</option>
-                    <option value="Non-Board Program" <?php if ($admissionData['qualification_nature_degree'] == 'Non-Board Program') echo 'selected'; ?>>Non-Board Program</option>
-                    <option value="Both" <?php if ($admissionData['qualification_nature_degree'] == 'Both') echo 'selected'; ?>>Both</option>
-                  </select>
-                </div>
+              <div class="form-group">
+
 
               </div>
 
@@ -687,7 +682,7 @@ $stmt->close();
               $('#updateProfileForm input[name="OSS_Endorsement_Slip"]').val(response.OSS_Endorsement_Slip);
               $('#updateProfileForm input[name="OSS_Admission_Test_Score"]').val(response.OSS_Admission_Test_Score);
               $('#updateProfileForm input[name="OSS_Remarks"]').val(response.OSS_Remarks);
-              $('#updateProfileForm input[name="Qualification_Nature_Degree"]').val(response.Qualification_Nature_Degree);
+              $('#qualification_nature_degree').val(response.Qualification_Nature_Degree);
               $('#updateProfileForm input[name="Interview_Result"]').val(response.Interview_Result);
               $('#updateProfileForm input[name="Endorsed"]').val(response.Endorsed);
               $('#updateProfileForm input[name="Confirmed_Slot"]').val(response.Confirmed_Slot);
@@ -774,7 +769,7 @@ $stmt->close();
           rows.forEach(function(r) {
             r.classList.remove('selected');
           });
-
+ 
           // Add 'selected' class to the clicked row
           this.classList.add('selected');
         });
