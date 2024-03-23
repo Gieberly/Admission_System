@@ -7,7 +7,29 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
   header("Location: loginpage.php");
   exit();
 }
+// Fetch courses from the programs table
+$courses_query = "SELECT DISTINCT Courses FROM programs";
+$courses_result = $conn->query($courses_query);
 
+$courses = array();
+while ($row = $courses_result->fetch_assoc()) {
+    $courses[] = $row['Courses'];
+}
+$colleges_query = "SELECT DISTINCT College FROM programs";
+$colleges_result = $conn->query($colleges_query);
+
+$colleges = array();
+while ($row = $colleges_result->fetch_assoc()) {
+  $colleges[] = $row['College'];
+}
+// Fetch classifications from the academicclassification table
+$classifications_query = "SELECT Classification FROM academicclassification";
+$classifications_result = $conn->query($classifications_query);
+
+$classifications = array();
+while ($row = $classifications_result->fetch_assoc()) {
+  $classifications[] = $row['Classification'];
+}
 // Retrieve admission data from the database with date filter
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
@@ -22,7 +44,7 @@ $query = "SELECT * FROM admission_data WHERE
              `degree_applied` LIKE '%$search%')
             AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
             AND `appointment_date` IS NOT NULL
-          ORDER BY nature_of_degree ASC, degree_applied ASC, applicant_name ASC";
+          ORDER BY  applicant_name ASC";
 
 $result = $conn->query($query);
 
@@ -114,39 +136,39 @@ $stmt->close();
               </tr>
             </thead>
             <tbody>
-            <?php
-$counter = 1; // Initialize the counter before the loop
+              <?php
+              $counter = 1; // Initialize the counter before the loop
 
-while ($row = $result->fetch_assoc()) {
-    echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
-    echo "<td>" . $counter . "</td>";
-    echo "<td>" . $row['applicant_number'] . "</td>";
-    echo "<td>" . $row['applicant_name'] . "</td>";
-    echo "<td>" . $row['nature_of_degree'] . "</td>";
-    echo "<td>" . $row['degree_applied'] . "</td>";
-    echo "<td>" . $row['academic_classification'] . "</td>";
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+                echo "<td>" . $counter . "</td>";
+                echo "<td>" . $row['applicant_number'] . "</td>";
+                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['nature_of_degree'] . "</td>";
+                echo "<td>" . $row['degree_applied'] . "</td>";
+                echo "<td>" . $row['academic_classification'] . "</td>";
 
 
 
-    $appointmentDate = $row['appointment_date'];
-    echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
-    $appointmentTime = $row['appointment_time'];
-    echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
+                $appointmentDate = $row['appointment_date'];
+                echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
+                $appointmentTime = $row['appointment_time'];
+                echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
 
-    echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
-    echo "<td>
+                echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
+                echo "<td>
     <div class='button-container'>
     <button type='button' class='button ekis-btn' data-tooltip='Rejected' onclick='updateStatus({$row['id']}, \"Rejected\")'><i class='bx bxs-x-circle'></i></button>
     <button type='button' class='button inc-btn' data-tooltip='Incomplete' onclick='updateStatus({$row['id']}, \"Incomplete\")'><i class='bx bxs-no-entry'></i></button>
     <button type='button' class='button check-btn' data-tooltip='Complete' onclick='updateStatus({$row['id']}, \"Complete\")'><i class='bx bxs-check-circle'></i></button>
     </div>
     </td>";
-    echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-    echo "</tr>";
+                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
+                echo "</tr>";
 
-    $counter++; // Increment the counter for the next row
-}
-?>
+                $counter++; // Increment the counter for the next row
+              }
+              ?>
 
             </tbody>
           </table>
@@ -154,133 +176,161 @@ while ($row = $result->fetch_assoc()) {
         </div>
 
         <div class="todo" style="display: none;">
-        <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
-       
-  <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
-  <label class="tab-label" for="tab1">Student Grades</label>
+          <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
 
-  <input type="radio" id="tab2" name="tabGroup1" class="tab">
-  <label class="tab-label" for="tab2">Student Requirements</label>
+          <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+          <label class="tab-label" for="tab1">Student Data</label>
 
-  <div class="tab-content" id="content1">
-   
-    <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-            
-            <div class="form-container1">
-            
-              <div class="form-group">
-                <!-- Complete Name -->
-                <label class="small-label" for="applicant_name">Complete Name</label>
-                <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
-                <br>
-                <!--Email Address -->
-                <label class="small-label" for="email">Email Address</label>
-                <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
-              </div>
+          <input type="radio" id="tab2" name="tabGroup1" class="tab">
+          <label class="tab-label" for="tab2">Student Requirements</label>
 
-              <div class="form-group">
-                <!-- Sex at Birth -->
-                <label class="small-label" for="gender">Sex at birth</label>
-                <input name="gender" class="input" id="gender" value="<?php echo $admissionData['gender']; ?>">
-                <br>
-                <!-- Telephone/Mobile No -->
-                <label class="small-label" for="phone_number">Mobile No.</label>
-                <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
-              </div>
-              <!-- ID -->
+          <div class="tab-content" id="content1">
+
+            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
+
+              <div class="form-container1">
+
+                <div class="form-group">
+                  <!-- Complete Name -->
+                  <label class="small-label" for="applicant_name">Complete Name</label>
+                  <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
+                  <br>
+                  <!--Email Address -->
+                  <label class="small-label" for="email">Email Address</label>
+                  <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
+                </div>
+
+                <div class="form-group">
+                  <!-- Sex at Birth -->
+                  <label class="small-label" for="gender">Sex at birth</label>
+                  <select name="gender" class="input" id="gender">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                  <br>
+                  <!-- Telephone/Mobile No -->
+                  <label class="small-label" for="phone_number">Mobile No.</label>
+                  <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
+                </div>
+                <!-- ID -->
                 <img id="applicantPicture" alt="Applicant Picture">
               </div>
               <br>
-            <p class="personal_information">Contact Person(s) in Case of Emergency</p>
-            <div class="form-container2">
-              <!-- Contact Person 1 -->
-              <div class="form-group">
-                <label class="small-label" for="contact_person_1">Contact Person</label>
-                <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
+              <p class="personal_information">Contact Person(s) in Case of Emergency</p>
+              <div class="form-container2">
+                <!-- Contact Person 1 -->
+                <div class="form-group">
+                  <label class="small-label" for="contact_person_1">Contact Person</label>
+                  <input name="contact_person_1" class="input" id="contact_person_1" value="<?php echo $admissionData['contact_person_1']; ?>">
+                </div>
+                <div class="form-group">
+                  <label class="small-label" for="contact_person_1_mobile">Mobile No.</label>
+                  <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
+                </div>
+                <div class="form-group">
+                  <!-- Relationship -->
+                  <label class="small-label" for="relationship_1">Relationship</label>
+                  <select name="relationship_1" class="input" id="relationship_1">
+                    <option value="Parent">Parent</option>
+                    <option value="Guardian">Guardian</option>
+                  </select>
+                </div>
               </div>
-              <div class="form-group">
-                <label class="small-label" for="contact_person_1_mobile">Mobile No.</label>
-                <input name="contact_person_1_mobile" class="input" id="contact_person_1_mobile" value="<?php echo $admissionData['contact1_phone']; ?>">
-              </div>
-              <div class="form-group">
-                <label class="small-label" for="relationship_1">Relationship</label>
-                <input name="relationship_1" class="input" id="relationship_1" value="<?php echo $admissionData['relationship_1']; ?>">
-              </div>
-            </div>
 
-            <div class="form-container2">
-              <!-- Contact Person 2 -->
-              <div class="form-group">
-                <label class="small-label" for="contact_person_2">Contact Person</label>
-                <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
+              <div class="form-container2">
+                <!-- Contact Person 2 -->
+                <div class="form-group">
+                  <label class="small-label" for="contact_person_2">Contact Person</label>
+                  <input name="contact_person_2" class="input" id="contact_person_2" value="<?php echo $admissionData['contact_person_2']; ?>">
+                </div>
+                <div class="form-group">
+                  <label class="small-label" for="contact_person_2_mobile">Mobile No.</label>
+                  <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
+                </div>
+                <div class="form-group">
+                  <!-- Relationship -->
+                  <label class="small-label" for="relationship_2">Relationship</label>
+                  <select name="relationship_2" class="input" id="relationship_2">
+                    <option value="Parent">Parent</option>
+                    <option value="Guardian">Guardian</option>
+                  </select>
+                </div>
+
               </div>
-              <div class="form-group">
-                <label class="small-label" for="contact_person_2_mobile">Mobile No.</label>
-                <input name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" value="<?php echo $admissionData['contact_person_2_mobile']; ?>">
-              </div>
-              <div class="form-group">
-                <label class="small-label" for="relationship_2">Relationship</label>
-                <input name="relationship_2" class="input" id="relationship_2" value="<?php echo $admissionData['relationship_2']; ?>">
-              </div>
-            </div>
 
               <br>
-            <p class="personal_information">Academic Classification</p>
+              <p class="personal_information">Academic Classification</p>
 
-            <div class="form-container3">
-              
-              <div class="form-group">
-              <!-- College -->
-              <label class="small-label" for="college">College</label>
-                <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>">
-                <br>
-              <!-- Degree -->
-              <label class="small-label" for="degree_applied">Degree</label>
-                <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>">
+              <div class="form-container3">
+
+                <div class="form-group">
+                  <!-- College -->
+                  <label class="small-label" for="college">College</label>
+                  <select name="college" class="input" id="college">
+                    <?php foreach ($colleges as $college) { ?>
+                      <option value="<?php echo $college; ?>"><?php echo $college; ?></option>
+                    <?php } ?>
+                  </select>
+                  <br>
+                  <!-- Degree -->
+                  <label class="small-label" for="degree_applied">Degree</label>
+                  <select name="degree_applied" class="input" id="degree_applied">
+                    <?php foreach ($courses as $course) { ?>
+                      <option value="<?php echo $course; ?>"><?php echo $course; ?></option>
+                    <?php } ?>
+                  </select>
+
+                </div>
+
+                <div class="form-group">
+                  <!-- Academic Classification -->
+                  <label class="small-label" for="academic_classification">Classification</label>
+                  <select name="academic_classification" class="input" id="academic_classification">
+                    <?php foreach ($classifications as $classification) { ?>
+                      <option value="<?php echo $classification; ?>"><?php echo $classification; ?></option>
+                    <?php } ?>
+                  </select>
+                  <br>
+                  <!-- Nature -->
+                  <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
+    <select name="nature_of_degree" class="input" id="nature_of_degree">
+        <option value="Board">Board</option>
+        <option value="Non-Board">Non-Board</option>
+    </select>
+                </div>
               </div>
 
-              <div class="form-group">
-                <!-- Academic Classification -->
-                <label class="small-label" for="academic_classification">Classification</label>
-                <input name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>">
-                <br>
-                <!-- Nature -->
-                <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-                <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>">
+              <br>
+              <p class="personal_information">Academic Background </p>
+              <div class="form-container3">
+                <!-- Academic Background -->
+                <div class="form-group">
+                  <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED</label>
+                  <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
+                </div>
+                <div class="form-group">
+                  <label class="small-label" for="lrn" style="white-space: nowrap;">LRN</label>
+                  <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
+                </div>
               </div>
-            </div>
 
-            <br>
-            <p class="personal_information">Academic Background </p>
-            <div class="form-container3">
-              <!-- Academic Background -->
-              <div class="form-group">
-                <label class="small-label" for="high_school_name_address" style="white-space: nowrap;">LAST SCHOOL ATTENDED</label>
-                <input name="high_school_name_address" class="input" id="high_school_name_address" value="<?php echo $admissionData['high_school_name_address']; ?>">
-              </div>
-              <div class="form-group">
-                <label class="small-label" for="lrn" style="white-space: nowrap;">LRN</label>
-                <input name="lrn" class="input" id="lrn" value="<?php echo $admissionData['lrn']; ?>">
-              </div>
-            </div>
+              <br>
+              <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
+              <input type="submit" name="submit">
+            </form>
 
-            <br>
-            <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-            <input type="submit" name="submit">
-          </form>
- 
-  </div>
+          </div>
 
-  <div class="tab-content" id="content2"></div>
-
-
-      
-    </div>
-</div>
+          <div class="tab-content" id="content2"></div>
 
 
 
         </div>
+      </div>
+
+
+
+      </div>
       </div>
     </main>
     <!-- MAIN -->
@@ -296,15 +346,17 @@ while ($row = $result->fetch_assoc()) {
 
   <style>
     .field-group {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
 
-.field-group > * {
-    flex-basis: calc(25% - 10px); /* Adjust the width as needed */
-    margin-bottom: 10px; /* Adjust the vertical spacing as needed */
-}
+    .field-group>* {
+      flex-basis: calc(25% - 10px);
+      /* Adjust the width as needed */
+      margin-bottom: 10px;
+      /* Adjust the vertical spacing as needed */
+    }
 
     .success-message {
       position: fixed;
@@ -328,17 +380,22 @@ while ($row = $result->fetch_assoc()) {
         transform: translateY(0);
       }
     }
+
     .button-container {
-  display: flex;
-  justify-content: center; /* Align buttons horizontally */
- 
-}
-@media screen and (max-width: 600px) {
-  .button-container {
-    flex-direction: column; /* Stack buttons vertically on smaller screens */
-    align-items: center;
-  }
-}
+      display: flex;
+      justify-content: center;
+      /* Align buttons horizontally */
+
+    }
+
+    @media screen and (max-width: 600px) {
+      .button-container {
+        flex-direction: column;
+        /* Stack buttons vertically on smaller screens */
+        align-items: center;
+      }
+    }
+
     .button.ekis-btn {
       position: relative;
       background: none;
@@ -533,6 +590,7 @@ while ($row = $result->fetch_assoc()) {
       grid-template-columns: 100%;
       gap: 10px;
     }
+
     /* Apply styles to the form groups */
     .form-group {
       margin-bottom: 15px;
@@ -554,7 +612,7 @@ while ($row = $result->fetch_assoc()) {
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-      font-size:.8vw;
+      font-size: .8vw;
     }
 
     /* Apply styles to the submit button */
@@ -636,10 +694,10 @@ while ($row = $result->fetch_assoc()) {
       color: white;
       transition: background-color 0.3s ease;
       padding: 10px 15px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     /* Hover effect for Confirm button */
@@ -654,10 +712,10 @@ while ($row = $result->fetch_assoc()) {
       color: white;
       transition: background-color 0.3s ease;
       padding: 10px 15px;
-    margin: 0 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
     }
 
     /* Hover effect for Cancel button */
@@ -677,14 +735,14 @@ while ($row = $result->fetch_assoc()) {
     }
 
     #applicantPicture {
-      width: 100%; /* Adjust width as a percentage of the container */
+      width: 100%;
+      /* Adjust width as a percentage of the container */
       max-width: 192px;
       min-width: 20px;
       height: auto;
       border-radius: 2%;
       float: right;
     }
-    
   </style>
 
   <div class="confirmation-dialog-overlay"></div>
@@ -721,7 +779,7 @@ while ($row = $result->fetch_assoc()) {
               $('#applicantPicture').attr('src', response.id_picture);
               $('#updateProfileForm input[name="applicant_name"]').val(response.applicant_name);
               $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
-              $('#updateProfileForm input[name="gender"]').val(response.gender);
+              $('#updateProfileForm select[name="gender"]').val(response.gender);
               $('#updateProfileForm input[name="birthdate"]').val(response.birthdate);
               $('#updateProfileForm input[name="age"]').val(response.age);
               $('#updateProfileForm input[name="civil_status"]').val(response.civil_status);
@@ -734,18 +792,18 @@ while ($row = $result->fetch_assoc()) {
               $('#updateProfileForm input[name="email"]').val(response.email);
               $('#updateProfileForm input[name="contact_person_1"]').val(response.contact_person_1);
               $('#updateProfileForm input[name="contact_person_1_mobile"]').val(response.contact1_phone);
-              $('#updateProfileForm input[name="relationship_1"]').val(response.relationship_1);
+              $('#updateProfileForm select[name="relationship_1"]').val(response.relationship_1);
               $('#updateProfileForm input[name="contact_person_2"]').val(response.contact_person_2);
               $('#updateProfileForm input[name="contact_person_2_mobile"]').val(response.contact_person_2_mobile);
-              $('#updateProfileForm input[name="relationship_2"]').val(response.relationship_2);
-              $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
-              $('#updateProfileForm input[name="college"]').val(response.college);
+              $('#updateProfileForm select[name="relationship_2"]').val(response.relationship_2);
+              $('#updateProfileForm select[name="academic_classification"]').val(response.academic_classification);
+
+              $('#updateProfileForm select[name="college"]').val(response.college);
               $('#updateProfileForm input[name="id"]').val(response.id);
               $('#updateProfileForm input[name="high_school_name_address"]').val(response.high_school_name_address);
               $('#updateProfileForm input[name="lrn"]').val(response.lrn);
-              $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
-              $('#updateProfileForm input[name="nature_of_degree"]').val(response.nature_of_degree);
-
+              $('#updateProfileForm select[name="degree_applied"]').val(response.degree_applied);
+              $('#updateProfileForm select[name="nature_of_degree"]').val(response.nature_of_degree);
               // Add similar lines for other form fields
 
               // Display the form for editing
@@ -766,26 +824,26 @@ while ($row = $result->fetch_assoc()) {
     });
 
     function updateContent(rowId) {
-    // Make an Ajax request to fetch requirements based on the clicked row
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-        // Update the content2 div with the fetched requirements
-        document.getElementById("content2").innerHTML = this.responseText;
-      }
-    };
-    xhttp.open("GET", "Personnel_fetchrequirements.php?rowId=" + rowId, true);
-    xhttp.send();
-  }
+      // Make an Ajax request to fetch requirements based on the clicked row
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // Update the content2 div with the fetched requirements
+          document.getElementById("content2").innerHTML = this.responseText;
+        }
+      };
+      xhttp.open("GET", "Personnel_fetchrequirements.php?rowId=" + rowId, true);
+      xhttp.send();
+    }
 
-  // Attach click event listener to table rows
-  var rows = document.getElementsByClassName("editRow");
-  for (var i = 0; i < rows.length; i++) {
-    rows[i].addEventListener("click", function() {
-      var rowId = this.getAttribute("data-id");
-      updateContent(rowId);
-    });
-  }
+    // Attach click event listener to table rows
+    var rows = document.getElementsByClassName("editRow");
+    for (var i = 0; i < rows.length; i++) {
+      rows[i].addEventListener("click", function() {
+        var rowId = this.getAttribute("data-id");
+        updateContent(rowId);
+      });
+    }
 
 
     function updateStatus(id, status) {
@@ -852,20 +910,20 @@ while ($row = $result->fetch_assoc()) {
       }
     });
     document.addEventListener("DOMContentLoaded", function() {
-    // Add click event listener to each row
-    var rows = document.querySelectorAll('.editRow');
-    rows.forEach(function(row) {
+      // Add click event listener to each row
+      var rows = document.querySelectorAll('.editRow');
+      rows.forEach(function(row) {
         row.addEventListener('click', function() {
-            // Remove 'selected' class from all rows
-            rows.forEach(function(r) {
-                r.classList.remove('selected');
-            });
+          // Remove 'selected' class from all rows
+          rows.forEach(function(r) {
+            r.classList.remove('selected');
+          });
 
-            // Add 'selected' class to the clicked row
-            this.classList.add('selected');
+          // Add 'selected' class to the clicked row
+          this.classList.add('selected');
         });
+      });
     });
-});
   </script>
 
 

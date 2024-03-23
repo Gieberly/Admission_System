@@ -175,6 +175,12 @@ $stmt->close();
       gap: 10px;
     }
 
+    .form-container6 {
+      display: grid;
+      grid-template-columns: 50% 15%;
+      gap: 10px;
+    }
+
     .form-group {
       margin-bottom: 15px;
       display: flex;
@@ -321,7 +327,7 @@ $stmt->close();
                 <th>Name</th>
                 <th>Nature of Degree</th>
                 <th>Program</th>
-               
+
                 <th>Academic Classification</th>
 
               </tr>
@@ -354,10 +360,10 @@ $stmt->close();
         </div>
 
         <div class="todo" style="display: none;">
-        <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
+          <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
 
           <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
-          <label class="tab-label" for="tab1">Student Data</label>
+          <label class="tab-label" for="tab1">Student Grades</label>
           <input type="radio" id="tab2" name="tabGroup1" class="tab">
           <label class="tab-label" for="tab2">Student Remarks</label>
 
@@ -468,6 +474,7 @@ $stmt->close();
                     <label class="small-label" for="Science_Other_Courses_Grade">Science 5</label>
                     <input name="Science_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>">
                   </div>
+
                 </div>
                 <p class="personal_information">Math</p>
 
@@ -504,7 +511,7 @@ $stmt->close();
                   </div>
                 </div>
               </div>
- 
+
               <div class="HS-Graduate" style="display: none;">
                 <h2> School (Old Curriculum) Graduates </h2>
 
@@ -548,7 +555,7 @@ $stmt->close();
           </div>
 
           <div class="tab-content" id="content2">
-          <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_SubmitForm.php">
+            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_SubmitForm2.php">
 
               <div class="form-container5">
 
@@ -569,12 +576,25 @@ $stmt->close();
                   <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly>
                 </div>
               </div>
-              <div class="form-container5">
-              <div class="form-group">
-
+              <div class="form-container6">
+                <div class="form-group">
+                  <label class="small-label" for="nature_qualification" style="white-space: nowrap;">Qualification</label>
+                  <select name="nature_qualification" class="input" id="nature_qualification">
+                    <option value="" disabled selected>Select qualification</option>
+                    <option value="Non-Board/Board">Non-Board/Board</option>
+                    <option value="Non-Board">Non-Board</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                <label class="small-label" for="Degree_Remarks" style="white-space: nowrap;">Degree meets admission policy</label>
+                  <select name="Degree_Remarks" class="input" id="Degree_Remarks">
+                    <option value="" disabled selected>Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
 
               </div>
-
 
               <br>
               <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
@@ -606,6 +626,7 @@ $stmt->close();
 
   <script>
     $(document).ready(function() {
+      
       $('.editRow').click(function() {
         // Check if the click was on the buttons
         if (!$(event.target).is('button') && !$(event.target).is('i')) {
@@ -626,7 +647,7 @@ $stmt->close();
               $('#updateProfileForm input[name="Gr11_A1"]').val(response.Gr11_A1);
               $('#updateProfileForm input[name="applicant_name"]').val(response.applicant_name);
               $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
-              $('#updateProfileForm input[name="gender"]').val(response.gender);
+              $('#updateProfileForm select[name="gender"]').val(response.gender);
               $('#updateProfileForm input[name="birthdate"]').val(response.birthdate);
               $('#updateProfileForm input[name="age"]').val(response.age);
               $('#updateProfileForm input[name="civil_status"]').val(response.civil_status);
@@ -655,6 +676,8 @@ $stmt->close();
               $('#updateProfileForm input[name="Gr11_A3"]').val(response.Gr11_A3);
               $('#updateProfileForm input[name="Gr11_GWA"]').val(response.Gr11_GWA);
               $('#updateProfileForm input[name="GWA_OTAS"]').val(response.GWA_OTAS);
+              $('#updateProfileForm select[name="nature_qualification"]').val(response.nature_qualification);
+              $('#updateProfileForm select[name="Degree_Remarks"]').val(response.Degree_Remarks);
 
               $('#updateProfileForm input[name="Gr12_A1"]').val(response.Gr12_A1);
               $('#updateProfileForm input[name="Gr12_A2"]').val(response.Gr12_A2);
@@ -682,13 +705,15 @@ $stmt->close();
               $('#updateProfileForm input[name="OSS_Endorsement_Slip"]').val(response.OSS_Endorsement_Slip);
               $('#updateProfileForm input[name="OSS_Admission_Test_Score"]').val(response.OSS_Admission_Test_Score);
               $('#updateProfileForm input[name="OSS_Remarks"]').val(response.OSS_Remarks);
-              $('#qualification_nature_degree').val(response.Qualification_Nature_Degree);
+              $('#updateProfileForm input[name="Qualification_Nature_Degree"]').val(response.Qualification_Nature_Degree);
+
               $('#updateProfileForm input[name="Interview_Result"]').val(response.Interview_Result);
               $('#updateProfileForm input[name="Endorsed"]').val(response.Endorsed);
               $('#updateProfileForm input[name="Confirmed_Slot"]').val(response.Confirmed_Slot);
               $('#updateProfileForm input[name="Final_Remarks"]').val(response.Final_Remarks);
               $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
               $('#updateProfileForm input[name="nature_of_degree"]').val(response.nature_of_degree);
+
               $('#updateProfileForm input[name="college"]').val(response.college);
 
               var academicClassification = response.academic_classification;
@@ -728,17 +753,6 @@ $stmt->close();
     });
 
 
-
-    // Attach click event listener to table rows
-    var rows = document.getElementsByClassName("editRow");
-    for (var i = 0; i < rows.length; i++) {
-      rows[i].addEventListener("click", function() {
-        var rowId = this.getAttribute("data-id");
-        updateContent(rowId);
-      });
-    }
-
-
     function showToast(message, type) {
       // Display a toast message
       $('#toast-body').text(message);
@@ -769,7 +783,7 @@ $stmt->close();
           rows.forEach(function(r) {
             r.classList.remove('selected');
           });
- 
+
           // Add 'selected' class to the clicked row
           this.classList.add('selected');
         });
