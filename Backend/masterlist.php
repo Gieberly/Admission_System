@@ -13,24 +13,14 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
 // Retrieve student data from the database
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
-$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, math_grade, math_2, math_3, science_grade, science_2, science_3, english_grade, english_2, english_3, gwa_grade, test_score, result, nature_of_degree, degree_applied 
+$query = "SELECT id, applicant_name, applicant_number, academic_classification, email, result, nature_of_degree, degree_applied 
           FROM admission_data 
           WHERE 
             (`applicant_name` LIKE '%$search%' OR 
             `applicant_number` LIKE '%$search%' OR 
             `academic_classification` LIKE '%$search%' OR 
             `email` LIKE '%$search%' OR 
-            `math_grade` LIKE '%$search%' OR 
-            `math_2` LIKE '%$search%' OR 
-            `math_3` LIKE '%$search%' OR 
-            `science_grade` LIKE '%$search%' OR
-            `science_2` LIKE '%$search%' OR  
-            `science_3` LIKE '%$search%' OR 
-            `english_grade` LIKE '%$search%' OR 
-            `english_2` LIKE '%$search%' OR 
-            `english_3` LIKE '%$search%' OR 
-            `gwa_grade` LIKE '%$search%' OR 
-            `test_score` LIKE '%$search%' OR 
+         
             `result` LIKE '%$search%' OR 
             `nature_of_degree` LIKE '%$search%' OR 
             `degree_applied` LIKE '%$search%')
@@ -122,16 +112,6 @@ $stmt->fetch();
                                             <th>Nature of Degree</th>
                                             <th>Program</th>
                                             <th>Academic Clasiffication</th>
-                                            <th>Math 1</th>
-                                            <th>Math 2</th>
-                                            <th>Math 3</th>
-                                            <th>Math 1</th>
-                                            <th>Science 2</th>
-                                            <th>Science 3</th>
-                                            <th>English 1</th>
-                                            <th>English 2</th>
-                                            <th>English 3</th>
-                                            <th>GWA</th>
                                             <th>Admission Score</th>
                                             <th>Result</th>
 
@@ -152,20 +132,7 @@ $stmt->fetch();
                                                 echo "<td data-field='nature_of_degree'>{$row['nature_of_degree']}</td>";
                                                 echo "<td  data-field='degree_applied'>{$row['degree_applied']}</td>";
 
-                                                echo "<td  <td data-field='academic_classification'>{$row['academic_classification']}</td>";
-                                                echo "<td  data-field='math_grade'>{$row['math_grade']}</td>";
-                                                echo "<td  data-field='math_2'>{$row['math_2']}</td>";
-                                                echo "<td  data-field='math_3'>{$row['math_3']}</td>";
-                                                echo "<td  data-field='science_grade'>{$row['science_grade']}</td>";
-                                                echo "<td  data-field='science_2'>{$row['science_2']}</td>";
-                                                echo "<td  data-field='science_3'>{$row['science_3']}</td>";
-                                                echo "<td  data-field='english_grade'>{$row['english_grade']}</td>";
-                                                echo "<td  data-field='english_2'>{$row['english_2']}</td>";
-                                                echo "<td  data-field='english_3'>{$row['english_3']}</td>";
-                                                echo "<td  data-field='gwa_grade'>{$row['gwa_grade']}</td>";
-                                                echo "<td  data-field='test_score'>{$row['test_score']}</td>";
-                                                echo "<td class='editable' data-field='result'>{$row['result']}</td>";
-
+                                               
                                                 echo "<td>";
                                                 echo "<button type='button' id='edit-btn-{$row['id']}' class='button edit-btn' onclick='showDropdown({$row['id']})'><i class='bx bx-edit-alt'></i></button>";
                                                 echo "<select class='dropdown-button' style='display: none;' id='dropdown-{$row['id']}' onchange='selectOption(this.value, {$row['id']})'>";

@@ -315,6 +315,12 @@ $stmt->close();
                 <input type="date" name="appointment_date" id="appointment_date">
                 <button type="submit"><i class='bx bx-filter'></i></button>
               </form>
+              <button type="button" id="toggleSelection">
+                                        <i class='bx bx-select-multiple'></i> Toggle Selection
+                                    </button>
+                                    <button style="display: none;" type="button" id="deleteSelected">
+                                        <i class='bx bx-trash'></i> Delete Selected
+                                    </button>
             </div>
           </div>
 
@@ -329,7 +335,7 @@ $stmt->close();
                 <th>Program</th>
 
                 <th>Academic Classification</th>
-
+                <th style="display: none;" id="selectColumn">Select</th>
               </tr>
             </thead>
             <tbody>
@@ -344,8 +350,6 @@ $stmt->close();
                 echo "<td>" . $row['nature_of_degree'] . "</td>";
                 echo "<td>" . $row['degree_applied'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
-
-
 
                 echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
                 echo "</tr>";
@@ -725,7 +729,7 @@ $stmt->close();
                 $('.SHS-Graduate-Average, .Subjects ').show();
               } else if (academicClassification === 'Grade 12') {
                 $('.Gr-12-Average, .Subjects').show();
-              } else if (academicClassification === 'Transferee') {
+              } else if (academicClassification === 'Transferees') {
                 $('.Transferee, .GWA-OTAS').show();
               } else if (academicClassification === 'ALS/PEPT Completers') {
                 $('.ALS, .GWA-OTAS').show();
@@ -789,6 +793,40 @@ $stmt->close();
         });
       });
     });
+    function selectOption(selectedValue, id) {
+            // Show the confirmation dialog
+            showConfirmationDialog(selectedValue, id);
+        }
+
+        function showConfirmationDialog(selectedValue, id) {
+            // Set the confirmation message with the selected value
+            $('#confirmation-message').text("Are you sure you want to set the status of the student to '" + selectedValue + "'?");
+
+            // Show the confirmation overlay
+            $('#confirmation-overlay').show();
+
+            // Set up event listeners for OK and Cancel buttons
+            $('#confirm-ok').on('click', function () {
+                // If the user clicks 'OK', proceed with the update
+                updateStatus(id, selectedValue);
+
+                // Hide the confirmation overlay
+                $('#confirmation-overlay').hide();
+
+                // Remove event listeners
+                $('#confirm-ok').off('click');
+                $('#confirm-cancel').off('click');
+            });
+
+            $('#confirm-cancel').on('click', function () {
+                // If the user clicks 'Cancel', hide the confirmation overlay
+                $('#confirmation-overlay').hide();
+
+                // Remove event listeners
+                $('#confirm-ok').off('click');
+                $('#confirm-cancel').off('click');
+            });
+        }
   </script>
 
 
