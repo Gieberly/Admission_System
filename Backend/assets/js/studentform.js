@@ -386,12 +386,9 @@ document.addEventListener("DOMContentLoaded", function() {
   var CitizenshipInput = document.getElementById("citizenship");
   var AddressInput = document.getElementById("permanent_address");
   var zipCodeInput = document.getElementById("zip_code");
-  var TeleInput = document.getElementById("phone_number");
   var FacebookInput = document.getElementById("facebook");
   var conName1Input = document.getElementById("contact_person_1");
-  var conNum1Input = document.getElementById("contact1_phone");
-  var conName2Input = document.getElementById("contact_person_2");
-  var conNum2Input = document.getElementById("contact_person_2_mobile");
+  var conName2Input = document.getElementById("contact_person_2");;
   var lastSchoolInput = document.getElementById("high_school_name_address");
   var lrnInput = document.getElementById("lrn");
  
@@ -402,12 +399,9 @@ document.addEventListener("DOMContentLoaded", function() {
   var CitizenshipNote = document.getElementById("citizenship_note");
   var AddressNote = document.getElementById("permanent_address_note");
   var zipCodeNote = document.getElementById("zip_code_note");
-  var TeleNote = document.getElementById("phone_number_note");
   var FacebookNote = document.getElementById("facebook_note");
   var conName1Note = document.getElementById("contact_person_1_note");
-  var conNum1Note = document.getElementById("contact1_phone_note");
   var conName2Note = document.getElementById("contact_person_2_note");
-  var conNum2Note = document.getElementById("contact_person_2_mobile_note");
   var lastSchoolNote = document.getElementById("high_school_name_address_note");
   var lrnNote = document.getElementById("lrn_note");
 
@@ -446,11 +440,6 @@ document.addEventListener("DOMContentLoaded", function() {
     displayPlaceholderExample(zipCodeNote);
   });
 
-  TeleInput.addEventListener("focus", function() {
-    hideAllPlaceholderExamples();
-    displayPlaceholderExample(TeleNote);
-  });
-
   FacebookInput.addEventListener("focus", function() {
     hideAllPlaceholderExamples();
     displayPlaceholderExample(FacebookNote);
@@ -461,19 +450,9 @@ document.addEventListener("DOMContentLoaded", function() {
     displayPlaceholderExample(conName1Note);
   });
 
-  conNum1Input.addEventListener("focus", function() {
-    hideAllPlaceholderExamples();
-    displayPlaceholderExample(conNum1Note);
-  });
-
   conName2Input.addEventListener("focus", function() {
     hideAllPlaceholderExamples();
     displayPlaceholderExample(conName2Note);
-  });
-
-  conNum2Input.addEventListener("focus", function() {
-    hideAllPlaceholderExamples();
-    displayPlaceholderExample(conNum2Note);
   });
 
   lastSchoolInput.addEventListener("focus", function() {
@@ -514,6 +493,57 @@ document.getElementById('citizenship').addEventListener('input', function() {
   }
 });
 
+const inputIds = ['phone_number', 'contact1_phone', 'contact_person_2_mobile'];
+
+for (const id of inputIds) {
+  const inputElement = document.getElementById(id);
+  if (inputElement) {
+    inputElement.addEventListener('input', function() {
+      var inputValue = this.value;
+      // Regular expression to match only digits (0-9)
+      var onlyNumbers = /^\d+$/;
+      // Test if the input matches the regular expression
+      if (!onlyNumbers.test(inputValue)) {
+        // If input doesn't match, clear the input field (or provide an error message)
+        this.value = '';  // This clears the field
+        // Alternatively, you can display an error message:
+        // this.classList.add('error'); // Add an error class for styling
+      } else {
+        // Optionally, remove any previous error styling
+        this.classList.remove('error');
+      }
+    });
+  }
+}
+
+function initializeTelInput(input) {
+  var iti = window.intlTelInput(input, {
+      initialCountry: "ph",
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
+  });
+
+  input.addEventListener('countrychange', function() {
+      var selectedCountryData = iti.getSelectedCountryData();
+      var sampleNumber = selectedCountryData.sample_phone;
+      var sampleNumberDigits = sampleNumber.replace(/\D/g,'').length; // Count digits only
+      input.setAttribute('maxlength', sampleNumberDigits);
+  });
+
+  input.addEventListener('input', function() {
+      var formattedNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
+      input.value = formattedNumber;
+  });
+}
+
+var input1 = document.querySelector("#phone_number");
+var input2 = document.querySelector("#contact1_phone");
+var input3 = document.querySelector("#contact_person_2_mobile");
+
+initializeTelInput(input1);
+initializeTelInput(input2);
+initializeTelInput(input3);
+
 
 function handleEthnicityChange() {
   var selectBox = document.getElementById("ethnicity");
@@ -537,3 +567,9 @@ function handleEthnicityChange() {
   }
 }
 
+intlTelInput(input, {
+  initialCountry: "auto",
+  separateDialCode: true,
+  utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
+  allowDropdown: false // Disable dropdown for custom styling
+});

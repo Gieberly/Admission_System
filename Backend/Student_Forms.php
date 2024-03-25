@@ -216,8 +216,11 @@ $conn->close();
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets\css\studentform.css">
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/css/intlTelInput.css">
-    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/js/intlTelInput.min.js"></script>
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/js/intlTelInput.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/css/intlTelInput.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/intlTelInput.min.js"></script>
+
 
 </head>
 
@@ -497,7 +500,7 @@ $conn->close();
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
                         <label class="small-label" for="phone_number">Telephone/Mobile No.<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" >
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" maxlength="15">
                         <div class="note" id="phone_number_note">e.g. 09091010222</div>
                     </div>
 
@@ -526,7 +529,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="contact1_phone">Mobile Number<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')">
+                        <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')" maxlength="15">
                         <div class="note" id="contact1_phone_note">e.g. 09101112222</div>
                         <p id="contact1_phone-error" style="color: red;"></p>
                     </div>
@@ -549,7 +552,7 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" oninput="validatePhoneNumber('contact_person_2_mobile')">
+                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" oninput="validatePhoneNumber('contact_person_2_mobile')" maxlength="15">
                         <div class="note" id="contact_person_2_mobile_note">e.g. 09102223333</div>
                         <p id="contact_person_2_mobile-error" style="color: red;"></p>
                     </div>
@@ -689,12 +692,12 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
     <script src="assets\js\studentform.js"></script>
-    <script>
+    <!-- <script>
         const input = document.querySelector("#phone_number");
         window.intlTelInput(input, {
     utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/js/utils.js",
     });
-    </script>
+    </script> -->
 </body>
 
 </html>
