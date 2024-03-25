@@ -2,8 +2,8 @@
 session_start();
 include("config.php");
 
-// Fetch data from the database and sort by Nature_of_Degree and Description
-$sql = "SELECT * FROM Programs ORDER BY Nature_of_Degree ASC";
+// Fetch data from the database and sort by College and Course
+$sql = "SELECT * FROM Programs ORDER BY College, Courses ASC";
 $result = $conn->query($sql);
 
 
@@ -165,27 +165,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select name="description" id="description">
                     <option value="" disabled selected>Select Department:</option>
                     <?php
-                    if ($result->num_rows > 0) {
-                        $currentNature = null;
-                        while ($row = $result->fetch_assoc()) {
-                            $nature = $row['Nature_of_Degree'];
-                            $description = $row['Description'];
+        // Loop through the fetched data and group courses under their respective colleges
+        if ($result->num_rows > 0) {
+            $currentCollege = null;
+            while ($row = $result->fetch_assoc()) {
+                $college = $row['College'];
+                $course = $row['Courses'];
 
-                            if ($nature != $currentNature) {
-                                if ($currentNature !== null) {
-                                    echo "</optgroup>";
-                                }
-                                echo "<optgroup label=\"$nature Programs\">";
-                                $currentNature = $nature;
-                            }
-
-                            echo "<option value=\"$description\">$description</option>";
-                        }
+                if ($college != $currentCollege) {
+                    if ($currentCollege !== null) {
                         echo "</optgroup>";
-                    } else {
-                        echo "<option value=\"\">No programs available</option>";
                     }
-                    ?>
+                    echo "<optgroup label=\"$college\">";
+                    $currentCollege = $college;
+                }
+
+                echo "<option value=\"$course\">$course</option>";
+            }
+            echo "</optgroup>";
+        } else {
+            echo "<option value=\"\">No programs available</option>";
+        }
+        ?>
                 </select>
 
                 <button class="btnn" type="submit">Register</button>

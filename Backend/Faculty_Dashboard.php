@@ -1,7 +1,7 @@
 <?php
 
 include("config.php");
-include("facultyCover.php");
+include("Faculty_Cover.php");
 
 
 // Check if the user is a student member, otherwise redirect them

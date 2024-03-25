@@ -44,7 +44,9 @@ $query = "SELECT * FROM admission_data WHERE
              `degree_applied` LIKE '%$search%')
             AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
             AND `appointment_date` IS NOT NULL
-          ORDER BY  applicant_name ASC";
+            AND `appointment_status` <> 'Cancelled'  -- Exclude Cancelled appointments
+          ORDER BY `appointment_date` ASC, `appointment_time` ASC";
+
 
 $result = $conn->query($query);
 
@@ -126,8 +128,7 @@ $stmt->close();
                 <th>#</th>
                 <th>Application No.</th>
                 <th>Name</th>
-                <th>Nature of Degree</th>
-                <th>Program</th>
+               
                 <th>Academic Classification</th>
                 <th>Appointment Date</th>
                 <th>Application Time</th>
@@ -144,8 +145,7 @@ $stmt->close();
                 echo "<td>" . $counter . "</td>";
                 echo "<td>" . $row['applicant_number'] . "</td>";
                 echo "<td>" . $row['applicant_name'] . "</td>";
-                echo "<td>" . $row['nature_of_degree'] . "</td>";
-                echo "<td>" . $row['degree_applied'] . "</td>";
+
                 echo "<td>" . $row['academic_classification'] . "</td>";
 
 
