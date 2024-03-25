@@ -47,6 +47,12 @@
             padding: 15px 40px 40px 40px;
             width: 90%;
           }
+
+          .tab {
+            height: 430px; /* Set a fixed height for the scrolling content */
+            overflow-y: auto; /* Enable vertical scrolling */
+            overflow-x: hidden; /* Disable horizontal scrolling */
+        }
           
           .tab p{
             font-size: 20px;

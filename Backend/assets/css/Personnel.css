@@ -833,7 +833,7 @@ nav {
 .tab-content {
 	display: none;
 }
-
+ 
 /* Display the active tab content */
 .tab-content.active {
 	display: block;
@@ -845,10 +845,9 @@ nav {
 	color: var(--dark);
 }
 
-/* MAIN */
 #content main {
 	width: 100%;
-	padding: 36px 24px;
+	padding: 10px 24px;
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
@@ -860,10 +859,11 @@ nav {
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	position: sticky;
 }
 
 #content main .head-title .left h1 {
-	font-size: 36px;
+	font-size: 2vw;
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
@@ -882,48 +882,41 @@ nav {
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
 	pointer-events: none;
+	font-size: 1vw;
 }
 
 #content main .head-title .left .breadcrumb li a.active {
 	color: var(--blue);
 	pointer-events: unset;
+
+
 }
 
-#content main .head-title .button-container {
-	display: flex;
-	grid-gap: 16px;
-}
-
-.btn-download,
-.btn-appointment {
-	height: 36px;
-	padding: 0 16px;
+#content main .head-title .btn-download {
+	height: 5vh;
+	width: 10vw;
+	padding: 0 5%;
 	border-radius: 36px;
 	background: var(--green);
 	color: var(--light);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	grid-gap: 10px;
+	grid-gap: 3%;
 	font-weight: 500;
+	font-size: 1vw;
 }
 
-.btn-download:hover,
-.btn-appointment:hover {
-	background: var(--blue);
+#content main .head-title .btn-download:hover {
+	background: var(--green)
 }
+
 
 /* Responsive Styles */
 @media only screen and (max-width: 768px) {
 	#content main .head-title .button-container {
 		flex-direction: column;
 		align-items: stretch;
-	}
-
-	.btn-download,
-	.btn-appointment {
-		width: 100%;
-		margin-bottom: 10px;
 	}
 }
 
@@ -1026,7 +1019,6 @@ button[type="submit"]:hover {
 
 #toggleSelection .bx {
 	font-size: 15px;
-
 	color: var(--dark);
 }
 
@@ -1252,7 +1244,7 @@ button[type="submit"]:hover {
 
 #content main .table-data .head h3 {
 	/* Add styles for the table header heading */
-	font-size: 18px;
+	font-size: 1.5vw;
 	float: left;
 	margin-right: auto;
 }
@@ -1280,8 +1272,7 @@ button[type="submit"]:hover {
 	border: none;
 	text-align: left;
 	padding: 6px;
-	font-size: 12px;
-	font-size: 10px;
+	font-size: .8vw;
 	white-space: normal;
 	border-bottom: 1px solid var(--dark);
 
@@ -1293,8 +1284,8 @@ button[type="submit"]:hover {
 #content main .table-data .order table td {
 	/* Add any styles for table data cells */
 	border: none;
-	padding: 6px;
-	font-size: 10px;
+	padding: .5%;
+	font-size: .8vw;
 	font-family: 'Arial', sans-serif;
 }
 
@@ -1367,7 +1358,9 @@ button[type="submit"]:hover {
 	transition-duration: 0.4s;
 }
 
-
+#content main .table-data .order table tbody tr.selected {
+    background-color: lightgray; /* Change this to the desired highlight color */
+}
 
 
 
@@ -1458,15 +1451,6 @@ button[type="submit"]:hover {
 	#content main .table-data > div {
         padding: 10px; /* Reduce padding for smaller screens */
         overflow-x: auto; /* Add horizontal scroll for smaller screens */
-    }
-
-    #content main .table-data .head {
-        margin-bottom: 20px; /* Reduce margin for smaller screens */
-    }
-
-    #content main .table-data .order table th,
-    #content main .table-data .order table td {
-        font-size: 12px; /* Adjust font size for smaller screens */
     }
 }
 
@@ -1709,3 +1693,56 @@ label[for="rangeInput"] {
 	width: 16px;
 	/* Adjust the height for the desired spacing */
 }
+
+
+.tab {
+  display: none;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #4caf50;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.tab-label {
+	cursor: pointer;
+	font-size: 1vw;
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #bababa;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover effect for labels */
+  .tab-label:hover {
+	background-color: #ddd;
+  }
+  
+  /* Show tab content when the radio button is checked */
+  .tab:checked + .tab-label {
+	background-color: #4caf50;
+	color: #fff;
+	border-color: #000101;
+	border-top:  #4caf50;
+  }
+  
+  .tab:checked ~ .tab-content {
+	display: none;
+  }
+  
+  #tab1:checked ~ #content1,
+  #tab2:checked ~ #content2 {
+	display: block;
+  }
+  /* Add this style to target the top border */
+.tab:checked + .tab-label + .tab-content {
+	border-top: 1px solid #4caf50;
+  }
