@@ -80,14 +80,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     // Process form data
     $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
-    $applicant_name = $_POST['applicant_name'];
+    $Name = $_POST['Name'];
+    $Middle_Name = $_POST['Middle_Name'];
+    $Last_Name = $_POST['Last_Name'];
     $gender = $_POST['gender'];
     $birthdate = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate'])));
     $birthplace = $_POST['birthplace'];
     $age = $_POST['age'];
     $civil_status = $_POST['civil_status'];
     $citizenship = $_POST['citizenship'];
-    $nationality = $_POST['nationality'];
+    $ethnicity = $_POST['ethnicity'];
     $permanent_address = $_POST['permanent_address'];
     $zip_code = $_POST['zip_code'];
     $phone_number = $_POST['phone_number'];
@@ -145,24 +147,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Prepare SQL statement for inserting data into admission_data table
-    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture, applicant_name, gender, birthdate, birthplace, age, 
-    civil_status, citizenship, nationality, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
+    $stmt = $conn->prepare("INSERT INTO admission_data (id_picture,  Name, Middle_Name, Last_Name, gender, birthdate, birthplace, age, 
+    civil_status, citizenship, ethnicity, permanent_address, zip_code, phone_number, facebook, email, contact_person_1, 
     contact1_phone, relationship_1, contact_person_2, contact_person_2_mobile, relationship_2, academic_classification, 
     high_school_name_address, lrn, degree_applied, nature_of_degree, applicant_number, application_date, college) VALUES (?, ?, 
-    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
+    ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)");
 
     // Bind parameters
     $stmt->bind_param(
-        "sssssissssiisssississsssssss",
+        "sssssssissssiisssississsssssss",
         $id_picture_data,
-        $applicant_name,
+        $Name,
+        $Middle_Name,
+        $Last_Name,
         $gender,
         $birthdate,
         $birthplace,
         $age,
         $civil_status,
         $citizenship,
-        $nationality,
+        $ethnicity,
         $permanent_address,
         $zip_code,
         $phone_number,
@@ -390,20 +394,20 @@ $conn->close();
                 <div class="form-container">
                     <!-- Full name -->
                     <div class="form-group">
-                        <label class="small-label" for="last_name">Last Name</label>
-                        <input type="text" name="last_name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
+                        <label class="small-label" for="Last_Name">Last Name</label>
+                        <input type="text" name="Last_Name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
                         <div class="note" id="last_name_note">e.g. Dela Cruz</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="first_name">First Name and Extension Name</label>
-                        <input type="text" name="first_name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
+                        <label class="small-label" for="Name">First Name and Extension Name</label>
+                        <input type="text" name="Name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
                         <div class="note" id="first_name_note">e.g. Mario Jr.</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required>
+                        <label class="small-label" for="Middle_Name">Middle Name</label>
+                        <input type="text" name="Middle_Name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required>
                         <div class="note" id="middle_name_note">e.g. Lim</div>
                     </div>
 
@@ -452,10 +456,10 @@ $conn->close();
                         <div class="note" id="citizenship_note">e.g. Filipino</div>
 
                     </div>
-                    <!-- Nationality-->
+                    <!-- ethnicity-->
                     <div class="form-group">
-                        <label class="small-label" for="nationality">Nationality</label>
-                        <input type="text" name="nationality" class="input" id="nationality" placeholder="Nationality" required>
+                        <label class="small-label" for="ethnicity">Ethnicity</label>
+                        <input type="text" name="ethnicity" class="input" id="nationality" placeholder="ethnicity" required>
                         <div class="note" id="nationality_note">e.g. Filipino</div>
                     </div>
                 </div>
@@ -620,12 +624,9 @@ $conn->close();
                 <label for="applicant_number" class="applicant_number">Applicant Number:</label>
                 <input type="text" name="applicant_number" id="applicant_number" readonly value="<?php echo $applicantNumber; ?>">
             </div>
+   
             <div class="form-group" style="display: none;">
-                <label for="applicant_name">Name of Applicant</label>
-                <input type="text" placeholder="Enter Full Name" value="<?php echo $last_name; ?>, <?php echo $name; ?> <?php echo $mname; ?>" name="applicant_name" id="applicant_name">
-            </div>
-            <div class="form-group" style="display: none;">
-               
+
                 <div class="form-group">
                     <label class="small-label" for="college">Selected College</label>
                     <?php
