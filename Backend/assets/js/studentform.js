@@ -11,12 +11,17 @@ $("input, select").on("focus", function() {
   $(this).css("background", "#fff"); // Reset background color when focused
 }).on("blur", function() {
   if ($(this).val() === "") {
-    // If the field is empty, turn background color to red
-    $(this).css("background", "#ffdddd");
-    $(this).attr("placeholder", "Please fill up this field");
+    // If the field is empty, check if it's not among the specified fields
+    var id = $(this).attr("id");
+    if (id !== "middle_name" && id !== "zip_code" && id !== "contact_person_2" && id !== "contact_person_2_mobile" && id !== "relationship_2" && id !== "lrn") {
+      $(this).css("border", "1px solid #ff0000");
+      $(this).attr("placeholder", "Please fill up this field");
+    }
+  } else {
+    // If the field is already filled, reset border color to default
+    $(this).css("border", "1px solid #ccc"); // Change to your default border color
   }
 });
-
 
 
 function run(hideTab, showTab) {
@@ -46,32 +51,36 @@ function run(hideTab, showTab) {
     } else if (hideTab === 2) {
       // Handle the file input label click
       $('label[for="id_picture"]').click(function () {
-        $('input[name="id_picture"]').click();
+          $('input[name="id_picture"]').click();
       });
-
+  
       // Display the selected file name
       $('input[name="id_picture"]').change(function () {
-        var fileName = $(this).val().split("\\").pop();
-        $('label[for="id_picture"]').text(fileName);
+          var fileName = $(this).val().split("\\").pop();
+          $('label[for="id_picture"]').text(fileName);
       });
       var pictureInput = $('input[name="id_picture"]');
-    if (pictureInput[0].files.length === 0) {
-      alert("Please upload an ID picture.");
-      return false;
-    }
-
-
-  }
-
-    for (i = 0; i < y.length; i++) {
-      if ((hideTab === 2 ) && y[i].value === "") {
-        // Handle empty fields with visual cues
-        $(y[i]).css("background", "#ffdddd");
-        y[i].placeholder = "Please fill up all the field";
-        y[i].focus();
-        return false;
+      if (pictureInput[0].files.length === 0) {
+          alert("Please upload an ID picture.");
+          return false;
       }
-    }
+  
+      for (i = 0; i < y.length; i++) {
+          // Check if the field is among those allowed to be empty
+          if (y[i].id === "middle_name" || y[i].id === "zip_code" || y[i].id === "contact_person_2" || y[i].id === "contact_person_2_mobile" || y[i].id === "relationship_2" || y[i].id === "lrn") {
+              continue; // Skip validation for this field
+          }
+  
+          if (y[i].value.trim() === "") {
+              // Handle empty fields with visual cues
+              $(y[i]).css("border", "1px solid #ff0000");
+              y[i].placeholder = "Please fill up all the field";
+              y[i].focus();
+              return false;
+          }
+      }
+  }
+  
     // Mark the step as completed
     completedSteps[hideTab - 1] = true;
   }
@@ -306,6 +315,7 @@ function updateApplicantName() {
   var fullName = lastName + ', ' + firstName + ' ' + middleName;
   document.getElementById('applicant_name').value = fullName;
 }
+
 function calculateAge() {
   var birthdateInput = document.getElementById("birthdate");
   var ageInput = document.getElementById("age");
@@ -324,19 +334,36 @@ function calculateAge() {
    
 }
 }
-function validatePhoneNumber(inputId) {
-  var phoneInput = document.getElementById(inputId);
-  var phoneError = document.getElementById(inputId + "-error");
 
-  // Regular expression for a valid Philippine mobile number
-  var regex = /^(09|\+639)\d{9}$/;
 
-  if (!regex.test(phoneInput.value)) {
-    phoneError.innerHTML = "Please enter a valid Philippine mobile number.";
-  } else {
-    phoneError.innerHTML = "";
+
+function validateBirthdate() {
+  var birthdateInput = document.getElementById('birthdate').value;
+  var birthdate = new Date(birthdateInput);
+  var currentDate = new Date();
+  var minBirthdate = new Date();
+  minBirthdate.setFullYear(currentDate.getFullYear() - 10); // Subtract 10 years from the current date
+
+  if (birthdate > minBirthdate) {
+      // If the birthdate entered is less than 10 years from the current date
+      alert("You must be at least 10 years old to register.");
+      document.getElementById('birthdate').value = ''; // Clear the input field
   }
 }
+
+// function validatePhoneNumber(inputId) {
+//   var phoneInput = document.getElementById(inputId);
+//   var phoneError = document.getElementById(inputId + "-error");
+
+//   // Regular expression for a valid Philippine mobile number
+//   var regex = /^(09|\+639)\d{9}$/;
+
+//   if (!regex.test(phoneInput.value)) {
+//     phoneError.innerHTML = "Please enter a valid Philippine mobile number.";
+//   } else {
+//     phoneError.innerHTML = "";
+//   }
+// }
 function validateLRN(input) {
   // Remove non-numeric characters
   let inputValue = input.value.replace(/\D/g, '');
@@ -357,7 +384,6 @@ document.addEventListener("DOMContentLoaded", function() {
   var middleNameInput = document.getElementById("middle_name");
   var birthPlaceInput = document.getElementById("birthplace");
   var CitizenshipInput = document.getElementById("citizenship");
-  var NationalityInput = document.getElementById("nationality");
   var AddressInput = document.getElementById("permanent_address");
   var zipCodeInput = document.getElementById("zip_code");
   var TeleInput = document.getElementById("phone_number");
@@ -368,13 +394,12 @@ document.addEventListener("DOMContentLoaded", function() {
   var conNum2Input = document.getElementById("contact_person_2_mobile");
   var lastSchoolInput = document.getElementById("high_school_name_address");
   var lrnInput = document.getElementById("lrn");
-
+ 
   var lastNameNote = document.getElementById("last_name_note");
   var firstNameNote = document.getElementById("first_name_note");
   var middleNameNote = document.getElementById("middle_name_note");
   var birthPlaceNote = document.getElementById("birthPlace_note");
   var CitizenshipNote = document.getElementById("citizenship_note");
-  var NationalityNote = document.getElementById("nationality_note");
   var AddressNote = document.getElementById("permanent_address_note");
   var zipCodeNote = document.getElementById("zip_code_note");
   var TeleNote = document.getElementById("phone_number_note");
@@ -409,11 +434,6 @@ document.addEventListener("DOMContentLoaded", function() {
   CitizenshipInput.addEventListener("focus", function() {
     hideAllPlaceholderExamples();
     displayPlaceholderExample(CitizenshipNote);
-  });
-
-  NationalityInput.addEventListener("focus", function() {
-    hideAllPlaceholderExamples();
-    displayPlaceholderExample(NationalityNote);
   });
 
   AddressInput.addEventListener("focus", function() {
@@ -481,4 +501,39 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 });
+
+// Add event listener to the input field
+document.getElementById('citizenship').addEventListener('input', function() {
+  var inputValue = this.value;
+  // Regular expression to match only letters
+  var onlyLetters = /^[A-Za-z]+$/;
+  // Test if the input matches the regular expression
+  if (!onlyLetters.test(inputValue)) {
+      // If input doesn't match, clear the input field
+      this.value = '';
+  }
+});
+
+
+function handleEthnicityChange() {
+  var selectBox = document.getElementById("ethnicity");
+  var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+  if (selectedValue.toLowerCase() === "others") {
+      var textBox = document.createElement("input");
+      textBox.type = "text";
+      textBox.className = "input";
+      textBox.id = "ethnicity";
+      textBox.name = "ethnicity";
+      textBox.required = true;
+      textBox.placeholder = "Enter Ethnicity";
+      textBox.addEventListener("keypress", function(event) {
+          var key = event.keyCode;
+          // Allow only letters
+          if ((key < 65 || key > 90) && (key < 97 || key > 122)) {
+              event.preventDefault();
+          }
+      });
+      selectBox.parentNode.replaceChild(textBox, selectBox);
+  }
+}
 

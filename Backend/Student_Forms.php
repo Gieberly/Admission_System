@@ -216,7 +216,8 @@ $conn->close();
     <link rel="icon" href="assets/images/BSU Logo1.png" type="image/x-icon">
     <link rel="stylesheet" href="assets\css\studentform.css">
     <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/css/intlTelInput.css">
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/js/intlTelInput.min.js"></script>
 
 </head>
 
@@ -390,55 +391,58 @@ $conn->close();
                 <div class="form-container">
                     <!-- Full name -->
                     <div class="form-group">
-                        <label class="small-label" for="last_name">Last Name</label>
+                        <label class="small-label" for="last_name">Last Name<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="last_name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
                         <div class="note" id="last_name_note">e.g. Dela Cruz</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="first_name">First Name and Extension Name</label>
+                        <label class="small-label" for="first_name">First Name and Extension Name<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="first_name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
                         <div class="note" id="first_name_note">e.g. Mario Jr.</div>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required>
+                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>">
                         <div class="note" id="middle_name_note">e.g. Lim</div>
                     </div>
 
                     <!-- Gender at Birth -->
                     <div class="form-group">
-                        <label class="small-label" for="gender">Gender at birth</label>
+                        <label class="small-label" for="gender">Sex at birth<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="gender" class="input" id="gender" required>
                             <option value="" disabled selected>Select Gender</option>
                             <option value="male">Male</option>
                             <option value="female">Female</option>
                         </select>
                     </div>
+                    <!-- Birthdate -->
                     <div class="form-group">
-                        <label class="small-label" for="birthdate">Birthdate</label>
-                        <input type="date" name="birthdate" class="input" id="birthdate" required oninput="calculateAge();">
+                        <label class="small-label" for="birthdate">Birthdate<span style="color: red; font-weight: bold;">*</span></label>
+                        <!-- <input type="date" name="birthdate" class="input" id="birthdate" required oninput="calculateAge();"> -->
+                        <input type="date" name="birthdate" class="input" id="birthdate" required oninput="validateBirthdate(); calculateAge();">
+                        <div id="birthdateError" style="color: red; font-size: 12px; display: none;">Age must be at least 10 years old.</div>
                     </div>
                 </div>
                 <p class="birthplace"></p>
                 <div class="form-container">
-
+                    <!-- Birthplace -->
                     <div class="form-group">
-                        <label class="small-label" for="birthplace">Birthplace</label>
+                        <label class="small-label" for="birthplace">Birthplace<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="birthplace" class="input" id="birthplace" placeholder="Municipality/City, Province, Country" required>
                         <div class="note" id="birthPlace_note">e.g. La Trinidad, Benguet, Philippines</div>
                     </div>
                     <!-- Age -->
                     <div class="form-group">
-                        <label class="small-label" for="age">Age</label>
-                        <input type="number" name="age" class="input" id="age" placeholder="Age" required oninput="calculateAge();">
+                        <label class="small-label" for="age">Age<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="text" pattern="[0-9]*" name="age" class="input" id="age" placeholder="Age" required maxlength="2" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAge();">
                     </div>
 
 
                     <!-- civil status -->
                     <div class="form-group">
-                        <label class="small-label" for="civil_status">Civil Status</label>
+                        <label class="small-label" for="civil_status">Civil Status<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="civil_status" class="input" id="civil_status" required>
                             <option value="" disabled selected>Select Civil Status</option>
                             <option value="single">Not Married</option>
@@ -447,24 +451,33 @@ $conn->close();
                     </div>
                     <!-- Citizenship -->
                     <div class="form-group">
-                        <label class="small-label" for="citizenship">Citizenship</label>
-                        <input type="text" name="citizenship" class="input" id="citizenship" placeholder="Citizenship" required>
+                        <label class="small-label" for="citizenship">Citizenship<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="text" name="citizenship" class="input" id="citizenship" placeholder="Citizenship" required maxlength="28">
                         <div class="note" id="citizenship_note">e.g. Filipino</div>
-
                     </div>
-                    <!-- Nationality-->
+                    <!-- Ethnicity-->
                     <div class="form-group">
-                        <label class="small-label" for="nationality">Nationality</label>
-                        <input type="text" name="nationality" class="input" id="nationality" placeholder="Nationality" required>
-                        <div class="note" id="nationality_note">e.g. Filipino</div>
+                    <label class="small-label" for="ethnicity">Ethnicity<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="ethnicity" class="input" id="ethnicity" maxlength="28" required onchange="handleEthnicityChange()">
+                            <option value="" disabled selected>Select Ethnicity</option>
+                            <option value="kankanaey">Kankana-ey</option>
+                            <option value="ilocano">Ilocano</option>
+                            <option value="others">Others</option>
+                        </select>
                     </div>
+                        <!-- Ethnicity Others -->
+                    <!-- <div class="form-group" id="ethnicity_others_field" style="display: none;">
+                        <label class="small-label" for="ethnicity_others">Others</label>
+                        <input type="text" name="ethnicity_others" class="input" id="ethnicity_others" placeholder="Others">
+                        <div class="note" id="ethnicity_others_note">e.g. Korean</div>
+                    </div> -->
                 </div>
 
                 <p class="personal_information">Permanent Home Address</p>
                 <div class="form-container2">
                     <!-- Permanent Address -->
                     <div class="form-group">
-                        <label class="small-label" for="permanent_address">Address</label>
+                        <label class="small-label" for="permanent_address">Address<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" class="input" name="permanent_address" id="permanent_address" placeholder="House # & Street, Barangay/Subdivision, Municipality(town)/City, Province, Country/State" required>
                         <div class="note" id="permanent_address_note">e.g. 01-A, Balili, La Trinidad, Benguet, Philippines</div>
                     </div>
@@ -472,32 +485,31 @@ $conn->close();
 
                 <!-- zip-code -->
                 <div class="form-container">
-                    <div class="form-group">
-                        <label class="small-label" for="zip_code">Zip Code</label>
-                        <input type="number" name="zip_code" class="input" id="zip_code" placeholder="Zip Code" required>
-                        <div class="note" id="zip_code_note">e.g. 2601</div>
-                    </div>
+                <div class="form-group">
+                    <label class="small-label" for="zip_code">Zip Code</label>
+                    <input type="text" pattern="[0-9]*" name="zip_code" class="input" id="zip_code" placeholder="Zip Code" required maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                    <div class="note" id="zip_code_note">e.g. 2601</div>
+                </div>
                 </div>
 
                 <p class="personal_information">Contact Information</p>
                 <div class="form-container">
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
-                        <label class="small-label" for="phone_number">Telephone/Mobile No.</label>
-                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" required oninput="validatePhoneNumber('phone_number')">
+                        <label class="small-label" for="phone_number">Telephone/Mobile No.<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" >
                         <div class="note" id="phone_number_note">e.g. 09091010222</div>
-                        <p id="phone_number-error" style="color: red;"></p>
                     </div>
 
                     <!-- Facebook Account Name -->
                     <div class="form-group">
-                        <label class="small-label" for="facebook">Facebook Account Name</label>
+                        <label class="small-label" for="facebook">Facebook Account Name<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="facebook" class="input" id="facebook" placeholder="account should be your name" required>
                         <div class="note" id="facebook_note">e.g. Mario Lim Dela Cruz Jr.</div>
                     </div>
                     <!--Email Address -->
                     <div class="form-group">
-                        <label class="small-label" for="email">Email Address</label>
+                        <label class="small-label" for="email">Email Address<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="email" class="input" id="email" placeholder="Enter active email address" value="<?php echo $email; ?>" autocomplete="email:" required oninput="validateEmail()" readonly>
                         <p id="email-error" style="color: red;"></p>
                     </div>
@@ -508,18 +520,18 @@ $conn->close();
                 <div class="form-container">
                     <!-- Contact Person 1 -->
                     <div class="form-group">
-                        <label class="small-label" for="contact_person_1">Contact Person</label>
+                        <label class="small-label" for="contact_person_1">Contact Person<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="contact_person_1" class="input" id="contact_person_1" placeholder="Full Name of Contact Person" required>
                         <div class="note" id="contact_person_1_note">e.g. Juana Dela Cruz</div>
                     </div>
                     <div class="form-group">
-                        <label class="small-label" for="contact1_phone">Mobile Number</label>
+                        <label class="small-label" for="contact1_phone">Mobile Number<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')">
                         <div class="note" id="contact1_phone_note">e.g. 09101112222</div>
                         <p id="contact1_phone-error" style="color: red;"></p>
                     </div>
                     <div class="form-group">
-                        <label class="small-label" for="relationship_1">Relationship w/ Contact Person</label>
+                        <label class="small-label" for="relationship_1">Relationship w/ Contact Person<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
                             <option value="" disabled selected>Select Relationship</option>
                             <option value="Parent">Parent</option>
@@ -532,18 +544,18 @@ $conn->close();
                     <!-- Contact Person 2 -->
                     <div class="form-group">
                         <label class="small-label" for="contact_person_2">Contact Person</label>
-                        <input type="text" name="contact_person_2" class="input" id="contact_person_2" placeholder="Full Name of Contact Person" required>
+                        <input type="text" name="contact_person_2" class="input" id="contact_person_2" placeholder="Full Name of Contact Person">
                         <div class="note" id="contact_person_2_note">e.g. Juan Dela Cruz</div>
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact_person_2_mobile')">
+                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" oninput="validatePhoneNumber('contact_person_2_mobile')">
                         <div class="note" id="contact_person_2_mobile_note">e.g. 09102223333</div>
                         <p id="contact_person_2_mobile-error" style="color: red;"></p>
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="relationship_2">Relationship w/ Contact Person</label>
-                        <select name="relationship_2" class="input custom-dropdown" id="relationship_2" required>
+                        <select name="relationship_2" class="input custom-dropdown" id="relationship_2">
                             <option value="" disabled selected>Select Relationship</option>
                             <option value="Parent">Parent</option>
                             <option value="Guardian">Guardian</option>
@@ -556,7 +568,7 @@ $conn->close();
                 <div class="form-container">
                     <!-- Academic Classification -->
                     <div class="form-group">
-                        <label class="small-label" for="academic_classification">Academic Classification</label>
+                        <label class="small-label" for="academic_classification">Academic Classification<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="academic_classification" class="input" id="academic_classification" readonly required>
                     </div>
                 </div>
@@ -564,7 +576,7 @@ $conn->close();
                 <div class="form-container3">
                     <!-- Academic Background -->
                     <div class="form-group2">
-                        <label class="small-label" for="high_school_name_address">Last School Attended</label>
+                        <label class="small-label" for="high_school_name_address">Last School Attended<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="high_school_name_address" class="input" id="high_school_name_address" required placeholder="Enter Name and Address">
                         <div class="note" id="high_school_name_address_note">e.g. Benguet National high School/Wangal, La Trinidad, Benguet</div>
                     </div>
@@ -573,13 +585,13 @@ $conn->close();
                 <div class="form-container">
                     <div class="form-group">
                         <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-                        <input type="text" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*" maxlength="12" oninput="validateLRN(this)" required>
+                        <input type="text" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*" maxlength="12" oninput="validateLRN(this)">
                         <div class="note" id="lrn_note">e.g. 157936123439</div>
                     </div>
 
 
                     <div class="form-group">
-                        <label class="small-label" for="degree_applied">Program</label>
+                        <label class="small-label" for="degree_applied">Program<span style="color: red; font-weight: bold;">*</span></label>
                         <!-- Display the selected program in this input field -->
 
 
@@ -595,7 +607,7 @@ $conn->close();
 
 
                     <div class="form-group">
-                        <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
+                        <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree<span style="color: red; font-weight: bold;">*</span></label>
 
                         <?php
                         if (isset($_GET['degree'])) {
@@ -674,16 +686,15 @@ $conn->close();
 
     </form>
 
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
-
-
     <script src="assets\js\studentform.js"></script>
-
-
+    <script>
+        const input = document.querySelector("#phone_number");
+        window.intlTelInput(input, {
+    utilsScript: "https://cdn.jsdelivr.net/npm/intl-tel-input@20.1.0/build/js/utils.js",
+    });
+    </script>
 </body>
 
 </html>
