@@ -833,7 +833,7 @@ nav {
 .tab-content {
 	display: none;
 }
-
+ 
 /* Display the active tab content */
 .tab-content.active {
 	display: block;
@@ -845,10 +845,9 @@ nav {
 	color: var(--dark);
 }
 
-/* MAIN */
 #content main {
 	width: 100%;
-	padding: 36px 24px;
+	padding: 10px 24px;
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
@@ -864,7 +863,7 @@ nav {
 }
 
 #content main .head-title .left h1 {
-	font-size: 2.5vw;
+	font-size: 2vw;
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
@@ -883,21 +882,17 @@ nav {
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
 	pointer-events: none;
-	font-size: 1.2vw;
+	font-size: 1vw;
 }
 
 #content main .head-title .left .breadcrumb li a.active {
 	color: var(--blue);
 	pointer-events: unset;
+
+
 }
 
-#content main .head-title .button-container {
-	display: flex;
-	grid-gap: 16px;
-}
-
-.btn-download,
-.btn-appointment {
+#content main .head-title .btn-download {
 	height: 5vh;
 	width: 10vw;
 	padding: 0 5%;
@@ -912,10 +907,10 @@ nav {
 	font-size: 1vw;
 }
 
-.btn-download:hover,
-.btn-appointment:hover {
-	background: var(--blue);
+#content main .head-title .btn-download:hover {
+	background: var(--green)
 }
+
 
 /* Responsive Styles */
 @media only screen and (max-width: 768px) {

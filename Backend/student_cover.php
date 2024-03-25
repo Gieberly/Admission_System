@@ -37,7 +37,7 @@ $studentData = $resultUser->fetch_assoc();
     <section id="sidebar">
         <a class="brand">
             <img class="bsulogo" src="assets/images/BSU Logo1.png" alt="BSU LOGO">
-            <span class="text">Student</span> 
+            <span class="text">Student</span>
         </a>
 
         <ul class="side-menu top">
@@ -59,20 +59,14 @@ $studentData = $resultUser->fetch_assoc();
                     <span class="text">Transaction</span>
                 </a>
             </li>
-
-
-
         </ul>
     </section>
     <!-- SIDEBAR -->
-
     <!-- CONTENT -->
     <section id="content">
-        <!-- NAVBAR -->
         <nav>
             <i class='bx bx-menu'></i>
             <?php
-            // Check if the current page is masterlist.php
             $current_page = basename($_SERVER['PHP_SELF']);
             if ($current_page === 'Student_Dashboard.php') {
             ?>
@@ -93,20 +87,12 @@ $studentData = $resultUser->fetch_assoc();
             </form>
             <div id="clock">8:10:45</div>
 
-
             <a href="#" class="profile" id="profile-button">
                 <img src="assets/images/human icon.png" alt="User Profile" id="profile-image">
             </a>
-
-
         </nav>
 
-
     </section>
-
-
-
-
 
     <!-- Add the profile popup container here -->
     <div class="profile-popup" id="profile-popup">
@@ -136,8 +122,7 @@ $studentData = $resultUser->fetch_assoc();
                     <a href="Student_EditProfile.php">Edit Profile</a>
 
                 </div>
-                <!-- Add the overlay and modal for the confirmation dialog -->
-               
+
 
                 <a href="#" id="help" class="profile-item"><i class='bx bx-question-mark'></i> Help and Support</a>
                 <div class="dropdown" id="help-dropdown" style="display: none;">
@@ -175,119 +160,123 @@ $studentData = $resultUser->fetch_assoc();
                 </div>
             </div>
             <div class="logout-confirmation-message" id="logoutConfirmationMessage">
-    Account logging out...
-</div>
+                Account logging out...
+            </div>
 
-<script>
-  function confirmLogout() {
-    // Show the overlay with the confirmation dialog
-    $("#confirmationOverlayLogout").fadeIn();
+            <script>
+                function confirmLogout() {
+                    // Show the overlay with the confirmation dialog
+                    $("#confirmationOverlayLogout").fadeIn();
 
-    // Handle 'Yes' button click
-    $("#confirmYesLogout").click(function () {
-        // Close the overlay
-        $("#confirmationOverlayLogout").fadeOut();
+                    // Handle 'Yes' button click
+                    $("#confirmYesLogout").click(function() {
+                        // Close the overlay
+                        $("#confirmationOverlayLogout").fadeOut();
 
-        // Display the logout confirmation message
-        $("#logoutConfirmationMessage").fadeIn();
+                        // Display the logout confirmation message
+                        $("#logoutConfirmationMessage").fadeIn();
 
-        // Hide the message after 2 seconds
-        setTimeout(function () {
-            $("#logoutConfirmationMessage").fadeOut();
-            // Redirect to the logout page after hiding the message
-            window.location.href = "../Backend/logout.php";
-        }, 2000);
+                        // Hide the message after 2 seconds
+                        setTimeout(function() {
+                            $("#logoutConfirmationMessage").fadeOut();
+                            // Redirect to the logout page after hiding the message
+                            window.location.href = "../Backend/logout.php";
+                        }, 2000);
 
-        // Prevent further clicks on 'Yes' button
-        $(this).prop('disabled', true);
-    });
+                        // Prevent further clicks on 'Yes' button
+                        $(this).prop('disabled', true);
+                    });
 
-    // Handle 'No' button click
-    $("#confirmNoLogout").click(function () {
-        // Close the overlay without logging out
-        $("#confirmationOverlayLogout").fadeOut();
-        return false; // Cancel link click
-    });
+                    // Handle 'No' button click
+                    $("#confirmNoLogout").click(function() {
+                        // Close the overlay without logging out
+                        $("#confirmationOverlayLogout").fadeOut();
+                        return false; // Cancel link click
+                    });
 
-    // Prevent the default link click
-    return false;
-}
+                    // Prevent the default link click
+                    return false;
+                }
+            </script>
+            <style>
+                /* Styles for the logout confirmation message */
+                .logout-confirmation-message {
+                    display: none;
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background-color: green;
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 5px;
+                    z-index: 1000;
+                }
 
+                #confirmationOverlayLogout {
+                    display: none;
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.5);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
 
-</script>
-<style>
-  /* Styles for the logout confirmation message */
-.logout-confirmation-message {
-    display: none;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: green;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 5px;
-    z-index: 1000;
-}
+                /* Add styles for the confirmation dialog modal */
+                .confirmation-modal {
+                    background-color: white;
+                    color: black;
+                    padding: 20px;
+                    border-radius: 5px;
+                    text-align: center;
+                    max-width: 400px;
+                    /* Adjust the maximum width as needed */
+                }
 
-#confirmationOverlayLogout {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+                .confirmation-modal p {
+                    margin-bottom: 15px;
+                }
 
-/* Add styles for the confirmation dialog modal */
-.confirmation-modal {
-    background-color: white;
-    color: black;
-    padding: 20px;
-    border-radius: 5px;
-    text-align: center;
-    max-width: 400px; /* Adjust the maximum width as needed */
-}
+                .confirmation-modal button {
+                    padding: 10px 15px;
+                    margin: 0 10px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    /* Add transition effect */
+                }
 
-.confirmation-modal p {
-    margin-bottom: 15px;
-}
+                /* Style the 'Yes' button in green */
+                #confirmYesLogout {
+                    background-color: #28a745;
+                    /* Green color */
+                    color: white;
+                }
 
-.confirmation-modal button {
-        padding: 10px 15px;
-        margin: 0 10px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease; /* Add transition effect */
-    }
+                /* Style the 'Yes' button hover */
+                #confirmYesLogout:hover {
+                    background-color: #218838;
+                    /* Darker shade of green */
+                }
 
-    /* Style the 'Yes' button in green */
-    #confirmYesLogout {
-        background-color: #28a745; /* Green color */
-        color: white;
-    }
+                /* Style the 'No' button in red */
+                #confirmNoLogout {
+                    background-color: #dc3545;
+                    /* Red color */
+                    color: white;
+                }
 
-    /* Style the 'Yes' button hover */
-    #confirmYesLogout:hover {
-        background-color: #218838; /* Darker shade of green */
-    }
-
-    /* Style the 'No' button in red */
-    #confirmNoLogout {
-        background-color: #dc3545; /* Red color */
-        color: white;
-    }
-
-    /* Style the 'No' button hover */
-    #confirmNoLogout:hover {
-        background-color: #c82333; /* Darker shade of red */
-    }
-</style>
+                /* Style the 'No' button hover */
+                #confirmNoLogout:hover {
+                    background-color: #c82333;
+                    /* Darker shade of red */
+                }
+            </style>
         </div>
     </div>
 

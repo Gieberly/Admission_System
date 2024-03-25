@@ -8,9 +8,6 @@ if (!isset($_SESSION['user_type']) || $_SESSION['user_type'] !== 'Staff') {
   exit();
 }
 
-// Fetch data from the academicclassification table for the Classification column
-$sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
-$resultClassification = $conn->query($sqlClassification);
 
 // Retrieve admission data from the database with date filter
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -46,6 +43,7 @@ $stmt->close();
 
 
 
+
 <head>
   <meta charset="UTF-8">
 
@@ -54,327 +52,44 @@ $stmt->close();
 </head>
 
 <body>
-  <section id="content">
-    <?php
-
-    // Check if the success message session variable is set
-    if (isset($_SESSION['update_success']) && $_SESSION['update_success']) {
-      // Display success message with animation
-      echo '<div class="success-message" id="successMessage">Data successfully updated!</div>';
-
-      // Unset the session variable to avoid displaying the message again on page refresh
-      unset($_SESSION['update_success']);
-    }
-    ?>
-
-    <main>
-
-      <div class="head-title">
-        <div class="left">
-          <h1>Applicants</h1>
-          <ul class="breadcrumb">
-            <li><a href="#">Applicants</a></li>
-            <li><i class='bx bx-chevron-right'></i></li>
-            <li>
-            <li><a class="active" href="Personnel_dashboard.php">Home</a></li>
-            </li>
-          </ul>
-        </div>
-        <div class="button-container">
-          <a href="Personnels_AppointmentDate.php" class="btn-appointment">
-            <i class='bx bxs-calendar calendar-icon'></i>
-            <span class="text">Set Dates</span>
-          </a>
-          <a href="excel_export_appointments.php" class="btn-download">
-            <i class='bx bxs-file-export'></i>
-            <span class="text">Excel Export</span>
-          </a>
-        </div>
-      </div>
-
-      <div class="table-data">
-        <div class="order">
-          <div class="head">
-            <h3>List of Students</h3>
-            <!-- Add this input field for date filtering -->
-            <div class="headfornaturetosort">
-              <form method="GET" action="" id="calendarFilterForm">
-                <label for="appointment_date"></label>
-                <input type="date" name="appointment_date" id="appointment_date">
-                <button type="submit"><i class='bx bx-filter'></i></button>
-              </form>
-            </div>
-          </div>
-
-
-          <table id="studentTable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Application No.</th>
-                <th>Nature of Degree</th>
-                <th>Program</th>
-                <th>Name</th>
-                <th>Academic Classification</th>
-
-              </tr>
-            </thead>
-            <tbody>
-              <?php
-              $counter = 1; // Initialize the counter before the loop
-
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
-                echo "<td>" . $counter . "</td>";
-                echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['nature_of_degree'] . "</td>";
-                echo "<td>" . $row['degree_applied'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
-                echo "<td>" . $row['academic_classification'] . "</td>";
-
-
-
-                echo "<td style='display: none;'><input type='checkbox' name='select[]' value='" . $row["id"] . "'></td>";
-                echo "</tr>";
-
-                $counter++; // Increment the counter for the next row
-              }
-              ?>
-
-            </tbody>
-          </table>
-
-        </div>
-
-        <div class="todo" style="display: none;">
-
-          <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
-          <label class="tab-label" for="tab1">Student Data</label>
-
-          <input type="radio" id="tab2" name="tabGroup1" class="tab">
-          <label class="tab-label" for="tab2">Student Requirements</label>
-
-          <div class="tab-content" id="content1">
-
-            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-           
-            <p class="personal_information"> Grade 11 Average</p>
-            <div class="form-container2">
-              
-                <div class="form-group">
-                  <!-- Gr11_A1 -->
-                  <label class="small-label" for="Gr11_A1">1st SEM</label>
-                  <input name="Gr11_A1" class="input" id="Gr11_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A1']; ?>">
-                  <!-- Gr11_A2 -->
-                </div>
-                <div class="form-group">
-                  <label class="small-label" for="Gr11_A2">2nd SEM</label>
-                  <input name="Gr11_A2" class="input" autocomplete="off" id="Gr11_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A2']; ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <!-- Gr11_A3 -->
-                  <label class="small-label" for="Gr11_A3">3rd SEM</label>
-                  <input name="Gr11_A3" class="input" autocomplete="off" id="Gr11_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A3']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- Gr11_GWA -->
-                  <label class="small-label" for="Gr11_GWA">GWA</label>
-                  <input name="Gr11_GWA" class="input" autocomplete="off" id="Gr11_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_GWA']; ?>" readonly>
-                </div>
-               
-              </div>
-              <p class="personal_information">Average</p>
-              <div class="form-container2">
-              <div class="form-group"> <!-- GWA_OTAS -->
-                  <label class="small-label" for="GWA_OTAS">Average</label>
-                  <input name="GWA_OTAS" class="input" autocomplete="off" id="GWA_OTAS" placeholder="Enter Grade" value="<?php echo $admissionData['GWA_OTAS']; ?>" readonly>
-                </div>
-              </div>
-              <p class="personal_information">Grade 12 Average</p>
-                <div class="form-container2">
-                <div class="form-group">
-                  <!-- Gr12_A1 -->
-                  <label class="small-label" for="Gr12_A1">1st SEM</label>
-                  <input name="Gr12_A1" class="input" id="Gr12_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A1']; ?>">
-
-                </div>
-                <div class="form-group"> <!-- Gr12_A2 -->
-                  <label class="small-label" for="Gr12_A2">2nd SEM</label>
-                  <input name="Gr12_A2" class="input" autocomplete="off" id="Gr12_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A2']; ?>" readonly>
-
-                </div>
-                <div class="form-group"> <!-- Gr12_A3 -->
-                  <label class="small-label" for="Gr12_A3">3rd SEM</label>
-                  <input name="Gr12_A3" class="input" autocomplete="off" id="Gr12_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A3']; ?>" readonly>
-
-                </div>
-                <div class="form-group"> <!-- Gr12_GWA -->
-                  <label class="small-label" for="Gr12_GWA">GWA</label>
-                  <input name="Gr12_GWA" class="input" autocomplete="off" id="Gr12_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_GWA']; ?>" readonly>
-                </div>
-                </div>
-              <p class="personal_information">English</p>
-                <div class="form-container2">
-                <div class="form-group">
-                  <!-- English_Oral_Communication_Grade -->
-                  <label class="small-label" for="English_Oral_Communication_Grade">English 1</label>
-                  <input name="English_Oral_Communication_Grade" class="input" autocomplete="off" id="English_Oral_Communication_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Oral_Communication_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- English_Reading_Writing_Grade -->
-                  <label class="small-label" for="English_Reading_Writing_Grade">English 2</label>
-                  <input name="English_Reading_Writing_Grade" class="input" autocomplete="off" id="English_Reading_Writing_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Reading_Writing_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- English_Academic_Grade -->
-                  <label class="small-label" for="English_Academic_Grade">English 3</label>
-                  <input name="English_Academic_Grade" class="input" autocomplete="off" id="English_Academic_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Academic_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- English_Other_Courses_Grade -->
-                  <label class="small-label" for="English_Other_Courses_Grade">English 4</label>
-                  <input name="English_Other_Courses_Grade" class="input" autocomplete="off" id="English_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Other_Courses_Grade']; ?>" readonly>
-                </div>
-                </div>
-              <p class="personal_information">Science</p>
-
-                <div class="form-container3">
-                <div class="form-group">
-                  <!-- Science_Earth_Science_Grade -->
-                  <label class="small-label" for="Science_Earth_Science_Grade">Science 1</label>
-                  <input name="Science_Earth_Science_Grade" class="input" autocomplete="off" id="Science_Earth_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_Science_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- Science_Earth_and_Life_Science_Grade -->
-                  <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Science 2</label>
-                  <input name="Science_Earth_and_Life_Science_Grade" class="input" autocomplete="off" id="Science_Earth_and_Life_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_and_Life_Science_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- Science_Physical_Science_Grade -->
-                  <label class="small-label" for="Science_Physical_Science_Grade">Science 3</label>
-                  <input name="Science_Physical_Science_Grade" class="input" autocomplete="off" id="Science_Physical_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Physical_Science_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group"> <!-- Science_Disaster_Readiness_Grade -->
-                  <label class="small-label" for="Science_Disaster_Readiness_Grade">Science 4</label>
-                  <input name="Science_Disaster_Readiness_Grade" class="input" autocomplete="off" id="Science_Disaster_Readiness_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Disaster_Readiness_Grade']; ?>" readonly>
-                </div>
-
-                <!-- Repeat the same structure for the next set of fields -->
-                <div class="form-group">
-                  <!-- Science_Other_Courses_Grade -->
-                  <label class="small-label" for="Science_Other_Courses_Grade">Science 5</label>
-                  <input name="Science_Other_Courses_Grade" class="input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>" readonly>
-                </div>
-                </div>
-              <p class="personal_information">Math</p>
-
-                <div class="form-container2">
-                <div class="form-group">
-                  <!-- Math_General_Mathematics_Grade -->
-                  <label class="small-label" for="Math_General_Mathematics_Grade">Math 1</label>
-                  <input name="Math_General_Mathematics_Grade" class="input" autocomplete="off" id="Math_General_Mathematics_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_General_Mathematics_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <!-- Math_Statistics_and_Probability_Grade -->
-                  <label class="small-label" for="Math_Statistics_and_Probability_Grade">Math 2</label>
-                  <input name="Math_Statistics_and_Probability_Grade" class="input" autocomplete="off" id="Math_Statistics_and_Probability_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Statistics_and_Probability_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <!-- Math_Other_Courses_Grade -->
-                  <label class="small-label" for="Math_Other_Courses_Grade">Math 3</label>
-                  <input name="Math_Other_Courses_Grade" class="input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>" readonly>
-                </div>
-                </div>
-              <p class="personal_information">High School (Old Curriculum) Graduates</p>
-                
-                <div class="form-container2">
-                <div class="form-group">
-                  <!-- Old_HS_English_Grade -->
-                  <label class="small-label" for="Old_HS_English_Grade">English</label>
-                  <input name="Old_HS_English_Grade" class="input" autocomplete="off" id="Old_HS_English_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_English_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <!-- Old_HS_Math_Grade -->
-                  <label class="small-label" for="Old_HS_Math_Grade">Math</label>
-                  <input name="Old_HS_Math_Grade" class="input" autocomplete="off" id="Old_HS_Math_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Math_Grade']; ?>" readonly>
-                </div>
-                <div class="form-group">
-                  <!-- Old_HS_Science_Grade -->
-                  <label class="small-label" for="Old_HS_Science_Grade">Science</label>
-                  <input name="Old_HS_Science_Grade" class="input" autocomplete="off" id="Old_HS_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Science_Grade']; ?>" readonly>
-                </div>
-                </div>
-                <div class="form-container2">
-                <div class="form-group">
-                  <!-- ALS_Grade -->
-                  <label class="small-label" for="ALS_Grade">ALS Grade</label>
-                  <input name="ALS_Grade" class="input" autocomplete="off" id="ALS_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['ALS_Grade']; ?>" readonly>
-                </div>
-
-
-
-
-                <div class="form-group">
-                  <!-- Qualification_Nature_Degree -->
-                  <label class="small-label" for="Qualification_Nature_Degree">Nature</label>
-                  <input name="Qualification_Nature_Degree" class="input" autocomplete="off" id="Qualification_Nature_Degree" value="<?php echo $admissionData['Qualification_Nature_Degree']; ?>" readonly>
-                </div>
-
-
-
-
-              </div>
-              <br>
-              <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
-              <input type="submit" name="submit">
-            </form>
-
-
-          </div>
-
-          <div class="tab-content" id="content2"></div>
-
-
-
-        </div>
-      </div>
-
-
-
-      </div>
-      </div>
-    </main>
-    <!-- MAIN -->
-  </section>
-
-  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-    <div class="toast-header">
-
-
-    </div>
-    <div class="toast-body" id="toast-body"></div>
-  </div>
 
   <style>
-    .field-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
+    #sendButton {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
     }
 
-    .field-group>* {
-      flex-basis: calc(25% - 10px);
-      /* Adjust the width as needed */
-      margin-bottom: 10px;
-      /* Adjust the vertical spacing as needed */
+    #sendButton i {
+      font-size: 14px;
+      color: black;
     }
 
-    .success-message {
+    #sendButton:hover i {
+      color: green;
+      transform: scale(1.2);
+    }
+
+
+
+    #toast {
       position: fixed;
       top: 10%;
       right: 10%;
+      width: 300px;
       background-color: #4CAF50;
-      color: white;
+      color: #fff;
+      border-radius: 5px;
       padding: 10px;
-      border-radius: 4px;
-      animation: slideInRight 0.5s ease-in-out;
-      display: none;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
     }
 
+    #toast.show {
+      opacity: 1;
+    }
 
     @keyframes slideInUp {
       from {
@@ -386,115 +101,126 @@ $stmt->close();
       }
     }
 
-    .button.ekis-btn {
-      position: relative;
-      background: none;
-      border: none;
-      padding: 0;
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      /* Could be more or less, depending on screen size */
+      border-radius: 10px;
+    }
+
+    /* Close Button */
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
       cursor: pointer;
     }
 
-    .button.ekis-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-
-    }
-
-    .button.ekis-btn:hover i {
-      color: red;
-    }
-
-    .button.ekis-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
-      color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
-    }
-
-
-
-    .button.inc-btn {
-      background: none;
+    /* Buttons */
+    /* Buttons */
+    #confirmSend,
+    .yes,
+    .cancel {
+      padding: 10px 15px;
+      margin: 5px;
       border: none;
-      padding: 0;
+      border-radius: 5px;
       cursor: pointer;
-      position: relative;
+      font-size: 14px;
+      text-align: center;
+      display: inline-block;
     }
 
-    .button.inc-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-
-    }
-
-    .button.inc-btn:hover i {
-      color: orange;
-    }
-
-    .button.inc-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
+    #confirmSend,
+    .yes {
+      background-color: #4CAF50;
+      /* Green color for "Confirm" button */
       color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
     }
 
-
-    .button.check-btn {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .button.check-btn i {
-      font-size: 15px;
-      pointer-events: auto;
-      color: black;
-    }
-
-    .button.check-btn:hover i {
-      color: green;
-
-    }
-
-    .button.check-btn::after {
-      content: attr(data-tooltip);
-      position: absolute;
-      bottom: -100%;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #333;
+    .cancel {
+      background-color: #ff5757;
+      /* Red color for "Cancel" button */
       color: white;
-      padding: 5px;
-      border-radius: 3px;
-      font-size: 12px;
-      opacity: 0;
-      transition: opacity 0.3s;
-      z-index: 2;
-      pointer-events: none;
+      float: right;
+      /* Float the "Cancel" button to the right */
+    }
+
+    #confirmSend:hover,
+    .cancel:hover {
+      opacity: 0.8;
+    }
+
+    .confirmation-message {
+      background-color: #f44336;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+
+    #deleteConfirmationModal,
+    #errorModal,
+    #selectRowModal,
+    #sendSuccessModal {
+      display: none;
+    }
+
+    .field-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .field-group>* {
+      flex-basis: calc(25% - 10px);
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      position: fixed;
+      top: 15%;
+      right: 10%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      z-index: 9;
+      animation: slideInUp 0.3s ease-in-out;
+      display: none;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
     }
 
     #calendarFilterForm button {
@@ -552,10 +278,8 @@ $stmt->close();
 
     .close-form:hover {
       background-color: rgba(255, 0, 0, 0.2);
-      /* Red with 80% opacity */
     }
 
-    /* Apply styles to the form container */
     .form-container1 {
       display: grid;
       grid-template-columns: 50% 23% 23%;
@@ -564,7 +288,7 @@ $stmt->close();
 
     .form-container2 {
       display: grid;
-      grid-template-columns: 20% 20% 20% 20%;
+      grid-template-columns: 23% 23% 23% 23%;
       gap: 2%;
     }
 
@@ -580,21 +304,30 @@ $stmt->close();
       gap: 10px;
     }
 
-    /* Apply styles to the form groups */
+    .form-container5 {
+      display: grid;
+      grid-template-columns: 40% 40% 15%;
+      gap: 10px;
+    }
+
+    .form-container6 {
+      display: grid;
+      grid-template-columns: 50% 15%;
+      gap: 10px;
+    }
+
     .form-group {
       margin-bottom: 15px;
       display: flex;
       flex-direction: column;
     }
 
-    /* Apply styles to the labels */
     .small-label {
       display: block;
       font-size: .9vw;
       margin-bottom: 5px;
     }
 
-    /* Apply styles to the input fields */
     .input {
       width: 100%;
       padding: 8px;
@@ -604,7 +337,6 @@ $stmt->close();
       font-size: .8vw;
     }
 
-    /* Apply styles to the submit button */
     input[type="submit"] {
       background-color: #4CAF50;
       color: white;
@@ -619,14 +351,12 @@ $stmt->close();
       background-color: darkcyan;
     }
 
-    /* Style for the personal information headings */
     .personal_information {
       font-size: 1vw;
       font-weight: bold;
       margin-bottom: 10px;
     }
 
-    /* Style for the form container */
     #updateProfileForm {
       max-width: 800px;
       margin: 0 auto;
@@ -640,103 +370,451 @@ $stmt->close();
       margin-bottom: 10px;
     }
 
-    /* Responsive styles for smaller screens */
     @media screen and (max-width: 881px) {
       .form-group {
         width: 100%;
       }
     }
 
-    /* Add this CSS to your existing styles */
-    .confirmation-dialog {
-      display: none;
+    #update_success {
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      z-index: 1000;
-      border-radius: 5px;
-    }
-
-    .confirmation-dialog p {
-      margin-bottom: 15px;
-    }
-
-    .confirmation-buttons {
-      text-align: center;
-      outline: none;
-      margin: 0 10px;
-    }
-
-
-
-    .confirmation-buttons button[data-confirmed="true"] {
+      top: 75px;
+      /* Adjust the distance from the top */
+      right: 20px;
+      /* Adjust the distance from the right */
+      padding: 10px 20px;
       background-color: green;
       color: white;
-      transition: background-color 0.3s ease;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards, fadeOut 0.5s 2.5s forwards;
     }
 
-    /* Hover effect for Confirm button */
-    .confirmation-buttons button[data-confirmed="true"]:hover {
-      background-color: #4caf50;
-    }
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100%);
+      }
 
-
-    /* Styling for Cancel button */
-    .confirmation-buttons button[data-confirmed="false"] {
-      background-color: red;
-      color: white;
-      transition: background-color 0.3s ease;
-    }
-
-    /* Hover effect for Cancel button */
-    .confirmation-buttons button[data-confirmed="false"]:hover {
-      background-color: #e57373;
-    }
-
-    .confirmation-dialog-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      z-index: 999;
-    }
-
-    #applicantPicture {
-      width: 100%;
-      /* Adjust width as a percentage of the container */
-      max-width: 192px;
-      min-width: 20px;
-      height: auto;
-      border-radius: 2%;
-      float: right;
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
+  <section id="content">
+    <?php
 
-  <div class="confirmation-dialog-overlay"></div>
-  <div class="confirmation-dialog">
-    <p></p>
-    <div class="confirmation-buttons">
-      <button data-confirmed="true">Confirm</button>
-      <button data-confirmed="false">Cancel</button>
+    // Check if the success message session variable is set
+    if (isset($_SESSION['update_success']) && $_SESSION['update_success']) {
+      // Display success message with animation
+      echo '<div class="success-message" id="successMessage">Data successfully updated!</div>';
+
+      // Unset the session variable to avoid displaying the message again on page refresh
+      unset($_SESSION['update_success']);
+    }
+    ?>
+
+
+    <main>
+      <div class="head-title">
+        <div class="left">
+          <h1>Applicants</h1>
+          <ul class="breadcrumb">
+            <li><a href="#">Applicants</a></li>
+            <li><i class='bx bx-chevron-right'></i></li>
+            <li>
+            <li><a class="active" href="Personnel_dashboard.php">Home</a></li>
+            </li>
+          </ul>
+        </div>
+        <div class="button-container">
+
+          <a href="excel_export_appointments.php" class="btn-download">
+            <i class='bx bxs-file-export'></i>
+            <span class="text">Excel Export</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="table-data">
+        <div class="order">
+          <div class="head">
+            <h3>List of Students</h3>
+            <!-- Add this input field for date filtering -->
+            <div class="headfornaturetosort">
+              <form method="GET" action="" id="calendarFilterForm">
+                <label for="appointment_date"></label>
+                <input type="date" name="appointment_date" id="appointment_date">
+                <button type="submit"><i class='bx bx-filter'></i></button>
+              </form>
+              <button type="button" id="toggleSelection">
+                <i class='bx bx-select-multiple'></i> Toggle Selection
+              </button>
+              <button style="display: none;" type="button" id="deleteSelected">
+                <i class='bx bx-trash'></i> Delete Selected
+              </button>
+              <button type="button" id="sendButton" style="display: none;">
+                <i class='bx bx-send'></i>
+              </button>
+            </div>
+          </div>
+
+
+          <table id="studentTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Application No.</th>
+                <th>Name</th>
+                <th>Nature of Degree</th>
+                <th>Program</th>
+
+                <th>Academic Classification</th>
+                <th style="display: none;" id="selectColumn">
+                  <input type="checkbox" id="selectAllCheckbox">
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              $counter = 1; // Initialize the counter before the loop
+
+              while ($row = $result->fetch_assoc()) {
+                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+                echo "<td>" . $counter . "</td>";
+                echo "<td>" . $row['applicant_number'] . "</td>";
+                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['nature_of_degree'] . "</td>";
+                echo "<td>" . $row['degree_applied'] . "</td>";
+                echo "<td>" . $row['academic_classification'] . "</td>";
+
+                echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
+
+                echo "</tr>";
+
+                $counter++; // Increment the counter for the next row
+              }
+              ?>
+
+            </tbody>
+          </table>
+          <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+              <strong class="mr-auto">Success!</strong>
+
+            </div>
+            <div class="toast-body" id="toast-body"></div>
+          </div>
+          <div id="confirmationModal" class="modal">
+            <div class="modal-content">
+              <span class="close"></span>
+              <p>Are you sure you want to send these applicants to the faculty?</p>
+              <button id="confirmSend">Confirm</button>
+              <button class="cancel">Cancel</button>
+            </div>
+          </div>
+
+
+
+          <div id="deleteSelectedConfirmationModal" class="modal">
+            <div class="modal-content">
+              <span class="close"></span>
+              <p>Are you sure you want to delete the selected rows?</p>
+              <button id="confirmDeleteSelected" class="yes">Confirm</button>
+              <button class="cancel" onclick="closeDeleteSelectedConfirmationModal()">Cancel</button>
+            </div>
+          </div>
+          <div id="errorModal" class="modal">
+            <div class="modal-content">
+              <span class="close"></span>
+              <p id="errorMessage"></p>
+              <button class="ok" onclick="closeErrorModal()">OK</button>
+            </div>
+          </div>
+          <div id="sendErrorModal" class="modal">
+            <div class="modal-content">
+              <span class="close"></span>
+              <p id="sendErrorMessage"></p>
+              <button class="ok" onclick="closeSendErrorModal()">OK</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="todo" style="display: none;">
+          <i class="bx bx-x close-form" style="float: right;font-size: 24px;"></i>
+
+          <input type="radio" id="tab1" name="tabGroup1" class="tab" checked>
+          <label class="tab-label" for="tab1">Student Grades</label>
+          <input type="radio" id="tab2" name="tabGroup1" class="tab">
+          <label class="tab-label" for="tab2">Student Remarks</label>
+
+          <div class="tab-content" id="content1">
+
+            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_SubmitForm.php">
+
+              <input type="hidden" name="academic_classification" class="input" id="academic_classification" value="<?php echo $admissionData['academic_classification']; ?>" readonly>
+              <!-- Senior High School Graduates -->
+              <div class="SHS-Graduate-Average" style="display:none;">
+                <h2>Senior High School Graduates</h2>
+
+                <p class="personal_information"> Grade 11 Average</p>
+                <div class="form-container2">
+
+                  <div class="form-group">
+                    <!-- Gr11_A1 -->
+                    <label class="small-label" for="Gr11_A1">1st SEM</label>
+                    <input name="Gr11_A1" class="input numeric-input" id="Gr11_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A1']; ?>">
+                    <!-- Gr11_A2 -->
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Gr11_A2">2nd SEM</label>
+                    <input name="Gr11_A2" class="input numeric-input" autocomplete="off" id="Gr11_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Gr11_A3 -->
+                    <label class="small-label" for="Gr11_A3">3rd SEM</label>
+                    <input name="Gr11_A3" class="input numeric-input" autocomplete="off" id="Gr11_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_A3']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- Gr11_GWA -->
+                    <label class="small-label" for="Gr11_GWA">GWA</label>
+                    <input name="Gr11_GWA" class="input numeric-input" autocomplete="off" id="Gr11_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr11_GWA']; ?>">
+                  </div>
+
+                </div>
+              </div>
+              <div class="Gr-12-Average" style="display: none;">
+                <h2> Grade 12</h2>
+                <p class="personal_information">Grade 12 Average</p>
+                <div class="form-container2">
+                  <div class="form-group">
+                    <!-- Gr12_A1 -->
+                    <label class="small-label" for="Gr12_A1">1st SEM</label>
+                    <input name="Gr12_A1" class="input numeric-input" id="Gr12_A1" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A1']; ?>">
+
+                  </div>
+                  <div class="form-group"> <!-- Gr12_A2 -->
+                    <label class="small-label" for="Gr12_A2">2nd SEM</label>
+                    <input name="Gr12_A2" class="input numeric-input" autocomplete="off" id="Gr12_A2" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A2']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- Gr12_A3 -->
+                    <label class="small-label" for="Gr12_A3">3rd SEM</label>
+                    <input name="Gr12_A3" class="input numeric-input" autocomplete="off" id="Gr12_A3" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_A3']; ?>">
+
+                  </div>
+                  <div class="form-group"> <!-- Gr12_GWA -->
+                    <label class="small-label" for="Gr12_GWA">GWA</label>
+                    <input name="Gr12_GWA" class="input numeric-input" autocomplete="off" id="Gr12_GWA" placeholder="Enter Grade" value="<?php echo $admissionData['Gr12_GWA']; ?>">
+                  </div>
+                </div>
+              </div>
+              <div class="Subjects" style="display: none;">
+                <p class="personal_information">English</p>
+                <div class="form-container2">
+                  <div class="form-group">
+                    <!-- English_Oral_Communication_Grade -->
+                    <label class="small-label" for="English_Oral_Communication_Grade">English 1</label>
+                    <input name="English_Oral_Communication_Grade" class="input numeric-input" autocomplete="off" id="English_Oral_Communication_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Oral_Communication_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- English_Reading_Writing_Grade -->
+                    <label class="small-label" for="English_Reading_Writing_Grade">English 2</label>
+                    <input name="English_Reading_Writing_Grade" class="input numeric-input" autocomplete="off" id="English_Reading_Writing_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Reading_Writing_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- English_Academic_Grade -->
+                    <label class="small-label" for="English_Academic_Grade">English 3</label>
+                    <input name="English_Academic_Grade" class="input numeric-input" autocomplete="off" id="English_Academic_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Academic_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- English_Other_Courses_Grade -->
+                    <label class="small-label" for="English_Other_Courses_Grade">English 4</label>
+                    <input name="English_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="English_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Other_Courses_Grade']; ?>">
+                  </div>
+                </div>
+                <p class="personal_information">Science</p>
+
+                <div class="form-container3">
+                  <div class="form-group">
+                    <!-- Science_Earth_Science_Grade -->
+                    <label class="small-label" for="Science_Earth_Science_Grade">Science 1</label>
+                    <input name="Science_Earth_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Earth_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_Science_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- Science_Earth_and_Life_Science_Grade -->
+                    <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Science 2</label>
+                    <input name="Science_Earth_and_Life_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Earth_and_Life_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_and_Life_Science_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- Science_Physical_Science_Grade -->
+                    <label class="small-label" for="Science_Physical_Science_Grade">Science 3</label>
+                    <input name="Science_Physical_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Physical_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Physical_Science_Grade']; ?>">
+                  </div>
+                  <div class="form-group"> <!-- Science_Disaster_Readiness_Grade -->
+                    <label class="small-label" for="Science_Disaster_Readiness_Grade">Science 4</label>
+                    <input name="Science_Disaster_Readiness_Grade" class="input numeric-input" autocomplete="off" id="Science_Disaster_Readiness_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Disaster_Readiness_Grade']; ?>">
+                  </div>
+
+                  <!-- Repeat the same structure for the next set of fields -->
+                  <div class="form-group">
+                    <!-- Science_Other_Courses_Grade -->
+                    <label class="small-label" for="Science_Other_Courses_Grade">Science 5</label>
+                    <input name="Science_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>">
+                  </div>
+
+                </div>
+                <p class="personal_information">Math</p>
+
+                <div class="form-container2">
+                  <div class="form-group">
+                    <!-- Math_General_Mathematics_Grade -->
+                    <label class="small-label" for="Math_General_Mathematics_Grade">Math 1</label>
+                    <input name="Math_General_Mathematics_Grade" class="input numeric-input" autocomplete="off" id="Math_General_Mathematics_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_General_Mathematics_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Math_Statistics_and_Probability_Grade -->
+                    <label class="small-label" for="Math_Statistics_and_Probability_Grade">Math 2</label>
+                    <input name="Math_Statistics_and_Probability_Grade" class="input numeric-input" autocomplete="off" id="Math_Statistics_and_Probability_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Statistics_and_Probability_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Math_Other_Courses_Grade -->
+                    <label class="small-label" for="Math_Other_Courses_Grade">Math 3</label>
+                    <input name="Math_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>">
+                  </div>
+                </div>
+              </div>
+              <div class="Transferee" style="display: none;">
+                <h2> Transferee</h2>
+              </div>
+
+
+              <div class="ALS" style="display: none;">
+                <h2> ALS/PEPT Completers </h2>
+                <div class="form-container2">
+                  <div class="form-group">
+                    <!-- ALS_Grade -->
+                    <label class="small-label" for="ALS_Grade">ALS Grade</label>
+                    <input name="ALS_Grade" class="input numeric-input" autocomplete="off" id="ALS_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['ALS_Grade']; ?>">
+                  </div>
+                </div>
+              </div>
+
+              <div class="HS-Graduate" style="display: none;">
+                <h2> School (Old Curriculum) Graduates </h2>
+
+                <div class="form-container2">
+                  <div class="form-group">
+                    <!-- Old_HS_English_Grade -->
+                    <label class="small-label" for="Old_HS_English_Grade">English</label>
+                    <input name="Old_HS_English_Grade" class="input numeric-input" autocomplete="off" id="Old_HS_English_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_English_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Old_HS_Math_Grade -->
+                    <label class="small-label" for="Old_HS_Math_Grade">Math</label>
+                    <input name="Old_HS_Math_Grade" class="input numeric-input" autocomplete="off" id="Old_HS_Math_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Math_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Old_HS_Science_Grade -->
+                    <label class="small-label" for="Old_HS_Science_Grade">Science</label>
+                    <input name="Old_HS_Science_Grade" class="input numeric-input" autocomplete="off" id="Old_HS_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Old_HS_Science_Grade']; ?>">
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="2nd-degree" style="display: none;">
+                <h2> Second Degree</h2>
+
+              </div>
+              <div class="GWA-OTAS" style="display: none;">
+                <div class="form-container2">
+                  <div class="form-group"> <!-- GWA_OTAS -->
+                    <label class="small-label" for="GWA_OTAS">Average</label>
+                    <input name="GWA_OTAS" class="input numeric-input" autocomplete="off" id="GWA_OTAS" placeholder="Enter Grade" value="<?php echo $admissionData['GWA_OTAS']; ?>">
+                  </div>
+                </div>
+              </div>
+
+              <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
+              <input type="submit" name="submit">
+            </form>
+
+          </div>
+
+          <div class="tab-content" id="content2">
+            <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_SubmitForm2.php">
+
+              <div class="form-container5">
+
+                <div class="form-group">
+                  <!-- College -->
+                  <label class="small-label" for="college">College</label>
+                  <input name="college" class="input" id="college" value="<?php echo $admissionData['college']; ?>" readonly>
+                </div>
+                <div class="form-group">
+                  <!-- Degree -->
+                  <label class="small-label" for="degree_applied">Degree</label>
+                  <input name="degree_applied" class="input" id="degree_applied" value="<?php echo $admissionData['degree_applied']; ?>" readonly>
+                </div>
+
+                <div class="form-group">
+                  <!-- Nature -->
+                  <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature</label>
+                  <input name="nature_of_degree" class="input" id="nature_of_degree" value="<?php echo $admissionData['nature_of_degree']; ?>" readonly>
+                </div>
+              </div>
+              <div class="form-container6">
+                <div class="form-group">
+                  <label class="small-label" for="nature_qualification" style="white-space: nowrap;">Qualification</label>
+                  <select name="nature_qualification" class="input" id="nature_qualification">
+                    <option value="" disabled selected>Select qualification</option>
+                    <option value="Non-Board/Board">Non-Board/Board</option>
+                    <option value="Non-Board">Non-Board</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="small-label" for="Degree_Remarks" style="white-space: nowrap;">Degree meets admission policy</label>
+                  <select name="Degree_Remarks" class="input" id="Degree_Remarks">
+                    <option value="" disabled selected>Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+
+              </div>
+
+              <br>
+              <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
+              <input type="submit" name="submit">
+            </form>
+
+          </div>
+
+
+        </div>
+      </div>
+
+
+
+      </div>
+      </div>
+    </main>
+    <!-- MAIN -->
+  </section>
+
+  <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+
+
     </div>
+    <div class="toast-body" id="toast-body"></div>
   </div>
 
 
   <script>
     $(document).ready(function() {
 
-
       $('.editRow').click(function() {
         // Check if the click was on the buttons
-        if (!$(event.target).is('button') && !$(event.target).is('i')) {
+        if (!$(event.target).is('button') && !$(event.target).is('i') && !$(event.target).is(':checkbox')) {
           // Get the 'data-userid' attribute from the clicked row
           var userId = $(this).data('id');
 
@@ -749,14 +827,24 @@ $stmt->close();
             },
             dataType: 'json',
             success: function(response) {
-              // Populate the form fields with the fetched data
 
               $('#applicantPicture').attr('src', response.id_picture);
+              $('#updateProfileForm input[name="Gr11_A1"]').val(response.Gr11_A1);
+              $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
+              $('#updateProfileForm input[name="college"]').val(response.college);
+              $('#updateProfileForm input[name="id"]').val(response.id);
+              $('#updateProfileForm input[name="high_school_name_address"]').val(response.high_school_name_address);
+              $('#updateProfileForm input[name="lrn"]').val(response.lrn);
+              $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
+              $('#updateProfileForm input[name="nature_of_degree"]').val(response.nature_of_degree);
               $('#updateProfileForm input[name="Gr11_A1"]').val(response.Gr11_A1);
               $('#updateProfileForm input[name="Gr11_A2"]').val(response.Gr11_A2);
               $('#updateProfileForm input[name="Gr11_A3"]').val(response.Gr11_A3);
               $('#updateProfileForm input[name="Gr11_GWA"]').val(response.Gr11_GWA);
               $('#updateProfileForm input[name="GWA_OTAS"]').val(response.GWA_OTAS);
+              $('#updateProfileForm select[name="nature_qualification"]').val(response.nature_qualification);
+              $('#updateProfileForm select[name="Degree_Remarks"]').val(response.Degree_Remarks);
+
               $('#updateProfileForm input[name="Gr12_A1"]').val(response.Gr12_A1);
               $('#updateProfileForm input[name="Gr12_A2"]').val(response.Gr12_A2);
               $('#updateProfileForm input[name="Gr12_A3"]').val(response.Gr12_A3);
@@ -766,6 +854,7 @@ $stmt->close();
               $('#updateProfileForm input[name="English_Academic_Grade"]').val(response.English_Academic_Grade);
               $('#updateProfileForm input[name="English_Other_Courses_Grade"]').val(response.English_Other_Courses_Grade);
               $('#updateProfileForm input[name="Science_Earth_Science_Grade"]').val(response.Science_Earth_Science_Grade);
+              $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
               $('#updateProfileForm input[name="Science_Earth_and_Life_Science_Grade"]').val(response.Science_Earth_and_Life_Science_Grade);
               $('#updateProfileForm input[name="Science_Physical_Science_Grade"]').val(response.Science_Physical_Science_Grade);
               $('#updateProfileForm input[name="Science_Disaster_Readiness_Grade"]').val(response.Science_Disaster_Readiness_Grade);
@@ -783,15 +872,37 @@ $stmt->close();
               $('#updateProfileForm input[name="OSS_Admission_Test_Score"]').val(response.OSS_Admission_Test_Score);
               $('#updateProfileForm input[name="OSS_Remarks"]').val(response.OSS_Remarks);
               $('#updateProfileForm input[name="Qualification_Nature_Degree"]').val(response.Qualification_Nature_Degree);
+
               $('#updateProfileForm input[name="Interview_Result"]').val(response.Interview_Result);
               $('#updateProfileForm input[name="Endorsed"]').val(response.Endorsed);
               $('#updateProfileForm input[name="Confirmed_Slot"]').val(response.Confirmed_Slot);
               $('#updateProfileForm input[name="Final_Remarks"]').val(response.Final_Remarks);
+              $('#updateProfileForm input[name="degree_applied"]').val(response.degree_applied);
+              $('#updateProfileForm input[name="nature_of_degree"]').val(response.nature_of_degree);
 
-              // Add similar lines for other form fields
+              $('#updateProfileForm input[name="college"]').val(response.college);
 
-              // Display the form for editing
-              $('.todo').show();
+              var academicClassification = response.academic_classification;
+              $('.todo').show(); // Show the form container
+
+              // Show the relevant div based on academic classification
+              $('.SHS-Graduate-Average, .Gr-12-Average, .ALS, .Subjects, .GWA-OTAS, .Transferee, .Gr-12, .HS-Graduate, .2nd-degree').hide(); // Hide all divs first
+              if (academicClassification === 'Senior High School Graduates') {
+                $('.SHS-Graduate-Average, .Subjects ').show();
+              } else if (academicClassification === 'Grade 12') {
+                $('.Gr-12-Average, .Subjects').show();
+              } else if (academicClassification === 'Transferees') {
+                $('.Transferee, .GWA-OTAS').show();
+              } else if (academicClassification === 'ALS/PEPT Completers') {
+                $('.ALS, .GWA-OTAS').show();
+              } else if (academicClassification === 'High School (Old Curriculum) Graduates') {
+                $('.HS-Graduate, .GWA-OTAS').show();
+              } else if (academicClassification === 'Second Degree') {
+                $('.2nd-degree, .GWA-OTAS').show();
+              }
+
+              // Add similar logic for other form fields
+
             },
             error: function(error) {
               console.error('Error fetching user data: ', error);
@@ -807,70 +918,6 @@ $stmt->close();
       });
     });
 
-    function updateContent(rowId) {
-      // Make an Ajax request to fetch requirements based on the clicked row
-      var xhttp = new XMLHttpRequest();
-      xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          // Update the content2 div with the fetched requirements
-          document.getElementById("content2").innerHTML = this.responseText;
-        }
-      };
-      xhttp.open("GET", "Personnel_fetchrequirements.php?rowId=" + rowId, true);
-      xhttp.send();
-    }
-
-    // Attach click event listener to table rows
-    var rows = document.getElementsByClassName("editRow");
-    for (var i = 0; i < rows.length; i++) {
-      rows[i].addEventListener("click", function() {
-        var rowId = this.getAttribute("data-id");
-        updateContent(rowId);
-      });
-    }
-
-
-    function updateStatus(id, status) {
-      // Show the confirmation dialog
-      $('.confirmation-dialog').show();
-      $('.confirmation-dialog-overlay').show();
-
-      // Set the message in the dialog
-      $('.confirmation-dialog p').text('Are you sure you want to set the status to ' + status + '?');
-
-      // Handle button clicks in the confirmation dialog
-      $('.confirmation-buttons button').click(function() {
-        var userConfirmed = $(this).data('confirmed');
-        if (userConfirmed) {
-          // User confirmed, send the AJAX request to update the status
-          $.ajax({
-            type: 'POST',
-            url: 'Personnel_UpdateStatus.php',
-            data: {
-              id: id,
-              status: status
-            },
-            dataType: 'json', // Expect JSON response
-            success: function(response) {
-              if (response.success) {
-                // Update the status in the table cell
-                $('[data-id="' + id + '"] [data-field="appointment_status"]').text(status);
-                showToast(response.message, 'success');
-              } else {
-                showToast(response.message, 'error');
-              }
-            },
-            error: function(error) {
-              console.error('Error updating status:', error);
-            }
-          });
-        }
-
-        // Hide the confirmation dialog and overlay
-        $('.confirmation-dialog').hide();
-        $('.confirmation-dialog-overlay').hide();
-      });
-    }
 
     function showToast(message, type) {
       // Display a toast message
@@ -908,6 +955,276 @@ $stmt->close();
         });
       });
     });
+
+    function toggleSendButtonVisibility() {
+      var sendButton = document.getElementById('sendButton');
+      sendButton.style.display = (sendButton.style.display === 'none' || sendButton.style.display === '') ? 'block' : 'none';
+    }
+
+    // Add an event listener to the "Toggle Selection" button
+    document.getElementById('toggleSelection').addEventListener('click', toggleSendButtonVisibility);
+
+    function deleteAdmissionData(id) {
+      // Display the delete confirmation modal
+      var modal = document.getElementById('deleteConfirmationModal');
+      modal.style.display = 'block';
+
+      // Add a click event listener to the "Confirm" button in the modal
+      document.getElementById('confirmDelete').addEventListener('click', function() {
+        // Send an AJAX request to delete the course
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "deleteStudentPersonnel.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              // Remove the deleted row from the table
+              var row = document.querySelector(`tr[data-id='${id}']`);
+              row.remove();
+
+              // Show a toast notification for success
+              showSuccessToast();
+            } else {
+              // Handle errors from the server if needed
+              alert('Error deleting the course. Please try again.');
+            }
+
+            // Close the delete confirmation modal after processing
+            closeDeleteConfirmationModal();
+          }
+        };
+
+        // Encode the data to be sent in the request
+        var data = "id=" + encodeURIComponent(id);
+        xhr.send(data);
+      });
+    }
+
+    // Function to close the delete confirmation modal
+    function closeDeleteConfirmationModal() {
+      var modal = document.getElementById('deleteConfirmationModal');
+      modal.style.display = 'none';
+    }
+    // Add an event listener to the "Delete Selected" button
+    document.getElementById('deleteSelected').addEventListener('click', function() {
+      // Display the delete confirmation modal for selected rows
+      var modal = document.getElementById('deleteSelectedConfirmationModal');
+      modal.style.display = 'block';
+
+      // Add a click event listener to the "Confirm" button in the modal
+      document.getElementById('confirmDeleteSelected').addEventListener('click', function() {
+        // Call the function to delete the selected admission data
+        deleteSelectedAdmissionData();
+
+        // Close the delete confirmation modal after processing
+        closeDeleteSelectedConfirmationModal();
+      });
+    });
+
+    // Function to close the delete confirmation modal for selected rows
+    function closeDeleteSelectedConfirmationModal() {
+      var modal = document.getElementById('deleteSelectedConfirmationModal');
+      modal.style.display = 'none';
+    }
+
+    function showErrorModal(message) {
+      var errorModal = document.getElementById('errorModal');
+      var errorMessage = document.getElementById('errorMessage');
+      errorMessage.textContent = message;
+      errorModal.style.display = 'block';
+    }
+
+    // Function to close the error modal
+    function closeErrorModal() {
+      var errorModal = document.getElementById('errorModal');
+      errorModal.style.display = 'none';
+    }
+    // Function to delete selected rows
+    function deleteSelectedAdmissionData() {
+      // Get all checkboxes
+      var checkboxes = document.querySelectorAll('.select-checkbox:checked');
+
+      // Check if at least one checkbox is selected
+      if (checkboxes.length > 0) {
+        // Create an array to store the selected row IDs
+        var selectedRowIds = [];
+
+        // Iterate over selected checkboxes and store the corresponding row IDs
+        checkboxes.forEach(function(checkbox) {
+          var row = checkbox.closest('tr');
+          var rowId = row.getAttribute('data-id');
+          selectedRowIds.push(rowId);
+        });
+
+        // Send an AJAX request to delete the selected rows
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "deleteSelectedStudents.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              // Remove the selected rows from the table
+              selectedRowIds.forEach(function(rowId) {
+                var row = document.querySelector(`tr[data-id='${rowId}']`);
+                row.remove();
+              });
+
+              // Show a success toast
+              showSuccessToast();
+            } else {
+              // Show an error modal with a custom message
+              showErrorModal('Error deleting selected rows. Please try again.');
+            }
+          }
+        };
+
+        // Encode the data to be sent in the request
+        var data = "selectedRowIds=" + encodeURIComponent(JSON.stringify(selectedRowIds));
+        xhr.send(data);
+      } else {
+        // If no checkboxes are selected, show an error modal
+        showErrorModal('Please select at least one student to delete.');
+      }
+    }
+    // Function to toggle the visibility of the Select column and checkboxes
+    function toggleSelectionVisibility() {
+      // Toggle the visibility of the Select column in the table header
+      var selectColumn = document.getElementById('selectColumn');
+      selectColumn.style.display = (selectColumn.style.display === 'none' || selectColumn.style.display === '') ? 'table-cell' : 'none';
+
+      // Toggle the visibility of the checkboxes in each row
+      var checkboxes = document.querySelectorAll('.select-checkbox');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.style.display = (checkbox.style.display === 'none' || checkbox.style.display === '') ? 'table-cell' : 'none';
+      });
+
+      // Toggle the visibility of the "Delete Selected" button
+      var deleteSelectedButton = document.getElementById('deleteSelected');
+      deleteSelectedButton.style.display = (deleteSelectedButton.style.display === 'none' || deleteSelectedButton.style.display === '') ? 'block' : 'none';
+    }
+
+    // Add an event listener to the "Toggle Selection" button
+    document.getElementById('toggleSelection').addEventListener('click', toggleSelectionVisibility);
+    // Function to check/uncheck all checkboxes
+    function checkAllCheckboxes(checked) {
+      var checkboxes = document.querySelectorAll('.select-checkbox');
+      checkboxes.forEach(function(checkbox) {
+        checkbox.checked = checked;
+      });
+    }
+
+    // Add an event listener to the "selectAllCheckbox" checkbox
+    document.getElementById('selectAllCheckbox').addEventListener('change', function() {
+      checkAllCheckboxes(this.checked);
+    });
+
+    // Add an event listener to the "Send" button
+    document.getElementById('sendButton').addEventListener('click', function() {
+      // Show the confirmation modal
+      var modal = document.getElementById('confirmationModal');
+      modal.style.display = 'block';
+    });
+
+    // Get the confirmation modal
+    var modal = document.getElementById('confirmationModal');
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName('close')[0];
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+      modal.style.display = 'none';
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = 'none';
+      }
+    };
+
+    // Add an event listener to the "Confirm" button in the confirmation modal
+    document.getElementById('confirmSend').addEventListener('click', function() {
+      modal.style.display = 'none'; // Close the modal
+      sendSelectedStudents(); // Proceed with sending the applicants
+    });
+
+    // Add an event listener to the "Cancel" button in the confirmation modal
+    document.getElementsByClassName('cancel')[0].addEventListener('click', function() {
+      modal.style.display = 'none'; // Close the modal
+    });
+    // Function to show a send success modal
+    function showSendSuccessModal() {
+      var sendSuccessModal = document.getElementById('sendSuccessModal');
+      sendSuccessModal.style.display = 'block';
+    }
+
+    // Function to close the send success modal
+    function closeSendSuccessModal() {
+      var sendSuccessModal = document.getElementById('sendSuccessModal');
+      sendSuccessModal.style.display = 'none';
+    }
+
+    // Function to show a send error modal with a custom message
+    function showSendErrorModal(message) {
+      var sendErrorModal = document.getElementById('sendErrorModal');
+      var sendErrorMessage = document.getElementById('sendErrorMessage');
+      sendErrorMessage.textContent = message;
+      sendErrorModal.style.display = 'block';
+    }
+
+    // Function to close the send error modal
+    function closeSendErrorModal() {
+      var sendErrorModal = document.getElementById('sendErrorModal');
+      sendErrorModal.style.display = 'none';
+    }
+
+
+    function sendSelectedStudents() {
+      // Get all checkboxes
+      var checkboxes = document.querySelectorAll('.select-checkbox:checked');
+
+      // Check if at least one checkbox is selected
+      if (checkboxes.length > 0) {
+        // Create an array to store the selected row IDs
+        var selectedRowIds = [];
+
+        // Iterate over selected checkboxes and store the corresponding row IDs
+        checkboxes.forEach(function(checkbox) {
+          var row = checkbox.closest('tr');
+          var rowId = row.getAttribute('data-id');
+          selectedRowIds.push(rowId);
+        });
+
+        // Send an AJAX request to update the 'sent' field in the database
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "send_selected_applicants.php", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            if (response.success) {
+              // Show a success modal
+              showSendSuccessModal();
+
+              // Optionally, you can update the UI or perform other actions here
+            } else {
+              // Show a send error modal with a custom message
+              showSendErrorModal('Error updating sent status. Please try again.');
+            }
+          }
+        };
+
+        // Encode the data to be sent in the request
+        var data = "selectedRowIds=" + encodeURIComponent(JSON.stringify(selectedRowIds));
+        xhr.send(data);
+      } else {
+        // If no checkboxes are selected, show a send error modal
+        showSendErrorModal('Please select at least one student to send.');
+      }
+    }
   </script>
 
 
