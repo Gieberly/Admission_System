@@ -35,18 +35,21 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
 
 $query = "SELECT * FROM admission_data WHERE 
-            (`applicant_name` LIKE '%$search%' OR 
-             `applicant_number` LIKE '%$search%' OR 
+                 (
+                  `applicant_number` LIKE '%$search%' OR 
              `academic_classification` LIKE '%$search%' OR 
              `email` LIKE '%$search%' OR 
              `result` LIKE '%$search%' OR 
              `nature_of_degree` LIKE '%$search%' OR 
              `degree_applied` LIKE '%$search%')
+
+
+
+
             AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
             AND `appointment_date` IS NOT NULL
             AND `appointment_status` <> 'Cancelled'  -- Exclude Cancelled appointments
           ORDER BY `appointment_date` ASC, `appointment_time` ASC";
-
 
 $result = $conn->query($query);
 
@@ -127,8 +130,9 @@ $stmt->close();
               <tr>
                 <th>#</th>
                 <th>Application No.</th>
-                <th>Name</th>
-               
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
                 <th>Academic Classification</th>
                 <th>Appointment Date</th>
                 <th>Application Time</th>
@@ -144,17 +148,14 @@ $stmt->close();
                 echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
                 echo "<td>" . $counter . "</td>";
                 echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
-
+                echo "<td>" . $row['Last_Name'] . "</td>";
+                echo "<td>" . $row['Name'] . "</td>";
+                echo "<td>" . $row['Middle_Name'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
-
-
-
                 $appointmentDate = $row['appointment_date'];
                 echo "<td>" . ($appointmentDate ? date('F d, Y', strtotime($appointmentDate)) : '') . "</td>";
                 $appointmentTime = $row['appointment_time'];
                 echo "<td>" . ($appointmentTime ? date('g:i A', strtotime($appointmentTime)) : '') . "</td>";
-
                 echo "<td  data-field='appointment_status'>{$row['appointment_status']}</td>";
                 echo "<td>
     <div class='button-container'>

@@ -14,17 +14,24 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
 
 $query = "SELECT * FROM admission_data WHERE 
-            (`applicant_name` LIKE '%$search%' OR 
-             `applicant_number` LIKE '%$search%' OR 
+
+            (
+              `Name` LIKE '%$search%' OR 
+             `Middle_Name` LIKE '%$search%' OR 
+             `Last_Name` LIKE '%$search%' OR 
              `academic_classification` LIKE '%$search%' OR 
              `email` LIKE '%$search%' OR 
-             `result` LIKE '%$search%' OR 
              `nature_of_degree` LIKE '%$search%' OR 
-             `degree_applied` LIKE '%$search%')
+             `degree_applied` LIKE '%$search%' OR
+             `Name` LIKE '%$search%' OR 
+             `Middle_Name` LIKE '%$search%' OR 
+             `Last_Name` LIKE '%$search%'
+            )
             AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
             AND `appointment_date` IS NOT NULL
             AND `appointment_status` = 'Complete'
-          ORDER BY nature_of_degree ASC, degree_applied ASC, applicant_name ASC";
+            ORDER BY applicant_number ASC";
+
 
 $result = $conn->query($query);
 
@@ -472,7 +479,10 @@ $stmt->close();
               <tr>
                 <th>#</th>
                 <th>Application No.</th>
-                <th>Name</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+
                 <th>Nature of Degree</th>
                 <th>Program</th>
 
@@ -490,15 +500,15 @@ $stmt->close();
                 echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
                 echo "<td>" . $counter . "</td>";
                 echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['Last_Name'] . "</td>";
+                echo "<td>" . $row['Name'] . "</td>";
+                echo "<td>" . $row['Middle_Name'] . "</td>";
+
                 echo "<td>" . $row['nature_of_degree'] . "</td>";
                 echo "<td>" . $row['degree_applied'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
-
                 echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
-
                 echo "</tr>";
-
                 $counter++; // Increment the counter for the next row
               }
               ?>
@@ -744,9 +754,10 @@ $stmt->close();
               </div>
 
               <div class="Admission_Score" style="display: none;">
+              <h2> Admission Test</h2>
                 <div class="form-container2">
                   <div class="form-group">
-                    <label class="small-label" for="OSS_Admission_Test_Score">OSS Admission Test Score</label>
+                    <label class="small-label" for="OSS_Admission_Test_Score">Score</label>
                     <input name="OSS_Admission_Test_Score" class="input numeric-input" autocomplete="off" id="OSS_Admission_Test_Score" placeholder="Enter Score" value="<?php echo $admissionData['OSS_Admission_Test_Score']; ?>">
                   </div>
                 </div>
@@ -797,6 +808,7 @@ $stmt->close();
                     <option value="No">No</option>
                   </select>
                 </div>
+                
 
               </div>
               <label class="small-label" for="Requirements_Remarks" style="white-space: nowrap;">Remarks</label>
