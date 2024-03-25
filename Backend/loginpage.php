@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 exit();
             } elseif ($userType == 'Faculty') {
                 if (strtolower($lstatus) == 'approved') {
-                    header("Location: ../Backend/facultydashboard.php");
+                    header("Location: ../Backend/Faculty_Dashboard.php");
                     exit();
                 } elseif (strtolower($lstatus) == 'Pending') {
                     $_SESSION['message'] = "Your registration is pending approval.";

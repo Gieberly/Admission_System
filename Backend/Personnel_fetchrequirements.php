@@ -40,8 +40,7 @@ if (isset($_GET['rowId'])) {
                     <textarea name="Requirements" placeholder="Enter incomplete requirements..." class="input" id="Requirements"><?php echo htmlspecialchars($selectedRequirements); ?></textarea>
                     <br>
                     <!-- Nature -->
-                    <label class="small-label" for="Requirements_Remarks" style="white-space: nowrap;">Remarks</label>
-                    <textarea name="Requirements_Remarks" placeholder="Enter remarks..." class="input" id="Requirements_Remarks"><?php echo $admissionData['Requirements_Remarks']; ?></textarea>
+                   
                 </div>
                 <button type="submit">Submit</button>
             </form>
