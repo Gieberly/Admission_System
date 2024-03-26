@@ -212,12 +212,13 @@ $conn->close();
               <ol type='I' class='custom-list'>
                  
                   <strong>
-                      <li>ALS/PEPT Completer:</li>
+                  <li>Grade 12 as of application period (Currently enrolled as Grade 12):</li>
                   </strong>
                   <ol class='rac-list'>
                       <li>1. Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
                       <li>2. Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
                       <li>3. Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
+            <li>Hard copy One (1) 2x2 recent formal studio type photo with
                       <li>4. Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
                       <li>5. Certification of Enrollment from the last school attended (most recent).</li>
                   </ol>

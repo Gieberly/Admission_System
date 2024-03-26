@@ -43,14 +43,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $id = $_POST['id']; 
   $id_picture = isset($_FILES['id_picture']) ? $_FILES['id_picture'] : null;
 
-  $applicant_name = $_POST['applicant_name'];
+  $Name = $_POST['Name'];
+    $Middle_Name = $_POST['Middle_Name'];
+    $Last_Name = $_POST['Last_Name'];
   $gender = $_POST['gender'];
   $birthdate = date('Y-m-d', strtotime(str_replace('/', '-', $_POST['birthdate'])));
   $birthplace = $_POST['birthplace'];
   $age = $_POST['age'];
   $civil_status = $_POST['civil_status'];
   $citizenship = $_POST['citizenship'];
-  $nationality = $_POST['nationality'];
+  $ethnicity = $_POST['ethnicity'];
   $permanent_address = $_POST['permanent_address'];
   $zip_code = $_POST['zip_code'];
   $phone_number = $_POST['phone_number'];
@@ -130,7 +132,8 @@ ob_start(); // Start output buffering
           <!-- Full name -->
           <div class="form-group">
             <label class="small-label" for="applicant_name">Complete Name</label>
-            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>" readonly>
+            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['Name'] . ' ' . $admissionData['Middle_Name'] . ' ' . $admissionData['Last_Name']; ?>" readonly>
+
           </div>
 
           <!-- Birthplace -->
@@ -166,10 +169,10 @@ ob_start(); // Start output buffering
             <label class="small-label" for="citizenship">Citizenship</label>
             <input name="citizenship" class="input" id="citizenship" value="<?php echo $admissionData['citizenship']; ?>" readonly>
           </div>
-          <!-- Nationality-->
+          <!-- Ethnicity-->
           <div class="form-group">
-            <label class="small-label" for="nationality">Nationality</label>
-            <input name="nationality" class="input" id="nationality" value="<?php echo $admissionData['nationality']; ?>" readonly>
+            <label class="small-label" for="ethnicity">Ethnicity</label>
+            <input name="ethnicity" class="input" id="ethnicity" value="<?php echo $admissionData['ethnicity']; ?>" readonly>
           </div>
         </div>
 

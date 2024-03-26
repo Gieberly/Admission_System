@@ -8,6 +8,7 @@
     background-position:center;
     background-size: cover;
   }
+
   .header {
             background-color: #006611;
             color: #fff;
@@ -635,3 +636,8 @@
       width: 100%; /* Adjust width for smaller screens */
     }
   }
+
+  .error {
+    font-size: 12px;
+    color: red;
+}
