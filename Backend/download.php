@@ -278,15 +278,13 @@ ob_start(); // Start output buffering
             of the admission process of Benguet State University. I am aware that any information I have concealed, falsely given 
             and/or withheld is enough basis for the invalidation/cancellation of my application. I have understood the Data Privacy 
             Notice above and freely give my consent to the legitimate use of my personal data by the University thru my signature 
-            which I have affixed herein.</i></p><br><br><br>
+            which I have affixed herein.</i></p><br>
 
         <div class="student_signature">
             <p>Signature Over Printed Name</p>
-        </div><br><br>
+        </div><br>
         <div class="form-group">
         <h5>APPOINTMENT DATE: <span style="color: red;"><?php echo date('F d, Y', strtotime($admissionData['appointment_date'])); ?> <?php echo date('h:i A', strtotime($admissionData['appointment_time'])); ?></span></h5>
-
-
         <?php
 $requirements = "";  // Initialize requirements variable
 
@@ -360,7 +358,8 @@ switch ($admissionData['academic_classification']) {
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Birth Certificate</li>
                     <li>Photocopy /scanned copy of PSA (formerly NSO) Marriage Certificate for married females using the family name/surname of the husband</li>
                     <li>Hard copy two (2) 2x2 recent formal studio 'type' photo with nametag and signature</li>
-                    <li>Certified true copy ALS Certificate of Rating – For completers of Alternative Learning System (ALS) OR PEPT. Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
+                    <li>Certified true copy ALS Certificate of Rating For completers of Alternative Learning System (ALS) OR PEPT.<br>
+                    Photocopy /scanned copy will suffice if the applicant can present the original copy for comparison purposes.</li>
                     <li>Certification of Enrollment from the last school attended (most recent).</li>
                 </ol>
                 <h4>APPLICANTS WITH INCOMPLETE AND INCORRECT REQUIREMENTS WILL NOT BE ENTERTAINED.</h4>

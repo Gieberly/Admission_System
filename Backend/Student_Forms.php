@@ -388,14 +388,6 @@ $conn->close();
                 </div>
                 <input type="file" name="id_picture" id="id_picture" accept="image/*" required>
 
-
-
-                <u>
-                    <p class="head_information"> Privacy Notice</p>
-                </u>
-                <p class="privacy-notice-text">Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar, concerned Personnel of BSU La Trinidad, BSU Buguias Campus and Bokod Campus are committed to keep with utmost confidentiality, all sensitive personal information collected from applicants. Personal information are collected, accessed, used and or disclosed on a “need to know basis” and only as reasonably required. Confidential information either within or outside the University will not be communicated, except to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be used only in accessing, processing and transmitting such information. Read more on BSU Data Privacy Notice: <a href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students" target="_blank">Click here to visit the BSU Data Privacy Notice for Students</a>
-                </p>
-
                 <p class="binformation"> Background Information of Applicant</p>
                 <p class="personal_information"> Personal Information</p>
 

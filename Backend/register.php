@@ -6,7 +6,6 @@ include("config.php");
 $sql = "SELECT * FROM Programs ORDER BY College, Courses ASC";
 $result = $conn->query($sql);
 
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Retrieve user input
     $name = $_POST['name'];
@@ -63,9 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        // Your other JavaScript code here
-    </script>
     <link rel="stylesheet" href="assets/css/login.css">
 </head>
  
@@ -77,55 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <h2 class="scname">Benguet State University</h2>
         </div>
     </header>
-
-    <style>
-        body {
-        background-image: url('assets/images/banner.jpg');
-        background-attachment: fixed;
-        background-size: cover;
-        background-position: center;
-    }
-
-        .error-message {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            animation: slideUp 0.5s ease;
-            text-shadow: 0 0 5px red;
-        }
-
-        .success-message {
-            color: #155724;
-            /* Dark green text color */
-            background-color: #d4edda;
-            /* Light green background color */
-            border: 1px solid #c3e6cb;
-            /* Border color */
-            border-radius: 5px;
-            padding: 10px;
-            margin-bottom: 15px;
-            animation: slideUp 0.5s ease;
-            text-shadow: 0 0 5px green;
-            /* Dark green outer shadow */
-        }
-
-        /* Keyframes for the slide-up animation */
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-
 
     <section class="content">
         <div class="side">
@@ -144,12 +91,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="success-message"><?php echo $success_message; ?></div>
                 <?php endif; ?>
             
-                <input type="text" name="name" placeholder="First Name" autocomplete="name" required>
-                <input type="text" name="mname" placeholder="Middle Name" required>
-                <input type="text" name="last_name" placeholder="Last Name" autocomplete="family-name" required>
-                <input type="email" name="email" placeholder="Email" autocomplete="on">
-                <input type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
-                <input type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required oninput="validatePassword()">
+                <input class="register_in" type="text" name="name" placeholder="First Name" autocomplete="name" required>
+                <input class="register_in" type="text" name="mname" placeholder="Middle Name" required>
+                <input class="register_in" type="text" name="last_name" placeholder="Last Name" autocomplete="family-name" required>
+                <input class="register_in" type="email" name="email" placeholder="Email" autocomplete="on">
+                <input class="register_in" type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
+                <input class="register_in" type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required oninput="validatePassword()">
                 <div id="passwordError" class="error-message"></div>
 
                 <br>
@@ -197,116 +144,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         </div>
 
+<?php
+    // Check if the checkbox is clicked
+    $showPopup = isset($_POST['agree_checkbox']) && $_POST['agree_checkbox'] === 'on';
+    if (!$showPopup) {
+        // Show the popup if the checkbox is not clicked
+        echo '<div class="popup-container" id="popupContainer">
+                <div class="popup">
+                <h3>Privacy Notice</h3>
+                <div class="border-pop">
+                    
+                    <p>Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar, concerned Personnel of BSU La Trinidad, BSU Buguias Campus and Bokod Campus are committed to keep with utmost confidentiality, all sensitive personal information collected from applicants. Personal information are collected, accessed, used and or disclosed on a “need to know basis” and only as reasonably required. Confidential information either within or outside the University will not be communicated, except to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be used only in accessing, processing and transmitting such information. Read more on BSU Data Privacy Notice: <a href="http://www.bsu.edu.ph/dpa/bsu-data-privacy-notice-students" target="_blank">Click here to visit the BSU Data Privacy Notice for Students
+                        Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar, concerned Personnel of BSU La Trinidad, BSU Buguias Campus and Bokod Campus are committed to keep with utmost confidentiality, all sensitive personal information collected from applicants. Personal information are collected, accessed, used and or disclosed on a “need to know basis” and only as reasonably required. Confidential information either within or outside the University will not be communicated, except to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be used only in accessing, processing and transmitting such information. Read more on BSU Data Privacy Notice:
+                            Pursuant to the Data Privacy Act of 2012 and the BSU Data Policy from the Office of the University Registrar, concerned Personnel of BSU La Trinidad, BSU Buguias Campus and Bokod Campus are committed to keep with utmost confidentiality, all sensitive personal information collected from applicants. Personal information are collected, accessed, used and or disclosed on a “need to know basis” and only as reasonably required. Confidential information either within or outside the University will not be communicated, except to persons authorized to receive such information. Authorized hardware, software, or other authorized equipment shall be used only in accessing, processing and transmitting such information. Read more on BSU Data Privacy Notice:</a></p></div>
+                    <form method="post">
+                        <input type="checkbox" name="agree_checkbox" id="agreeCheckbox" >
+                        <label for="agreeCheckbox">By clicking this, you agree to share your personal information to Benguet State University - Office of the University Registrar.</label>
+                        <button type="submit" id="agreeButton" class="agree">I agree</button>
+                    </form>
+                </div>
+            </div>';
+    }
+    ?>
 
     </section>
 
-
     <style>
-        @keyframes fadeOut {
-            to {
-                opacity: 0;
-            }
-        }
-
-        /* Style for the dropdowns */
-        select {
-            font-size: 16px;
-            padding: 2px;
-            width: 100%;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            color: #555;
-        }
-
-        /* Style for the options within the dropdowns */
-        option {
-            font-size: 14px;
-        }
-
-
-        .hidden {
-            display: none;
-        }
-
-        #description {
-            display: none;
+       body {
+            background-image: url('assets/images/banner.jpg');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
         }
     </style>
-    <script>
-        // JavaScript to show/hide "Select Department" dropdown based on "Select User Type"
-        function toggleDepartmentDropdown() {
-            var userTypeDropdown = document.getElementById("userType");
-            var departmentDropdown = document.getElementById("description");
-
-            if (userTypeDropdown.value === "Faculty") {
-                // If "Faculty" is selected, show the "Select Department" dropdown
-                departmentDropdown.style.display = "block";
-            } else {
-                // Otherwise, hide the "Select Department" dropdown
-                departmentDropdown.style.display = "none";
-            }
-        }
-  document.addEventListener("DOMContentLoaded", function () {
-        // Hide the password error message initially
-        var errorContainer = document.getElementById("passwordError");
-        errorContainer.style.display = "none";
-    });
-
-    function validatePassword() {
-        var password = document.getElementById("registerEmail").value;
-        var confirmPassword = document.getElementsByName("confirm_password")[0].value;
-        var confirmPwdInput = document.getElementsByName("confirm_password")[0];
-        var errorContainer = document.getElementById("passwordError");
-
-        if (password !== confirmPassword) {
-            // Passwords don't match, show error message and highlight the field
-            confirmPwdInput.classList.add("password-error");
-            errorContainer.innerHTML = "Passwords don't match";
-            errorContainer.style.display = "block"; // Show the error message
-            return false;
-        } else {
-            // Passwords match, reset the border color and clear error message
-            confirmPwdInput.classList.remove("password-error");
-            errorContainer.innerHTML = "";
-            errorContainer.style.display = "none"; // Hide the error message
-            return true;
-        }
-    }
-
-    function validateForm() {
-        var password = document.getElementById("registerEmail").value;
-        var confirmPassword = document.getElementsByName("confirm_password")[0].value;
-
-        // Check if passwords match
-        if (password !== confirmPassword) {
-            alert("Password and Confirm Password do not match");
-            return false;
-        }
-
-        // Call validatePassword only if the user attempts to register
-        if (password !== "" || confirmPassword !== "") {
-            return validatePassword();
-        }
-
-        return true;
-    }
-    </script>
-
-    <style>
-        /* Style for the password fields with red background shadow */
-        .password-error {
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        }
-    </style>
-
 
     <footer>
-
     </footer>
 
     <script src="assets\js\reg.js"></script>
 </body>
-
 </html>
