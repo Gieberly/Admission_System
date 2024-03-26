@@ -526,29 +526,23 @@ for (const id of inputIds) {
   }
 }
 
-function initializeTelInput(input) {
-  var iti = window.intlTelInput(input, {
-      initialCountry: "ph",
-      separateDialCode: true,
-      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
-  });
-
-  input.addEventListener('countrychange', function() {
-      var selectedCountryData = iti.getSelectedCountryData();
-      var sampleNumber = selectedCountryData.sample_phone;
-      var sampleNumberDigits = sampleNumber.replace(/\D/g,'').length; // Count digits only
-      input.setAttribute('maxlength', sampleNumberDigits);
-  });
-
-  input.addEventListener('input', function() {
-      var formattedNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
-      input.value = formattedNumber;
-  });
-}
-
 var input1 = document.querySelector("#phone_number");
 var input2 = document.querySelector("#contact1_phone");
 var input3 = document.querySelector("#contact_person_2_mobile");
+
+function initializeTelInput(input) {
+  var iti = window.intlTelInput(input, {
+    initialCountry: "ph",
+    separateDialCode: true,
+    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js"
+  });
+
+  input.addEventListener('change', function() {
+    var selectedCountryData = iti.getSelectedCountryData();
+    var formattedNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
+    input.value = formattedNumber;
+  });
+}
 
 initializeTelInput(input1);
 initializeTelInput(input2);
@@ -627,9 +621,11 @@ function handleEthnicityChange() {
   }
 }
 
-intlTelInput(input, {
-  initialCountry: "ph",
-  separateDialCode: true,
-  utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
-  allowDropdown: false // Disable dropdown for custom styling
-});
+function updateBirthplace() {
+  var country = document.getElementById("Country_birthplace").value;
+  var province = document.getElementById("Province_birthplace").value;
+  var municipality = document.getElementById("Municipality_birthplace").value;
+  var birthplaceInput = document.getElementById("birthplace");
+
+  birthplaceInput.value = municipality + ", " + province + ", " + country;
+}

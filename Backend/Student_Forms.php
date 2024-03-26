@@ -484,21 +484,21 @@ $conn->close();
                 <div class="form-container">
                     <div class="form-group">
                         <label class="small-label" for="Country_birthplace">Country<span style="color: red; font-weight: bold;">*</span></label>
-                        <select name="Country_birthplace" class="input country" id="Country_birthplace" required onchange="loadStates()">
+                        <select name="Country_birthplace" class="input country" id="Country_birthplace" required onchange="loadStates()" onchange="updateBirthplace()">
                             <option value="" disabled selected>Select Country</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="Province_birthplace">Province<span style="color: red; font-weight: bold;">*</span></label>
-                        <select name="Province_birthplace" class="input state" id="Province_birthplace" required onchange="loadCities()">
+                        <select name="Province_birthplace" class="input state" id="Province_birthplace" required onchange="loadCities()" onchange="updateBirthplace()">
                             <option value="" disabled selected>Select Province</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="Municipality_birthplace">Municipality/City<span style="color: red; font-weight: bold;">*</span></label>
-                        <select name="Municipality_birthplace" class="input city" id="Municipality_birthplace" required>
+                        <select name="Municipality_birthplace" class="input city" id="Municipality_birthplace" required onchange="updateBirthplace()">
                             <option value="" disabled selected>Select Municipality/City</option>
                         </select>
                     </div>
@@ -686,7 +686,7 @@ $conn->close();
             </div>
             <div class="form-group">
                         <label class="small-label" for="birthplace" style="display: none;">Birthplace<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="text" name="birthplace" class="input" id="birthplace" placeholder="Municipality/City, Province, Country" required style="display: none;">
+                        <input type="text" name="birthplace" class="input" id="birthplace" placeholder="Municipality/City, Province, Country" required style="display: none;" value="">
                     </div>
 
             <div class="index-btn-wrapper">
