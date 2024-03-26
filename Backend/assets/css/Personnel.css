@@ -26,22 +26,22 @@ li {
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
 	--redlight: #DB504A;
-	--light-red:#ffaaa7;
+	--light-red: #ffaaa7;
 	--yellow: #FFCE26;
 	--light-yellow: #FFF2C6;
 	--orange: #FD7238;
 	--light-orange: #FFE0D3;
-	--green:#008000;
-	--light-green:#a6fda6;
-	--dark-green:#394b39;
-	--lighter-grey:#f4f4f4;
-	--light-gray:#f0f0f0;
+	--green: #008000;
+	--light-green: #a6fda6;
+	--dark-green: #394b39;
+	--lighter-grey: #f4f4f4;
+	--light-gray: #f0f0f0;
 	--fb-blue: #4267B2;
 	--red: #f00;
 	--li-grey: #ccc;
-	--gray:#c4bfbf;
-	--light-hover: #f0f2f5; 
-	
+	--gray: #c4bfbf;
+	--light-hover: #f0f2f5;
+
 }
 
 html {
@@ -74,12 +74,15 @@ body {
 	overflow-x: hidden;
 	scrollbar-width: none;
 }
+
 #sidebar::--webkit-scrollbar {
 	display: none;
 }
+
 #sidebar.hide {
 	width: 60px;
 }
+
 #sidebar .brand {
 	font-size: 24px;
 	font-weight: 700;
@@ -94,18 +97,19 @@ body {
 	z-index: 500;
 	padding-bottom: 1px;
 	box-sizing: content-box;
-	margin-top:5px ;
+	margin-top: 5px;
 }
 
-#sidebar .brand .bsulogo{
-height:31px;
-width: 32px;
-align-items: center;
-margin:15px;
-margin-inline-end: 23px;
-display: flex;
-justify-content: center;
+#sidebar .brand .bsulogo {
+	height: 31px;
+	width: 32px;
+	align-items: center;
+	margin: 15px;
+	margin-inline-end: 23px;
+	display: flex;
+	justify-content: center;
 }
+
 #sidebar .brand .bx {
 	min-width: 60px;
 	display: flex;
@@ -124,12 +128,14 @@ justify-content: center;
 	border-radius: 48px 0 0 48px;
 	padding: 4px;
 }
+
 #sidebar .side-menu li.active {
 	background: var(--grey);
 	position: relative;
 	justify-content: space-between;
 
 }
+
 #sidebar .side-menu li.active::before {
 	content: '';
 	position: absolute;
@@ -141,6 +147,7 @@ justify-content: center;
 	box-shadow: 20px 20px 0 var(--grey);
 	z-index: -1;
 }
+
 #sidebar .side-menu li.active::after {
 	content: '';
 	position: absolute;
@@ -152,6 +159,7 @@ justify-content: center;
 	box-shadow: 20px -20px 0 var(--grey);
 	z-index: -1;
 }
+
 #sidebar .side-menu li a {
 	width: 100%;
 	height: 100%;
@@ -169,6 +177,7 @@ justify-content: center;
 #sidebar .side-menu.top li.active a {
 	color: var(--green);
 }
+
 #sidebar.hide .side-menu li a {
 	width: calc(48px - (4px * 2));
 	transition: width .3s ease;
@@ -177,15 +186,17 @@ justify-content: center;
 #sidebar .side-menu.top li a:hover {
 	color: var(--blue);
 }
+
 #sidebar .side-menu li a .bx {
-	min-width: calc(60px  - ((4px + 6px) * 2));
+	min-width: calc(60px - ((4px + 6px) * 2));
 	display: flex;
 	justify-content: center;
 }
 
 .dropdown-content {
-    border-radius: 48px 0 0 48; 	
+	border-radius: 48px 0 0 48;
 }
+
 #sidebar .side-menu li.active::before {
 	content: '';
 	position: absolute;
@@ -197,60 +208,65 @@ justify-content: center;
 	box-shadow: 20px 20px 0 var(--grey);
 	z-index: -1;
 }
+
 /* Style the dropdown menu */
 .dropdown-content ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    width: 100%; /* Add this to ensure the ul extends the full width */
-	
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	/* Add this to ensure the ul extends the full width */
+
 }
 
 .dropdown-content li {
-    padding: 60px;
-    background-color: var(--dark);
-    border-radius: 0; 
+	padding: 60px;
+	background-color: var(--dark);
+	border-radius: 0;
 }
 
 .dropdown-content a {
-    text-decoration: none;
-    color: var(--light);
-    display: block;
-    transition: background-color 0.2s;
+	text-decoration: none;
+	color: var(--light);
+	display: block;
+	transition: background-color 0.2s;
 }
 
 /* Style the dropdown toggle */
 .dropdown-toggle:hover .dropdown-content {
-    display: block;
-    border-radius: 48px 0 0 48px; /* Adjust border-radius when the dropdown is open */
+	display: block;
+	border-radius: 48px 0 0 48px;
+	/* Adjust border-radius when the dropdown is open */
 }
 
 /* Tooltip styles */
 [data-tooltip] {
-    position: relative;
-    cursor: pointer;
+	position: relative;
+	cursor: pointer;
 }
 
 [data-tooltip]:before {
-    content: attr(data-tooltip);
-    position: absolute;
-    background: #333;
-    color: #fff;
-    padding: 5px;
-    border-radius: 5px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s;
-    bottom: 100%; /* Position the tooltip above the text */
-    left: 50%;
-    transform: translateX(-50%);
+	content: attr(data-tooltip);
+	position: absolute;
+	background: #333;
+	color: #fff;
+	padding: 5px;
+	border-radius: 5px;
+	white-space: nowrap;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.2s;
+	bottom: 100%;
+	/* Position the tooltip above the text */
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 [data-tooltip]:hover:before {
-    opacity: 1;
-    visibility: visible;
-    bottom: 120%; /* Adjust the distance from the text */
+	opacity: 1;
+	visibility: visible;
+	bottom: 120%;
+	/* Adjust the distance from the text */
 }
 
 /* SIDEBAR */
@@ -258,82 +274,105 @@ justify-content: center;
 
 /* Styles for the profile popups */
 .profile-popup {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 60px; /* Adjust the distance from the icon */
-    background-color: var(--light);
-    border: 1px solid var(--green);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 200px; /* Adjust the width as needed */
-    border-radius: 10px; /* Adjust the radius as needed */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
-    overflow: hidden;
-    z-index: 50000;
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 60px;
+	/* Adjust the distance from the icon */
+	background-color: var(--light);
+	border: 1px solid var(--green);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 200px;
+	/* Adjust the width as needed */
+	border-radius: 10px;
+	/* Adjust the radius as needed */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	/* Add a shadow for a better visual effect */
+	overflow: hidden;
+	z-index: 50000;
 }
+
 /* Styles for the profile popup */
 #profile-popup {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: 60px; /* Adjust the distance from the profile icon */
-    background-color: var(--light);
-    border: 1px solid var(--green);
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 300px; /* Adjust the width as needed */
-    max-height: 400px; /* Adjust the maximum height as needed */
-    border-radius: 10px; /* Adjust the radius as needed */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a shadow for a better visual effect */
-    margin-right: 25px; /* Adjust the margin-right value as needed */
-    overflow-y: auto;
-    z-index: 50000;/* Ensure the profile pop-up appears above the message pop-up */
+	display: none;
+	position: absolute;
+	right: 0;
+	top: 60px;
+	/* Adjust the distance from the profile icon */
+	background-color: var(--light);
+	border: 1px solid var(--green);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	width: 300px;
+	/* Adjust the width as needed */
+	max-height: 400px;
+	/* Adjust the maximum height as needed */
+	border-radius: 10px;
+	/* Adjust the radius as needed */
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	/* Add a shadow for a better visual effect */
+	margin-right: 25px;
+	/* Adjust the margin-right value as needed */
+	overflow-y: auto;
+	z-index: 50000;
+	/* Ensure the profile pop-up appears above the message pop-up */
 }
 
 .popup-content {
 	padding: 16px;
 }
+
 .profile-header {
 	display: flex;
 	align-items: center;
 	margin-bottom: 16px;
 }
+
 .profile-picture {
-    width: 50px; /* Adjust the width as needed */
-    height: 50px; /* Adjust the height as needed */
-    border-radius: 50%; /* Make the image circular */
-    margin-right: 15px;
+	width: 50px;
+	/* Adjust the width as needed */
+	height: 50px;
+	/* Adjust the height as needed */
+	border-radius: 50%;
+	/* Make the image circular */
+	margin-right: 15px;
 }
 
 .profile-name {
-    font-size: 16px; /* Adjust the font size as needed */
-    font-weight: bold;
+	font-size: 16px;
+	/* Adjust the font size as needed */
+	font-weight: bold;
 }
 
 hr {
-    margin: 15px 0;
-    border: 0.5px solid var(--green);
+	margin: 15px 0;
+	border: 0.5px solid var(--green);
 }
 
 .profile-menu {
-    display: flex;
-    flex-direction: column;
+	display: flex;
+	flex-direction: column;
 }
 
 .profile-item {
-    padding: 10px 0;
-    cursor: pointer;
 	padding: 10px 0;
 	cursor: pointer;
-	color: var(--dark); /* Default font color */
-	transition: color 0.3s; /* Add transition for font color change */
+	padding: 10px 0;
+	cursor: pointer;
+	color: var(--dark);
+	/* Default font color */
+	transition: color 0.3s;
+	/* Add transition for font color change */
 }
 
 .profile-item:hover {
-	
-        color: var(--blue); /* Change font color on hover */
+
+	color: var(--blue);
+	/* Change font color on hover */
 }
+
 .profile-item.clicked {
-        color: var(--green); /* Change font color when clicked */
+	color: var(--green);
+	/* Change font color when clicked */
 }
 
 .profile-header img {
@@ -348,9 +387,9 @@ hr {
 }
 
 .profile-name {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--dark); 
+	font-size: 16px;
+	font-weight: bold;
+	color: var(--dark);
 }
 
 .profile-menu a {
@@ -359,46 +398,48 @@ hr {
 	text-decoration: none;
 	padding: 8px 0;
 	transition: background-color 0.3s;
-	border-radius: 10px; 
-    overflow: hidden; 
+	border-radius: 10px;
+	overflow: hidden;
 	transition: width 0.3s, padding-left 0.3s;
 	padding-left: 0;
 }
 
 .profile-menu a:hover {
-	background-color:rgba(128, 128, 128, 0.248);
-    border-radius: 15px; 
+	background-color: rgba(128, 128, 128, 0.248);
+	border-radius: 15px;
 	padding-left: 10px;
 }
+
 .profile-menu i {
 	margin-right: 8px;
-	
+
 }
+
 /* Adjust other styles as needed */
 
 /* Additional styles for the notification icon */
 .notification {
-    position: relative;
+	position: relative;
 }
 
 .notification .num {
-    /* Styles for the notification number badge */
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 5px;
+	/* Styles for the notification number badge */
+	position: absolute;
+	top: -5px;
+	right: -5px;
+	background-color: red;
+	color: white;
+	border-radius: 50%;
+	padding: 5px;
 }
 
 /*popups n.m.p */
 
 #clock {
-    font-size: 24px;
+	font-size: 24px;
 	height: 36px;
 	margin-left: 18px;
-	position:center;
+	position: center;
 	width: 150px;
 	padding: 0 16px;
 	left: 50px;
@@ -419,44 +460,45 @@ hr {
 	left: 200px;
 	transition: .3s ease;
 }
-#sidebar.hide ~ #content {
+
+#sidebar.hide~#content {
 	width: calc(100% - 60px);
 	left: 60px;
 }
 
 /* Initially hide the dropdown content */
 .dropdown-content {
-    display: none;
+	display: none;
 }
 
 /* Style the dropdown menu */
 .dropdown-content ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
 }
 
 .dropdown-content li {
-    padding: 50px;
-    background-color: #222;
+	padding: 50px;
+	background-color: #222;
 }
 
 .dropdown-content a {
-    text-decoration: none;
-    color: white;
-    display: block;
-    transition: background-color 0.2s;
+	text-decoration: none;
+	color: white;
+	display: block;
+	transition: background-color 0.2s;
 }
 
 /* Style the dropdown toggle */
 .dropdown-toggle:hover .dropdown-content {
-    display: block;
+	display: block;
 }
 
 /* NAVBAR */
 nav {
-    position: relative;
-} 
+	position: relative;
+}
 
 #content nav {
 	height: 56px;
@@ -470,8 +512,9 @@ nav {
 	top: 0;
 	left: 0;
 	z-index: 1000;
-	
+
 }
+
 #content nav::before {
 	content: '';
 	position: absolute;
@@ -482,31 +525,38 @@ nav {
 	border-radius: 50%;
 	box-shadow: -20px -20px 0 var(--light);
 }
+
 #content nav a {
 	color: var(--dark);
 }
+
 #content nav .bx.bx-menu {
 	cursor: pointer;
 	color: var(--dark);
 }
+
 #content nav .nav-link {
 	font-size: 16px;
 	transition: .3s ease;
 }
+
 #content nav .nav-link:hover {
 	color: var(--blue);
 }
+
 #content nav form {
 	max-width: 400px;
 	width: 100%;
 	margin-right: auto;
 }
+
 #content nav form .form-input {
 	display: flex;
 	align-items: center;
 	height: 36px;
 
 }
+
 #content nav form .form-input input {
 	flex-grow: 1;
 	padding: 0 16px;
@@ -520,6 +570,7 @@ nav {
 
 	/*searchbar*/
 }
+
 #content nav form .form-input button {
 	width: 36px;
 	height: 100%;
@@ -535,10 +586,12 @@ nav {
 	cursor: pointer;
 	/*searchbar*/
 }
+
 #content nav .notification {
 	font-size: 25px;
 	position: relative;
 }
+
 #content nav .notification .num {
 	position: absolute;
 	top: -6px;
@@ -559,60 +612,67 @@ nav {
 /* Add the following styles to your existing CSS file or style block */
 
 nav {
-    position: relative;
+	position: relative;
 }
 
 .notification,
 .message {
-    position: relative;
-    display: flex;
-    align-items: center;
+	position: relative;
+	display: flex;
+	align-items: center;
 }
 
 .circle {
-    position: absolute;
-    border-radius: 50%;
-    width: 40px; /* Adjust the size as needed */
-    height: 40px; /* Adjust the size as needed */
-    background-color: var(--grey);
-    transition: background-color 0.3s; /* Add smooth transition for color change */
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); /* Center the circle */
+	position: absolute;
+	border-radius: 50%;
+	width: 40px;
+	/* Adjust the size as needed */
+	height: 40px;
+	/* Adjust the size as needed */
+	background-color: var(--grey);
+	transition: background-color 0.3s;
+	/* Add smooth transition for color change */
+	z-index: -1;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	/* Center the circle */
 }
 
 .notification:hover .circle,
 .message:hover .circle {
-    background-color: var(--gray);
+	background-color: var(--gray);
 }
 
 .notification .num {
-    position: absolute;
-    top: 50%;
-    left: 100%;
-    transform: translate(-50%, -50%);
-    color: var(--light);
-    font-weight: 700;
-    font-size: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	position: absolute;
+	top: 50%;
+	left: 100%;
+	transform: translate(-50%, -50%);
+	color: var(--light);
+	font-weight: 700;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
-	/*popup menu*/
+
+/*popup menu*/
 #content nav .profile img {
 	width: 36px;
 	height: 36px;
 	object-fit: cover;
 	border-radius: 50%;
-	
+
 }
+
 #content nav .prof {
 	position: relative;
 }
+
 #content nav .profile-menu {
 	position: absolute;
-	background:var(--light);
+	background: var(--light);
 	width: 250px;
 	right: 25px;
 	top: 20;
@@ -621,15 +681,17 @@ nav {
 	pointer-events: none;
 	border-radius: 6px;
 	box-shadow: 0 5px 10px var(--dark);
-	transition:0.2s ease ; 
+	transition: 0.2s ease;
 	margin-left: 8px;
 	font-size: 19;
 	list-style: none;
 }
+
 #content nav .prof:hover .profile-menu {
 	opacity: 1;
-	pointer-events: auto; 
+	pointer-events: auto;
 }
+
 /*switch*/
 
 .switch-mode {
@@ -666,6 +728,7 @@ nav {
 	display: flex;
 	flex: row;
 }
+
 /* Add this CSS to adjust nature of degree dropdown */
 .NatureDropdown {
 	border: 1px solid var(--dark);
@@ -675,30 +738,32 @@ nav {
 	padding: 2px 2px;
 	margin-right: 5px;
 }
+
 #sortButton {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
 
-  #sortButton .bx {
+#sortButton .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
+}
 
-  #sortAZ {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-  #sortAZ .bx {
+#sortAZ {
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
+#sortAZ .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
+}
 
 .nonboardProgram {
 	display: none;
@@ -708,13 +773,14 @@ nav {
 	height: 20px;
 	padding: 2px 2px;
 }
+
 .boardProgram {
 	display: none;
 	border: 1px solid var(--dark);
 	font-size: 10px;
 	width: 140px;
 	height: 20px;
-	padding: 2px 2px;	
+	padding: 2px 2px;
 }
 
 /*Range*/
@@ -730,125 +796,128 @@ nav {
 
 
 
-/* Adjust the input box styles */ /*delete*/
+/* Adjust the input box styles */
+/*delete*/
 .search-box input[type="text"] {
-    border: none;
-    padding: 5px 10px;
-    border-radius: 4px;
-    outline: none;
-    font-size: 14px;
-    width: 200px; /* Adjust the width as needed */
+	border: none;
+	padding: 5px 10px;
+	border-radius: 4px;
+	outline: none;
+	font-size: 14px;
+	width: 200px;
+	/* Adjust the width as needed */
 	background-color: var(--light-gray);
 }
 
 /*Tab like button for Student Result and Forms*/
 .tab-button {
-  padding: 8px 18px;
-  background-color: var(--dark-grey);
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-  margin-top: 20px;
-  border-radius: 3px;
+	padding: 8px 18px;
+	background-color: var(--dark-grey);
+	border: none;
+	cursor: pointer;
+	font-size: 15px;
+	margin-top: 20px;
+	border-radius: 3px;
 }
 
 .tab-button:hover {
 	background-color: var(--blue);
-	color:var(--gray);
-  }
-  
+	color: var(--gray);
+}
+
 .tab-button.active {
-  background-color: var(--green);
+	background-color: var(--green);
 }
 
 /* Style for tab content */
 .tab-content {
 	display: none;
-  }
-  
-  /* Display the active tab content */
-  .tab-content.active {
+}
+ 
+/* Display the active tab content */
+.tab-content.active {
 	display: block;
-  }
+}
 
 /* Adjust the margin between the icon and input */
 #searchIcon {
-    margin-right: -5px; 
-	color:  var(--dark);
-} 
-/* MAIN */
+	margin-right: -5px;
+	color: var(--dark);
+}
+
 #content main {
 	width: 100%;
-	padding: 36px 24px;
+	padding: 10px 24px;
 	font-family: var(--poppins);
 	max-height: calc(100vh - 56px);
 	overflow-y: auto;
 }
+
 #content main .head-title {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	position: sticky;
 }
+
 #content main .head-title .left h1 {
-	font-size: 36px;
+	font-size: 2vw;
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
 }
+
 #content main .head-title .left .breadcrumb {
 	display: flex;
 	align-items: center;
 	grid-gap: 16px;
 }
+
 #content main .head-title .left .breadcrumb li {
 	color: var(--dark);
 }
+
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
 	pointer-events: none;
+	font-size: 1vw;
 }
+
 #content main .head-title .left .breadcrumb li a.active {
 	color: var(--blue);
 	pointer-events: unset;
-}
-#content main .head-title .button-container {
-    display: flex;
-    grid-gap: 16px;
+
+
 }
 
-.btn-download,
-.btn-appointment {
-    height: 36px;
-    padding: 0 16px;
-    border-radius: 36px;
-    background: var(--green);
-    color: var(--light);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 10px;
-    font-weight: 500;
+#content main .head-title .btn-download {
+	height: 5vh;
+	width: 10vw;
+	padding: 0 5%;
+	border-radius: 36px;
+	background: var(--green);
+	color: var(--light);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	grid-gap: 3%;
+	font-weight: 500;
+	font-size: 1vw;
 }
 
-.btn-download:hover,
-.btn-appointment:hover {
-    background: var(--blue);
+#content main .head-title .btn-download:hover {
+	background: var(--green)
 }
+
 
 /* Responsive Styles */
 @media only screen and (max-width: 768px) {
-    #content main .head-title .button-container {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .btn-download,
-    .btn-appointment {
-        width: 100%;
-        margin-bottom: 10px;
-    }
+	#content main .head-title .button-container {
+		flex-direction: column;
+		align-items: stretch;
+	}
 }
 
 .search-btn {
@@ -866,19 +935,19 @@ nav {
 	border-radius: 5px;
 	font-size: 18px;
 	margin-top: 20px;
-  }
-  
-  label {
+}
+
+label {
 	margin-bottom: 5px;
-  }
-  
-  input[type="file"] {
+}
+
+input[type="file"] {
 	margin-bottom: 10px;
 	font-size: 16px;
 	margin-left: 30px;
-  }
-  
-  button[type="submit"] {
+}
+
+button[type="submit"] {
 	background-color: var(--green);
 	color: var(--light);
 	padding: 8px 16px;
@@ -886,16 +955,16 @@ nav {
 	border-radius: 4px;
 	cursor: pointer;
 	font-size: 14px;
-  }
-  
-  button[type="submit"]:hover {
+}
+
+button[type="submit"]:hover {
 	background-color: var(--gray);
-  }
- 
- #content main .button {
+}
+
+#content main .button {
 	border: none;
 	border-radius: 10px;
-	color:var(--light);
+	color: var(--light);
 	padding: 8px 10px;
 	text-align: center;
 	text-decoration: none;
@@ -914,142 +983,88 @@ nav {
 
 
 
-  
+
 #viewButton {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
 #viewButton i {
 	cursor: pointer;
 	font-size: 15px;
 
 	color: var(--dark);
-  }
-  #viewButton i:hover {
-    color: var(--green);
-    transform: scale(1.2); /* Adjust the scale factor as needed */
+}
+
+#viewButton i:hover {
+	color: var(--green);
+	transform: scale(1.2);
+	/* Adjust the scale factor as needed */
 }
 
 #toggleSelection {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-  #toggleSelection i:hover {
-    color:var(--green);
-    transform: scale(1.2); /* Adjust the scale factor as needed */
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
 }
+
+#toggleSelection i:hover {
+	color: var(--green);
+	transform: scale(1.2);
+	/* Adjust the scale factor as needed */
+}
+
 #toggleSelection .bx {
 	font-size: 15px;
-
 	color: var(--dark);
-  }
-
-  #delete-btn,
- 
-    #noa-qa-btn,
-    #noa-nqa-btn,
-    #nor-qa-btn,
-    #nor-nqa-btn {
-		
-        border: 1px solid #555;
-        padding: 8px 12px;
-        font: inherit;
-        cursor: pointer;
-        outline: none;
-        text-decoration: none;
-        color: black !important; /* Set the font color to a dark color */
-        border-radius: 4px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-        margin-right: 10px; /* Adjust as needed */
-    }
-
-    .button:hover {
-        background-color: #a52323;
-        color: #fff; /* Change font color on hover */
-    }
-  .button.check-btn {
-	background: none;
-	border: none;
-	padding: 0;
-	cursor: pointer;
-  }
-  
-  .button.check-btn i {
-	font-size: 15px; /* Adjust the size as needed */
-	color: black;
-  }
-  
-  .button.check-btn:hover i {
-	color: green;
-  }
-  .button.ekis-btn {
-	background: none;
-	border: none;
-	padding: 0;
-	cursor: pointer;
-  }
-  
-  .button.ekis-btn i {
-	font-size: 15px; /* Adjust the size as needed */
-	color: black; /* Set the default icon color */
-  }
-  
-  .button.ekis-btn:hover i {
-	color: red;
-  }
-  .button.ekis-btn::after {
-    content: attr(data-tooltip); /* Display the word as a tooltip */
-    position: absolute;
-    bottom: -100%; /* Position it below the button */
-    left: 50%; /* Center it horizontally */
-    transform: translateX(-50%);
-    background-color: #333; /* Tooltip background color */
-    color: white; /* Tooltip text color */
-    padding: 5px;
-    border-radius: 3px;
-    font-size: 12px;
-    opacity: 0; /* Initially hidden */
-    transition: opacity 0.3s;
-	z-index: 2;
 }
 
-.button.ekis-btn::after {
-    opacity: 0; /* Make the tooltip visible on hover */
+#delete-btn,
+
+#noa-qa-btn,
+#noa-nqa-btn,
+#nor-qa-btn,
+#nor-nqa-btn {
+
+	border: 1px solid #555;
+	padding: 8px 12px;
+	font: inherit;
+	cursor: pointer;
+	outline: none;
+	text-decoration: none;
+	color: black !important;
+	/* Set the font color to a dark color */
+	border-radius: 4px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+	margin-right: 10px;
+	/* Adjust as needed */
 }
 
-  .button.inc-btn {
-	background: none;
+.button:hover {
+	background-color: #a52323;
+	color: #fff;
+	/* Change font color on hover */
+}
+
+
+#delete-btn {
 	border: none;
+	background: none;
 	padding: 0;
-	cursor: pointer;
-  }
-  
-  .button.inc-btn i {
-	font-size: 15px; /* Adjust the size as needed */
-	color: black; /* Set the default icon color */
-  }
-  
-  .button.inc-btn:hover i {
-	color: orange;
-  }
-  
-  #delete-btn {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
+	font-size: 0;
+}
+
 #delete-btn .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
-  #delete-btn:hover i {
-    color: var(--red);
+}
+
+#delete-btn:hover i {
+	color: var(--red);
 }
 
 
@@ -1059,6 +1074,7 @@ nav {
 	grid-gap: 15px;
 	margin-top: 36px;
 }
+
 #content main .box-info li {
 	padding: 15px;
 	background: var(--light);
@@ -1067,6 +1083,7 @@ nav {
 	align-items: center;
 	grid-gap: 18px;
 }
+
 #content main .box-info li .bx {
 	width: 70px;
 	height: 70px;
@@ -1076,55 +1093,67 @@ nav {
 	justify-content: center;
 	align-items: center;
 }
+
 #content main .box-info li:nth-child(1) .bx {
 	background: var(--light-yellow);
 	color: var(--yellow);
 }
+
 #content main .box-info li:nth-child(1) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
 }
+
 #content main .box-info li:nth-child(2) .bx {
 	background: var(--light-green);
 	color: var(--green);
 }
+
 #content main .box-info li:nth-child(2) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
 }
+
 #content main .box-info li:nth-child(3) .bx {
 	background: var(--light-blue);
 	color: var(--blue);
 }
+
 #content main .box-info li:nth-child(3) .bx:hover {
 	background: var(--dark-green);
 	opacity: .2;
 }
+
 #content main .box-info li:nth-child(4) .bx {
 	background: var(--light-red);
 	color: var(--red);
 }
+
 #content main .box-info li:nth-child(4) .bx:hover {
 	background: var(--dark-green);
 	opacity: .3;
 }
+
 #content main .box-info li:nth-child(5) .bx {
 	background: var(--light-orange);
 	color: var(--orange);
 }
+
 #content main .box-info li:nth-child(5) .bx:hover {
 	background: var(--dark-green);
 	opacity: .3;
 }
+
 #content main .box-info li .text h3 {
 	font-size: 20px;
 	font-weight: 600;
 	color: var(--dark);
 }
+
 #content main .box-info li .text p {
-	color: var(--dark);	
+	color: var(--dark);
 	font-size: 12px;
- 
+
 
 }
 
@@ -1132,200 +1161,206 @@ nav {
 	table-layout: auto;
 	width: 100%;
 	border-collapse: collapse;
-    display: flex;
-    flex-wrap: wrap;
-    grid-gap: 24px;
-    margin-top: 10px;
-    color: var(--dark);
-	
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 24px;
+	margin-top: 10px;
+	color: var(--dark);
+
 
 }
+
 .table-data {
-    /* Add any styling for the table data container */
-    display: flex;
-    flex-wrap: wrap;
-    grid-gap: 24px;
-    margin-top: 10px;
-    color: var(--dark);
+	/* Add any styling for the table data container */
+	display: flex;
+	flex-wrap: wrap;
+	grid-gap: 24px;
+	margin-top: 10px;
+	color: var(--dark);
 }
 
 #table-container {
-    /* Add any styling for the table container */
-    max-height: 400px;
-    overflow-y: auto;
+	/* Add any styling for the table container */
+	max-height: 400px;
+	overflow-y: auto;
 }
 
 /* Scrollbar styles */
 #table-container::-webkit-scrollbar {
-    width: 6px;
+	width: 6px;
 }
 
 #table-container::-webkit-scrollbar-thumb {
-    background-color: var(--green);
-    border-radius: 10px;
+	background-color: var(--green);
+	border-radius: 10px;
 }
 
 #table-container::-webkit-scrollbar-track {
-    background-color: var(--light);
+	background-color: var(--light);
 }
 
 #table-container::-webkit-scrollbar-button:start:decrement,
 #table-container::-webkit-scrollbar-button:end:increment {
-    height: 5; /* Set height to 0 to make it smaller */
+	height: 5;
+	/* Set height to 0 to make it smaller */
 }
 
 #table-container::-webkit-scrollbar-track-piece {
-    height: 5; /* Set height to 0 to make it smaller */
+	height: 5;
+	/* Set height to 0 to make it smaller */
 }
 
 #table-container::-webkit-scrollbar-thumb:vertical {
-    min-height: 1px; /* Set a minimum height for the thumb */
+	min-height: 1px;
+	/* Set a minimum height for the thumb */
 }
 
 #table-container {
-    scrollbar-width: thin;
+	scrollbar-width: thin;
 }
 
 #table-container {
-    scrollbar-color: var(--dark) var(--light);
+	scrollbar-color: var(--dark) var(--light);
 }
 
-#content main .table-data > div {
-    /* Add any styling for table data div container */
-    border-radius: 10px;
-    background: var(--light);
-    padding: 20px;
-    overflow-x: auto;
+#content main .table-data>div {
+	/* Add any styling for table data div container */
+	border-radius: 10px;
+	background: var(--light);
+	padding: 20px;
+	overflow-x: auto;
 }
 
 #content main .table-data .head {
-    /* Add any styling for the table header */
-    position: sticky;
-    top: 0;
-    background-color: var(--light);
-    z-index: 100;
-    align-items: center;
-    grid-gap: 16px;
-    margin-bottom: 40px;
+	/* Add any styling for the table header */
+	position: sticky;
+	top: 0;
+	background-color: var(--light);
+	z-index: 100;
+	align-items: center;
+	grid-gap: 16px;
+	margin-bottom: 40px;
 }
 
 #content main .table-data .head h3 {
-    /* Add styles for the table header heading */
-    font-size: 18px;
-    float: left;
-    margin-right: auto;
+	/* Add styles for the table header heading */
+	font-size: 1.5vw;
+	float: left;
+	margin-right: auto;
 }
 
 #content main .table-data .head .bx {
-    /* Add styles for the icons in the header */
-    cursor: pointer;
+	/* Add styles for the icons in the header */
+	cursor: pointer;
 }
 
 #content main .table-data .order {
-    /* Add any styling for the order container */
-    flex-basis: 200px;
-    flex-grow: 1;
-    overflow: auto;
+	/* Add any styling for the order container */
+	flex-basis: 200px;
+	flex-grow: 1;
+	overflow: auto;
 }
 
 #content main .table-data .order table {
-    /* Add any additional table styles */
-    width: 100%;
-    border-collapse: collapse;
+	/* Add any additional table styles */
+	width: 100%;
+	border-collapse: collapse;
 }
 
 #content main .table-data .order table th {
-    /* Add any styles for table header cells */
-    border: none;
-    text-align: left;
-    padding: 6px;
-    font-size: 12px;
-    font-size: 10px;
-    white-space: normal;
-    border-bottom: 1px solid var(--dark);
-   
-    top: 0;
-    z-index: 2;
-    background-color: var(--light);
+	/* Add any styles for table header cells */
+	border: none;
+	text-align: left;
+	padding: 6px;
+	font-size: .8vw;
+	white-space: normal;
+	border-bottom: 1px solid var(--dark);
+
+	top: 0;
+	z-index: 2;
+	background-color: var(--light);
 }
 
 #content main .table-data .order table td {
-    /* Add any styles for table data cells */
-    border: none;
-    padding: 6px;
-    font-size: 10px;
-    font-family: 'Arial', sans-serif;
+	/* Add any styles for table data cells */
+	border: none;
+	padding: .5%;
+	font-size: .8vw;
+	font-family: 'Arial', sans-serif;
 }
 
 #content main .table-data .order table tr td:first-child {
-    /* Add styles for the first column of table data */
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    align-items: center;
-    grid-gap: 12px;
-    padding-left: 6px;
+	/* Add styles for the first column of table data */
+	font-family: 'Arial', sans-serif;
+	display: flex;
+	align-items: center;
+	grid-gap: 12px;
+	padding-left: 6px;
 }
 
 #content main .table-data .order table tbody tr:nth-child(even) {
-    /* Add styles for even rows */
-    background-color: var(); /* Specify your desired background color */
+	/* Add styles for even rows */
+	background-color: var();
+	/* Specify your desired background color */
 }
 
 #content main .table-data .order table tbody tr:nth-child(odd) {
-    /* Add styles for odd rows */
-    background-color: rgba(236, 236, 236, 0.383);
+	/* Add styles for odd rows */
+	background-color: rgba(236, 236, 236, 0.383);
 }
 
 #content main .table-data .order table tr td img {
-    /* Add styles for images within table cells */
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
+	/* Add styles for images within table cells */
+	width: 36px;
+	height: 36px;
+	border-radius: 50%;
+	object-fit: cover;
 }
 
 #content main .table-data .order table tbody tr:hover {
-    /* Add styles for row hover effect */
-    background: var(--dark-grey);
+	/* Add styles for row hover effect */
+	background: var(--dark-grey);
 }
 
 #content main .table-data .order table tr td .status {
-    /* Add styles for status cells */
-    font-size: 10px;
-    padding: 6px 16px;
-    color: var(--light);
-    border-radius: 20px;
-    font-weight: 700;
+	/* Add styles for status cells */
+	font-size: 10px;
+	padding: 6px 16px;
+	color: var(--light);
+	border-radius: 20px;
+	font-weight: 700;
 }
 
 #content main .table-data .order table tr td .status.admitted {
-    /* Add styles for specific status */
-    background: var(--blue);
+	/* Add styles for specific status */
+	background: var(--blue);
 }
 
 
 
 #content main .table-data .order table tr td .status.pending {
-    /* Add styles for specific status */
-    background: var(--yellow);
+	/* Add styles for specific status */
+	background: var(--yellow);
 }
 
 #content main .table-data .order table tr td .button {
-    /* Add styles for buttons within table cells */
-    border: none;
-    border-radius: 10px;
-    color: var(--light);
-    padding: 4px 8px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 12px;
-    margin: 1px 1px;
-    cursor: pointer;
-    transition-duration: 0.4s;
+	/* Add styles for buttons within table cells */
+	border: none;
+	border-radius: 10px;
+	color: var(--light);
+	padding: 4px 8px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 12px;
+	margin: 1px 1px;
+	cursor: pointer;
+	transition-duration: 0.4s;
 }
 
-
+#content main .table-data .order table tbody tr.selected {
+    background-color: lightgray; /* Change this to the desired highlight color */
+}
 
 
 
@@ -1333,9 +1368,11 @@ nav {
 	flex-grow: 1;
 	flex-basis: 30px;
 }
+
 #content main .table-data .todo .todo-list {
 	width: 100%;
 }
+
 #content main .table-data .todo .todo-list li {
 	width: 100%;
 	margin-bottom: 16px;
@@ -1346,15 +1383,19 @@ nav {
 	justify-content: space-between;
 	align-items: center;
 }
+
 #content main .table-data .todo .todo-list li .bx {
 	cursor: pointer;
 }
+
 #content main .table-data .todo .todo-list li.completed {
 	border-left: 10px solid var(--blue);
 }
+
 #content main .table-data .todo .todo-list li.not-completed {
 	border-left: 10px solid var(--orange);
 }
+
 #content main .table-data .todo .todo-list li:last-child {
 	margin-bottom: 0;
 }
@@ -1398,8 +1439,8 @@ nav {
 	}
 
 
-	#content nav form.show ~ .notification,
-	#content nav form.show ~ .profile {
+	#content nav form.show~.notification,
+	#content nav form.show~.profile {
 		display: none;
 	}
 
@@ -1407,50 +1448,51 @@ nav {
 		grid-template-columns: 1fr;
 	}
 
-	#content main .table-data .head {
-		min-width: 420px;
-	}
-	#content main .table-data .order table {
-		min-width: 420px;
-	}
-	#content main .table-data .todo .todo-list {
-		min-width: 420px;
-	}
+	#content main .table-data > div {
+        padding: 10px; /* Reduce padding for smaller screens */
+        overflow-x: auto; /* Add horizontal scroll for smaller screens */
+    }
 }
-  #mathGrade,
-  #scienceGrade,
-  #englishGrade {
-    width: 60px; /* Adjust the width as needed */
-  }
 
-  #gwaGrade {
-    width: 80px; /* Adjust the width as needed */
-  }
+#mathGrade,
+#scienceGrade,
+#englishGrade {
+	width: 60px;
+	/* Adjust the width as needed */
+}
 
-  #mathGrade,
-  #scienceGrade,
-  #englishGrade,
-  #gwaGrade {
-    padding: 8px;
-    margin: 5px;
-    border: none; /* Remove border */
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 14px;
-    outline: none; /* Remove the default focus outline */
-  }
+#gwaGrade {
+	width: 80px;
+	/* Adjust the width as needed */
+}
+
+#mathGrade,
+#scienceGrade,
+#englishGrade,
+#gwaGrade {
+	padding: 8px;
+	margin: 5px;
+	border: none;
+	/* Remove border */
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+	outline: none;
+	/* Remove the default focus outline */
+}
 
 
 .editable {
 	cursor: pointer;
 	border: none;
 	background-color: transparent;
-} 
+}
 
 .editable:focus {
 	outline: none;
 	border: 1px solid #2196F3;
 }
+
 button {
 	padding: 4px 8px;
 	margin: 4px;
@@ -1472,75 +1514,83 @@ select {
 
 
 #toast {
-    position: fixed;
-    top: 10%;
-    right: 10%;
-    width: 300px;
-    background-color: #4CAF50;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
+	position: fixed;
+	top: 10%;
+	right: 10%;
+	width: 300px;
+	background-color: #4CAF50;
+	color: #fff;
+	border-radius: 5px;
+	padding: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	opacity: 0;
+	transition: opacity 0.5s ease-in-out;
 }
 
 #toast.show {
-    opacity: 1;
+	opacity: 1;
 }
+
 #addStudent {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-  #addStudent .bx {
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
+#addStudent .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
-  #toggleSelection {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-  #toggleSelection .bx {
+}
+
+#toggleSelection {
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
+#toggleSelection .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
-  #deleteSelected {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
-  #deleteSelected .bx {
+}
+
+#deleteSelected {
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
+#deleteSelected .bx {
 	font-size: 15px;
 
 	color: var(--dark);
-  }
-  #deleteSelected:hover .bx {
-    transform: scale(1.2); 
+}
+
+#deleteSelected:hover .bx {
+	transform: scale(1.2);
 	color: var(--green);
 }
-  
+
 #viewButton {
-    border: none;
-    background: none;
-    padding: 0;
-    font-size: 0;
-  }
+	border: none;
+	background: none;
+	padding: 0;
+	font-size: 0;
+}
+
 #viewButton i {
 	cursor: pointer;
 	font-size: 15px;
 
 	color: var(--dark);
-  }
+}
 
- /* Your styles go here */
- .social-icons-container {
+/* Your styles go here */
+.social-icons-container {
 	display: flex;
 	align-items: center;
 }
@@ -1548,92 +1598,151 @@ select {
 .social-icons-container a {
 	margin-right: 10px;
 	text-decoration: none;
-	color:var(--green);
+	color: var(--green);
 	font-size: 24px;
 }
+
 .social-icons-container a:hover {
-	color: #000000; /* Change to the desired hover color */
+	color: #000000;
+	/* Change to the desired hover color */
 }
 
 
 .ProgramDropdown {
-    width: 160;
-    padding: 2px;
-    font-size: 11px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
-   
+	width: 160;
+	padding: 2px;
+	font-size: 11px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	cursor: pointer;
+
 	line-height: 1;
 	margin: 2px 0;
 }
 
 .ProgramDropdown:hover {
-    border-color: #999;
+	border-color: #999;
 }
 
 .ProgramDropdown:focus {
-    outline: none;
-    border-color: #0056b3;
-    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+	outline: none;
+	border-color: #0056b3;
+	box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
 }
 
 /* Style the dropdown arrow */
 .ProgramDropdown::after {
-    content: '\25BC';
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    pointer-events: none;
+	content: '\25BC';
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	transform: translateY(-50%);
+	pointer-events: none;
 }
 
 /* Style the options */
 .ProgramDropdown option {
-    font-size: 11px;
-	
+	font-size: 11px;
+
 }
 
 
 label[for="rangeInput"] {
-    display: block;
-    margin-bottom: 4px; /* Optional: Adjust the margin as needed */
-    font-size: 14px; /* Match the font size with .ProgramDropdown */
+	display: block;
+	margin-bottom: 4px;
+	/* Optional: Adjust the margin as needed */
+	font-size: 14px;
+	/* Match the font size with .ProgramDropdown */
 }
 
 .ForRange {
-    width: 50;
-    padding: 2px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    cursor: pointer;
+	width: 50;
+	padding: 2px;
+	font-size: 14px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	background-color: #fff;
+	cursor: pointer;
 	text-align: center;
-    line-height: 1;
-    margin: 2px 0;
+	line-height: 1;
+	margin: 2px 0;
 }
 
 .ForRange:hover {
-    border-color: #999;
+	border-color: #999;
 }
 
 .ForRange:focus {
-    outline: none;
-    border-color: #0056b3;
-    box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
+	outline: none;
+	border-color: #0056b3;
+	box-shadow: 0 0 5px rgba(0, 86, 179, 0.5);
 }
 
 /* Style the dropdown arrow */
 .ForRange::after {
-    content: '\25BC';
-    position: absolute;
-    top: 50%;
-    right: 8px;
-    transform: translateY(-50%);
-    pointer-events: none;
+	content: '\25BC';
+	position: absolute;
+	top: 50%;
+	right: 8px;
+	transform: translateY(-50%);
+	pointer-events: none;
 }
+
 .spacing {
-    width: 16px; /* Adjust the height for the desired spacing */
+	width: 16px;
+	/* Adjust the height for the desired spacing */
 }
+
+
+.tab {
+  display: none;
+}
+
+.tab-content {
+  display: none;
+  padding: 20px;
+  border: 1px solid #4caf50;
+  border-bottom-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.tab-label {
+	cursor: pointer;
+	font-size: 1vw;
+	display: inline-block;
+	padding: 5px 10px;
+	background-color: #bababa;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Hover effect for labels */
+  .tab-label:hover {
+	background-color: #ddd;
+  }
+  
+  /* Show tab content when the radio button is checked */
+  .tab:checked + .tab-label {
+	background-color: #4caf50;
+	color: #fff;
+	border-color: #000101;
+	border-top:  #4caf50;
+  }
+  
+  .tab:checked ~ .tab-content {
+	display: none;
+  }
+  
+  #tab1:checked ~ #content1,
+  #tab2:checked ~ #content2 {
+	display: block;
+  }
+  /* Add this style to target the top border */
+.tab:checked + .tab-label + .tab-content {
+	border-top: 1px solid #4caf50;
+  }

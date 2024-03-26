@@ -353,26 +353,6 @@ hr {
 	font-weight: bold;
 }
 
-
-#clock {
-	font-size: 24px;
-	height: 36px;
-	margin-left: 18px;
-	position: center;
-	width: 150px;
-	padding: 0 16px;
-	left: 50px;
-	border-radius: 36px;
-	background: none;
-	color: var(--dark);
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	grid-gap: 10px;
-	font-weight: 500;
-}
-
-
 /* CONTENT */
 #content {
 	position: relative;
@@ -583,7 +563,9 @@ nav {
 	/* Add space between text and icon */
 }
 
-
+#content {
+	position: relative;
+}
 
 /* MAIN */
 #content main {
@@ -594,6 +576,21 @@ nav {
 	overflow-y: auto;
 }
 
+#table-container {
+	overflow-y: auto;
+}
+
+#table-container1 {
+	height: 60vh;
+	overflow-y: auto;
+}
+
+#searchableTable thead {
+	position: sticky;
+	top: 0;
+	background-color: #F9F9F9; /* Set the desired background color for the header */
+	z-index: 2;
+}
 
 #content main .head-title {
 	display: flex;
@@ -601,10 +598,11 @@ nav {
 	justify-content: space-between;
 	grid-gap: 16px;
 	flex-wrap: wrap;
+	position: sticky;
 }
 
 #content main .head-title .left h1 {
-	font-size: 36px;
+	font-size: 2vw;
 	font-weight: 600;
 	margin-bottom: 10px;
 	color: var(--dark);
@@ -623,6 +621,7 @@ nav {
 #content main .head-title .left .breadcrumb li a {
 	color: var(--dark-grey);
 	pointer-events: none;
+	font-size: 1vw;
 }
 
 #content main .head-title .left .breadcrumb li a.active {
@@ -633,18 +632,18 @@ nav {
 }
 
 #content main .head-title .btn-download {
-	height: 36px;
-	padding: 0 16px;
+	height: 5vh;
+	width: 10vw;
+	padding: 0 5%;
 	border-radius: 36px;
-	background: var(--blue);
+	background: var(--green);
 	color: var(--light);
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	grid-gap: 10px;
+	grid-gap: 3%;
 	font-weight: 500;
-	transition: background 0.3s ease;
-	/* Add transition for a smooth color change */
+	font-size: 1vw;
 }
 
 #content main .head-title .btn-download:hover {
@@ -653,7 +652,7 @@ nav {
 
 
 #clock {
-	font-size: 24px;
+	font-size: 1.5vw;
 	height: 36px;
 	margin-left: 18px;
 	position: center;
@@ -773,9 +772,9 @@ nav {
 }
 
 #content main .table-data .head h3 {
+	font-size: 1.2vw;
+	float: left;
 	margin-right: auto;
-	font-size: 24px;
-	font-weight: 600;
 }
 
 #content main .table-data .head .bx {
@@ -794,13 +793,17 @@ nav {
 
 #content main .table-data .order table th {
 	padding-bottom: 12px;
-	font-size: 13px;
+	font-size: 1vw;
 	text-align: left;
 	border-bottom: 1px solid var(--grey);
 }
 
 #content main .table-data .order table td {
-	padding: 16px 0;
+	border: none;
+	padding: .5%;
+	font-size: .8vw;
+	font-family: 'Arial', sans-serif;
+	align-items: center;
 }
 
 #content main .table-data .order table tr td:first-child {
@@ -969,9 +972,7 @@ nav {
 .order-profile {
 	display: flex;
 	justify-content: center;
-	/* Center horizontally */
 	align-items: center;
-	/* Center vertically */
 
 }
 
@@ -1024,66 +1025,75 @@ nav {
 
 }
 
+.apply-program {
+    text-align: center;
+}
+
+.apply-program a:hover {
+    text-decoration: underline;
+}
+
 .StudentResult-Content {
 	display: flex;
 	align-items: center;
 	border: 2px solid #000;
-	/* Add border to the result info div */
-	padding: 5px;
 	border-radius: 5px;
+	width: 100%;
 }
 
+.rac-list {
+	font-size: 1vw;
+}
 .student-picture {
-	width: 30%;
-	/* Adjust the width as needed */
-	margin-right: 20px;
-	/* Add some space between the picture and the information */
+	margin: 20px;
 }
 
 .student-picture img {
 	max-width: 100%;
-	height: auto;
-	display: block;
+    height: auto;
+    width: 15vw;
+    border-radius: 2%;
 }
 
 .result-info {
-	width: 70%;
-	/* Adjust the width as needed */
 	flex: 3;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .result-style {
 	margin-bottom: 10px;
+	width: 100%;
 	/* Add some space between each result section */
 }
 
 /* Additional styling as per your design requirements */
 .applicant-name {
-	
-	font-size: 1.2em;
-	/* Example font size */
+	font-size: 1vw;
 	color: var(--dark);
-	/* Example text color */
+}
+
+.result-p {
+	font-size: 1vw;
+
 }
 
 .applicant-number {
-	
+	font-size: 1vw;
 	color: #777;
-	/* Lighter color for contrast */
 }
 
 .program-info {
 	color: #009688;
-	/* Green color for emphasis */
+	font-size: 1vw;
 }
 
 .status-pending {
 	font-weight: bold;
 	color: #FFA500;
-	/* Orange color for pending status */
+	font-size: 1vw;
 }
 
 /* Center the announcement text */

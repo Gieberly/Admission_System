@@ -89,7 +89,7 @@ $conn->close();
 <body>
     <style>
         .custom-list {
-            font-size: 14px;
+            font-size: .9vw;
             margin-left: 20px;
             /* Adjust the left margin as needed */
         }
@@ -105,7 +105,7 @@ $conn->close();
         }
 
         .requirements {
-            font-size: 12px;
+            font-size: .8vw;
             /* Adjust the font size for requirements */
         }
 
@@ -161,7 +161,8 @@ $conn->close();
                                         while ($row = $result->fetch_assoc()) {
                                             echo "<tr>";
                                             // Display the count
-                                            echo "<td>" . $row['application_date'] . "</td>";
+                                            echo "<td>" . date('F j, Y', strtotime($row['application_date'])) . "</td>";
+
 
                                             echo "<td>" . $row['degree_applied'] . "</td>";
 
@@ -300,9 +301,9 @@ $conn->close();
 
                                             // Check the appointment status and appointment date to display the appropriate action
                                             if ($row['appointment_status'] === 'Cancelled') {
-                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
+                                                echo "<td><a href='Student_Appointment.php?id=" . $row['id'] . "'>Reset Appointment</a></td>";
                                             } elseif (empty($row['appointment_date'])) {
-                                                echo "<td><a href='StudentSetAppointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
+                                                echo "<td><a href='Student_Appointment.php?id=" . $row['id'] . "'>Set Appointment</a></td>";
                                             } else {
                                                 echo "<td><a href='download.php?id=" . $row['id'] . "'>Generate Form</a></td>";
                                             }
