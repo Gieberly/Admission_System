@@ -21,7 +21,7 @@ $stmtFetchDepartment->fetch();
 $stmtFetchDepartment->close();
 
 // Fetch Overall_Slots for the user's department
-$fetchOverallSlotsQuery = "SELECT Overall_Slots FROM programs WHERE Description = ?";
+$fetchOverallSlotsQuery = "SELECT Overall_Total FROM programs WHERE Nature_of_Degree = ?";
 $stmtFetchOverallSlots = $conn->prepare($fetchOverallSlotsQuery);
 $stmtFetchOverallSlots->bind_param("s", $department);
 $stmtFetchOverallSlots->execute();
