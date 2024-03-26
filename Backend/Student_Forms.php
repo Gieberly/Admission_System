@@ -419,7 +419,7 @@ $conn->close();
                         <div class="note" id="middle_name_note">e.g. Lim</div>
                     </div>
 
-                    <!-- Gender at Birth -->
+                    <!-- Sex at Birth -->
                     <div class="form-group">
                         <label class="small-label" for="gender">Sex at birth<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="gender" class="input" id="gender" required>
@@ -435,22 +435,14 @@ $conn->close();
                         <input type="date" name="birthdate" class="input" id="birthdate" required oninput="validateBirthdate(); calculateAge();">
                         <div id="birthdateError" style="color: red; font-size: 12px; display: none;">Age must be at least 10 years old.</div>
                     </div>
-                </div>
-                <p class="birthplace"></p>
-                <div class="form-container">
-                    <!-- Birthplace -->
-                    <div class="form-group">
-                        <label class="small-label" for="birthplace">Birthplace<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="text" name="birthplace" class="input" id="birthplace" placeholder="Municipality/City, Province, Country" required>
-                        <div class="note" id="birthPlace_note">e.g. La Trinidad, Benguet, Philippines</div>
-                    </div>
                     <!-- Age -->
                     <div class="form-group">
                         <label class="small-label" for="age">Age<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" pattern="[0-9]*" name="age" class="input" id="age" placeholder="Age" required maxlength="2" required oninput="this.value = this.value.replace(/[^0-9]/g, ''); calculateAge();">
                     </div>
+                </div>
 
-
+                <div class="form-container">
                     <!-- civil status -->
                     <div class="form-group">
                         <label class="small-label" for="civil_status">Civil Status<span style="color: red; font-weight: bold;">*</span></label>
@@ -483,6 +475,31 @@ $conn->close();
                                     }
                                     ?>
                                 <option value="others">Others</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Birthplace -->
+                <p class="personal_information">Birthplace</p>
+                <div class="form-container">
+                    <div class="form-group">
+                        <label class="small-label" for="Country_birthplace">Country<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="Country_birthplace" class="input country" id="Country_birthplace" required onchange="loadStates()">
+                            <option value="" disabled selected>Select Country</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small-label" for="Province_birthplace">Province<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="Province_birthplace" class="input state" id="Province_birthplace" required onchange="loadCities()">
+                            <option value="" disabled selected>Select Province</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="small-label" for="Municipality_birthplace">Municipality/City<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="Municipality_birthplace" class="input city" id="Municipality_birthplace" required>
+                            <option value="" disabled selected>Select Municipality/City</option>
                         </select>
                     </div>
                 </div>
@@ -667,6 +684,10 @@ $conn->close();
                 <label for="application_date"><strong>DATE OF APPLICATION:</strong></label>
                 <input type="date" name="application_date" class="input" id="application_date" value="<?php echo date('Y-m-d'); ?>" required>
             </div>
+            <div class="form-group">
+                        <label class="small-label" for="birthplace" style="display: none;">Birthplace<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="text" name="birthplace" class="input" id="birthplace" placeholder="Municipality/City, Province, Country" required style="display: none;">
+                    </div>
 
             <div class="index-btn-wrapper">
                 <div class="index-btn" onclick="run(2, 1);">Previous</div>
@@ -700,6 +721,7 @@ $conn->close();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
     <script src="assets\js\studentform.js"></script>
+    <script src="CountryStateCity.js"></script>
     <!-- <script>
         const input = document.querySelector("#phone_number");
         window.intlTelInput(input, {
