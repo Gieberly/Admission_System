@@ -72,6 +72,10 @@ $applicantNumber = sprintf("%02d-%d-%05d", $currentYearLastTwoDigits, $semester,
 $sqlClassification = "SELECT DISTINCT Classification FROM academicclassification";
 $resultClassification = $conn->query($sqlClassification);
 
+// Fetch data from the ethnicity table for the ethnicity_name column
+$sqlEthnicity = "SELECT DISTINCT ethnicity_name FROM ethnicity";
+$resultEthnicity = $conn->query($sqlEthnicity);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['set_button_clicked'])) {
         // The "Set" button was clicked, do not process the form submission
@@ -398,20 +402,20 @@ $conn->close();
                 <div class="form-container">
                     <!-- Full name -->
                     <div class="form-group">
-                        <label class="small-label" for="last_name">Last Name<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="text" name="last_name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
+                        <label class="small-label" for="Last_Name">Last Name<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="text" name="Last_Name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
                         <div class="note" id="last_name_note">e.g. Dela Cruz</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="first_name">First Name and Extension Name<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="text" name="first_name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
+                        <label class="small-label" for="Name">First Name<span style="color: red; font-weight: bold;">*</span></label>
+                        <input type="text" name="Name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
                         <div class="note" id="first_name_note">e.g. Mario Jr.</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>">
+                        <label class="small-label" for="Middle_Name">Middle Name</label>
+                        <input type="text" name="Middle_Name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>">
                         <div class="note" id="middle_name_note">e.g. Lim</div>
                     </div>
 
@@ -467,9 +471,18 @@ $conn->close();
                     <label class="small-label" for="ethnicity">Ethnicity<span style="color: red; font-weight: bold;">*</span></label>
                         <select name="ethnicity" class="input" id="ethnicity" maxlength="28" required onchange="handleEthnicityChange()">
                             <option value="" disabled selected>Select Ethnicity</option>
-                            <option value="kankanaey">Kankana-ey</option>
-                            <option value="ilocano">Ilocano</option>
-                            <option value="others">Others</option>
+                            <?php
+                                    // Check if the query was successful
+                                    if ($resultEthnicity && $resultEthnicity->num_rows > 0) {
+                                        while ($rowEthnicity = $resultEthnicity->fetch_assoc()) {
+                                            $ethnicity = $rowEthnicity['ethnicity_name'];
+                                            echo "<option value=\"$ethnicity\">$ethnicity</option>";
+                                        }
+                                    } else {
+                                        echo "<option value=\"\">No Ethnicity found</option>";
+                                    }
+                                    ?>
+                                <option value="others">Others</option>
                         </select>
                     </div>
                 </div>

@@ -555,6 +555,28 @@ initializeTelInput(input2);
 initializeTelInput(input3);
 
 
+// function handleEthnicityChange() {
+//   var selectBox = document.getElementById("ethnicity");
+//   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+//   if (selectedValue.toLowerCase() === "others") {
+//       var textBox = document.createElement("input");
+//       textBox.type = "text";
+//       textBox.className = "input";
+//       textBox.id = "ethnicity";
+//       textBox.name = "ethnicity";
+//       textBox.required = true;
+//       textBox.placeholder = "Enter Ethnicity";
+//       textBox.addEventListener("keypress", function(event) {
+//           var key = event.keyCode;
+//           // Allow only letters
+//           if ((key < 65 || key > 90) && (key < 97 || key > 122)) {
+//               event.preventDefault();
+//           }
+//       });
+//       selectBox.parentNode.replaceChild(textBox, selectBox);
+//   }
+// }
+
 function handleEthnicityChange() {
   var selectBox = document.getElementById("ethnicity");
   var selectedValue = selectBox.options[selectBox.selectedIndex].value;
@@ -562,7 +584,7 @@ function handleEthnicityChange() {
       var textBox = document.createElement("input");
       textBox.type = "text";
       textBox.className = "input";
-      textBox.id = "ethnicity";
+      textBox.id = "ethnicityInput"; // Change the id to avoid conflicts
       textBox.name = "ethnicity";
       textBox.required = true;
       textBox.placeholder = "Enter Ethnicity";
@@ -574,6 +596,34 @@ function handleEthnicityChange() {
           }
       });
       selectBox.parentNode.replaceChild(textBox, selectBox);
+
+      // Add a blur event listener to check if the input is left empty
+      textBox.addEventListener("blur", function() {
+          if (textBox.value.trim() === "") {
+              var selectBox = document.createElement("select");
+              selectBox.name = "ethnicity";
+              selectBox.className = "input";
+              selectBox.id = "ethnicity";
+              selectBox.required = true;
+              selectBox.onchange = handleEthnicityChange;
+
+              var defaultOption = document.createElement("option");
+              defaultOption.value = "";
+              defaultOption.disabled = true;
+              defaultOption.selected = true;
+              defaultOption.textContent = "Select Ethnicity";
+
+              selectBox.appendChild(defaultOption);
+
+              var othersOption = document.createElement("option");
+              othersOption.value = "others";
+              othersOption.textContent = "Others";
+
+              selectBox.appendChild(othersOption);
+
+              textBox.parentNode.replaceChild(selectBox, textBox);
+          }
+      });
   }
 }
 
