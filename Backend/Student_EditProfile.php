@@ -49,7 +49,7 @@ if (isset($_SESSION['error_message'])) {
           <!-- Full name -->
           <div class="form-group">
             <label class="small-label" for="applicant_name">Complete Name</label>
-            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
+            <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['Name'] . ' ' . $admissionData['Middle_Name'] . ' ' . $admissionData['Last_Name']; ?>" readonly>
           </div>
           <!-- Birthplace -->
           <div class="form-group">
@@ -84,10 +84,10 @@ if (isset($_SESSION['error_message'])) {
             <label class="small-label" for="citizenship">Citizenship</label>
             <input name="citizenship" class="input" id="citizenship" value="<?php echo $admissionData['citizenship']; ?>">
           </div>
-          <!-- Nationality-->
+          <!-- Ethnicity-->
           <div class="form-group">
-            <label class="small-label" for="nationality">Nationality</label>
-            <input name="nationality" class="input" id="nationality" value="<?php echo $admissionData['nationality']; ?>">
+            <label class="small-label" for="ethnicity">Ethnicity</label>
+            <input name="ethnicity" class="input" id="ethnicity" value="<?php echo $admissionData['ethnicity']; ?>">
           </div>
         </div>
 
