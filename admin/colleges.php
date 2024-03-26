@@ -17,7 +17,7 @@ include("../includes/functions.php");
                 <div class="head-title">
                     <div class="left">
                         <h1>Colleges</h1>
-                        <ul class="breadcrumb">
+                        <ul class="breadcrumb" style="background-color:inherit">
                             <li><a href="#" style="text-decoration:none">Home</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
                             <li><a class="active" href="#" style="text-decoration:none">Colleges</a></li>
@@ -33,27 +33,13 @@ include("../includes/functions.php");
                         <div class="headfornaturetosort">
                                 <label for="rangeInput"></label>
                                 <input class="ForRange" type="text" id="rangeInput" name="rangeInput" placeholder="1-10" />
-                                <button type="button" id="viewButton">
-                                    <i class='bx bx-filter'></i>
-                                </button>
                             </div>
-                            <ul class="nav nav-tabs">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="dataListViewTab" data-toggle="tab" href="#dataListView" style="text-decoration:none">Data List View</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="addTab" data-toggle="tab" href="#add" style="text-decoration:none"><i class='bx bx-add-to-queue'></i>Add Course</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="editTab" data-toggle="tab" href="#edit" style="text-decoration:none">Edit</a>
-                                </li>
-                            </ul>
                         </div>
 
                         <!--ADDEDD TABS AND CONTENTS-->
                                 <div class="tab-pane fade show active" id="dataListView">
                                     <div id="table-container">
-                                    <table>
+                                    <table id="colleges">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -91,11 +77,7 @@ include("../includes/functions.php");
                                     </div> 
                                     </div>
 
-                                    <div class="tab-pane fade" id="edit">
-                                        <!-- Content for Edit tab -->
-                                        <!-- Edit form or other content for the Edit tab -->
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mb-2">Add</button>
+
                             </div>                  
                         </div>
                     </div>

@@ -13,15 +13,8 @@ if(isset($_POST['login_btn'])){
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            $stmt->bind_result($id, $hashedPassword, $userType, $status, $state);
+            $stmt->bind_result($id, $Password, $userType, $status, $state);
             $stmt->fetch();
-
-            if (password_verify($password, $hashedPassword)) {
-                $_SESSION['user_id'] = $id;
-                $_SESSION['user_type'] = $userType;
-                // Store additional user information in session
-                $_SESSION['user_email'] = $email;
-                // Assuming $department is available
 
 
                 if ($userType == 'Student') {
@@ -56,7 +49,7 @@ if(isset($_POST['login_btn'])){
                 } elseif ($userType == 'Staff') {
                     if(strtolower($status) == 'verified' || strtolower($state) == 'Activated')
                     {
-                            header("Location: Backend/personnel.php");  // Redirect to faculty.php if approved
+                            header("Location: Backend/Personnel_dashboard.php");  // Redirect to faculty.php if approved
                             exit();
                     }
                     elseif(strtolower($status) == 'verified' || strtolower($state) == 'Pending')
@@ -85,13 +78,7 @@ if(isset($_POST['login_btn'])){
                     header("Location:register.php"); // Redirect to register.php if the user is not found
                     exit();
                 }
-            } else {
-                echo "Incorrect password";
-            }
-        } else {
-            echo "User not found";
-            // Additional error handling or redirection can be added here
-        }
+            } 
 
         $stmt->close();
     }

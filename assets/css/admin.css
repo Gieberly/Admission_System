@@ -75,7 +75,7 @@ body {
 	overflow-x: hidden;
 	scrollbar-width: none;
 }
-#sidebar::--webkit-scrollbar {
+#sidebar::state(webkit-scrollbar) {
 	display: none;
 }
 #sidebar.hide {

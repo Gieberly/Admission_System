@@ -5,7 +5,6 @@ include("../includes/functions.php");
 ?>
 
 <?php include ('../template/header_admin.php')?>
-
 <body>
 <?php include ('sidebar-admin.php')?>
     <!-- CONTENT -->
@@ -17,7 +16,7 @@ include("../includes/functions.php");
             <div class="head-title">
                 <div class="left">
                     <h1>Master List</h1>
-                    <ul class="breadcrumb">
+                    <ul class="breadcrumb" style="background-color:inherit">
                         <li><a href="#" style="text-decoration:none">Admin</a></li>
                         <li><i class='bx bx-chevron-right'></i></li>
                         <li><a class="active" href="#master-list-content" style="text-decoration:none">Masterlist</a></li>
@@ -57,12 +56,12 @@ include("../includes/functions.php");
                                 ?>
                                     <tr>
                                         <td><?php echo $counter++; ?></td>
-                                        <td><?php echo $row['application_date']; ?></td>
-                                        <td><?php echo $row['app_number']; ?></td>
-                                        <td><?php echo $row['fname']; ?></td>
-                                        <td><?php echo $row['lname']; ?></td>
-                                        <td><?php echo $row['college']; ?></td>
-                                        <td><?php echo $row['course']; ?></td>
+                                        <td><?php echo $row['applicant_name']; ?></td>
+                                        <td><?php echo $row['birthdate']; ?></td>
+                                        <td><?php echo $row['age']; ?></td>
+                                        <td><?php echo $row['academic_classification']; ?></td>
+                                        <td><?php echo $row['degree_applied']; ?></td>
+                                        <td><?php echo $row['nature_of_degree']; ?></td>
                                         <td><?php echo $row['email']; ?></td>
                                         <td><form method="post" action="">
                                 <input type="hidden" name="staffId" value="<?php echo $row['id']; ?>">
@@ -90,8 +89,14 @@ include("../includes/functions.php");
 
             </div>
         </div>
-        <script src="https://cdn.datatables.net/2.0.1/js/dataTables.min.js"></script>
-        <script>
+</main>
+        <!-- MAIN -->
+
+    </section>
+<!--Scripts-->
+<?php include ('profile.php')?>
+<?php include ('script.php')?>
+<script>
     $(document).ready(function(){
         $('#masterlist').DataTable({
             "pagingType":"full_numbers",
@@ -107,11 +112,4 @@ include("../includes/functions.php");
     });
 </script>
 
-</main>
-        <!-- MAIN -->
-
-    </section>
-    <?php include ('profile.php')?>
-    <?php include ('script.php')?>
-    <!-- CONTENT -->
 <?php include("../template/footer.php")?>

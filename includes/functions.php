@@ -61,16 +61,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['updateSlots'])) {
 //Function to get all Departments
 function getAllDept() {
     global $conn;
-    $query = "SELECT dept_id, college_name, dept_name, course, slots,used_slots,dept_chair FROM department ";
+    $query = "SELECT * FROM colleges ";
     $result = $conn->query($query);
     return $result;
 }
 
 
-// Function to get all student form data
+//Function to get all student form data
 function getAllStudentFormData() {
     global $conn;
-    $query = "SELECT *FROM applicant";
+    $query = "SELECT *FROM admission_data";
     $result = $conn->query($query);
     return $result;
 }

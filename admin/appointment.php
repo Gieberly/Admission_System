@@ -16,7 +16,7 @@ include("../includes/functions.php");
                 <div class="head-title">
                     <div class="left">
                         <h1>Schedule</h1>
-                        <ul class="breadcrumb">
+                        <ul class="breadcrumb" style="background-color:inherit">
                             <li><a href="#" style="text-decoration:none">Admin</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
                             <li><a class="active" href="#" style="text-decoration:none">Appointment Schedule</a></li>

@@ -18,7 +18,7 @@ include("../includes/functions.php");
                 <div class="head-title">
                     <div class="left">
                         <h1>Personnels</h1>
-                        <ul class="breadcrumb">
+                        <ul class="breadcrumb" style="background-color:inherit">
                             <li><a href="#" style="text-decoration:none">Admin</a></li>
                             <li><i class='bx bx-chevron-right'></i></li>
                             <li><a class="active" href="staff.html" style="text-decoration:none">Personnel List</a></li>
