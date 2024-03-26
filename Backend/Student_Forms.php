@@ -398,20 +398,20 @@ $conn->close();
                 <div class="form-container">
                     <!-- Full name -->
                     <div class="form-group">
-                        <label class="small-label" for="last_name">Last Name</label>
+                        <label class="small-label" for="last_name">Last Name<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="last_name" class="input" id="last_name" placeholder="e.g. Dela Cruz" value="<?php echo $last_name; ?>" required>
                         <div class="note" id="last_name_note">e.g. Dela Cruz</div>
                     </div>
 
                     <div class="form-group">
-                        <label class="small-label" for="first_name">First Name and Extension Name</label>
+                        <label class="small-label" for="first_name">First Name and Extension Name<span style="color: red; font-weight: bold;">*</span></label>
                         <input type="text" name="first_name" class="input" id="first_name" placeholder="e.g. Mario Jr." value="<?php echo $name; ?>" autocomplete="name" required>
                         <div class="note" id="first_name_note">e.g. Mario Jr.</div>
                     </div>
 
                     <div class="form-group">
                         <label class="small-label" for="middle_name">Middle Name</label>
-                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>" required>
+                        <input type="text" name="middle_name" class="input" id="middle_name" placeholder="Middle Name" autocomplete="middle" value="<?php echo $mname; ?>">
                         <div class="note" id="middle_name_note">e.g. Lim</div>
                     </div>
 
@@ -462,18 +462,16 @@ $conn->close();
                         <input type="text" name="citizenship" class="input" id="citizenship" placeholder="Citizenship" required maxlength="28">
                         <div class="note" id="citizenship_note">e.g. Filipino</div>
                     </div>
-                    <!-- Nationality-->
+                    <!-- Ethnicity-->
                     <div class="form-group">
-                        <label class="small-label" for="nationality">Nationality</label>
-                        <input type="text" name="nationality" class="input" id="nationality" placeholder="Nationality" required>
-                        <div class="note" id="nationality_note">e.g. Filipino</div>
+                    <label class="small-label" for="ethnicity">Ethnicity<span style="color: red; font-weight: bold;">*</span></label>
+                        <select name="ethnicity" class="input" id="ethnicity" maxlength="28" required onchange="handleEthnicityChange()">
+                            <option value="" disabled selected>Select Ethnicity</option>
+                            <option value="kankanaey">Kankana-ey</option>
+                            <option value="ilocano">Ilocano</option>
+                            <option value="others">Others</option>
+                        </select>
                     </div>
-                        <!-- Ethnicity Others -->
-                    <!-- <div class="form-group" id="ethnicity_others_field" style="display: none;">
-                        <label class="small-label" for="ethnicity_others">Others</label>
-                        <input type="text" name="ethnicity_others" class="input" id="ethnicity_others" placeholder="Others">
-                        <div class="note" id="ethnicity_others_note">e.g. Korean</div>
-                    </div> -->
                 </div>
 
                 <p class="personal_information">Permanent Home Address</p>
@@ -588,7 +586,7 @@ $conn->close();
                 <div class="form-container">
                     <div class="form-group">
                         <label class="small-label" for="lrn" style="white-space: nowrap;">Learner's Reference Number</label>
-                        <input type="text" name="lrn" class="input" id="lrn" placeholder="Enter LRN" pattern="[0-9]*" maxlength="12" oninput="validateLRN(this)">
+                        <input type="text" name="lrn" class="input" id="lrn" placeholder="Enter LRN" oninput="validateLRN(this)">
                         <div class="note" id="lrn_note">e.g. 157936123439</div>
                     </div>
 

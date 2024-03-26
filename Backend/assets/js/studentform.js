@@ -369,14 +369,24 @@ function validateLRN(input) {
   let inputValue = input.value.replace(/\D/g, '');
 
   // Limit the input to 12 digits
-  if (inputValue.length > 12) {
-      inputValue = inputValue.slice(0, 12);
-  }
+  inputValue = inputValue.slice(0, 12);
 
   // Update the input value
   input.value = inputValue;
-}
 
+  // Validate input length and update border and error message
+  const lrnInput = document.getElementById("lrn");
+  const lrnNote = document.getElementById("lrn_note");
+  if (inputValue.length < 12) {
+      lrnInput.style.borderColor = "red";
+      lrnNote.textContent = "Invalid input (must be 12 digits)";
+      lrnNote.classList.add("error"); // Add the error class
+  } else {
+      lrnInput.style.borderColor = "initial";
+      lrnNote.textContent = "";
+      lrnNote.classList.remove("error"); // Remove the error class (optional)
+  }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
   var lastNameInput = document.getElementById("last_name");
@@ -568,7 +578,7 @@ function handleEthnicityChange() {
 }
 
 intlTelInput(input, {
-  initialCountry: "auto",
+  initialCountry: "ph",
   separateDialCode: true,
   utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.12/js/utils.js",
   allowDropdown: false // Disable dropdown for custom styling
