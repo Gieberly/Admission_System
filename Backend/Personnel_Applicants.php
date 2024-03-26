@@ -808,8 +808,8 @@ $stmt->close();
                 <div class="form-container8">
                   <div class="form-group">
                     <!-- Science_Other_Courses_Grade -->
-                    <label class="small-label" for="Science_Other_Courses_Grade">Course</label>
-                    <input name="Science_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>">
+                    <label class="small-label" for="Science_Subject_1">Course</label>
+                    <input name="Science_Subject_1" class="input numeric-input" autocomplete="off" id="Science_Subject_1" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_1']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Science_Other_Courses_Grade">&nbsp; </label>
@@ -817,8 +817,8 @@ $stmt->close();
                   </div>
                   <div class="form-group">
                     <!-- Science_Other_Courses_Grade -->
-                    <label class="small-label" for="Science_Other_Courses_Grade_2">Course</label>
-                    <input name="Science_Other_Courses_Grade_2" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade_2" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade_2']; ?>">
+                    <label class="small-label" for="Science_Subject_2">Course</label>
+                    <input name="Science_Subject_2" class="input numeric-input" autocomplete="off" id="Science_Subject_2" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_2']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Science_Other_Courses_Grade_2">&nbsp; </label>
@@ -826,8 +826,8 @@ $stmt->close();
                   </div>
                   <div class="form-group">
                     <!-- Science_Other_Courses_Grade -->
-                    <label class="small-label" for="Science_Other_Courses_Grade_3">Course</label>
-                    <input name="Science_Other_Courses_Grade_3" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade_3" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade_3']; ?>">
+                    <label class="small-label" for="Science_Subject_3">Course</label>
+                    <input name="Science_Subject_3" class="input numeric-input" autocomplete="off" id="Science_Subject_3" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_3']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Science_Other_Courses_Grade_3">&nbsp; </label>
@@ -856,8 +856,8 @@ $stmt->close();
                 <div class="form-container8">
                   <div class="form-group">
                     <!-- Math_Other_Courses_Grade -->
-                    <label class="small-label" for="Math_Other_Courses_Grade">Course</label>
-                    <input name="Math_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>">
+                    <label class="small-label" for="Math_Subject_1">Course</label>
+                    <input name="Math_Subject_1" class="input numeric-input" autocomplete="off" id="Math_Subject_1" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_1']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Math_Other_Courses_Grade">&nbsp; </label>
@@ -865,8 +865,8 @@ $stmt->close();
                   </div>
                   <div class="form-group">
                     <!-- Math_Other_Courses_Grade -->
-                    <label class="small-label" for="Math_Other_Courses_Grade_2">Course</label>
-                    <input name="Math_Other_Courses_Grade_2" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade_2" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade_2']; ?>">
+                    <label class="small-label" for="Math_Subject_2">Course</label>
+                    <input name="Math_Subject_2" class="input numeric-input" autocomplete="off" id="Math_Subject_2" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_2']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Math_Other_Courses_Grade_2">&nbsp; </label>
@@ -874,8 +874,8 @@ $stmt->close();
                   </div>
                   <div class="form-group">
                     <!-- Math_Other_Courses_Grade -->
-                    <label class="small-label" for="Math_Other_Courses_Grade_3">Course</label>
-                    <input name="Math_Other_Courses_Grade_3" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade_3" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade_3']; ?>">
+                    <label class="small-label" for="Math_Subject_3">Course</label>
+                    <input name="Math_Subject_3" class="input numeric-input" autocomplete="off" id="Math_Subject_3" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_3']; ?>">
                   </div>
                   <div class="form-group">
                     <label class="small-label" for="Math_Other_Courses_Grade_3">&nbsp; </label>
@@ -1038,7 +1038,7 @@ $stmt->close();
             type: 'POST',
             data: {
               userId: userId
-            },
+            }, 
             dataType: 'json',
             success: function(response) {
 
