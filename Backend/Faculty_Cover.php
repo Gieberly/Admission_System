@@ -87,7 +87,7 @@ function getCourses($conn)
 
 
             <li class="">
-                <a href="FacultySlots.php" id="announcements-link">
+                <a href="FacultyDeptSlot.php" id="announcements-link">
                     <i class='bx bxs-book-content'></i>
                     <span class="text">Slots</span>
                 </a>

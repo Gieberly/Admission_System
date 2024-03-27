@@ -13,7 +13,7 @@ $courses_result = $conn->query($courses_query);
 
 $courses = array();
 while ($row = $courses_result->fetch_assoc()) {
-    $courses[] = $row['Courses'];
+  $courses[] = $row['Courses'];
 }
 $colleges_query = "SELECT DISTINCT College FROM programs";
 $colleges_result = $conn->query($colleges_query);
@@ -35,21 +35,20 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
 
 $query = "SELECT * FROM admission_data WHERE 
-                 (
-                  `applicant_number` LIKE '%$search%' OR 
+                 ( 
+            `Name` LIKE '%$search%' OR 
+            `Middle_Name` LIKE '%$search%' OR 
+            `Last_Name` LIKE '%$search%' OR 
+            `applicant_number` LIKE '%$search%' OR 
              `academic_classification` LIKE '%$search%' OR 
              `email` LIKE '%$search%' OR 
              `result` LIKE '%$search%' OR 
              `nature_of_degree` LIKE '%$search%' OR 
              `degree_applied` LIKE '%$search%')
-
-
-
-
             AND (DATE(appointment_date) = '$filterDate' OR '$filterDate' = '')
-            AND `appointment_date` IS NOT NULL
-            AND `appointment_status` <> 'Cancelled'  -- Exclude Cancelled appointments
+            AND (`appointment_status` IS NULL OR `appointment_status` = '' OR `appointment_status` <> 'Cancelled')
           ORDER BY `appointment_date` ASC, `appointment_time` ASC";
+
 
 $result = $conn->query($query);
 
@@ -188,33 +187,51 @@ $stmt->close();
           <div class="tab-content" id="content1">
 
             <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
+              <p class="personal_information">Personal Information </p>
 
               <div class="form-container1">
 
                 <div class="form-group">
-                  <!-- Complete Name -->
-                  <label class="small-label" for="applicant_name">Complete Name</label>
-                  <input name="applicant_name" class="input" id="applicant_name" value="<?php echo $admissionData['applicant_name']; ?>">
+                  <!-- Last_ Name -->
+                  <label class="small-label" for="Last_Name">Last Name</label>
+                  <input name="Last_Name" class="input" id="Last_Name" value="<?php echo $admissionData['Last_Name']; ?>">
                   <br>
                   <!--Email Address -->
                   <label class="small-label" for="email">Email Address</label>
                   <input name="email" class="input" autocomplete="off" id="email" value="<?php echo $admissionData['email']; ?>" readonly>
                 </div>
-
                 <div class="form-group">
+                  <!-- First Name -->
+                  <label class="small-label" for="Name">First Name</label>
+                  <input name="Name" class="input" id="Name" value="<?php echo $admissionData['Name']; ?>">
+
+                  <br>
+
                   <!-- Sex at Birth -->
                   <label class="small-label" for="gender">Sex at birth</label>
                   <select name="gender" class="input" id="gender">
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
+                </div>
+                <div class="form-group">
+                  <!-- First Name -->
+                  <label class="small-label" for="Middle_Name">Middle Name</label>
+                  <input name="Middle_Name" class="input" id="Middle_Name" value="<?php echo $admissionData['Middle_Name']; ?>">
                   <br>
                   <!-- Telephone/Mobile No -->
                   <label class="small-label" for="phone_number">Mobile No.</label>
                   <input name="phone_number" autocomplete="off" class="input" id="phone_number" value="<?php echo $admissionData['phone_number']; ?>">
+
+
                 </div>
                 <!-- ID -->
                 <img id="applicantPicture" alt="Applicant Picture">
+                <div class="form-group">
+
+
+                </div>
+
               </div>
               <br>
               <p class="personal_information">Contact Person(s) in Case of Emergency</p>
@@ -276,10 +293,38 @@ $stmt->close();
                   <!-- Degree -->
                   <label class="small-label" for="degree_applied">Degree</label>
                   <select name="degree_applied" class="input" id="degree_applied">
-                    <?php foreach ($courses as $course) { ?>
-                      <option value="<?php echo $course; ?>"><?php echo $course; ?></option>
-                    <?php } ?>
+                    <?php
+                    // Fetch distinct colleges from programs table
+                    $distinct_colleges_query = "SELECT DISTINCT College FROM programs";
+                    $distinct_colleges_result = $conn->query($distinct_colleges_query);
+
+                    while ($college_row = $distinct_colleges_result->fetch_assoc()) {
+                      $college_name = $college_row['College'];
+                    ?>
+                      <optgroup label="<?php echo $college_name; ?>">
+                        <?php
+                        // Fetch courses associated with this college
+                        $courses_for_college_query = "SELECT Courses FROM programs WHERE College = ?";
+                        $stmt = $conn->prepare($courses_for_college_query);
+                        $stmt->bind_param("s", $college_name);
+                        $stmt->execute();
+                        $courses_for_college_result = $stmt->get_result();
+                        $stmt->close();
+
+                        // Display courses
+                        while ($course_row = $courses_for_college_result->fetch_assoc()) {
+                          $course_name = $course_row['Courses'];
+                        ?>
+                          <option value="<?php echo $course_name; ?>"><?php echo $course_name; ?></option>
+                        <?php
+                        }
+                        ?>
+                      </optgroup>
+                    <?php
+                    }
+                    ?>
                   </select>
+
 
                 </div>
 
@@ -294,10 +339,10 @@ $stmt->close();
                   <br>
                   <!-- Nature -->
                   <label class="small-label" for="nature_of_degree" style="white-space: nowrap;">Nature of degree</label>
-    <select name="nature_of_degree" class="input" id="nature_of_degree">
-        <option value="Board">Board</option>
-        <option value="Non-Board">Non-Board</option>
-    </select>
+                  <select name="nature_of_degree" class="input" id="nature_of_degree">
+                    <option value="Board">Board</option>
+                    <option value="Non-Board">Non-Board</option>
+                  </select>
                 </div>
               </div>
 
@@ -570,7 +615,7 @@ $stmt->close();
     /* Apply styles to the form container */
     .form-container1 {
       display: grid;
-      grid-template-columns: 50% 23% 23%;
+      grid-template-columns: 20% 23% 23% 23%;
       gap: 2%;
     }
 
@@ -778,7 +823,10 @@ $stmt->close();
               // Populate the form fields with the fetched data
 
               $('#applicantPicture').attr('src', response.id_picture);
-              $('#updateProfileForm input[name="applicant_name"]').val(response.applicant_name);
+              $('#updateProfileForm input[name="Name"]').val(response.Name);
+              $('#updateProfileForm input[name="Middle_Name"]').val(response.Middle_Name);
+              $('#updateProfileForm input[name="Last_Name"]').val(response.Last_Name);
+
               $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
               $('#updateProfileForm select[name="gender"]').val(response.gender);
               $('#updateProfileForm input[name="birthdate"]').val(response.birthdate);

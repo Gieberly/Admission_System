@@ -32,11 +32,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ALS_English = !empty($_POST['ALS_English']) ? $_POST['ALS_English'] : null;
     $Qualification_Nature_Degree = !empty($_POST['Qualification_Nature_Degree']) ? $_POST['Qualification_Nature_Degree'] : null;
     $nature_qualification = !empty($_POST['nature_qualification']) ? $_POST['Qualification_Nature_Degree'] : null;
-
+    $English_Subject_1 = !empty($_POST['English_Subject_1']) ? $_POST['English_Subject_1'] : null;
+    $English_Subject_2 = !empty($_POST['English_Subject_2']) ? $_POST['English_Subject_2'] : null;
+    $English_Subject_3 = !empty($_POST['English_Subject_3']) ? $_POST['English_Subject_3'] : null;
+    $Science_Subject_1 = !empty($_POST['Science_Subject_1']) ? $_POST['Science_Subject_1'] : null;
+    $Science_Subject_2 = !empty($_POST['Science_Subject_2']) ? $_POST['Science_Subject_2'] : null;
+    $Science_Subject_3 = !empty($_POST['Science_Subject_3']) ? $_POST['Science_Subject_3'] : null;
+    $Math_Subject_1 = !empty($_POST['Math_Subject_1']) ? $_POST['Math_Subject_1'] : null;
+    $Math_Subject_2 = !empty($_POST['Math_Subject_2']) ? $_POST['Math_Subject_2'] : null;
+    $Math_Subject_3 = !empty($_POST['Math_Subject_3']) ? $_POST['Math_Subject_3'] : null;
+    $English_Other_Courses_Grade_2 = !empty($_POST['English_Other_Courses_Grade_2']) ? $_POST['English_Other_Courses_Grade_2'] : null;
+    $English_Other_Courses_Grade_3 = !empty($_POST['English_Other_Courses_Grade_3']) ? $_POST['English_Other_Courses_Grade_3'] : null;
+    $Science_Other_Courses_Grade_2 = !empty($_POST['Science_Other_Courses_Grade_2']) ? $_POST['Science_Other_Courses_Grade_2'] : null;
+    $Science_Other_Courses_Grade_3 = !empty($_POST['Science_Other_Courses_Grade_3']) ? $_POST['Science_Other_Courses_Grade_3'] : null;
+    $Math_Other_Courses_Grade_2 = !empty($_POST['Math_Other_Courses_Grade_2']) ? $_POST['Math_Other_Courses_Grade_2'] : null;
+    $Math_Other_Courses_Grade_3 = !empty($_POST['Math_Other_Courses_Grade_3']) ? $_POST['Math_Other_Courses_Grade_3'] : null;
+    
     // Prepare and execute the SQL statement
-    $stmt = $conn->prepare("UPDATE admission_data SET nature_qualification=?, Qualification_Nature_Degree=?, Gr11_A1=?, Gr11_A2=?, Gr11_A3=?, Gr11_GWA=?, GWA_OTAS=?, Gr12_A1=?, Gr12_A2=?, Gr12_A3=?, Gr12_GWA=?, English_Oral_Communication_Grade=?, English_Reading_Writing_Grade=?, English_Academic_Grade=?, English_Other_Courses_Grade=?, Science_Earth_Science_Grade=?, Science_Earth_and_Life_Science_Grade=?, Science_Physical_Science_Grade=?, Science_Disaster_Readiness_Grade=?, Science_Other_Courses_Grade=?, Math_General_Mathematics_Grade=?, Math_Statistics_and_Probability_Grade=?, Math_Other_Courses_Grade=?, Old_HS_English_Grade=?, Old_HS_Math_Grade=?, Old_HS_Science_Grade=?, ALS_Math=?,ALS_English=?  WHERE id=?");
-    $stmt->bind_param("ddddddddddddddddddddddddddddi", $nature_qualification, $Qualification_Nature_Degree, $Gr11_A1, $Gr11_A2, $Gr11_A3, $Gr11_GWA, $GWA_OTAS, $Gr12_A1, $Gr12_A2, $Gr12_A3, $Gr12_GWA, $English_Oral_Communication_Grade, $English_Reading_Writing_Grade, $English_Academic_Grade, $English_Other_Courses_Grade, $Science_Earth_Science_Grade, $Science_Earth_and_Life_Science_Grade, $Science_Physical_Science_Grade, $Science_Disaster_Readiness_Grade, $Science_Other_Courses_Grade, $Math_General_Mathematics_Grade, $Math_Statistics_and_Probability_Grade, $Math_Other_Courses_Grade, $Old_HS_English_Grade, $Old_HS_Math_Grade, $Old_HS_Science_Grade, $ALS_Math,$ALS_English, $id);
-
+    $stmt = $conn->prepare("UPDATE admission_data SET nature_qualification=?, Qualification_Nature_Degree=?, Gr11_A1=?, Gr11_A2=?, Gr11_A3=?, Gr11_GWA=?, GWA_OTAS=?, Gr12_A1=?, Gr12_A2=?, Gr12_A3=?, Gr12_GWA=?, English_Oral_Communication_Grade=?, English_Reading_Writing_Grade=?, English_Academic_Grade=?, English_Other_Courses_Grade=?, Science_Earth_Science_Grade=?, Science_Earth_and_Life_Science_Grade=?, Science_Physical_Science_Grade=?, Science_Disaster_Readiness_Grade=?, Science_Other_Courses_Grade=?, Math_General_Mathematics_Grade=?, Math_Statistics_and_Probability_Grade=?, Math_Other_Courses_Grade=?, Old_HS_English_Grade=?, Old_HS_Math_Grade=?, Old_HS_Science_Grade=?, ALS_Math=?,ALS_English=?, English_Subject_1=?, English_Subject_2=?, English_Subject_3=?, Science_Subject_1=?, Science_Subject_2=?, Science_Subject_3=?, Math_Subject_1=?, Math_Subject_2=?, Math_Subject_3=?,English_Other_Courses_Grade_2=?, English_Other_Courses_Grade_3=?,
+    Science_Other_Courses_Grade_2=?, Science_Other_Courses_Grade_3=?,
+    Math_Other_Courses_Grade_2=?, Math_Other_Courses_Grade_3=? WHERE id=?");
+    $stmt->bind_param("ddddddddddddddddddddddddddddsssssssssidddddd", $nature_qualification, $Qualification_Nature_Degree, $Gr11_A1, $Gr11_A2, $Gr11_A3, $Gr11_GWA, $GWA_OTAS, $Gr12_A1, $Gr12_A2, $Gr12_A3, $Gr12_GWA, $English_Oral_Communication_Grade, $English_Reading_Writing_Grade, $English_Academic_Grade, $English_Other_Courses_Grade, $Science_Earth_Science_Grade, $Science_Earth_and_Life_Science_Grade, $Science_Physical_Science_Grade, $Science_Disaster_Readiness_Grade, $Science_Other_Courses_Grade, $Math_General_Mathematics_Grade, $Math_Statistics_and_Probability_Grade, $Math_Other_Courses_Grade, $Old_HS_English_Grade, $Old_HS_Math_Grade, $Old_HS_Science_Grade, $ALS_Math,$ALS_English, $English_Subject_1, $English_Subject_2, $English_Subject_3, $Science_Subject_1, $Science_Subject_2, $Science_Subject_3, $Math_Subject_1, $Math_Subject_2, $Math_Subject_3,$English_Other_Courses_Grade_2, $English_Other_Courses_Grade_3, 
+    $Science_Other_Courses_Grade_2, $Science_Other_Courses_Grade_3, 
+    $Math_Other_Courses_Grade_2, $Math_Other_Courses_Grade_3, $id);
+ 
     // Execute the statement
     if ($stmt->execute()) {
         // Set a session variable for success message

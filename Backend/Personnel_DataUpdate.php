@@ -4,7 +4,9 @@ include 'config.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $id = $_POST['id']; // Assuming you're passing the ID from the form
-    $applicant_name = $_POST['applicant_name'];
+    $first_name = $_POST['Name'];
+    $middle_name = $_POST['Middle_Name'];
+    $last_name = $_POST['Last_Name'];
     $gender = $_POST['gender'];
     $phone_number = isset($_POST['phone_number']) ? $_POST['phone_number'] : '';
     $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -21,15 +23,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $high_school_name_address = isset($_POST['high_school_name_address']) ? $_POST['high_school_name_address'] : '';
     $lrn = isset($_POST['lrn']) ? $_POST['lrn'] : '';
 
-    $stmt = $conn->prepare("UPDATE admission_data SET applicant_name=?, gender=?, phone_number=?, email=?, contact_person_1=?, contact1_phone=?, relationship_1=?, contact_person_2=?, contact_person_2_mobile=?, relationship_2=?, academic_classification=?, college=?, degree_applied=?, nature_of_degree=?, high_school_name_address=?, lrn=? WHERE id=?");
-    $stmt->bind_param("sssssssssssssssii", $applicant_name, $gender, $phone_number, $email, $contact_person_1, $contact_person_1_mobile, $relationship_1, $contact_person_2, $contact_person_2_mobile, $relationship_2, $academic_classification, $college, $degree_applied, $nature_of_degree, $high_school_name_address, $lrn, $id);
+    $stmt = $conn->prepare("UPDATE admission_data SET Name=?, Middle_Name=?, Last_Name=?, gender=?, phone_number=?, email=?, contact_person_1=?, contact1_phone=?, relationship_1=?, contact_person_2=?, contact_person_2_mobile=?, relationship_2=?, academic_classification=?, college=?, degree_applied=?, nature_of_degree=?, high_school_name_address=?, lrn=? WHERE id=?");
+    $stmt->bind_param("sssssssssssssssssii", $first_name, $middle_name, $last_name, $gender, $phone_number, $email, $contact_person_1, $contact_person_1_mobile, $relationship_1, $contact_person_2, $contact_person_2_mobile, $relationship_2, $academic_classification, $college, $degree_applied, $nature_of_degree, $high_school_name_address, $lrn, $id);
 
     if ($stmt->execute()) {
-      // Set a session variable for success message
-      session_start();
-      $_SESSION['update_success'] = true;
+        // Set a session variable for success message
+        session_start();
+        $_SESSION['update_success'] = true;
 
-      header("Location: Personnel_Verification.php");
-      exit();
-  }
+        header("Location: Personnel_Verification.php");
+        exit();
+    }
 }
+?>
