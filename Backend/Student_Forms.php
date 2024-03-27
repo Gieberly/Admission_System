@@ -519,8 +519,8 @@ $conn->close();
                 <div class="form-container">
                     <!-- Telephone/Mobile No -->
                     <div class="form-group">
-                        <label class="small-label" for="phone_number">Telephone/Mobile No.<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" maxlength="15">
+                        <label class="small-label" for="phone_number">Telephone/Mobile No.<span style="color: red; font-weight: bold;">*</span></label><br>
+                        <input type="tel" name="phone_number" class="input" id="phone_number" placeholder="Enter phone number" autocomplete="number" maxlength="15" style="width: 25vw;">
                         <div class="note" id="phone_number_note">e.g. 09091010222</div>
                     </div>
 
@@ -549,12 +549,12 @@ $conn->close();
                     </div>
                     <div class="form-group">
                         <label class="small-label" for="contact1_phone">Mobile Number<span style="color: red; font-weight: bold;">*</span></label>
-                        <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')" maxlength="15">
+                        <input type="tel" name="contact1_phone" class="input" id="contact1_phone" placeholder="Enter mobile number" required oninput="validatePhoneNumber('contact1_phone')" maxlength="15" style="width: 25vw;">
                         <div class="note" id="contact1_phone_note">e.g. 09101112222</div>
                         <p id="contact1_phone-error" style="color: red;"></p>
                     </div>
                     <div class="form-group">
-                        <label class="small-label" for="relationship_1">Relationship w/ Contact Person<span style="color: red; font-weight: bold;">*</span></label>
+                        <label class="small-label" for="relationship_1">Relationship w/ Contact Person<span style="color: red; font-weight: bold;">*</span></label><br>
                         <select name="relationship_1" class="input custom-dropdown" id="relationship_1" required>
                             <option value="" disabled selected>Select Relationship</option>
                             <option value="Parent">Parent</option>
@@ -571,8 +571,8 @@ $conn->close();
                         <div class="note" id="contact_person_2_note">e.g. Juan Dela Cruz</div>
                     </div>
                     <div class="form-group">
-                        <label class="small-label" for="contact_person_2_mobile">Mobile Number</label>
-                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" oninput="validatePhoneNumber('contact_person_2_mobile')" maxlength="15">
+                        <label class="small-label" for="contact_person_2_mobile">Mobile Number</label><br>
+                        <input type="tel" name="contact_person_2_mobile" class="input" id="contact_person_2_mobile" placeholder="Enter mobile number" oninput="validatePhoneNumber('contact_person_2_mobile')" maxlength="15"  style="width: 25vw;">
                         <div class="note" id="contact_person_2_mobile_note">e.g. 09102223333</div>
                         <p id="contact_person_2_mobile-error" style="color: red;"></p>
                     </div>

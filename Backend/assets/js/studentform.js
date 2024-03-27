@@ -541,6 +541,10 @@ function initializeTelInput(input) {
     var selectedCountryData = iti.getSelectedCountryData();
     var formattedNumber = iti.getNumber(intlTelInputUtils.numberFormat.E164);
     input.value = formattedNumber;
+
+    // Dynamically set maxlength based on the phone number format of the selected country
+    var phoneLength = selectedCountryData.dialCode.length + selectedCountryData.format.replace(/\D/g, '').length;
+    input.setAttribute('maxlength', phoneLength);
   });
 }
 
