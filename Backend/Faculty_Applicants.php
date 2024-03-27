@@ -1,14 +1,13 @@
 <?php
-
 include("config.php");
 include("Faculty_Cover.php");
-
 
 // Check if the user is logged in as a Faculty
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
   header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
   exit();
 }
+
 // Fetch user's department
 $userId = $_SESSION['user_id'];
 $fetchDepartmentQuery = "SELECT Department FROM users WHERE id = ?";
@@ -23,20 +22,18 @@ $stmtFetchDepartment->close();
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 
 // Fetch the list of students without a result in the faculty's department with search functionality
-$fetchStudentListQuery = "SELECT * FROM admission_data 
+$fetchStudentListQuery = "SELECT *, IFNULL(Gr11_GWA,0) AS Gr11_GWA, IFNULL(GWA_OTAS,0) AS GWA_OTAS, IFNULL(Gr12_GWA,0) AS Gr12_GWA FROM admission_data 
                           WHERE degree_applied = ? 
-                         
+                          AND sent = 'sent'
                           AND ( `Name` LIKE '%$search%' OR 
-                          `Middle_Name` LIKE '%$search%' OR 
-                          `Last_Name` LIKE '%$search%' OR 
-                          `applicant_number` LIKE '%$search%' OR 
-                               applicant_number LIKE '%$search%' OR 
-                               academic_classification LIKE '%$search%' OR 
-                             
-                               nature_of_degree LIKE '%$search%' OR 
-                               degree_applied LIKE '%$search%')
+                                `Middle_Name` LIKE '%$search%' OR 
+                                `Last_Name` LIKE '%$search%' OR 
+                                `applicant_number` LIKE '%$search%' OR 
+                                applicant_number LIKE '%$search%' OR 
+                                academic_classification LIKE '%$search%' OR 
+                                nature_of_degree LIKE '%$search%' OR 
+                                degree_applied LIKE '%$search%')
                           ORDER BY applicant_number ASC";
-
 
 $stmtFetchStudentList = $conn->prepare($fetchStudentListQuery);
 $stmtFetchStudentList->bind_param("s", $department);
@@ -45,367 +42,16 @@ $result = $stmtFetchStudentList->get_result();
 $stmtFetchStudentList->close();
 ?>
 
-
 <head>
   <meta charset="UTF-8">
 
-  <title>BSU OUR Admission Faculty</title>
+  <title>BSU OUR Admission Unit Personnel</title>
 
 </head>
 
 <body>
 
-  <style>
-    #sendButton {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-    }
-
-    #sendButton i {
-      font-size: 14px;
-      color: black;
-    }
-
-    #sendButton:hover i {
-      color: green;
-      transform: scale(1.2);
-    }
-
-
-
-    #toast {
-      position: fixed;
-      top: 10%;
-      right: 10%;
-      width: 300px;
-      background-color: #4CAF50;
-      color: #fff;
-      border-radius: 5px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    #toast.show {
-      opacity: 1;
-    }
-
-    @keyframes slideInUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    .modal {
-      display: none;
-      position: fixed;
-      z-index: 1000;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.4);
-
-    }
-
-    /* Modal Content/Box */
-    .modal-content {
-      background-color: #fefefe;
-      margin: 15% auto;
-      /* 15% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 30%;
-      /* Could be more or less, depending on screen size */
-      border-radius: 10px;
-    }
-
-    /* Close Button */
-
-    .close:hover,
-    .close:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    /* Buttons */
-    /* Buttons */
-    #confirmSend,
-    .yes,
-    .cancel {
-      padding: 10px 15px;
-      margin: 5px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-      text-align: center;
-      display: inline-block;
-    }
-
-    #confirmSend,
-    .yes {
-      background-color: #4CAF50;
-      /* Green color for "Confirm" button */
-      color: white;
-    }
-
-    .cancel {
-      background-color: #ff5757;
-      /* Red color for "Cancel" button */
-      color: white;
-      float: right;
-      /* Float the "Cancel" button to the right */
-    }
-
-    #confirmSend:hover,
-    .cancel:hover {
-      opacity: 0.8;
-    }
-
-    .confirmation-message {
-      background-color: #f44336;
-      color: white;
-      padding: 15px;
-      border-radius: 5px;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1000;
-    }
-
-    #deleteConfirmationModal,
-    #errorModal,
-    #selectRowModal,
-    #sendSuccessModal {
-      display: none;
-    }
-
-    .field-group {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-
-    .field-group>* {
-      flex-basis: calc(25% - 10px);
-      margin-bottom: 10px;
-    }
-
-    .success-message {
-      position: fixed;
-      top: 15%;
-      right: 10%;
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-      z-index: 9;
-      animation: slideInUp 0.3s ease-in-out;
-      display: none;
-    }
-
-    @keyframes slideInUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    #calendarFilterForm button {
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 0;
-      font-size: 0;
-      color: #000;
-    }
-
-    #calendarFilterForm button i {
-      font-size: 18px;
-    }
-
-    #calendarFilterForm input[type="date"] {
-      padding: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      margin-right: 10px;
-    }
-
-    #toast {
-      position: fixed;
-      top: 10%;
-      right: 10%;
-      width: 300px;
-      background-color: #4CAF50;
-      color: #fff;
-      border-radius: 5px;
-      padding: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
-
-    #toast.show {
-      opacity: 1;
-    }
-
-    @keyframes slideInUp {
-      from {
-        transform: translateY(100%);
-      }
-
-      to {
-        transform: translateY(0);
-      }
-    }
-
-    .close-form {
-      transition: background-color 0.3s, transform 0.3s;
-      border-radius: 50%;
-    }
-
-    .close-form:hover {
-      background-color: rgba(255, 0, 0, 0.2);
-    }
-
-    .form-container1 {
-      display: grid;
-      grid-template-columns: 50% 23% 23%;
-      gap: 2%;
-    }
-
-    .form-container2 {
-      display: grid;
-      grid-template-columns: 23% 23% 23% 23%;
-      gap: 2%;
-    }
-
-    .form-container3 {
-      display: grid;
-      grid-template-columns: 18% 18% 18% 18% 18%;
-      gap: 2%;
-    }
-
-    .form-container4 {
-      display: grid;
-      grid-template-columns: 100%;
-      gap: 10px;
-    }
-
-    .form-container5 {
-      display: grid;
-      grid-template-columns: 40% 40% 15%;
-      gap: 10px;
-    }
-
-    .form-container6 {
-      display: grid;
-      grid-template-columns: 50% 15%;
-      gap: 10px;
-    }
-
-    .form-group {
-      margin-bottom: 15px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .small-label {
-      display: block;
-      font-size: .9vw;
-      margin-bottom: 5px;
-    }
-
-    .input {
-      width: 100%;
-      padding: 8px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: .8vw;
-    }
-
-    input[type="submit"] {
-      background-color: #4CAF50;
-      color: white;
-      padding: 2% 4%;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 1vw;
-    }
-
-    input[type="submit"]:hover {
-      background-color: darkcyan;
-    }
-
-    .personal_information {
-      font-size: 1vw;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    #updateProfileForm {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-
-    .success-message {
-      background-color: #4CAF50;
-      color: white;
-      padding: 10px;
-      border-radius: 4px;
-      margin-bottom: 10px;
-    }
-
-    @media screen and (max-width: 881px) {
-      .form-group {
-        width: 100%;
-      }
-    }
-
-    #update_success {
-      position: fixed;
-      top: 75px;
-      /* Adjust the distance from the top */
-      right: 20px;
-      /* Adjust the distance from the right */
-      padding: 10px 20px;
-      background-color: green;
-      color: white;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      z-index: 9999;
-      opacity: 0;
-      animation: slideUp 0.5s ease forwards, fadeOut 0.5s 2.5s forwards;
-    }
-
-    @keyframes slideUp {
-      0% {
-        opacity: 0;
-        transform: translateY(100%);
-      }
-
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-  </style>
+ 
   <section id="content">
     <?php
 
@@ -467,13 +113,38 @@ $stmtFetchStudentList->close();
 
           <table id="studentTable">
             <thead>
+            <tr>
+                <th></th>
+                <th></th>
+                <th colspan="3" style="text-align: center;">Full Name</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th colspan="3" style="text-align: center;">English</th>
+                <th colspan="3" style="text-align: center;">Math</th>
+                <th colspan="3" style="text-align: center;">Science</th>
+                <th></th>
+                <th></th>
+                <th style="display: none;" id="selectColumn">
+                  <input type="checkbox" id="selectAllCheckbox">
+                </th>
+              </tr>
               <tr>
                 <th>#</th>
-                <th>Application No.</th>
-                <th>Name</th>
+                <th>Applicat Number</th>
+                <th>Last Name</th>
+                <th>Middle Name</th>
+                <th>First Name</th>
+                <th>Nature</th>
+                <th>Classification</th>
+                <th>GWA</th>
+                <th>ORAL COMMUNICATION IN CONTEXT</th>
+                <th>READING AND WRITING SKILLS</th>
+                <th>ENGLISH FOR ACADEMIC AND PROFESSIONAL PURPOSES</th>
+                <th>Math</th>
+                
+                <th>Science</th>
                 <th>Nature of Degree</th>
-                <th>Program</th>
-
                 <th>Academic Classification</th>
                 <th style="display: none;" id="selectColumn">
                   <input type="checkbox" id="selectAllCheckbox">
@@ -481,27 +152,41 @@ $stmtFetchStudentList->close();
               </tr>
             </thead>
             <tbody>
-              <?php
-              $counter = 1; // Initialize the counter before the loop
+            <?php
+  $counter = 1; // Initialize the counter before the loop
 
-              while ($row = $result->fetch_assoc()) {
-                echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
-                echo "<td>" . $counter . "</td>";
-                echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['Last_Name'] . "</td>";
-                echo "<td>" . $row['Name'] . "</td>";
-                echo "<td>" . $row['Middle_Name'] . "</td>";
-                echo "<td>" . $row['nature_of_degree'] . "</td>";
-                echo "<td>" . $row['degree_applied'] . "</td>";
-                echo "<td>" . $row['academic_classification'] . "</td>";
+  while ($row = $result->fetch_assoc()) {
+    echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
+    echo "<td>" . $counter . "</td>";
+    echo "<td>" . $row['applicant_number'] . "</td>";
+    echo "<td>" . $row['Last_Name'] . "</td>";
+    echo "<td>" . $row['Name'] . "</td>";
+    echo "<td>" . $row['Middle_Name'] . "</td>";
+    echo "<td>" . $row['nature_of_degree'] . "</td>";
+    echo "<td>" . $row['academic_classification'] . "</td>";
 
-                echo "<td  id='checkbox-{$row['id']}'><input type='checkbox'style='display: none;' class='select-checkbox'></td>";
+    // Determine GWA and apply style if none of the columns have data
+    $gwa = max($row['Gr11_GWA'], $row['GWA_OTAS'], $row['Gr12_GWA']);
+    $gwaCellClass = ($gwa == 0) ? 'class="red-cell"' : '';
+    echo "<td {$gwaCellClass}>" . $gwa . "</td>";
 
-                echo "</tr>";
+    // Fetch English grade and apply blue color if it comes from 'English_Other_Courses_Grade'
+    $englishGrade = $row['English_Oral_Communication_Grade'];
+    $englishGradeColumn = 'English_Oral_Communication_Grade'; // Default column
+    if ($englishGrade === null) {
+      $englishGrade = $row['English_Other_Courses_Grade'];
+      $englishGradeColumn = 'English_Other_Courses_Grade'; // Updated column
+    }
 
-                $counter++; // Increment the counter for the next row
-              }
-              ?>
+    $blueCellClass = ($englishGradeColumn === 'English_Other_Courses_Grade') ? 'blue-cell pointer-hover' : '';
+    echo "<td class='{$blueCellClass}' title='" . $row['English_Subject_1'] . "'>" . $englishGrade . "</td>";
+
+ 
+    echo "</tr>";
+
+    $counter++; // Increment the counter for the next row
+  }
+  ?>
 
             </tbody>
           </table>
@@ -616,73 +301,172 @@ $stmtFetchStudentList->close();
                 </div>
               </div>
               <div class="Subjects" style="display: none;">
-                <p class="personal_information">English</p>
-                <div class="form-container2">
+              <p id="toggleSubjects">Other Subjects</p>
+<br>
+              <div class="core_subject" >
+                <p class="personal_information">Grade in English</p>
+                  
+                <div class="form-container7">
                   <div class="form-group">
                     <!-- English_Oral_Communication_Grade -->
-                    <label class="small-label" for="English_Oral_Communication_Grade">English 1</label>
+                    <label class="small-label" for="English_Oral_Communication_Grade">Oral Communication in Context
+                    </label>
                     <input name="English_Oral_Communication_Grade" class="input numeric-input" autocomplete="off" id="English_Oral_Communication_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Oral_Communication_Grade']; ?>">
                   </div>
                   <div class="form-group"> <!-- English_Reading_Writing_Grade -->
-                    <label class="small-label" for="English_Reading_Writing_Grade">English 2</label>
+                    <label class="small-label" for="English_Reading_Writing_Grade">Reading and Writing Skills</label>
                     <input name="English_Reading_Writing_Grade" class="input numeric-input" autocomplete="off" id="English_Reading_Writing_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Reading_Writing_Grade']; ?>">
                   </div>
                   <div class="form-group"> <!-- English_Academic_Grade -->
-                    <label class="small-label" for="English_Academic_Grade">English 3</label>
+                    <label class="small-label" for="English_Academic_Grade">Academic and Professional Purposes</label>
                     <input name="English_Academic_Grade" class="input numeric-input" autocomplete="off" id="English_Academic_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Academic_Grade']; ?>">
                   </div>
-                  <div class="form-group"> <!-- English_Other_Courses_Grade -->
-                    <label class="small-label" for="English_Other_Courses_Grade">English 4</label>
-                    <input name="English_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="English_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['English_Other_Courses_Grade']; ?>">
-                  </div>
                 </div>
-                <p class="personal_information">Science</p>
+                </div>
+                <div class="other_subject" style="display: none;">
+                <p class="personal_information">OTHER ENGLISH COURSES (INDICATE COURSE AND GRADE ONLY IF THERE IS NO CORE ENGLISH COURSE)</p>
 
-                <div class="form-container3">
+                <div class="form-container8">
+                  <div class="form-group">
+                    <!-- English_Subject_1 -->
+                    <label class="small-label" for="English_Subject_1">Course</label>
+                    <input name="English_Subject_1" class="input numeric-input" autocomplete="off" id="English_Subject_1" placeholder="Course" value="<?php echo $admissionData['English_Subject_1']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- English_Other_Courses_Grade -->
+                    <label class="small-label" for="English_Other_Courses_Grade">&nbsp;</label>
+                    <input name="English_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="English_Other_Courses_Grade" placeholder="Grade" value="<?php echo $admissionData['English_Other_Courses_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- English_Subject_2 -->
+                    <label class="small-label" for="English_Subject_2">Course</label>
+                    <input name="English_Subject_2" class="input numeric-input" autocomplete="off" id="English_Subject_2" placeholder="Course" value="<?php echo $admissionData['English_Subject_2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="English_Other_Courses_Grade_2">&nbsp; </label>
+                    <input name="English_Other_Courses_Grade_2" class="input numeric-input" autocomplete="off" id="English_Other_Courses_Grade_2" placeholder="Grade" value="<?php echo $admissionData['English_Other_Courses_Grade_2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="English_Subject_3">Course</label>
+                    <input name="English_Subject_3" class="input numeric-input" autocomplete="off" id="English_Subject_3" placeholder="Course" value="<?php echo $admissionData['English_Subject_3']; ?>">
+
+                  </div>
+
+
+                  <div class="form-group">
+                    <label class="small-label" for="English_Other_Courses_Grade_3">&nbsp; </label>
+                    <input name="English_Other_Courses_Grade_3" class="input numeric-input" autocomplete="off" id="English_Other_Courses_Grade_3" placeholder="Grade" value="<?php echo $admissionData['English_Other_Courses_Grade_3']; ?>">
+
+                  </div>
+
+                </div>
+                </div>
+                <div class="core_subject" >
+
+                <p class="personal_information">Grade in Science</p>
+
+                <div class="form-container9">
                   <div class="form-group">
                     <!-- Science_Earth_Science_Grade -->
-                    <label class="small-label" for="Science_Earth_Science_Grade">Science 1</label>
+                    <label class="small-label" for="Science_Earth_Science_Grade">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Earth Science</label>
                     <input name="Science_Earth_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Earth_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_Science_Grade']; ?>">
                   </div>
                   <div class="form-group"> <!-- Science_Earth_and_Life_Science_Grade -->
-                    <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Science 2</label>
+                    <label class="small-label" for="Science_Earth_and_Life_Science_Grade">Earth and Life Science</label>
                     <input name="Science_Earth_and_Life_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Earth_and_Life_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Earth_and_Life_Science_Grade']; ?>">
                   </div>
                   <div class="form-group"> <!-- Science_Physical_Science_Grade -->
-                    <label class="small-label" for="Science_Physical_Science_Grade">Science 3</label>
+                    <label class="small-label" for="Science_Physical_Science_Grade">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                      Physical Science</label>
                     <input name="Science_Physical_Science_Grade" class="input numeric-input" autocomplete="off" id="Science_Physical_Science_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Physical_Science_Grade']; ?>">
                   </div>
                   <div class="form-group"> <!-- Science_Disaster_Readiness_Grade -->
-                    <label class="small-label" for="Science_Disaster_Readiness_Grade">Science 4</label>
+                    <label class="small-label" for="Science_Disaster_Readiness_Grade">DRRR for STEM and GAS strands</label>
                     <input name="Science_Disaster_Readiness_Grade" class="input numeric-input" autocomplete="off" id="Science_Disaster_Readiness_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Disaster_Readiness_Grade']; ?>">
                   </div>
+                </div>
+                </div>
 
-                  <!-- Repeat the same structure for the next set of fields -->
+                <div class="other_subject" style="display: none;">
+                <p class="personal_information">OTHER SCIENCE COURSES (INDICATE COURSE AND GRADE ONLY IF THERE IS NO CORE ENGLISH COURSE)</p>
+                <div class="form-container8">
                   <div class="form-group">
                     <!-- Science_Other_Courses_Grade -->
-                    <label class="small-label" for="Science_Other_Courses_Grade">Science 5</label>
-                    <input name="Science_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>">
+                    <label class="small-label" for="Science_Subject_1">Course</label>
+                    <input name="Science_Subject_1" class="input numeric-input" autocomplete="off" id="Science_Subject_1" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_1']; ?>">
                   </div>
-
+                  <div class="form-group">
+                    <label class="small-label" for="Science_Other_Courses_Grade">&nbsp; </label>
+                    <input name="Science_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade" placeholder="Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Science_Other_Courses_Grade -->
+                    <label class="small-label" for="Science_Subject_2">Course</label>
+                    <input name="Science_Subject_2" class="input numeric-input" autocomplete="off" id="Science_Subject_2" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Science_Other_Courses_Grade_2">&nbsp; </label>
+                    <input name="Science_Other_Courses_Grade_2" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade_2" placeholder="Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade_2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Science_Other_Courses_Grade -->
+                    <label class="small-label" for="Science_Subject_3">Course</label>
+                    <input name="Science_Subject_3" class="input numeric-input" autocomplete="off" id="Science_Subject_3" placeholder="Enter Grade" value="<?php echo $admissionData['Science_Subject_3']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Science_Other_Courses_Grade_3">&nbsp; </label>
+                    <input name="Science_Other_Courses_Grade_3" class="input numeric-input" autocomplete="off" id="Science_Other_Courses_Grade_3" placeholder="Grade" value="<?php echo $admissionData['Science_Other_Courses_Grade_3']; ?>">
+                  </div>
                 </div>
-                <p class="personal_information">Math</p>
-
+                </div>
+                <div class="core_subject" >
+                <p class="personal_information">Grade in Math</p>
                 <div class="form-container2">
                   <div class="form-group">
                     <!-- Math_General_Mathematics_Grade -->
-                    <label class="small-label" for="Math_General_Mathematics_Grade">Math 1</label>
+                    <label class="small-label" for="Math_General_Mathematics_Grade">General Mathematics</label>
                     <input name="Math_General_Mathematics_Grade" class="input numeric-input" autocomplete="off" id="Math_General_Mathematics_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_General_Mathematics_Grade']; ?>">
                   </div>
                   <div class="form-group">
                     <!-- Math_Statistics_and_Probability_Grade -->
-                    <label class="small-label" for="Math_Statistics_and_Probability_Grade">Math 2</label>
+                    <label class="small-label" for="Math_Statistics_and_Probability_Grade">Statistics and Probability</label>
                     <input name="Math_Statistics_and_Probability_Grade" class="input numeric-input" autocomplete="off" id="Math_Statistics_and_Probability_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Statistics_and_Probability_Grade']; ?>">
+                  </div>
+                </div>
+                </div>
+                <div class="other_subject" style="display: none;">
+                <p class="personal_information">OTHER SCIENCE COURSES (INDICATE COURSE AND GRADE ONLY IF THERE IS NO CORE ENGLISH COURSE)</p>
+
+                <div class="form-container8">
+                  <div class="form-group">
+                    <!-- Math_Other_Courses_Grade -->
+                    <label class="small-label" for="Math_Subject_1">Course</label>
+                    <input name="Math_Subject_1" class="input numeric-input" autocomplete="off" id="Math_Subject_1" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_1']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Math_Other_Courses_Grade">&nbsp; </label>
+                    <input name="Math_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>">
                   </div>
                   <div class="form-group">
                     <!-- Math_Other_Courses_Grade -->
-                    <label class="small-label" for="Math_Other_Courses_Grade">Math 3</label>
-                    <input name="Math_Other_Courses_Grade" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade']; ?>">
+                    <label class="small-label" for="Math_Subject_2">Course</label>
+                    <input name="Math_Subject_2" class="input numeric-input" autocomplete="off" id="Math_Subject_2" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_2']; ?>">
                   </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Math_Other_Courses_Grade_2">&nbsp; </label>
+                    <input name="Math_Other_Courses_Grade_2" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade_2" placeholder="Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade_2']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <!-- Math_Other_Courses_Grade -->
+                    <label class="small-label" for="Math_Subject_3">Course</label>
+                    <input name="Math_Subject_3" class="input numeric-input" autocomplete="off" id="Math_Subject_3" placeholder="Enter Grade" value="<?php echo $admissionData['Math_Subject_3']; ?>">
+                  </div>
+                  <div class="form-group">
+                    <label class="small-label" for="Math_Other_Courses_Grade_3">&nbsp; </label>
+                    <input name="Math_Other_Courses_Grade_3" class="input numeric-input" autocomplete="off" id="Math_Other_Courses_Grade_3" placeholder="Grade" value="<?php echo $admissionData['Math_Other_Courses_Grade_3']; ?>">
+                  </div>
+                </div>
                 </div>
               </div>
               <div class="Transferee" style="display: none;">
@@ -694,9 +478,15 @@ $stmtFetchStudentList->close();
                 <h2> ALS/PEPT Completers </h2>
                 <div class="form-container2">
                   <div class="form-group">
-                    <!-- ALS_Grade -->
-                    <label class="small-label" for="ALS_Grade">ALS Grade</label>
-                    <input name="ALS_Grade" class="input numeric-input" autocomplete="off" id="ALS_Grade" placeholder="Enter Grade" value="<?php echo $admissionData['ALS_Grade']; ?>">
+                    <!-- ALS_Math -->
+                    <label class="small-label" for="ALS_Math">Math</label>
+                    <input name="ALS_Math" class="input numeric-input" autocomplete="off" id="ALS_Math" placeholder="Enter Grade" value="<?php echo $admissionData['ALS_Math']; ?>">
+                  </div>
+
+                  <div class="form-group">
+                    <!-- ALS_Math -->
+                    <label class="small-label" for="ALS_English">English</label>
+                    <input name="ALS_English" class="input numeric-input" autocomplete="off" id="ALS_English" placeholder="Enter Grade" value="<?php echo $admissionData['ALS_English']; ?>">
                   </div>
                 </div>
               </div>
@@ -736,6 +526,8 @@ $stmtFetchStudentList->close();
                   </div>
                 </div>
               </div>
+
+
 
               <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
               <input type="submit" name="submit">
@@ -783,7 +575,10 @@ $stmtFetchStudentList->close();
                   </select>
                 </div>
 
+
               </div>
+              <label class="small-label" for="Requirements_Remarks" style="white-space: nowrap;">Remarks</label>
+              <textarea name="Requirements_Remarks" placeholder="Enter remarks..." class="input auto-expand" id="Requirements_Remarks"><?php echo $admissionData['Requirements_Remarks']; ?></textarea>
 
               <br>
               <input type="hidden" name="id" value="<?php echo $admissionData['id']; ?>">
@@ -828,7 +623,7 @@ $stmtFetchStudentList->close();
             type: 'POST',
             data: {
               userId: userId
-            },
+            }, 
             dataType: 'json',
             success: function(response) {
 
@@ -848,7 +643,15 @@ $stmtFetchStudentList->close();
               $('#updateProfileForm input[name="GWA_OTAS"]').val(response.GWA_OTAS);
               $('#updateProfileForm select[name="nature_qualification"]').val(response.nature_qualification);
               $('#updateProfileForm select[name="Degree_Remarks"]').val(response.Degree_Remarks);
-
+              $('#updateProfileForm input[name="English_Subject_1"]').val(response.English_Subject_1);
+              $('#updateProfileForm input[name="English_Subject_2"]').val(response.English_Subject_2);
+              $('#updateProfileForm input[name="English_Subject_3"]').val(response.English_Subject_3);
+              $('#updateProfileForm input[name="Science_Subject_1"]').val(response.Science_Subject_1);
+              $('#updateProfileForm input[name="Science_Subject_2"]').val(response.Science_Subject_2);
+              $('#updateProfileForm input[name="Science_Subject_3"]').val(response.Science_Subject_3);
+              $('#updateProfileForm input[name="Math_Subject_1"]').val(response.Math_Subject_1);
+              $('#updateProfileForm input[name="Math_Subject_2"]').val(response.Math_Subject_2);
+              $('#updateProfileForm input[name="Math_Subject_3"]').val(response.Math_Subject_3);
               $('#updateProfileForm input[name="Gr12_A1"]').val(response.Gr12_A1);
               $('#updateProfileForm input[name="Gr12_A2"]').val(response.Gr12_A2);
               $('#updateProfileForm input[name="Gr12_A3"]').val(response.Gr12_A3);
@@ -857,25 +660,33 @@ $stmtFetchStudentList->close();
               $('#updateProfileForm input[name="English_Reading_Writing_Grade"]').val(response.English_Reading_Writing_Grade);
               $('#updateProfileForm input[name="English_Academic_Grade"]').val(response.English_Academic_Grade);
               $('#updateProfileForm input[name="English_Other_Courses_Grade"]').val(response.English_Other_Courses_Grade);
+              $('#updateProfileForm input[name="English_Other_Courses_Grade_2"]').val(response.English_Other_Courses_Grade_2);
+              $('#updateProfileForm input[name="English_Other_Courses_Grade_3"]').val(response.English_Other_Courses_Grade_3);
               $('#updateProfileForm input[name="Science_Earth_Science_Grade"]').val(response.Science_Earth_Science_Grade);
               $('#updateProfileForm input[name="academic_classification"]').val(response.academic_classification);
               $('#updateProfileForm input[name="Science_Earth_and_Life_Science_Grade"]').val(response.Science_Earth_and_Life_Science_Grade);
               $('#updateProfileForm input[name="Science_Physical_Science_Grade"]').val(response.Science_Physical_Science_Grade);
               $('#updateProfileForm input[name="Science_Disaster_Readiness_Grade"]').val(response.Science_Disaster_Readiness_Grade);
               $('#updateProfileForm input[name="Science_Other_Courses_Grade"]').val(response.Science_Other_Courses_Grade);
+              $('#updateProfileForm input[name="Science_Other_Courses_Grade_2"]').val(response.Science_Other_Courses_Grade_2);
+              $('#updateProfileForm input[name="Science_Other_Courses_Grade_3"]').val(response.Science_Other_Courses_Grade_3);
               $('#updateProfileForm input[name="Math_General_Mathematics_Grade"]').val(response.Math_General_Mathematics_Grade);
               $('#updateProfileForm input[name="Math_Statistics_and_Probability_Grade"]').val(response.Math_Statistics_and_Probability_Grade);
               $('#updateProfileForm input[name="Math_Other_Courses_Grade"]').val(response.Math_Other_Courses_Grade);
+              $('#updateProfileForm input[name="Math_Other_Courses_Grade_2"]').val(response.Math_Other_Courses_Grade_2);
+              $('#updateProfileForm input[name="Math_Other_Courses_Grade_3"]').val(response.Math_Other_Courses_Grade_3);
               $('#updateProfileForm input[name="Old_HS_English_Grade"]').val(response.Old_HS_English_Grade);
               $('#updateProfileForm input[name="Old_HS_Math_Grade"]').val(response.Old_HS_Math_Grade);
               $('#updateProfileForm input[name="Old_HS_Science_Grade"]').val(response.Old_HS_Science_Grade);
-              $('#updateProfileForm input[name="ALS_Grade"]').val(response.ALS_Grade);
+              $('#updateProfileForm input[name="ALS_Math"]').val(response.ALS_Math);
+              $('#updateProfileForm input[name="ALS_English"]').val(response.ALS_English);
+
               $('#updateProfileForm input[name="Requirements"]').val(response.Requirements);
-              $('#updateProfileForm input[name="Requirements_Remarks"]').val(response.Requirements_Remarks);
               $('#updateProfileForm input[name="OSS_Endorsement_Slip"]').val(response.OSS_Endorsement_Slip);
               $('#updateProfileForm input[name="OSS_Admission_Test_Score"]').val(response.OSS_Admission_Test_Score);
               $('#updateProfileForm input[name="OSS_Remarks"]').val(response.OSS_Remarks);
               $('#updateProfileForm input[name="Qualification_Nature_Degree"]').val(response.Qualification_Nature_Degree);
+              $('#updateProfileForm textarea[name="Requirements_Remarks"]').val(response.Requirements_Remarks);
 
               $('#updateProfileForm input[name="Interview_Result"]').val(response.Interview_Result);
               $('#updateProfileForm input[name="Endorsed"]').val(response.Endorsed);
@@ -890,7 +701,7 @@ $stmtFetchStudentList->close();
               $('.todo').show(); // Show the form container
 
               // Show the relevant div based on academic classification
-              $('.SHS-Graduate-Average, .Gr-12-Average, .ALS, .Subjects, .GWA-OTAS, .Transferee, .Gr-12, .HS-Graduate, .2nd-degree').hide(); // Hide all divs first
+              $('.SHS-Graduate-Average,.Gr-12-Average, .ALS, .Subjects, .GWA-OTAS, .Transferee, .Gr-12, .HS-Graduate, .2nd-degree').hide(); // Hide all divs first
               if (academicClassification === 'Senior High School Graduates') {
                 $('.SHS-Graduate-Average, .Subjects ').show();
               } else if (academicClassification === 'Grade 12') {
@@ -921,8 +732,36 @@ $stmtFetchStudentList->close();
         $('.todo').hide();
       });
     });
+    var toggleState = false; // Initial state
 
+document.getElementById('toggleSubjects').addEventListener('click', function() {
+  var coreSubjects = document.querySelectorAll('.core_subject');
+  var otherSubjects = document.querySelectorAll('.other_subject');
 
+  if (toggleState) { // If currently showing other subjects, switch to showing core subjects
+    coreSubjects.forEach(function(subject) {
+      subject.style.display = 'block';
+    });
+
+    otherSubjects.forEach(function(subject) {
+      subject.style.display = 'none';
+    });
+
+    this.textContent = "Other Subjects"; // Update text
+    toggleState = false; // Update toggle state
+  } else { // If currently showing core subjects, switch to showing other subjects
+    coreSubjects.forEach(function(subject) {
+      subject.style.display = 'none';
+    });
+
+    otherSubjects.forEach(function(subject) {
+      subject.style.display = 'block';
+    });
+
+    this.textContent = "Show Core Subjects"; // Update text
+    toggleState = true; // Update toggle state
+  }
+});
     function showToast(message, type) {
       // Display a toast message
       $('#toast-body').text(message);
@@ -1230,7 +1069,481 @@ $stmtFetchStudentList->close();
       }
     }
   </script>
+ <style>
+   .english-subject-tooltip {
+    position: absolute;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    color: #333;
+  }
 
+  .english-subject-tooltip:before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    margin-left: -8px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent #ccc transparent;
+  }
+    .blue-cell {
+    color: blue;
+  }
+
+  .pointer-hover:hover {
+    cursor: pointer;
+  }
+    #sendButton {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    #sendButton i {
+      font-size: 14px;
+      color: black;
+    }
+
+    #sendButton:hover i {
+      color: green;
+      transform: scale(1.2);
+    }
+
+
+
+    #toast {
+      position: fixed;
+      top: 10%;
+      right: 10%;
+      width: 300px;
+      background-color: #4CAF50;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #toast.show {
+      opacity: 1;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+
+    }
+
+    /* Modal Content/Box */
+    .modal-content {
+      background-color: #fefefe;
+      margin: 15% auto;
+      /* 15% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 30%;
+      /* Could be more or less, depending on screen size */
+      border-radius: 10px;
+    }
+
+    /* Close Button */
+
+    .close:hover,
+    .close:focus {
+      color: #000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    /* Buttons */
+    /* Buttons */
+    #confirmSend,
+    .yes,
+    .cancel {
+      padding: 10px 15px;
+      margin: 5px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    #confirmSend,
+    .yes {
+      background-color: #4CAF50;
+      /* Green color for "Confirm" button */
+      color: white;
+    }
+
+    .cancel {
+      background-color: #ff5757;
+      /* Red color for "Cancel" button */
+      color: white;
+      float: right;
+      /* Float the "Cancel" button to the right */
+    }
+
+    #confirmSend:hover,
+    .cancel:hover {
+      opacity: 0.8;
+    }
+
+    .confirmation-message {
+      background-color: #f44336;
+      color: white;
+      padding: 15px;
+      border-radius: 5px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+    }
+
+    #deleteConfirmationModal,
+    #errorModal,
+    #selectRowModal,
+    #sendSuccessModal {
+      display: none;
+    }
+
+    .field-group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .field-group>* {
+      flex-basis: calc(25% - 10px);
+      margin-bottom: 10px;
+    }
+
+    .success-message {
+      position: fixed;
+      top: 15%;
+      right: 10%;
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      z-index: 9;
+      animation: slideInUp 0.3s ease-in-out;
+      display: none;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    #calendarFilterForm button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      font-size: 0;
+      color: #000;
+    }
+
+    #calendarFilterForm button i {
+      font-size: 18px;
+    }
+
+    #calendarFilterForm input[type="date"] {
+      padding: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    #toast {
+      position: fixed;
+      top: 10%;
+      right: 10%;
+      width: 300px;
+      background-color: #4CAF50;
+      color: #fff;
+      border-radius: 5px;
+      padding: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    #toast.show {
+      opacity: 1;
+    }
+
+    @keyframes slideInUp {
+      from {
+        transform: translateY(100%);
+      }
+
+      to {
+        transform: translateY(0);
+      }
+    }
+
+    .close-form {
+      transition: background-color 0.3s, transform 0.3s;
+      border-radius: 50%;
+    }
+
+    .close-form:hover {
+      background-color: rgba(255, 0, 0, 0.2);
+    }
+
+    .form-container1 {
+      display: grid;
+      grid-template-columns: 50% 23% 23%;
+      gap: 2%;
+    }
+
+    .form-container2 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2%;
+    }
+
+    .form-container7 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2%;
+    }
+
+    .form-container7 .form-group {
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: start;
+      /* Align items to the start of the grid cell */
+    }
+
+    .form-container7 .form-group .small-label {
+      margin-bottom: 10px;
+      white-space: normal;
+      text-align: left;
+      word-wrap: break-word;
+    }
+
+    .form-container7 .form-group input {
+      width: 100%;
+      /* Take up full width of the grid cell */
+    }
+
+
+
+    .form-container8 {
+      display: grid;
+      grid-template-columns: 20% 10% 20% 10% 20% 10%;
+
+      gap: 2%;
+    }
+
+    .form-container8 .form-group {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .form-container9 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      /* evenly distribute columns */
+      gap: 2%;
+    }
+
+    .form-container9 .form-group {
+      display: flex;
+      flex-direction: column;
+
+    }
+
+    .form-container9 .form-group .small-label {
+      margin-bottom: 10px;
+      max-height: 3em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      text-align: left;
+    }
+
+    .form-container8 .form-group .small-label {
+      margin-bottom: 10px;
+      max-height: 3em;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: normal;
+      text-align: left;
+    }
+
+    .form-container3 {
+      display: grid;
+      grid-template-columns: 18% 18% 18% 18% 18%;
+      gap: 2%;
+    }
+
+    .form-container4 {
+      display: grid;
+      grid-template-columns: 100%;
+      gap: 10px;
+    }
+
+    .form-container5 {
+      display: grid;
+      grid-template-columns: 40% 40% 15%;
+      gap: 10px;
+    }
+
+    .form-container6 {
+      display: grid;
+      grid-template-columns: 50% 15%;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .small-label {
+      display: block;
+      font-size: .9vw;
+      margin-bottom: 5px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: .8vw;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      padding: 2% 4%;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1vw;
+    }
+
+    input[type="submit"]:hover {
+      background-color: darkcyan;
+    }
+
+    .personal_information {
+      font-size: 1vw;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    #updateProfileForm {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .success-message {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px;
+      border-radius: 4px;
+      margin-bottom: 10px;
+    }
+
+    @media screen and (max-width: 881px) {
+      .form-group {
+        width: 100%;
+      }
+    }
+
+    #update_success {
+      position: fixed;
+      top: 75px;
+      /* Adjust the distance from the top */
+      right: 20px;
+      /* Adjust the distance from the right */
+      padding: 10px 20px;
+      background-color: green;
+      color: white;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      opacity: 0;
+      animation: slideUp 0.5s ease forwards, fadeOut 0.5s 2.5s forwards;
+    }
+
+    @keyframes slideUp {
+      0% {
+        opacity: 0;
+        transform: translateY(100%);
+      }
+
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .auto-expand {
+      min-height: 50px;
+      /* Set a minimum height for the textarea */
+    }
+    #toggleSubjects {
+    background-color: green;
+    border-radius: 5px;
+    padding: 10px 20px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: auto; /* Set width to auto */
+    float: right; /* Float it to the right */
+  }
+
+  #toggleSubjects:hover {
+    background-color: darkgreen;
+  }
+
+  .other_subject {
+    display: none;
+  }
+  </style>
 
 
   </div>

@@ -1091,6 +1091,14 @@ nav {
     max-height: 400px;
     overflow-y: auto;
 }
+#content main .table-data .order table th:nth-child(8),
+#content main .table-data .order table th:nth-child(9),
+#content main .table-data .order table th:nth-child(10) {
+    /* Add specific styles for English columns */
+    /* For example: */
+    font-weight: bold;
+    color: var(--green); /* Change color as desired */
+}
 
 /* Scrollbar styles */
 #table-container::-webkit-scrollbar {
