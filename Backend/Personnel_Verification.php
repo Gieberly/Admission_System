@@ -35,8 +35,11 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $filterDate = isset($_GET['appointment_date']) ? $_GET['appointment_date'] : '';
 
 $query = "SELECT * FROM admission_data WHERE 
-                 (
-                  `applicant_number` LIKE '%$search%' OR 
+                 ( 
+            `Name` LIKE '%$search%' OR 
+            `Middle_Name` LIKE '%$search%' OR 
+            `Last_Name` LIKE '%$search%' OR 
+            `applicant_number` LIKE '%$search%' OR 
              `academic_classification` LIKE '%$search%' OR 
              `email` LIKE '%$search%' OR 
              `result` LIKE '%$search%' OR 
@@ -184,7 +187,7 @@ $stmt->close();
           <div class="tab-content" id="content1">
 
             <form id="updateProfileForm" class="tab1-content" method="post" action="Personnel_DataUpdate.php">
-            <p class="personal_information">Personal Information </p>
+              <p class="personal_information">Personal Information </p>
 
               <div class="form-container1">
 
@@ -201,8 +204,9 @@ $stmt->close();
                   <!-- First Name -->
                   <label class="small-label" for="Name">First Name</label>
                   <input name="Name" class="input" id="Name" value="<?php echo $admissionData['Name']; ?>">
+
                   <br>
-                  
+
                   <!-- Sex at Birth -->
                   <label class="small-label" for="gender">Sex at birth</label>
                   <select name="gender" class="input" id="gender">
@@ -225,7 +229,7 @@ $stmt->close();
                 <img id="applicantPicture" alt="Applicant Picture">
                 <div class="form-group">
 
-                 
+
                 </div>
 
               </div>
@@ -289,10 +293,38 @@ $stmt->close();
                   <!-- Degree -->
                   <label class="small-label" for="degree_applied">Degree</label>
                   <select name="degree_applied" class="input" id="degree_applied">
-                    <?php foreach ($courses as $course) { ?>
-                      <option value="<?php echo $course; ?>"><?php echo $course; ?></option>
-                    <?php } ?>
+                    <?php
+                    // Fetch distinct colleges from programs table
+                    $distinct_colleges_query = "SELECT DISTINCT College FROM programs";
+                    $distinct_colleges_result = $conn->query($distinct_colleges_query);
+
+                    while ($college_row = $distinct_colleges_result->fetch_assoc()) {
+                      $college_name = $college_row['College'];
+                    ?>
+                      <optgroup label="<?php echo $college_name; ?>">
+                        <?php
+                        // Fetch courses associated with this college
+                        $courses_for_college_query = "SELECT Courses FROM programs WHERE College = ?";
+                        $stmt = $conn->prepare($courses_for_college_query);
+                        $stmt->bind_param("s", $college_name);
+                        $stmt->execute();
+                        $courses_for_college_result = $stmt->get_result();
+                        $stmt->close();
+
+                        // Display courses
+                        while ($course_row = $courses_for_college_result->fetch_assoc()) {
+                          $course_name = $course_row['Courses'];
+                        ?>
+                          <option value="<?php echo $course_name; ?>"><?php echo $course_name; ?></option>
+                        <?php
+                        }
+                        ?>
+                      </optgroup>
+                    <?php
+                    }
+                    ?>
                   </select>
+
 
                 </div>
 
@@ -794,7 +826,7 @@ $stmt->close();
               $('#updateProfileForm input[name="Name"]').val(response.Name);
               $('#updateProfileForm input[name="Middle_Name"]').val(response.Middle_Name);
               $('#updateProfileForm input[name="Last_Name"]').val(response.Last_Name);
-             
+
               $('#updateProfileForm input[name="birthplace"]').val(response.birthplace);
               $('#updateProfileForm select[name="gender"]').val(response.gender);
               $('#updateProfileForm input[name="birthdate"]').val(response.birthdate);

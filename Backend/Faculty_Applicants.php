@@ -6,8 +6,8 @@ include("Faculty_Cover.php");
 
 // Check if the user is logged in as a Faculty
 if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] !== 'Faculty') {
-    header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
-    exit();
+  header("Location: loginpage.php");  // Redirect to login page if not logged in as Faculty
+  exit();
 }
 // Fetch user's department
 $userId = $_SESSION['user_id'];
@@ -26,7 +26,10 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $fetchStudentListQuery = "SELECT * FROM admission_data 
                           WHERE degree_applied = ? 
                          
-                          AND (applicant_name LIKE '%$search%' OR 
+                          AND ( `Name` LIKE '%$search%' OR 
+                          `Middle_Name` LIKE '%$search%' OR 
+                          `Last_Name` LIKE '%$search%' OR 
+                          `applicant_number` LIKE '%$search%' OR 
                                applicant_number LIKE '%$search%' OR 
                                academic_classification LIKE '%$search%' OR 
                              
@@ -44,10 +47,10 @@ $stmtFetchStudentList->close();
 
 
 <head>
-    <meta charset="UTF-8">
-  
-    <title>BSU OUR Admission Faculty</title>
-    
+  <meta charset="UTF-8">
+
+  <title>BSU OUR Admission Faculty</title>
+
 </head>
 
 <body>
@@ -485,7 +488,9 @@ $stmtFetchStudentList->close();
                 echo "<tr class='editRow' data-id='" . $row['id'] . "' data-date='" . $row['application_date'] . "'>";
                 echo "<td>" . $counter . "</td>";
                 echo "<td>" . $row['applicant_number'] . "</td>";
-                echo "<td>" . $row['applicant_name'] . "</td>";
+                echo "<td>" . $row['Last_Name'] . "</td>";
+                echo "<td>" . $row['Name'] . "</td>";
+                echo "<td>" . $row['Middle_Name'] . "</td>";
                 echo "<td>" . $row['nature_of_degree'] . "</td>";
                 echo "<td>" . $row['degree_applied'] . "</td>";
                 echo "<td>" . $row['academic_classification'] . "</td>";
