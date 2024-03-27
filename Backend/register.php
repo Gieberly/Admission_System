@@ -91,18 +91,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="success-message"><?php echo $success_message; ?></div>
                 <?php endif; ?>
             
-                <input class="register_in" type="text" name="name" placeholder="First Name" autocomplete="name" required>
-                <input class="register_in" type="text" name="mname" placeholder="Middle Name" required>
-                <input class="register_in" type="text" name="last_name" placeholder="Last Name" autocomplete="family-name" required>
-                <input class="register_in" type="email" name="email" placeholder="Email" autocomplete="on">
-                <input class="register_in" type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password" required>
-                <input class="register_in" type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password" required oninput="validatePassword()">
+                <input class="register_in" type="text" name="name" placeholder="First Name*" autocomplete="name" required>
+                <input class="register_in" type="text" name="mname" placeholder="Middle Name" >
+                <input class="register_in" type="text" name="last_name" placeholder="Last Name*" autocomplete="family-name" required>
+                <input class="register_in" type="email" name="email" placeholder="Email*" autocomplete="on">
+                <input class="register_in" type="password" id="registerEmail" autocomplete="on" name="password" placeholder="Password*" required required maxlength="8" oninput="validatePassword()">
+                <input class="register_in" type="password" name="confirm_password" autocomplete="password" placeholder="Confirm Password*" required maxlength="8" oninput="validateConfirmPassword()">
                 <div id="passwordError" class="error-message"></div>
 
                 <br>
 
                 <select id="userType" name="userType" required onchange="toggleDepartmentDropdown()">
-                    <option value="" disabled selected>Select User Type</option>
+                    <option value="" disabled selected>Select User Type*</option>
                     <option value="Student">Student</option>
                     <option value="Staff">Staff</option>
                     <option value="Faculty">Faculty</option>

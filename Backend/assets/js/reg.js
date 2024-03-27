@@ -24,6 +24,33 @@ errorContainer.style.display = "none";
 });
 
 function validatePassword() {
+    const passwordInput = document.getElementById("registerEmail");
+    const passwordError = document.getElementById("passwordError");
+  
+    // Reset error message and style
+    passwordError.textContent = "";
+    passwordInput.classList.remove("invalid");
+  
+    // Check password length
+    if (passwordInput.value.length > passwordInput.maxLength) {
+      passwordError.textContent = "Password cannot exceed 8 characters.";
+      passwordInput.classList.add("invalid");
+      return;
+    }
+  
+    // Regular expression for letters, numbers, and special characters
+    const regex = /^(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[0-9a-zA-Z!@#$%^&*]{8}$/;
+  
+    // Check password pattern
+    if (!regex.test(passwordInput.value)) {
+      passwordError.textContent = "Password must contain letters, numbers, and special characters.";
+      passwordInput.classList.add("invalid");
+    }
+  }
+
+
+
+function validateConfirmPassword() {
 var password = document.getElementById("registerEmail").value;
 var confirmPassword = document.getElementsByName("confirm_password")[0].value;
 var confirmPwdInput = document.getElementsByName("confirm_password")[0];
