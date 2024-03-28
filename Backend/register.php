@@ -157,8 +157,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <select id="userType" name="userType" required onchange="toggleDepartmentDropdown()">
                     <option value="" disabled selected>Select User Type</option>
                     <option value="Student">Student</option>
-                    <option value="Staff">Staff</option>
+                    <option value="Staff">Personnel</option>
                     <option value="Faculty">Faculty</option>
+                    <option value="Faculty">OSS</option>
+
                 </select>
                 <!-- Style for the "Select Department" dropdown -->
 
